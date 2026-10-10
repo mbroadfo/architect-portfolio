@@ -4,7 +4,7 @@
 - **Project**: Build Michael Broadfoot's architect portfolio as specified in docs/CHARTER.md (the authoritative project brief): a public image-rich exhibition-style portfolio at michael.broadfoot.consulting plus a private, Auth0-protected administration Studio with GitHub discovery and one AI-assisted description workflow, on React/TypeScript/Vite, Python Lambda API, MongoDB Atlas, S3+CloudFront, Cloudflare DNS, Terraform, GitHub Actions with OIDC. Inception first; first vertical slice per charter section 8. The charter's open questions must be resolved with the product owner.
 - **Project Description Source**: project-description.json
 - **Project Type**: Greenfield
-- **Project Type Source**: workspace scan
+- **Project Type Source**: you
 - **Scope**: classic
 - **Plan**: portfolio-inception-slice
 - **Start Date**: 2026-10-10T16:38:23Z
@@ -30,9 +30,9 @@
 
 ## Workspace State
 - **Project Root**: .
-- **Languages**: Unknown
-- **Frameworks**: Unknown
-- **Build System**: Unknown
+- **Languages**: TypeScript
+- **Frameworks**: Vite, React
+- **Build System**: npm (package.json)
 
 ## Execution Plan Summary
 - **Total Stages**: 24
@@ -40,7 +40,7 @@
 - **In Progress**: requirements-analysis
 
 ## Runtime State
-- **Revision Count**: 2
+- **Revision Count**: 3
 - **Construction Checkpoints**: enabled
 - **Construction Iteration**: unit-major
 - **Construction Execution**: serial
@@ -74,7 +74,7 @@
 ### INCEPTION PHASE
 - [ ] reverse-engineering — SKIP
 - [x] practices-discovery — EXECUTE
-- [-] requirements-analysis — EXECUTE
+- [?] requirements-analysis — EXECUTE
 - [ ] user-stories — SKIP
 - [ ] refined-mockups — EXECUTE
 - [ ] domain-design — EXECUTE
@@ -106,7 +106,7 @@ Per unit: [TBD]
 - **Current Stage**: requirements-analysis
 - **Next Stage**: refined-mockups
 - **Status**: Running
-- **Last Updated**: 2026-10-10T18:29:35Z
+- **Last Updated**: 2026-10-10T18:50:56Z
 
 ## Session Resume Point
 - **Last Completed Stage**: practices-discovery
