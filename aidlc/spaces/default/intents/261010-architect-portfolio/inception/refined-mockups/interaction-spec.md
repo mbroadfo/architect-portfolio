@@ -1,0 +1,194 @@
+# Interaction Specification
+
+## Sources and Boundaries
+
+Inputs: wireframes and user-flow in `../../ideation/rough-mockups/`, approved fixes beside them, requirements in `../requirements-analysis/requirements.md`, team-practices in `../practices-discovery/team-practices.md`. User stories are skipped. Screen IDs match `mockups.md`. These are implementation contracts proposed for design approval, not implemented capabilities.
+
+## Journey Contracts
+
+| Journey | Trigger and steps | Success | Failure and recovery |
+|---|---|---|---|
+| Curate | S1 owner+MFA → S2 → S3 → create/link → S4 edit/save → optional AI review → S5 → S6 | Approved saved revision exported; page/card/assets consistent | GitHub/AI errors do not change edits; conflict preserves local copy; publish failure retains last successful public version |
+| Update | Open published project → edit/save → Changes since last publish → preview → full Update confirmation | New revision public | Saving alone never updates public content |
+| Withdraw | S2 or S4 Take down → S7 named confirmation | Page/card/assets/cache gone within five minutes; Studio content retained | Copies outside this site cannot be revoked; failed removal shown explicitly |
+| Republish | Open Taken down → edit/save (still Taken down) → preview → full Publish confirmation | Published only after checks and successful operation | No shortcut based on prior publication |
+| Explore | P1 hero/featured/categories → P2 project detail (category + access mode visible) → back to studio | Public static content, no account, curated discovery | Missing exhibit is HTTP 404 with useful navigation to studio |
+
+Public exploration now follows the new Studio / Selected Works model (hero → featured → category browsing → approach → detail). Category and access-mode are distinct and visible. Lifecycle state (Draft/Published/Taken down) is not collapsed with them.
+
+### Project state and operation state
+
+Use exactly Draft, Published, Changes since last publish, Taken down. Follow FR3.2: create → Draft; Publish from Draft/Taken down → Published; save Published → Changes since last publish; Update → Published; take down Published/Changes → Taken down; save Taken down stays Taken down. Saving Draft stays Draft. Saving Changes stays Changes.
+
+Queued, Publishing, Updating and Taking down are operation indicators, not extra project statuses. Display the last successfully completed public state alongside pending operations. Operations for one exhibit run in confirmation order (FR7.8). Take down can be confirmed after a queued Publish, including from a currently Draft project with a confirmed publish pending; this queues removal after creation without pretending the project is already Published. Once both complete the project is Taken down. The action is otherwise unavailable for Draft/Taken down with no pending publication. This pending-operation exception implements FR7.8 without allowing an independent invalid FR3.2 transition.
+
+A public operation failure leaves the last successful public version intact. Failed publication does not flip a status to Published. A later confirmed operation must not expose a mixture of versions; implementation must resolve failed dependencies and show them, with no silent reordering. Retries are explicit, idempotent and tied to the original action/revision; an operation superseded by a later successful action cannot be retried into reversing it. Offer fresh review instead.
+
+## Editor and SaveStatus
+
+| Field | Value |
+|---|---|
+| Component | ExhibitEditor / SaveStatus |
+| Description | Preserve private work while separating save from publication |
+| Category | input / feedback |
+
+### States
+
+| State | Trigger | Behavior |
+|---|---|---|
+| clean | Load saved revision | Saved at time, revision shown |
+| dirty | Edit any field or insert suggestion | Unsaved changes; public copy unchanged |
+| saving | Explicit Save | Snapshot buffer, retain further typing, disable duplicate Save only |
+| saved | Server accepts revision | Saved timestamp; subsequent typing remains dirty |
+| error | Network/server failure | Could not save. Your edits are still here. Retry |
+| conflict | Stale revision | Nothing overwritten; retain local buffer, show latest saved copy side by side; owner manually resolves and saves against latest version |
+| expired | Owner authorization expires | Hide private editor; authenticate same issuer/subject+MFA; restore protected unsaved buffer only for that owner |
+
+### Props / Inputs
+
+| Input | Type | Required | Default | Description |
+|---|---|---|---|---|
+| project | object | yes | none | Saved content and version |
+| buffer | object | yes | saved content | Editable local work |
+| saveState | enum | yes | clean | State above |
+| authorization | verified identity | yes | denied | Server authorizes every request |
+
+### Responsive Behaviour
+
+Desktop form and AI aside; tablet/phone one column. Visible Save/Preview/Review publication actions wrap; never cover fields. Preview/publication first requests explicit Save if dirty; cancelling keeps the buffer. Leaving dirty editor offers Stay / Discard unsaved changes, with Stay focused; no automatic publish or save implied by navigation.
+
+### Accessibility
+
+Visible labels, fieldset groups, inline errors linked with descriptions. Polite save-status announcements. Conflict explanation receives focus, not a destructive button. Return from reauthentication focuses restored editor heading and announces recovery.
+
+### Usage Example
+
+S4: change Summary → Unsaved changes → Save → Saved revision 12. Existing public revision 11 remains unchanged. Secure recovery storage and cross-device conflict implementation are design obligations for Domain/NFR Design; do not place private buffers in unprotected persistent browser storage or expose them after sign-out/non-owner login. Intentional sign-out warns about unsaved work and clears locally accessible private state; session-expiry recovery must still satisfy FR1.4.
+
+## AssetUploadRow
+
+| Field | Value |
+|---|---|
+| Component | AssetUploadRow |
+| Description | Upload into private storage, then validate before attachment |
+| Category | input / feedback |
+
+### States
+
+Idle → authorizing → uploading → checking → accepted, or rejected/expired/error. No image/file is attached or publishable until server content checks succeed. Individual retry/removal never discards other fields. Cancellation abandons an incomplete upload without attaching it.
+
+### Props / Inputs
+
+| Input | Type | Required | Default | Description |
+|---|---|---|---|---|
+| kind | image or build-file | yes | image | Applicable limits |
+| file | local file | yes on upload | none | No extension-only trust |
+| alt | string | for published image | empty | Visible field on each image |
+| lead | boolean | one image per publishable exhibit | false | Native radio choice |
+| result | validated asset identity | after checking | none | Version bound into publication |
+
+### Responsive Behaviour
+
+Rows stack below 768 px. Picker is a real button; optional drag/drop has the same keyboard alternative. Progress and type/size remain visible.
+
+### Accessibility
+
+Upload hints precede picker: JPEG/PNG/WebP, up to 10 MB per image; approved build-file types, up to 50 MB each. Label progress per filename; announce completion/rejection without repeated percentage announcements. Alt text field has a link from publication error summary.
+
+### Usage Example
+
+Upload image → Checking file → accepted thumbnail, alt text and Set as lead. Wrong signature/type/size gives a specific reason. Upload authorization is short-lived, single-use and bound to limits, issued only to owner; upload bytes go directly to private storage, never through API body. Export re-encodes image derivatives and strips all metadata; originals stay private. Downloads show filename/type/size and use attachment/nosniff/safe type headers. The final allowed build-file list is confirmed in contract/security design (FR4.4); examples are PDF, SKP, FCStd, DXF, STL, ZIP, not arbitrary executable archives.
+
+## SuggestionPanel
+
+| Field | Value |
+|---|---|
+| Component | SuggestionPanel |
+| Description | Reviewable provider-independent AI text assistance |
+| Category | input / display / feedback |
+
+### States
+
+Unconfigured; spending approval needed; provider not approved for private sources; monthly limit reached; rate-limited; ready; generating; suggestion available; error. Each blocked state explains its reason and sends no provider request. No button on this design silently grants spending or private-data permission. Provider/terms/spending approvals occur through explicit owner decisions in their owning stages.
+
+### Props / Inputs
+
+| Input | Type | Required | Default | Description |
+|---|---|---|---|---|
+| providerName | string | before request | unconfigured | Named before text is sent and retained with result |
+| evidence | list | yes | empty | Repository/file names and visibility, Studio-only |
+| permissions | booleans | yes | denied | Owner auth, spending and private-provider approval |
+| usage | count and limit | for paid provider | disabled | Owner-set monthly limit, no guessed budget |
+| suggestion | text plus provenance | on success | none | Never executable markup or commands |
+
+### Responsive Behaviour
+
+Desktop aside; below 1024 px the panel follows the editor in DOM order. A "Jump to AI suggestions" link appears before the form for keyboard users; it is visible in the flow (or as skip link), has explicit text "Jump to AI suggestions", and on activation moves focus to the first focusable control in the SuggestionPanel (the Suggest button or first input). After insert/edit/discard, focus returns to the originating field or next logical editor control. Sources and long paths wrap. No fixed height clipping.
+
+### Accessibility
+
+Native buttons and labelled suggestion textarea. "Jump to AI suggestions" link (visible text + aria-label) only below 1024 px; focus moves to panel on activation and returns after action. Polite Generating status; at 60 seconds show No suggestion this time. Your text is unchanged. Retry follows server retry time for 429 and is never automatic. Provider permission and usage explanations are visible text. Keyboard: Tab order includes the jump link when present; Escape not trapped in panel. Verification: axe + manual keyboard at 1024 px breakpoint.
+
+### Usage Example
+
+Show Provider: configured provider and the exact README/docs source list before Suggest description. Linked private repository blocks request unless that provider is approved for private content under documented no-training/stated-retention terms. Insert appends to the selected target field without replacing existing text; Edit changes the proposed text in the panel first, then Insert; Discard changes nothing. Insertion marks editor dirty and retains AI/private-source provenance even after edits. Repository instructions are untrusted data; AI has no tools/actions. Suggestion output is escaped everywhere.
+
+## PublicationConfirmation
+
+| Field | Value |
+|---|---|
+| Component | PublicationConfirmation |
+| Description | Owner approves exact public snapshot, not all future edits |
+| Category | input / display |
+
+### States
+
+Preparing inventory; ready; blocked; stale; confirming; queued; running; complete; failed. Required fields: nonempty title, validated lead image, alt text for every image. Other unresolved upload checks also block. The reasons are linked to editor fields; no disabled button without explanation.
+
+### Props / Inputs
+
+| Input | Type | Required | Default | Description |
+|---|---|---|---|---|
+| action | publish/update/take-down | yes | none | Exact label and result |
+| revision | immutable saved identity | yes | none | Includes asset versions and complete inventory |
+| inventory | full text/assets/links/provenance | publish/update | none | Inspectable content, not counts alone |
+| publicState | last successful action | yes | none | Shown alongside pending operation |
+| blockers | list | yes | empty | Server repeats all checks |
+
+### Responsive Behaviour
+
+Large dialog on desktop, viewport dialog on phone. One scroll region for inventory only; Cancel and Confirm actions are fixed at the bottom (or sticky below the scroll region) and remain fully accessible and in viewport at all times, even with long inventory (multiple narrative sections + 3+ images + files + warnings). Section headings wrap; no nested dialog; expandable groups do not obscure or push actions off-screen.
+
+### Accessibility
+
+Labelled modal, inert background, focus contained; initial focus Cancel; Escape cancels before confirmation and returns to trigger. No backdrop confirmation. Once submitted, Close only dismisses progress and explicitly says the operation continues; Escape must not claim cancellation. Failed validation focuses summary; success politely announced and activity updated.
+
+### Usage Example
+
+Review publication opens saved revision 12. Owner inspects title/summary/narratives, every image/alt, each file and link, AI-origin fields, and private source names. PRIVATE warning: only reviewed exhibit content becomes public; repository stays private and its View code link is omitted. A revision change before confirmation invalidates this review. Confirm sends the approved snapshot identity; edits made afterward are excluded. Double click reuses operation identity. Preview and public export must agree on approved content. Neither public JSON nor HTML may contain private evidence metadata or hidden private links.
+
+For Take down, name the exhibit and state: removes its page, gallery card, images and files from this site and its delivery cache; keeps Studio content; cannot withdraw downloaded copies or third-party caches/archives. No auto-confirm or optimistic claim of removal.
+
+## Public Components (Revised for Studio Identity)
+
+**StudioHeader** — Identity header with name, positioning statement, navigation to categories and approach notes. No public link to Studio. Plain contact in footer.
+
+**Hero** — Name, concise positioning (“Systems Architect · Engineer · Maker”), short statement about architecting software/systems/crafted artifacts, large cinematic lead image or montage (concept only).
+
+**FeaturedWork** — One flagship project: large image, short narrative teaser, clear access mode pill (e.g. “Try in browser”), link to detail.
+
+**CategoryBrowser** — Organized discovery. Sections for Browser Apps (v1 focus), future categories (Woodworking, Architecture/Cloud, AI/Experiments). Cards or entries show project + category + access mode. Supports curated, not cluttered, browsing. Access modes (Try, View source, Download & build, Read case study, Invitation only) are first-class and visible alongside category.
+
+**ApproachSection** — Editorial “How I think” area: architectural thinking, constraints, prototypes, system design mindset, craftsmanship. Feels like studio notes.
+
+**ProjectDetail** — Lead image, title, category, access mode, summary, narrative sections (inspiration, challenges, decisions, implementation, outcomes, lessons), gallery, build/repo/external links (private handling preserved). 
+
+ExhibitCard / ProjectEntry inputs: approved title, summary, image derivative/alt, public URL, category, access mode. States: reserved, loaded, failed; link usable. Visible category and mode. One accessible entry; phone stacks. 
+
+ImageViewer, Downloads, 404 handling preserved as before.
+
+Public page never fetches Studio API/database or loads analytics. All public content is static export after explicit owner confirmation.
+
+## Assumptions & Open Questions
+
+Secure recovery storage, snapshot atomicity, queue failure resolution and exact rate limits are later implementation decisions; the invariants above are mandatory acceptance obligations. No UI mockup proves them. Independent security review remains required for implementation of authentication, private data and publication boundaries.
