@@ -35,7 +35,7 @@ The review also asks that all existing publication, privacy, MFA, cost and secur
 
 | CR | Proposed decision | Deferred or excluded |
 |---|---|---|
-| CR-01 | Launch candidates are STARS, Monopoly, Baduk and Risk. Each needs its own approval of content, rights, URL and publication. No single project blocks launch. | Monopoly and Risk titles are provisional, pending trademark and artwork review. |
+| CR-01 | STARS, Monopoly, Baduk and Risk are launch candidates, each **eligible** for individual publication. None is mandatory for launch: launch can proceed with any owner-approved subset. Each needs its own approval of content, rights, URL and publication. | Monopoly and Risk titles are provisional, pending trademark and artwork review. |
 | CR-02 | A project needs no GitHub repository. Title-only drafts are allowed. Images and maker/design attachments are supported: PDF, SKP, FCStd, DXF, STL, ZIP, VSDX. HEIC photos are converted to sanitized web images. 50 MB limit kept. The GitHub-based AI workflow is unchanged. | Other CAD formats (DWG, STEP, 3MF and others) unless needed. A raised size limit. |
 | CR-03 | Explicit metadata: live URL, access requirement, phone suitability, repository visibility, licence. Links are validated at publication, with the result recorded. The owner keeps control of published changes. URL validation is protected against SSRF. | Scheduled link monitoring. Automatic removal of public badges. |
 | CR-04 | Warm charcoal and brass visual direction replaces "dark navy" (FR9.6). | — |
@@ -51,8 +51,8 @@ The review also asks that all existing publication, privacy, MFA, cost and secur
 
 | Where | Approved text | Proposed text |
 |---|---|---|
-| Intent Analysis, ¶1 last sentence | "The three seed exhibits — AI Arcade, STARS and Mom's Recipe Box — are published this way (charter §8)." | "The launch candidates — STARS, Monopoly, Baduk and Risk — are published this way, each only after its own owner approval (FR10.1; CR-01)." |
-| **FR10.1** | "The three seed exhibits — AI Arcade, STARS and Mom's Recipe Box — shall be published through the Studio workflow, not hand-authored." | "The launch candidates — STARS, Monopoly, Baduk and Risk — shall be published through the Studio workflow, not hand-authored. Each candidate needs its own owner approval of its content, its rights (names, artwork, imagery), its live URL, and its publication. A candidate without those approvals stays in Draft. No single candidate blocks launch." |
+| Intent Analysis, ¶1 last sentence | "The three seed exhibits — AI Arcade, STARS and Mom's Recipe Box — are published this way (charter §8)." | "The launch candidates — STARS, Monopoly, Baduk and Risk — are each eligible to be published this way, only after its own owner approval. None is required for launch (FR10.1; CR-01)." |
+| **FR10.1** | "The three seed exhibits — AI Arcade, STARS and Mom's Recipe Box — shall be published through the Studio workflow, not hand-authored." | "The launch candidates — STARS, Monopoly, Baduk and Risk — are each eligible for individual publication through the Studio workflow, not hand-authored. None of them is mandatory for launch, and launch may proceed with any owner-approved subset. A candidate is published only after the owner has approved its content, its rights (names, artwork, imagery), its live URL, and its publication. A candidate without those approvals stays in Draft and does not delay launch." Given STARS and Baduk are approved and Monopoly and Risk are not, When the owner approves launch (FR10.4), Then the site launches with STARS and Baduk published and Monopoly and Risk in Draft. |
 | New **FR10.6** | — | "Exhibit titles for Monopoly and Risk are provisional until the owner completes a trademark and artwork review. Until then, no board artwork resembling third-party trade dress is published, and the Publish confirmation flags the review as outstanding." |
 | New **FR10.7** | — | "Risk's live app URL shall not be published until the owner authorizes it after a privacy and security review of the live app. Risk's source repository is private and is never linked or exposed (FR4.3, D-15), and nothing is drawn from it for public text or imagery without the owner's approval (D-22, FR5.9)." |
 | Out of Scope | "…projects beyond the three seed exhibits…" | "…projects beyond the four launch candidates, other than projects the owner creates without a repository (CR-02)…" |
@@ -137,6 +137,8 @@ None of CR-01 to CR-05 relaxes an existing boundary. Each of these stays exactly
 New behaviour introduced by these CRs sits inside those boundaries. The access metadata and link check (CR-03) run only in the owner-authenticated Studio. Featured and category data (CR-05) are published only through the existing Publish flow.
 
 ## Remaining open items (not decided here)
+
+**Signing off CR-01 to CR-05 does not approve any of these.** Each stays unapproved until Michael decides it separately:
 
 - The trademark and artwork review for Monopoly and Risk (FR10.6).
 - The licensing decision for STARS and Monopoly.
