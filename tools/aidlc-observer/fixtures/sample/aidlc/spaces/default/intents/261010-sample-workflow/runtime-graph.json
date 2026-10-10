@@ -1,0 +1,21 @@
+{
+  "workflow_id": "2026-10-10T12:00:00Z",
+  "scope": "classic",
+  "started_at": "2026-10-10T12:00:00Z",
+  "stages": [
+    {
+      "stage_slug": "intent-capture",
+      "started_at": "2026-10-10T12:00:00Z",
+      "completed_at": "2026-10-10T12:10:00Z",
+      "outcome": "approved",
+      "sensor_firings": [{ "id": "required-sections", "fire_id": "aaaaaaaa", "result": "passed", "ts": "2026-10-10T12:09:00Z" }]
+    },
+    {
+      "stage_slug": "refined-mockups",
+      "started_at": "2026-10-10T12:10:00Z",
+      "completed_at": null,
+      "outcome": "pending",
+      "sensor_firings": []
+    }
+  ]
+}
