@@ -3260,3 +3260,72 @@
 **Reply**: The independent architecture reviewer approves the revised Practices Discovery content.\n\nHowever, PR #1 accidentally includes 18 files under tools/aidlc-observer/, added in commit 56b655b. These belong to the separate AI-DLC Observer feature, not the Practices Discovery records PR.\n\nPreserve all Observer work safely on its own feature branch/worktree, then remove those files from PR #1 without losing the work.\n\nPR #1 should contain only the AI-DLC Practices Discovery records and state changes.\n\nDo not reopen architectural decisions. Once the PR is clean, return to the existing Practices Discovery approval gate.\n\nAlso record a follow-up to correct the stale spa-on-aws claims in docs/CHARTER.md and the initiative brief. Those factual corrections should not block this gate.
 
 ---
+
+## Human Turn
+**Timestamp**: 2026-10-10T18:28:29Z
+**Event**: HUMAN_TURN
+**Session**: 01a126f9-aab1-7d03-9224-10e64acee492
+
+---
+
+## Human Turn
+**Timestamp**: 2026-10-10T18:29:28Z
+**Event**: HUMAN_TURN
+**Session**: a72d6fbb-f63d-4ad1-8717-fc46f9982e73
+**Picked**: ["Approve"]
+
+---
+
+## Question Replied
+**Timestamp**: 2026-10-10T18:29:28Z
+**Event**: QUESTION_REPLIED
+**Session**: a72d6fbb-f63d-4ad1-8717-fc46f9982e73
+**Question**: Practices Discovery (corrected) complete. How would you like to proceed?
+**Reply**: Approve
+
+---
+
+## Practices Affirmed
+**Timestamp**: 2026-10-10T18:29:31Z
+**Event**: PRACTICES_AFFIRMED
+**Affirming User**: Michael Broadfoot
+**Sections Written**: Way of Working, Walking Skeleton, Testing Posture, Deployment, Code Style
+**Mandated Rules Appended**: 7
+**Forbidden Rules Appended**: 10
+
+---
+
+## Gate Approved
+**Timestamp**: 2026-10-10T18:29:35Z
+**Event**: GATE_APPROVED
+**Stage**: practices-discovery
+**User Input**: Approve
+
+---
+
+## Stage Completion
+**Timestamp**: 2026-10-10T18:29:35Z
+**Event**: STAGE_COMPLETED
+**Stage**: practices-discovery
+**Validation Basis**: {"graphContract":"sha256:886af627a0fea6d271a662e4a54b4c5993ecee715d6144d46d4a58c2bc3d19bb","inputs":[],"outputs":[{"artifact":"discovered-rules","contentHash":"sha256:db9ea67d5261f2e0b985396ac286a916e6f0f9659e1909ba3223b92cd1319d5a","instanceCount":1,"presentCount":1,"producer":"practices-discovery","required":true,"structureHash":"sha256:3d556610958b188d8cf2c045f59cf652d72fa160b25a8f371b35030ce5b2c058"},{"artifact":"evidence","contentHash":"sha256:fc8ac52ad95cbcf31cc20204d5b93b3747025edf3655a9f8c5f39ba974acae83","instanceCount":1,"presentCount":1,"producer":"practices-discovery","required":true,"structureHash":"sha256:cb6603575c7f66ac437f3a6c91a020cda3fafbdcd6f87f4c5d892246d5b145e8"},{"artifact":"practices-discovery-timestamp","contentHash":"sha256:8822438bc34f2eea79ae9dc0301d6f08f0895b81221a05f36b0319940ebb719f","instanceCount":1,"presentCount":1,"producer":"practices-discovery","required":true,"structureHash":"sha256:964e2d6d697957d9b2d7a1cfeb67de3af419d0e9541970de76bdbb93ff94ce56"},{"artifact":"team-practices","contentHash":"sha256:6f771c9b5a5e071a6d25aaf6d21a573aea965c2356121dfdd8a4d10799fdddd1","instanceCount":1,"presentCount":1,"producer":"practices-discovery","required":true,"structureHash":"sha256:b0e6a533c80fc07476fc01e92acc2c2bc52c980a7aa37a507b9074c08670a6a6"}],"projectType":"greenfield","schema":3}
+**Details**: Stage Practices Discovery approved by gate
+**Tokens In**: 212
+**Tokens Out**: 113580
+**Cache Read**: 35796965
+**Cache Write**: 1165007
+**Cost USD**: 15.54
+**By Model**: opus-5-5=15.54
+**By Agent**: main=6.78; aidlc-pipeline-deploy-agent=8.76
+**Tokens By Model**: opus-5-5=212/113.6k/35.8M/1.2M
+**Tokens By Agent**: main=114/34.2k/26.7M/93.7k; aidlc-pipeline-deploy-agent=98/79.3k/9.1M/1.1M
+
+---
+
+## Stage Start
+**Timestamp**: 2026-10-10T18:29:35Z
+**Event**: STAGE_STARTED
+**Stage**: requirements-analysis
+**Agent**: aidlc-product-agent
+**Answer Mode**: guide (reused from intent-capture)
+
+---
