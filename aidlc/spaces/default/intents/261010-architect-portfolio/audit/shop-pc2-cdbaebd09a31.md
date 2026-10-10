@@ -1443,3 +1443,303 @@
 **Context**: ideation > scope-definition > intent-backlog.md
 
 ---
+
+## Artifact Created
+**Timestamp**: 2026-10-10T17:39:42Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/ideation/rough-mockups/rough-mockups-questions.md
+**Context**: ideation > rough-mockups > rough-mockups-questions.md
+
+---
+
+## Decision Recorded
+**Timestamp**: 2026-10-10T17:39:43Z
+**Event**: DECISION_RECORDED
+**Stage**: rough-mockups
+**Decision**: Q1-Q6 (screens, core flow, hierarchy, brand, devices, accessibility) answered from charter and approved scope
+**Options**: Q1: both sides,public only,studio only,Not yet defined; Q2: owner then visitor,visitor only,owner only,Not yet defined; Q3: image-led,text-first,taxonomy-first,Not yet defined; Q4: Engineering Studio,third-party,none,Not yet defined; Q5: responsive,desktop,mobile,Not yet defined; Q6: WCAG 2.1 AA,none,AAA,Not yet defined
+
+---
+
+## Error Logged
+**Timestamp**: 2026-10-10T17:39:47Z
+**Event**: ERROR_LOGGED
+**Tool**: aidlc-log
+**Command**: aidlc-log engine log answer --stage rough-mockups --details Q1: A; Q2: A; Q3: A; Q4: A; Q5: A; Q6: A (all derived from the charter and approved scope) --on-instruction-file .aidlc-engine/answer-text/answer.txt
+**Error**: answer text file could not be opened: <project-dir>\aidlc\spaces\default\intents\261010-architect-portfolio\.aidlc-engine\answer-text\answer.txt (ENOENT: no such file or directory, open '<project-dir>\aidlc\spaces\default\intents\261010-architect-portfolio\.aidlc-engine\answer-text\answer.txt')
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-10-10T17:39:51Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/.aidlc-engine/answer-text/answer.txt
+**Context**: .aidlc-engine > answer-text > answer.txt
+
+---
+
+## Question Answered
+**Timestamp**: 2026-10-10T17:39:53Z
+**Event**: QUESTION_ANSWERED
+**Stage**: rough-mockups
+**Details**: Q1: A; Q2: A; Q3: A; Q4: A; Q5: A; Q6: A (all derived from the charter and approved scope)
+**Answer Source**: chosen by the agent as the person asked
+**Instruction**: I'm spending too much time answering process questions. Handle routine decisions autonomously using the approved charter, recorded decisions, and sensible defaults. Batch genuinely unresolved questions.
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-10-10T17:41:11Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/ideation/rough-mockups/wireframes.md
+**Context**: ideation > rough-mockups > wireframes.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-10-10T17:41:12Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/ideation/rough-mockups/user-flow.md
+**Context**: ideation > rough-mockups > user-flow.md
+
+---
+
+## Review Requested
+**Timestamp**: 2026-10-10T17:41:25Z
+**Event**: REVIEW_REQUESTED
+**Stage**: rough-mockups
+**Reviewer**: aidlc-product-lead-agent
+**Iteration**: 1
+**Artifact Fingerprint**: sha256:ec780000611c6a3100f6ca72ab6041cc4f93d8dac2334672686c5e2e41d16baf
+**Request Id**: review:6a7bce0a19343084143e124a1eb306e8
+**Review File**: .aidlc-engine/reviews/rough-mockups/stage/6f4db8bbb74eba56/1.6a7bce0a19343084143e124a1eb306e8.review.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-10-10T17:42:05Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/.aidlc-engine/reviews/rough-mockups/stage/6f4db8bbb74eba56/1.6a7bce0a19343084143e124a1eb306e8.review.md
+**Context**: .aidlc-engine > reviews > rough-mockups > stage > 6f4db8bbb74eba56 > 1.6a7bce0a19343084143e124a1eb306e8.review.md
+
+---
+
+## Subagent Completed
+**Timestamp**: 2026-10-10T17:42:13Z
+**Event**: SUBAGENT_COMPLETED
+**Agent Type**: aidlc-product-lead-agent
+**Agent ID**: af7138a13c132e066
+
+---
+
+## Human Turn
+**Timestamp**: 2026-10-10T17:42:14Z
+**Event**: HUMAN_TURN
+**Session**: a72d6fbb-f63d-4ad1-8717-fc46f9982e73
+
+---
+
+## Review Completed
+**Timestamp**: 2026-10-10T17:42:17Z
+**Event**: REVIEW_COMPLETED
+**Stage**: rough-mockups
+**Reviewer**: aidlc-product-lead-agent
+**Iteration**: 1
+**Verdict**: READY
+**Request Fingerprint**: sha256:ec780000611c6a3100f6ca72ab6041cc4f93d8dac2334672686c5e2e41d16baf
+**Artifact Fingerprint**: sha256:ec780000611c6a3100f6ca72ab6041cc4f93d8dac2334672686c5e2e41d16baf
+**Request Id**: review:6a7bce0a19343084143e124a1eb306e8
+**Review Record**: .aidlc-engine/reviews/rough-mockups/stage/6f4db8bbb74eba56/1.json
+**Review Record Digest**: sha256:944bfb4fddc75505d6d5fae3441372310d795ce6be134a2dacd169cbe6fb5c1e
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-10T17:42:21Z
+**Event**: SENSOR_FIRED
+**Fire id**: c749f8cf
+**Sensor ID**: required-sections
+**Stage slug**: rough-mockups
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/ideation/rough-mockups/wireframes.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-10T17:42:21Z
+**Event**: SENSOR_PASSED
+**Fire id**: c749f8cf
+**Sensor ID**: required-sections
+**Stage slug**: rough-mockups
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/ideation/rough-mockups/wireframes.md
+**Duration ms**: 83
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-10T17:42:21Z
+**Event**: SENSOR_FIRED
+**Fire id**: 9e8a6714
+**Sensor ID**: required-sections
+**Stage slug**: rough-mockups
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/ideation/rough-mockups/user-flow.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-10T17:42:21Z
+**Event**: SENSOR_PASSED
+**Fire id**: 9e8a6714
+**Sensor ID**: required-sections
+**Stage slug**: rough-mockups
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/ideation/rough-mockups/user-flow.md
+**Duration ms**: 81
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-10T17:42:21Z
+**Event**: SENSOR_FIRED
+**Fire id**: b0a708be
+**Sensor ID**: required-sections
+**Stage slug**: rough-mockups
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/ideation/rough-mockups/rough-mockups-questions.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-10T17:42:21Z
+**Event**: SENSOR_PASSED
+**Fire id**: b0a708be
+**Sensor ID**: required-sections
+**Stage slug**: rough-mockups
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/ideation/rough-mockups/rough-mockups-questions.md
+**Duration ms**: 79
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-10T17:42:21Z
+**Event**: SENSOR_FIRED
+**Fire id**: 52465ec7
+**Sensor ID**: upstream-coverage
+**Stage slug**: rough-mockups
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/ideation/rough-mockups/wireframes.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-10T17:42:21Z
+**Event**: SENSOR_PASSED
+**Fire id**: 52465ec7
+**Sensor ID**: upstream-coverage
+**Stage slug**: rough-mockups
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/ideation/rough-mockups/wireframes.md
+**Duration ms**: 79
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-10T17:42:22Z
+**Event**: SENSOR_FIRED
+**Fire id**: 93f6f500
+**Sensor ID**: upstream-coverage
+**Stage slug**: rough-mockups
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/ideation/rough-mockups/user-flow.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-10T17:42:22Z
+**Event**: SENSOR_PASSED
+**Fire id**: 93f6f500
+**Sensor ID**: upstream-coverage
+**Stage slug**: rough-mockups
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/ideation/rough-mockups/user-flow.md
+**Duration ms**: 82
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-10T17:42:22Z
+**Event**: SENSOR_FIRED
+**Fire id**: 3ca53a13
+**Sensor ID**: upstream-coverage
+**Stage slug**: rough-mockups
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/ideation/rough-mockups/rough-mockups-questions.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-10T17:42:22Z
+**Event**: SENSOR_PASSED
+**Fire id**: 3ca53a13
+**Sensor ID**: upstream-coverage
+**Stage slug**: rough-mockups
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/ideation/rough-mockups/rough-mockups-questions.md
+**Duration ms**: 80
+
+---
+
+## Stage Awaiting Approval
+**Timestamp**: 2026-10-10T17:42:22Z
+**Event**: STAGE_AWAITING_APPROVAL
+**Stage**: rough-mockups
+
+---
+
+## Decision Recorded
+**Timestamp**: 2026-10-10T17:42:44Z
+**Event**: DECISION_RECORDED
+**Stage**: rough-mockups
+**Decision**: Which gallery concept to carry into Refined Mockups?
+**Options**: Concept A - Exhibition wall,Concept B - Workbench grid
+
+---
+
+## Human Turn
+**Timestamp**: 2026-10-10T17:46:31Z
+**Event**: HUMAN_TURN
+**Session**: a72d6fbb-f63d-4ad1-8717-fc46f9982e73
+**Picked**: ["Concept A - Exhibition wall","My choice is Concept A — Exhibition Wall. Use compelling project imagery with a responsive, orderly layout.\n\nBefore I approve Rough Mockups, commit and push the design artifacts and summarize the proposed default fixes so my independent architecture reviewer can inspect them.\n\nKeep the current approval gate open. Do not restart the stage or ask me to repeat settled decisions."]
+
+---
+
+## Question Replied
+**Timestamp**: 2026-10-10T17:46:31Z
+**Event**: QUESTION_REPLIED
+**Session**: a72d6fbb-f63d-4ad1-8717-fc46f9982e73
+**Question**: Which gallery concept should Refined Mockups develop?
+**Reply**: Concept A - Exhibition wall
+
+---
+
+## Question Replied
+**Timestamp**: 2026-10-10T17:46:31Z
+**Event**: QUESTION_REPLIED
+**Session**: a72d6fbb-f63d-4ad1-8717-fc46f9982e73
+**Question**: Rough Mockups complete. How would you like to proceed? (Approving also accepts the default fixes listed above.)
+**Reply**: My choice is Concept A — Exhibition Wall. Use compelling project imagery with a responsive, orderly layout.\n\nBefore I approve Rough Mockups, commit and push the design artifacts and summarize the proposed default fixes so my independent architecture reviewer can inspect them.\n\nKeep the current approval gate open. Do not restart the stage or ask me to repeat settled decisions.
+
+---
+
+## Question Answered
+**Timestamp**: 2026-10-10T17:46:45Z
+**Event**: QUESTION_ANSWERED
+**Stage**: rough-mockups
+**Details**: Concept A - Exhibition wall (owner: use compelling project imagery with a responsive, orderly layout)
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-10-10T17:46:47Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/ideation/rough-mockups/proposed-default-fixes.md
+**Context**: ideation > rough-mockups > proposed-default-fixes.md
+
+---
