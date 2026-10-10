@@ -212,7 +212,7 @@ function resolveArtifact(workspace: string, space: string, intent: string, relat
   if (!pathExists(requested) || isDirectory(requested)) return null;
   const fileReal = realPath(requested);
   if (!fileReal || !isInside(intentReal, fileReal)) return null;
-  if (!/\.markdown?$/i.test(fileReal)) return null;
+  if (!/\.(?:md|markdown)$/i.test(fileReal)) return null;
   return fileReal;
 }
 

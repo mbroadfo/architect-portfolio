@@ -13,7 +13,6 @@ import type {
   CommandNote,
   DecisionRecord,
   IntentSnapshot,
-  IntentSummary,
   Snapshot,
   SourceNote,
   StageView,
@@ -464,7 +463,7 @@ function readAudit(
     return { events: [], files: [] };
   }
   const files = entries
-    .filter((entry) => !entry.isDirectory && /\.markdown?$/i.test(entry.name) && safeFileSlug(entry.name))
+    .filter((entry) => !entry.isDirectory && /\.(?:md|markdown)$/i.test(entry.name) && safeFileSlug(entry.name))
     .map((entry) => entry.name)
     .sort((a, b) => a.localeCompare(b));
   if (files.length === 0) {
@@ -541,7 +540,7 @@ function walkMarkdown(dir: string, workspace: string): string[] {
       if (entry.isDirectory) {
         if (entry.name === "audit" || entry.name === "node_modules") continue;
         visit(full);
-      } else if (/\.markdown?$/i.test(entry.name)) {
+      } else if (/\.(?:md|markdown)$/i.test(entry.name)) {
         const rel = path.relative(workspace, full);
         if (!rel.startsWith("..") && !path.isAbsolute(rel)) found.push(full);
       }
