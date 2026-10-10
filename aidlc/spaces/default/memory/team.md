@@ -45,6 +45,8 @@
 
 <!-- Team-specific mandates -->
 
+- Decisions explicitly approved by the product owner must be recorded in version-controlled requirements or architectural decision records. Subsequent stages and coding agents must reuse those decisions rather than repeatedly asking the same questions. Stage-specific observations should not become permanent engineering rules. (learned 2026-10-10) <!-- cid:261010-architect-portfolio:intent-capture:e6c905c7512d91364c8a5d08f8cd74da67116d69d9325490d1b7089a00883cb5 -->
+
 ## Corrections
 
 <!-- Self-learning loop appends here. -->
