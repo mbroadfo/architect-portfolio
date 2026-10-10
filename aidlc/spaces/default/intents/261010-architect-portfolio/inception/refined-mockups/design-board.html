@@ -3,338 +3,332 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Michael Broadfoot’s Studio — Refined Mockups (Visual Board)</title>
+<title>Michael Broadfoot’s Studio — Refined Mockups (Visual Board) — CONCEPT ONLY</title>
 <style>
-:root {
-  color-scheme: dark;
-  --canvas: #0D1117;
-  --surface: #1A1F26;
-  --raised: #252B33;
-  --text: #F5F0E6;
-  --muted: #A8B0B8;
-  --accent: #C9A66B;
-  --walnut: #5C4033;
-  --bronze: #A67C52;
-  --border: #4A5563;
-  --warn: #D4A017;
-}
-* { box-sizing: border-box; }
-body { margin: 0; background: #080C12; color: var(--text); font: 16px/1.6 system-ui, sans-serif; }
-a { color: var(--accent); }
-h1, h2, h3 { font-weight: 600; letter-spacing: -0.02em; }
-.board-header { padding: 32px 4vw; background: var(--surface); border-bottom: 1px solid var(--border); }
-.board-header h1 { margin: 0 0 8px; font-size: 32px; }
-.board-header p { max-width: 80ch; color: var(--muted); }
-.board-nav { display: flex; gap: 16px; margin-top: 16px; flex-wrap: wrap; }
-.board-nav a { padding: 6px 12px; background: var(--raised); border-radius: 4px; text-decoration: none; font-size: 14px; }
-.board { max-width: 1600px; margin: 0 auto; padding: 40px 4vw; }
-.view { margin-bottom: 80px; scroll-margin-top: 20px; }
-.view-header { display: flex; align-items: baseline; gap: 16px; margin-bottom: 16px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
-.view-header h2 { margin: 0; font-size: 20px; }
-.view-header .note { color: var(--muted); font-size: 13px; }
-.frame { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; background: var(--canvas); }
-.frame-head { padding: 8px 16px; background: var(--raised); font-size: 12px; color: var(--muted); border-bottom: 1px solid var(--border); font-family: ui-monospace, monospace; }
-.mock { padding: 0; background: var(--canvas); }
+:root { color-scheme: dark; --canvas:#0D1117; --surface:#1A1F26; --raised:#252B33; --text:#F5F0E6; --muted:#A8B0B8; --accent:#C9A66B; --walnut:#5C4033; --bronze:#A67C52; --border:#4A5563; }
+* { box-sizing:border-box; }
+body { margin:0; background:#080C12; color:var(--text); font:14px/1.5 system-ui, sans-serif; }
+a { color:var(--accent); text-decoration:none; }
+h1,h2,h3 { font-weight:600; letter-spacing:-0.02em; }
+img { display:block; width:100%; height:auto; border:1px solid var(--border); }
+.concept { font-size:10px; background:#3A2A1F; color:#D4A017; padding:1px 6px; border:1px solid #664E2E; display:inline-block; margin:4px 0; }
+.frame { border:1px solid var(--border); border-radius:4px; overflow:hidden; background:var(--canvas); margin-bottom:40px; }
+.frame-head { padding:4px 10px; font-size:10px; background:var(--raised); color:var(--muted); border-bottom:1px solid var(--border); font-family:ui-monospace,monospace; }
+.mock { background:var(--canvas); }
 
-/* New Aesthetic Styles */
-.hero { padding: 80px 60px; background: linear-gradient(180deg, #0D1117 0%, #11151C 100%); position: relative; }
-.hero-content { max-width: 720px; }
-.hero h1 { font-size: 56px; line-height: 1.05; margin: 0 0 16px; }
-.hero .position { font-size: 18px; color: var(--accent); margin-bottom: 24px; }
-.hero p { font-size: 17px; max-width: 60ch; }
-.lead-image { position: absolute; right: 60px; top: 60px; width: 420px; height: 280px; background: linear-gradient(135deg, #1A1F26, #252B33); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 13px; color: var(--muted); text-align: center; }
-.lead-image::after { content: "[CONCEPT: Cinematic montage — workshop tools + code architecture drawing + warm brass light]"; }
+/* Top nav like reference */
+.topnav { display:flex; align-items:center; justify-content:space-between; padding:8px 20px; background:#11151C; border-bottom:1px solid var(--border); font-size:13px; }
+.topnav .logo { font-size:15px; font-weight:600; }
+.topnav nav { display:flex; gap:18px; }
+.topnav nav a { color:#A8B0B8; }
+.topnav nav a.active { color:var(--text); border-bottom:1px solid var(--accent); }
 
-.featured { padding: 48px 60px; border-top: 1px solid var(--border); }
-.featured-card { display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; align-items: center; }
-.featured-image { height: 320px; background: linear-gradient(135deg, #1A1F26, #252B33); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 13px; color: var(--muted); }
-.featured-image::after { content: "[CONCEPT: Sleek browser app interface, dark with warm highlights]"; }
-.featured .meta { font-size: 13px; color: var(--accent); margin-bottom: 8px; }
-.featured h3 { font-size: 28px; margin: 0 0 12px; }
-.featured .actions { margin-top: 20px; display: flex; gap: 12px; }
-.btn { display: inline-block; padding: 10px 18px; border: 1px solid var(--border); border-radius: 4px; font-size: 14px; text-decoration: none; color: var(--text); background: transparent; }
-.btn.primary { background: var(--accent); color: #0D1117; border-color: var(--accent); }
+/* Sidebar + hero like reference */
+.home-desktop { display:grid; grid-template-columns: 220px 1fr; gap:0; }
+.sidebar { background:#11151C; padding:12px 10px; border-right:1px solid var(--border); font-size:12px; }
+.sidebar .navitem { padding:6px 8px; display:flex; align-items:center; gap:8px; border-radius:3px; }
+.sidebar .navitem.active { background:#1F262E; }
+.sidebar .section { color:#6F7A88; font-size:10px; margin:12px 0 4px 8px; text-transform:uppercase; letter-spacing:0.5px; }
 
-.categories { padding: 48px 60px; }
-.category { margin-bottom: 40px; }
-.category h3 { font-size: 18px; margin: 0 0 16px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
-.projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; }
-.project-card { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
-.project-card .img { height: 160px; background: linear-gradient(135deg, #1A1F26, #252B33); display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--muted); }
-.project-card .img::after { content: "[CONCEPT: Clean web app UI]"; }
-.project-card .body { padding: 16px; }
-.project-card h4 { margin: 0 0 6px; font-size: 16px; }
-.project-card .tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
-.tag { font-size: 11px; padding: 2px 8px; border-radius: 3px; background: var(--raised); border: 1px solid var(--border); }
-.tag.category { background: var(--walnut); color: #F5F0E6; }
-.tag.mode { background: var(--bronze); color: #0D1117; }
+.hero { padding:32px 28px; display:grid; grid-template-columns:1.05fr 0.95fr; gap:32px; align-items:center; background:linear-gradient(180deg,#0D1117,#11151C); }
+.hero h1 { font-size:42px; margin:0 0 4px; line-height:1.05; }
+.hero .sub { color:var(--accent); font-size:13px; margin-bottom:8px; }
+.hero p { font-size:13px; max-width:42ch; color:#DCD3C3; }
+.hero .btns { margin-top:14px; display:flex; gap:8px; }
+.btn { padding:6px 14px; font-size:12px; border:1px solid var(--border); border-radius:3px; background:transparent; color:var(--text); }
+.btn.gold { background:var(--accent); color:#0D1117; border-color:var(--accent); }
+.hero-img { position:relative; }
+.hero-img .concept { position:absolute; bottom:6px; right:6px; }
 
-.detail { padding: 48px 60px; max-width: 960px; }
-.detail-hero { height: 380px; background: linear-gradient(135deg, #1A1F26, #252B33); margin-bottom: 32px; display: flex; align-items: center; justify-content: center; font-size: 13px; color: var(--muted); border: 1px solid var(--border); }
-.detail-hero::after { content: "[CONCEPT: Cinematic lead image of the project]"; }
-.detail h2 { font-size: 36px; margin: 0 0 8px; }
-.detail .meta { display: flex; gap: 16px; color: var(--muted); font-size: 14px; margin-bottom: 24px; }
-.detail .actions { display: flex; gap: 12px; flex-wrap: wrap; margin: 24px 0; }
-.detail .narrative { max-width: 68ch; line-height: 1.7; }
-.detail .gallery { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-top: 32px; }
-.detail .gallery > div { height: 140px; background: var(--raised); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--muted); }
-.detail .gallery > div::after { content: "[CONCEPT]"; }
+/* Category grid like reference */
+.cats { padding:20px 28px; }
+.cats h3 { font-size:13px; margin:0 0 10px; color:#A8B0B8; }
+.catgrid { display:grid; grid-template-columns:repeat(auto-fill,minmax(148px,1fr)); gap:10px; }
+.catcard { background:#1A1F26; border:1px solid var(--border); padding:8px; border-radius:3px; font-size:11px; }
+.catcard img { height:78px; object-fit:cover; margin-bottom:6px; }
+.catcard .t { font-weight:600; margin-bottom:2px; }
+.catcard .c { font-size:10px; color:#7E8A98; }
 
-.mobile-frame { max-width: 375px; margin: 0 auto; border: 12px solid #111; border-radius: 40px; overflow: hidden; background: var(--canvas); }
-.mobile-frame .mock { padding: 16px; }
+/* Quote / How I Think */
+.quote { padding:16px 28px; background:#11151C; font-size:12px; border-top:1px solid var(--border); color:#C8BFAE; }
+.quote .sig { font-family:serif; font-style:italic; margin-top:6px; color:#A67C52; }
 
-.note { font-size: 12px; color: var(--muted); margin-top: 8px; }
-.scope-note { background: #1A1F26; padding: 16px; border-left: 4px solid var(--accent); margin: 24px 0; font-size: 14px; }
+/* Catalog */
+.catalog { padding:16px 20px; }
+.filters { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:12px; }
+.filter { padding:3px 10px; font-size:11px; background:#1F262E; border:1px solid var(--border); border-radius:2px; }
+.filter.active { background:var(--bronze); color:#0D1117; border-color:var(--bronze); }
+.catlist { display:grid; grid-template-columns:repeat(auto-fill,minmax(168px,1fr)); gap:12px; }
+.card { background:#1A1F26; border:1px solid var(--border); overflow:hidden; border-radius:3px; }
+.card img { height:92px; object-fit:cover; }
+.card .b { padding:8px; font-size:11px; }
+.card .tags { display:flex; gap:4px; margin-top:4px; }
+.tag { font-size:9px; padding:0 4px; background:#252B33; border:1px solid var(--border); }
+.tag.cat { background:#5C4033; color:#F5F0E6; }
+.tag.mode { background:#A67C52; color:#0D1117; }
+
+/* Detail */
+.detail { padding:16px 22px; }
+.detail h1 { font-size:26px; margin:8px 0 4px; }
+.detail .meta { color:#8A96A3; font-size:12px; margin-bottom:10px; }
+.detail .act { display:flex; gap:8px; margin:10px 0; }
+.detail .navtabs { display:flex; gap:16px; border-bottom:1px solid var(--border); padding-bottom:6px; font-size:12px; }
+.detail .navtabs .t { color:#6F7A88; }
+.detail .navtabs .t.on { color:var(--text); border-bottom:2px solid var(--accent); }
+.detail .bodytext { max-width:66ch; font-size:13px; color:#DCD3C3; margin:12px 0; }
+.detail .g { display:grid; grid-template-columns:repeat(3,1fr); gap:6px; margin-top:10px; }
+.detail .g img { height:64px; object-fit:cover; }
+
+/* Mobile */
+.mobile { max-width:375px; margin:0 auto; border:9px solid #0A0E14; border-radius:28px; overflow:hidden; background:var(--canvas); font-size:13px; }
+.mtop { padding:8px 12px; background:#11151C; display:flex; justify-content:space-between; align-items:center; }
+.mhero { padding:14px; }
+.mhero img { border:none; }
+.mcard { margin:8px 12px; background:#1A1F26; border:1px solid var(--border); padding:8px; font-size:12px; }
+.mtags { display:flex; gap:4px; margin-top:4px; }
+
+/* Studio restored detailed */
+.studio { padding:12px 16px; background:#0F141A; }
+.studio h4 { font-size:11px; color:#6F7A88; margin:8px 0 4px; }
+.studio .slist { font-size:11px; }
+.studio .slist div { padding:3px 0; border-bottom:1px solid #222B36; }
+.studio .editor { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+.studio .editor pre { background:#11181F; padding:6px; font-size:10px; margin:0; }
+.pub { background:#1C242C; padding:8px; font-size:11px; }
+.pub button { background:#C9A66B; color:#0D1117; border:none; padding:6px 12px; font-weight:600; margin-top:6px; }
+
+.disclaimer { font-size:10px; background:#1F262E; padding:6px 10px; border-left:3px solid #D4A017; margin:8px 0; color:#B8A98A; }
+.scope { font-size:10px; background:#1A1F26; padding:6px 10px; border-left:3px solid var(--accent); margin-bottom:12px; }
 </style>
 </head>
 <body>
-<header class="board-header">
-  <p class="eyebrow">Architect portfolio / Inception / Refined Mockups — Visual Board</p>
-  <h1>Michael Broadfoot’s Studio</h1>
-  <p>Premium, crafted, warm, cinematic architect &amp; maker portfolio. Deep charcoal surfaces, warm walnut/bronze/brass accents, strong editorial typography, large cinematic imagery. <strong>All imagery is clearly labelled CONCEPT / moodboard only — not real project evidence.</strong> Private Studio remains functional and restrained.</p>
-  <nav class="board-nav">
-    <a href="#desktop-home">1. Desktop Homepage</a>
-    <a href="#mobile-home">2. Mobile Homepage (375px)</a>
-    <a href="#desktop-catalog">3. Desktop Catalog</a>
-    <a href="#desktop-detail">4. Desktop Detail</a>
-    <a href="#studio">Studio (unchanged)</a>
-  </nav>
-</header>
-
-<main class="board">
-
-<div class="scope-note">
-  <strong>Scope note (relative to previously approved first-release requirements):</strong> 
-  No proposed changes to approved requirements. First release remains focused on browser-ready / static applications as the initial project class (per prior scope and user direction). Structure and IA are designed to support graceful expansion to woodworking, cloud architecture, downloads, invitation-only, etc. Category, access/interaction mode, visibility, and publishing lifecycle remain distinct. No new functional requirements introduced here.
+<div class="board-header" style="padding:8px 16px; font-size:11px; background:#11151C;">
+  <strong>Michael Broadfoot’s Studio — Refined Mockups Visual Board (CONCEPT / MOODBOARD ONLY)</strong> — All imagery and project names are draft moodboard specimens. Not photography or verified real projects. Use supplied concept PNGs labeled explicitly.
 </div>
 
-<section id="desktop-home" class="view">
-  <div class="view-header">
-    <h2>1. Desktop Homepage</h2>
-    <span class="note">Hero + Featured + Organized Categories (Browser Apps focus for v1)</span>
+<div class="disclaimer">
+  <strong>Specimen only:</strong> Project titles (e.g. "Impossible Cube Lamp", "Craps Simulator") are layout examples for visual direction. No real completed projects, no public source/downloads/invitations are shown or implied. Category (Browser Apps) and access mode (Try in browser / Source Available etc.) are kept separate. All images are the supplied concept assets labeled as draft/moodboard.
+</div>
+
+<div class="scope">
+  Scope preserved: First release browser apps focus. Category + access mode + lifecycle distinct. No scope creep on approved FR/NFRs.
+</div>
+
+<!-- 1. DESKTOP HOMEPAGE -->
+<section id="desktop-home" class="frame">
+  <div class="frame-head">1. HOMEPAGE (DESKTOP) — 1440px · matching supplied reference direction</div>
+  <div class="mock">
+    <div class="topnav">
+      <div class="logo">MICHAEL BROADFOOT</div>
+      <nav><a class="active">Projects</a><a>Journal</a><a>About</a></nav>
+    </div>
+    <div class="home-desktop">
+      <div class="sidebar">
+        <div class="navitem active">🏠 Home</div>
+        <div class="navitem">📁 Projects</div>
+        <div style="padding-left:18px; font-size:11px;">
+          <div class="navitem">Woodworking</div>
+          <div class="navitem active">Browser Apps</div>
+          <div class="navitem">AI &amp; Experiments</div>
+        </div>
+        <div class="navitem">📓 Journal</div>
+        <div class="navitem">🛠 Shop Projects</div>
+        <div class="navitem">ℹ About</div>
+        <div class="section">Explore</div>
+        <div style="padding:4px 8px; font-size:11px; color:#7E8A98;">Good systems — in software, in wood, in life — start with structure, curiosity, and respect for the material.<br><span style="color:#A67C52; font-family:serif;">— M. Broadfoot</span></div>
+      </div>
+      <div>
+        <div class="hero">
+          <div>
+            <div class="sub">FEATURED · WOODWORKING + SYSTEMS</div>
+            <h1>Sample: Impossible Cube Lamp</h1>
+            <p>Woodworking · Design · Fabrication. A study in geometry, light, and craft. (Layout specimen using moodboard asset. Not a real completed project.)</p>
+            <div class="btns">
+              <span class="btn gold">View Project →</span>
+              <span class="btn">See All Woodworking</span>
+            </div>
+          </div>
+          <div class="hero-img">
+            <img src="screenshots/gallery-1440.png" alt="CONCEPT MOODBOARD">
+            <div class="concept">CONCEPT MOODBOARD / DRAFT — supplied asset, not photography of completed project</div>
+          </div>
+        </div>
+        <div class="cats">
+          <h3>Explore Projects by Type (Browser Apps focus for v1)</h3>
+          <div class="catgrid">
+            <div class="catcard"><img src="screenshots/editor-1440.png" alt="CONCEPT"><div class="t">Browser Apps</div><div class="c">Try in your browser · 12 specimens</div><div class="concept">MOODBOARD</div></div>
+            <div class="catcard"><img src="screenshots/gallery-375.png" alt="CONCEPT"><div class="t">Open Source Tools</div><div class="c">Clone, build, or download · 18 specimens</div><div class="concept">MOODBOARD</div></div>
+            <div class="catcard"><img src="screenshots/editor-375.png" alt="CONCEPT"><div class="t">Woodworking</div><div class="c">Furniture, gifts, shop work · 9 specimens</div><div class="concept">MOODBOARD</div></div>
+            <div class="catcard"><img src="screenshots/gallery-1440.png" alt="CONCEPT"><div class="t">AI &amp; Experiments</div><div class="c">Play, explore, research · 6 specimens</div><div class="concept">MOODBOARD</div></div>
+            <div class="catcard"><img src="screenshots/editor-1440.png" alt="CONCEPT"><div class="t">Astronomy &amp; Exploration</div><div class="c">Imaging the night sky · 4 specimens</div><div class="concept">MOODBOARD</div></div>
+          </div>
+        </div>
+        <div class="quote">“Good systems — in software, in wood, in life — start with structure, curiosity, and respect for the material.” <span class="sig">— M. Broadfoot</span><br><span style="font-size:10px;">(How I Think / Approach section — editorial studio notes)</span></div>
+      </div>
+    </div>
   </div>
-  <div class="frame">
-    <div class="frame-head">PUBLIC / Desktop / 1440px+ · New aesthetic: deep charcoal + warm brass</div>
-    <div class="mock hero">
-      <div class="hero-content">
-        <h1>Michael Broadfoot</h1>
-        <div class="position">Systems Architect · Engineer · Maker</div>
-        <p>I architect software, systems, and crafted artifacts that are precise, honest, and worth keeping.</p>
-      </div>
-      <div class="lead-image"></div>
+</section>
+
+<!-- 2. FILTERED CATALOGUE (DESKTOP) -->
+<section id="desktop-catalog" class="frame">
+  <div class="frame-head">2. FILTERED CATALOGUE (DESKTOP) — Browser Apps focus, category + mode distinct</div>
+  <div class="mock catalog">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+      <div><strong>Projects — Browser Apps</strong> <span style="color:#6F7A88;">(v1 focus; future categories prepared)</span></div>
+      <div style="font-size:10px; background:#1F262E; padding:2px 6px;">Browser Apps ▾</div>
     </div>
-    <div class="mock featured">
-      <div class="featured-card">
-        <div>
-          <div class="meta">FEATURED · BROWSER APP</div>
-          <h3>Interactive Systems Explorer</h3>
-          <p>A calm, explorable interface for understanding complex system architectures. Try it directly in the browser.</p>
-          <div class="actions">
-            <a class="btn primary" href="#">Try in browser</a>
-            <a class="btn" href="#">Read case study</a>
-          </div>
-        </div>
-        <div class="featured-image"></div>
-      </div>
+    <div class="filters">
+      <div class="filter active">All</div>
+      <div class="filter">In Browser</div>
+      <div class="filter">Source Available</div>
+      <div class="filter">In Progress</div>
+      <div class="filter">Private</div>
     </div>
-    <div class="mock categories">
-      <div class="category">
-        <h3>Selected Works — Browser Apps</h3>
-        <div class="projects-grid">
-          <div class="project-card">
-            <div class="img"></div>
-            <div class="body">
-              <h4>Systems Explorer</h4>
-              <div class="tags">
-                <span class="tag category">Browser Apps</span>
-                <span class="tag mode">Try in browser</span>
-              </div>
-            </div>
-          </div>
-          <div class="project-card">
-            <div class="img"></div>
-            <div class="body">
-              <h4>Constraint Solver</h4>
-              <div class="tags">
-                <span class="tag category">Browser Apps</span>
-                <span class="tag mode">Try in browser</span>
-                <span class="tag mode">View source</span>
-              </div>
-            </div>
-          </div>
+    <div class="catlist">
+      <div class="card">
+        <img src="screenshots/gallery-1440.png" alt="CONCEPT MOODBOARD">
+        <div class="b">
+          <div><strong>Sample: Craps Simulator</strong></div>
+          <div style="color:#7E8A98; font-size:10px;">Interactive craps with realistic odds, statistics, strategy tools.</div>
+          <div class="tags"><span class="tag cat">Browser Apps</span><span class="tag mode">In Browser</span><span class="tag mode">Source Available</span></div>
+          <div class="concept">MOODBOARD — not real project</div>
         </div>
       </div>
-      <div class="category">
-        <h3>Selected Works — Future Categories (structure prepared)</h3>
-        <div class="projects-grid">
-          <div class="project-card">
-            <div class="img"></div>
-            <div class="body">
-              <h4>Walnut Joinery Study</h4>
-              <div class="tags">
-                <span class="tag category">Woodworking</span>
-                <span class="tag mode">Download &amp; build</span>
-              </div>
-            </div>
-          </div>
-          <div class="project-card">
-            <div class="img"></div>
-            <div class="body">
-              <h4>Cloud Topology Diagrams</h4>
-              <div class="tags">
-                <span class="tag category">Architecture / Cloud</span>
-                <span class="tag mode">Read case study</span>
-              </div>
-            </div>
-          </div>
+      <div class="card">
+        <img src="screenshots/editor-1440.png" alt="CONCEPT MOODBOARD">
+        <div class="b">
+          <div><strong>Sample: Zork Observatory</strong></div>
+          <div style="color:#7E8A98; font-size:10px;">Explore the world of Zork with an interactive map and notes.</div>
+          <div class="tags"><span class="tag cat">Browser Apps</span><span class="tag mode">In Browser</span><span class="tag mode">Source Available</span></div>
+          <div class="concept">MOODBOARD — not real project</div>
+        </div>
+      </div>
+      <div class="card">
+        <img src="screenshots/gallery-375.png" alt="CONCEPT MOODBOARD">
+        <div class="b">
+          <div><strong>Sample: Lindblad Cruise Finder</strong></div>
+          <div style="color:#7E8A98; font-size:10px;">Scan upcoming cruises and find stand-by opportunities.</div>
+          <div class="tags"><span class="tag cat">Browser Apps</span><span class="tag mode">In Browser</span></div>
+          <div class="concept">MOODBOARD — not real project</div>
+        </div>
+      </div>
+      <div class="card">
+        <img src="screenshots/editor-375.png" alt="CONCEPT MOODBOARD">
+        <div class="b">
+          <div><strong>Sample: Astronomy Planner</strong></div>
+          <div style="color:#7E8A98; font-size:10px;">Plan imaging sessions for weather, moon phase, targets.</div>
+          <div class="tags"><span class="tag cat">Browser Apps</span><span class="tag mode">In Browser</span><span class="tag mode">Source Available</span></div>
+          <div class="concept">MOODBOARD — not real project</div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<section id="mobile-home" class="view">
-  <div class="view-header">
-    <h2>2. Mobile Homepage (375px)</h2>
-    <span class="note">Stacked, cinematic, strong hierarchy</span>
+<!-- 4. PROJECT DETAIL (DESKTOP) -->
+<section id="desktop-detail" class="frame">
+  <div class="frame-head">4. PROJECT DETAIL (DESKTOP) — clear access options, no public implication</div>
+  <div class="mock detail">
+    <div style="display:flex; gap:12px;">
+      <div style="flex:1.1;">
+        <img src="screenshots/gallery-1440.png" alt="CONCEPT MOODBOARD">
+        <div class="concept">CONCEPT MOODBOARD / DRAFT — supplied asset</div>
+      </div>
+      <div style="flex:1;">
+        <h1>Sample: Craps Simulator</h1>
+        <div class="meta">Category: Browser Apps &nbsp;·&nbsp; Access: In Browser, Source Available (authorization required)</div>
+        <div class="act">
+          <span class="btn gold">Play Online → <small>(auth required)</small></span>
+          <span class="btn">View Source <small>(private repo; auth req.)</small></span>
+          <span class="btn">Open in New Tab</span>
+        </div>
+        <div class="navtabs"><span class="t on">Overview</span><span class="t">Screenshots</span><span class="t">How It Works</span><span class="t">Build It Yourself</span><span class="t">Lessons Learned</span></div>
+        <div class="bodytext">An interactive craps table simulator for learning and analysis. Includes realistic odds, stat tracking, and strategy experimentation. Runs entirely in the browser. <span style="color:#666;">(This is layout specimen text. No real project.)</span></div>
+        <div style="font-size:11px; color:#6F7A88;">Type: Browser App · Tech: HTML, JS, CSS · Status: Published (specimen)</div>
+      </div>
+    </div>
+    <div class="g">
+      <img src="screenshots/editor-375.png" alt="CONCEPT">
+      <img src="screenshots/gallery-375.png" alt="CONCEPT">
+      <img src="screenshots/editor-1440.png" alt="CONCEPT">
+    </div>
   </div>
-  <div class="frame" style="max-width: 420px; margin: 0 auto;">
-    <div class="frame-head">PUBLIC / Mobile / 375 CSS px</div>
-    <div class="mock mobile-frame">
-      <div style="padding: 20px;">
-        <h1 style="font-size: 32px;">Michael Broadfoot</h1>
-        <div style="color: var(--accent); font-size: 15px;">Systems Architect · Engineer · Maker</div>
-        <p style="font-size: 15px; margin: 16px 0;">I architect software, systems, and crafted artifacts that are precise, honest, and worth keeping.</p>
-        <div style="height: 160px; background: linear-gradient(135deg, #1A1F26, #252B33); margin: 20px 0; display: flex; align-items: center; justify-content: center; font-size: 11px; color: var(--muted);">[CONCEPT: Cinematic hero montage]</div>
-        
-        <div style="margin: 24px 0 12px; font-size: 14px; color: var(--accent);">FEATURED</div>
-        <div style="border: 1px solid var(--border); padding: 12px; background: var(--surface);">
-          <strong>Interactive Systems Explorer</strong>
-          <div style="font-size: 13px; color: var(--muted); margin: 4px 0 12px;">A calm interface for complex architectures.</div>
-          <a class="btn primary" style="font-size: 13px; padding: 8px 14px;">Try in browser</a>
-        </div>
+</section>
 
-        <div style="margin-top: 32px;">
-          <div style="font-size: 14px; margin-bottom: 12px;">Selected Works — Browser Apps</div>
-          <div style="border: 1px solid var(--border); padding: 12px; background: var(--surface); margin-bottom: 8px;">
-            <strong>Systems Explorer</strong> <span class="tag category" style="font-size:10px;">Browser Apps</span> <span class="tag mode" style="font-size:10px;">Try</span>
-          </div>
-          <div style="border: 1px solid var(--border); padding: 12px; background: var(--surface);">
-            <strong>Constraint Solver</strong> <span class="tag category" style="font-size:10px;">Browser Apps</span> <span class="tag mode" style="font-size:10px;">Try · Source</span>
-          </div>
+<!-- 3. MOBILE HOMEPAGE (responsive) -->
+<section id="mobile" class="frame">
+  <div class="frame-head">3. HOMEPAGE (MOBILE 375px) — genuine responsive CSS, same structure optimized</div>
+  <div class="mock">
+    <div class="mobile">
+      <div class="mtop">
+        <div><strong>MICHAEL BROADFOOT</strong></div>
+        <div>☰</div>
+      </div>
+      <div class="mhero">
+        <img src="screenshots/gallery-375.png" alt="CONCEPT MOODBOARD">
+        <div class="concept">CONCEPT MOODBOARD</div>
+        <div style="margin:8px 0 4px;"><strong>Sample: Impossible Cube Lamp</strong></div>
+        <div style="font-size:11px; color:#C8BFAE;">Woodworking · Design · Fabrication. A study in geometry, light, and craft.</div>
+        <div style="margin-top:8px;"><span class="btn gold" style="padding:4px 10px; font-size:11px;">View Project →</span></div>
+      </div>
+      <div style="padding:0 12px 12px;">
+        <div style="font-size:11px; color:#6F7A88; margin:8px 0 4px;">Explore by Type</div>
+        <div class="mcard">
+          <div><strong>Browser Apps</strong> <span style="font-size:9px;">Try in your browser</span></div>
+          <div class="mtags"><span class="tag cat">Browser Apps</span><span class="tag mode">In Browser</span></div>
         </div>
+        <div class="mcard">
+          <div><strong>Woodworking</strong> <span style="font-size:9px;">Furniture, gifts, shop work</span></div>
+          <div class="mtags"><span class="tag cat">Woodworking</span><span class="tag mode">Download</span></div>
+        </div>
+        <div style="margin-top:10px; font-size:10px; color:#666;">(Same responsive rules as desktop — stacks naturally at 375px)</div>
       </div>
     </div>
   </div>
 </section>
 
-<section id="desktop-catalog" class="view">
-  <div class="view-header">
-    <h2>3. Desktop Project Catalog</h2>
-    <span class="note">Focused on browser-ready static apps · Category and access mode shown separately</span>
-  </div>
-  <div class="frame">
-    <div class="frame-head">PUBLIC / Desktop Catalog · Browser Apps (v1 focus)</div>
-    <div class="mock" style="padding: 40px 60px;">
-      <h2 style="margin-bottom: 8px;">Browser Apps</h2>
-      <p style="color: var(--muted); max-width: 60ch;">Carefully selected, immediately usable tools and experiments. Each card shows its category and the ways you can engage with it.</p>
-      
-      <div class="projects-grid" style="margin-top: 32px;">
-        <div class="project-card">
-          <div class="img" style="height: 180px;"></div>
-          <div class="body">
-            <h4>Interactive Systems Explorer</h4>
-            <div style="font-size: 13px; color: var(--muted); margin: 8px 0;">Explore architecture diagrams interactively in the browser.</div>
-            <div class="tags">
-              <span class="tag category">Browser Apps</span>
-              <span class="tag mode">Try in browser</span>
-              <span class="tag mode">View source</span>
-            </div>
-          </div>
+<!-- STUDIO restored detailed specimens -->
+<section id="studio" class="frame">
+  <div class="frame-head">STUDIO (detailed specimens restored — functional, restrained, separate from public premium)</div>
+  <div class="mock studio">
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+      <div>
+        <h4>S1 Sign-in (MFA)</h4>
+        <div class="slist">
+          <div>Email: owner@...</div>
+          <div>Password: ••••••••</div>
+          <div>MFA code: ____ (TOTP / hardware)</div>
+          <button style="margin-top:4px; padding:3px 8px; font-size:10px; background:#C9A66B; color:#0D1117; border:none;">Sign in</button>
         </div>
-        <div class="project-card">
-          <div class="img" style="height: 180px;"></div>
-          <div class="body">
-            <h4>Constraint Visualizer</h4>
-            <div style="font-size: 13px; color: var(--muted); margin: 8px 0;">Real-time visualization of system constraints.</div>
-            <div class="tags">
-              <span class="tag category">Browser Apps</span>
-              <span class="tag mode">Try in browser</span>
-            </div>
-          </div>
+        <h4>S3 Editor + AI panel</h4>
+        <div class="editor">
+          <div><textarea style="width:100%; height:70px; font-size:9px; background:#11181F; color:#ddd; border:1px solid #444;">Narrative text here...</textarea><div style="font-size:9px;">Suggest (AI) — only when permitted</div></div>
+          <div><pre style="height:70px;">Preview of public export
+(static specimen)</pre></div>
         </div>
       </div>
-      <div class="note" style="margin-top: 24px;">Future categories (Woodworking, Architecture/Cloud, AI Experiments) will appear here with appropriate access modes (Download &amp; build, Read case study, Invitation only, etc.).</div>
-    </div>
-  </div>
-</section>
-
-<section id="desktop-detail" class="view">
-  <div class="view-header">
-    <h2>4. Desktop Project Detail Page</h2>
-    <span class="note">Meaningful actions per access mode · Category clearly stated</span>
-  </div>
-  <div class="frame">
-    <div class="frame-head">PUBLIC / Project Detail — Browser Apps</div>
-    <div class="mock detail">
-      <div class="detail-hero"></div>
-      <h2>Interactive Systems Explorer</h2>
-      <div class="meta">
-        <span><strong>Category:</strong> Browser Apps</span>
-        <span><strong>Access modes:</strong> Try in browser, View source</span>
-      </div>
-      
-      <div class="actions">
-        <a class="btn primary">Try in browser</a>
-        <a class="btn">View source</a>
-        <a class="btn">Read case study</a>
-      </div>
-
-      <div class="narrative">
-        <p>Owner-authored narrative explaining the idea, constraints, architectural decisions, implementation, outcomes, and lessons learned.</p>
-        <p>This is a layout specimen using representative content. Real project text and imagery will replace these placeholders.</p>
-      </div>
-
-      <div class="gallery">
-        <div></div><div></div><div></div>
-      </div>
-
-      <div style="margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--border);">
-        <strong>Build &amp; extend</strong>
-        <div class="actions" style="margin-top: 12px;">
-          <a class="btn">View source on GitHub</a>
-          <a class="btn">Download &amp; run locally</a>
+      <div>
+        <h4>S6 Publish Confirmation (explicit inventory)</h4>
+        <div class="pub">
+          Confirm exact public snapshot<br>
+          <small>Revision 12 · Browser Apps · 1 lead + 3 images + narrative</small>
+          <ul style="font-size:10px; margin:4px 0 4px 16px; padding:0;">
+            <li>✓ Title, summary, lead alt</li>
+            <li>✓ All gallery images + alts</li>
+            <li>✗ No private repo paths</li>
+            <li>✗ No analytics</li>
+          </ul>
+          <button>I CONFIRM — Publish this snapshot</button>
+          <div style="font-size:9px; margin-top:4px; color:#8A96A3;">Explicit owner confirmation required. Private sources stay private.</div>
         </div>
+        <h4 style="margin-top:8px;">Lifecycle</h4>
+        <div style="font-size:10px;">Draft → Published → Taken down (with named confirmation)</div>
       </div>
     </div>
+    <div style="margin-top:8px; font-size:9px; color:#666;">Studio remains functional/restrained. Public carries the crafted identity. All prior approved workflows preserved.</div>
   </div>
 </section>
 
-<section id="studio" class="view">
-  <div class="view-header">
-    <h2>Studio / Admin (substantially unchanged)</h2>
-    <span class="note">Functional and restrained — preserved per requirements</span>
-  </div>
-  <div class="frame">
-    <div class="frame-head">PRIVATE STUDIO — Sign in, Projects, Editor, Publish confirmation remain as previously approved</div>
-    <div class="mock" style="padding: 24px 40px; font-size: 14px; color: var(--muted);">
-      The private Studio flows (sign-in with MFA, repository discovery, editor with AI suggestion, preview, explicit publish confirmation with full inventory, take-down) are retained without major visual overhaul. They stay purposeful and restrained so the public-facing portfolio carries the crafted identity.
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="caption"><h2>Visual Vocabulary — Updated Tokens</h2></div>
-  <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-    <div style="width: 110px; border: 1px solid var(--border);"><div style="height: 48px; background: #0D1117;"></div><small style="display:block; padding:6px;">Canvas #0D1117</small></div>
-    <div style="width: 110px; border: 1px solid var(--border);"><div style="height: 48px; background: #1A1F26;"></div><small style="display:block; padding:6px;">Surface #1A1F26</small></div>
-    <div style="width: 110px; border: 1px solid var(--border);"><div style="height: 48px; background: #C9A66B;"></div><small style="display:block; padding:6px;">Accent #C9A66B (Bronze)</small></div>
-    <div style="width: 110px; border: 1px solid var(--border);"><div style="height: 48px; background: #5C4033;"></div><small style="display:block; padding:6px;">Walnut #5C4033</small></div>
-    <div style="width: 110px; border: 1px solid var(--border);"><div style="height: 48px; background: #F5F0E6;"></div><small style="display:block; padding:6px;">Text #F5F0E6</small></div>
-  </div>
-  <p class="note" style="margin-top: 16px;">Strong editorial hierarchy, generous but intentional spacing, large cinematic imagery areas. No mint, no generic card grid.</p>
-</section>
-
-</main>
+<p style="font-size:10px; color:#555; text-align:center;">All four views above use the supplied concept PNGs (editor-*.png, gallery-*.png) explicitly labeled as CONCEPT MOODBOARD / DRAFT. Genuine responsive CSS (no separate hand-authored mobile). Public nav + How I Think included. Sample titles distinguished. No public availability implied. Studio detailed restored.</p>
 </body>
 </html>
