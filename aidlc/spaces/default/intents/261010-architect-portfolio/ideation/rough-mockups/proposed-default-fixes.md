@@ -1,6 +1,6 @@
 # Rough Mockups — Owner Decision and Proposed Default Fixes
 
-Status: **proposed, awaiting the owner's approval of Rough Mockups.** Nothing here changes the reviewed wireframes (`wireframes.md`, `user-flow.md`); these items are carried into Refined Mockups once Rough Mockups is approved.
+Status: **approved by the owner with Rough Mockups (2026-10-10), including Concept A and all six fixes below.** Nothing here changes the reviewed wireframes (`wireframes.md`, `user-flow.md`); these items are carried into Refined Mockups.
 
 ## Owner decision (2026-10-10)
 
@@ -19,6 +19,9 @@ The product-lead review (advisory, verdict READY) raised six findings. Proposed 
 | R-05: No state for an exhibit without a lead image | Minor | A lead image (with alt text) is required to publish; Publish stays disabled with the reason shown until one is set. |
 | R-06: "Take down" location undrawn; S5 preview does not show the gallery card | Minor | "Take down" is available as a row action on S2 Projects and as a control in the S4 editor, each with its own confirmation; S5 Preview shows the gallery card above the exhibit page. |
 
-## What approval means
+## Requirements carried into Requirements Analysis (owner, at approval, 2026-10-10)
 
-Approving Rough Mockups accepts these defaults; Refined Mockups then applies them to Concept A. Requesting changes instead reopens the wireframes.
+These are approved owner decisions; Requirements Analysis records them as requirements and does not re-ask them.
+
+1. **Take down / Unpublish is Must Have for the first release.** This promotes intent-backlog IB-16 from Should to Must.
+2. **Explicit publication approval covers all public content.** The owner's publish approval must cover everything that becomes public: narrative text, media, downloadable files, links, and AI-generated descriptions, including any drawn from private sources. Private source material is never exposed automatically.
