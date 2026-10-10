@@ -1,0 +1,10 @@
+[
+  { "slug": "workspace-scaffold", "number": "0.1", "name": "Workspace Scaffold", "phase": "initialization" },
+  { "slug": "state-init", "number": "0.3", "name": "State Init", "phase": "initialization" },
+  { "slug": "intent-capture", "number": "1.1", "name": "Intent Capture", "phase": "ideation" },
+  { "slug": "market-research", "number": "1.2", "name": "Market Research", "phase": "ideation" },
+  { "slug": "scope-definition", "number": "1.4", "name": "Scope Definition", "phase": "ideation" },
+  { "slug": "refined-mockups", "number": "2.5", "name": "Refined Mockups", "phase": "inception" },
+  { "slug": "domain-design", "number": "2.6", "name": "Domain Design", "phase": "inception" },
+  { "slug": "code-generation", "number": "3.5", "name": "Code Generation", "phase": "construction" }
+]
