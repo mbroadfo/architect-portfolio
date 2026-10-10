@@ -12,7 +12,9 @@ Inputs: wireframes and user-flow in `../../ideation/rough-mockups/`, approved fi
 | Update | Open published project → edit/save → Changes since last publish → preview → full Update confirmation | New revision public | Saving alone never updates public content |
 | Withdraw | S2 or S4 Take down → S7 named confirmation | Page/card/assets/cache gone within five minutes; Studio content retained | Copies outside this site cannot be revoked; failed removal shown explicitly |
 | Republish | Open Taken down → edit/save (still Taken down) → preview → full Publish confirmation | Published only after checks and successful operation | No shortcut based on prior publication |
-| Explore | P1 card → P2 summary/narrative/gallery/downloads → All work | Public static content, no account | Missing exhibit is HTTP 404 with useful navigation |
+| Explore | P1 hero/featured/categories → P2 project detail (category + access mode visible) → back to studio | Public static content, no account, curated discovery | Missing exhibit is HTTP 404 with useful navigation to studio |
+
+Public exploration now follows the new Studio / Selected Works model (hero → featured → category browsing → approach → detail). Category and access-mode are distinct and visible. Lifecycle state (Draft/Published/Taken down) is not collapsed with them.
 
 ### Project state and operation state
 
@@ -167,11 +169,25 @@ Review publication opens saved revision 12. Owner inspects title/summary/narrati
 
 For Take down, name the exhibit and state: removes its page, gallery card, images and files from this site and its delivery cache; keeps Studio content; cannot withdraw downloaded copies or third-party caches/archives. No auto-confirm or optimistic claim of removal.
 
-## Public Components
+## Public Components (Revised for Studio Identity)
 
-ExhibitCard inputs: approved title, summary, image derivative/alt, public URL. States: reserved image, loaded, image failed; link always usable. One accessible link per card; visible title provides name; hover is optional and keyboard focus equivalent. Phone stacks all content. Example: focus AI Arcade card → Enter → P2.
+**StudioHeader** — Identity header with name, positioning statement, navigation to categories and approach notes. No public link to Studio. Plain contact in footer.
 
-ImageViewer inputs: public derivative, alt, invoking thumbnail. States: closed/loading/open/failed. Labelled dialog with Close, Escape and focus return, no autoplay; phone fits image and controls without clipping. Downloads name type/size. Missing exhibit uses real HTTP 404, not a successful response with error copy. Public page never fetches Studio API/database or loads analytics.
+**Hero** — Name, concise positioning (“Systems Architect · Engineer · Maker”), short statement about architecting software/systems/crafted artifacts, large cinematic lead image or montage (concept only).
+
+**FeaturedWork** — One flagship project: large image, short narrative teaser, clear access mode pill (e.g. “Try in browser”), link to detail.
+
+**CategoryBrowser** — Organized discovery. Sections for Browser Apps (v1 focus), future categories (Woodworking, Architecture/Cloud, AI/Experiments). Cards or entries show project + category + access mode. Supports curated, not cluttered, browsing. Access modes (Try, View source, Download & build, Read case study, Invitation only) are first-class and visible alongside category.
+
+**ApproachSection** — Editorial “How I think” area: architectural thinking, constraints, prototypes, system design mindset, craftsmanship. Feels like studio notes.
+
+**ProjectDetail** — Lead image, title, category, access mode, summary, narrative sections (inspiration, challenges, decisions, implementation, outcomes, lessons), gallery, build/repo/external links (private handling preserved). 
+
+ExhibitCard / ProjectEntry inputs: approved title, summary, image derivative/alt, public URL, category, access mode. States: reserved, loaded, failed; link usable. Visible category and mode. One accessible entry; phone stacks. 
+
+ImageViewer, Downloads, 404 handling preserved as before.
+
+Public page never fetches Studio API/database or loads analytics. All public content is static export after explicit owner confirmation.
 
 ## Assumptions & Open Questions
 
