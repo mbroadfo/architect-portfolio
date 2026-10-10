@@ -3243,3 +3243,20 @@
 **Details**: Re-entering gate after revision
 
 ---
+
+## Human Turn
+**Timestamp**: 2026-10-10T18:26:41Z
+**Event**: HUMAN_TURN
+**Session**: a72d6fbb-f63d-4ad1-8717-fc46f9982e73
+**Picked**: ["The independent architecture reviewer approves the revised Practices Discovery content.\n\nHowever, PR #1 accidentally includes 18 files under tools/aidlc-observer/, added in commit 56b655b. These belong to the separate AI-DLC Observer feature, not the Practices Discovery records PR.\n\nPreserve all Observer work safely on its own feature branch/worktree, then remove those files from PR #1 without losing the work.\n\nPR #1 should contain only the AI-DLC Practices Discovery records and state changes.\n\nDo not reopen architectural decisions. Once the PR is clean, return to the existing Practices Discovery approval gate.\n\nAlso record a follow-up to correct the stale spa-on-aws claims in docs/CHARTER.md and the initiative brief. Those factual corrections should not block this gate."]
+
+---
+
+## Question Replied
+**Timestamp**: 2026-10-10T18:26:42Z
+**Event**: QUESTION_REPLIED
+**Session**: a72d6fbb-f63d-4ad1-8717-fc46f9982e73
+**Question**: Practices Discovery (corrected) complete. How would you like to proceed?
+**Reply**: The independent architecture reviewer approves the revised Practices Discovery content.\n\nHowever, PR #1 accidentally includes 18 files under tools/aidlc-observer/, added in commit 56b655b. These belong to the separate AI-DLC Observer feature, not the Practices Discovery records PR.\n\nPreserve all Observer work safely on its own feature branch/worktree, then remove those files from PR #1 without losing the work.\n\nPR #1 should contain only the AI-DLC Practices Discovery records and state changes.\n\nDo not reopen architectural decisions. Once the PR is clean, return to the existing Practices Discovery approval gate.\n\nAlso record a follow-up to correct the stale spa-on-aws claims in docs/CHARTER.md and the initiative brief. Those factual corrections should not block this gate.
+
+---
