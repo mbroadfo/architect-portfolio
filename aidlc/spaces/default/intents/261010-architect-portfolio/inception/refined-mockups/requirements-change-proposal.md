@@ -20,6 +20,17 @@ The approved `inception/requirements-analysis/requirements.md` is **unchanged**.
 
 Any part Michael rejects or changes at sign-off stays as approved today.
 
+## Independent architecture review (2026-10-10)
+
+An independent architecture review, relayed by Michael, **recommends accepting CR-01 to CR-05 as proposed**, with two refinements. Both are now part of the proposed text below and marked *(review refinement)*:
+
+- **CR-03:** a live-URL check shows reachability only. It is never evidence of security, or authorization to publish. The SSRF implementation keeps its security review.
+- **CR-05:** a single primary category is acceptable for v1, but the domain model must not permanently prevent multiple classifications.
+
+The review also asks that all existing publication, privacy, MFA, cost and security boundaries be preserved; see "Boundaries preserved" at the end.
+
+**This recommendation is not product-owner sign-off.** `requirements.md` stays unchanged until Michael explicitly signs off.
+
 ## Proposed owner decisions at a glance
 
 | CR | Proposed decision | Deferred or excluded |
@@ -87,8 +98,8 @@ Content checks per accepted format, confirmed against real sample files during d
 | Where | Proposed text |
 |---|---|
 | New **FR4.10** — access metadata | "Each exhibit records, separately from its narrative: an optional live URL; its access requirement (open, sign-in, invitation); its phone suitability (suitable, desktop only, unknown); and, for each linked repository, its visibility and licence. Public badges ('In browser', 'Source available', 'Open source · ⟨licence⟩', 'Source private') are derived only from these fields." |
-| New **FR10.5** — validation at publication | "When the owner opens Publish or Update for an exhibit with a live URL, the Studio validates the link and records the result with a date: whether it answers over HTTPS, its final address after redirects, and whether a sign-in page was detected. Repository visibility and licence are read from GitHub at the same time. The Publish confirmation (FR7.2) shows the results. A failed check is a warning, not a block: the owner decides whether to publish, change the link, or remove it. There is no scheduled monitoring, and nothing changes on the public site without an owner Publish or Update." Given a live URL that answers 404, When the owner opens Publish, Then the confirmation shows the failed check and the owner chooses whether to continue. |
-| New **NFR17** — SSRF protection | "Studio URL validation runs only server-side, inside owner-authenticated endpoints, and is rate-limited (NFR16). It shall: allow only `https` on port 443; resolve the hostname and refuse loopback, private, link-local, carrier-grade NAT, multicast and unspecified addresses (IPv4 and IPv6), including the cloud metadata address `169.254.169.254`; connect to the validated address so the check cannot be bypassed by a DNS change (rebinding) between check and request; re-validate every redirect target and follow at most 3; send no credentials, cookies or identifying headers; use only GET or HEAD with a 5-second timeout; and read at most 256 KB of the response. The response is never shown to visitors and never stored beyond the recorded result." Given a live URL that resolves to `169.254.169.254` or `10.0.0.5`, When validation runs, Then no request is sent and the result is "refused: non-public address". |
+| New **FR10.5** — validation at publication | "When the owner opens Publish or Update for an exhibit with a live URL, the Studio validates the link and records the result with a date: whether it answers over HTTPS, its final address after redirects, and whether a sign-in page was detected. Repository visibility and licence are read from GitHub at the same time. The Publish confirmation (FR7.2) shows the results. A failed check is a warning, not a block: the owner decides whether to publish, change the link, or remove it. There is no scheduled monitoring, and nothing changes on the public site without an owner Publish or Update. *(Review refinement)* A passing check shows only that the URL was reachable at that moment. It is never evidence that the linked app is secure, appropriate, or authorized for publication. That authorization remains the owner's Publish approval (FR7) and, for Risk, the review in FR10.7. The Studio labels the result 'Reachable' or 'Not reachable', never 'Verified' or 'Safe'." Given a live URL that answers 404, When the owner opens Publish, Then the confirmation shows the failed check and the owner chooses whether to continue. Given a URL that answers 200, When the confirmation renders, Then it reads "Reachable at ⟨time⟩" and states that reachability is not a security or publication check. |
+| New **NFR17** — SSRF protection | "Studio URL validation runs only server-side, inside owner-authenticated endpoints, and is rate-limited (NFR16). It shall: allow only `https` on port 443; resolve the hostname and refuse loopback, private, link-local, carrier-grade NAT, multicast and unspecified addresses (IPv4 and IPv6), including the cloud metadata address `169.254.169.254`; connect to the validated address so the check cannot be bypassed by a DNS change (rebinding) between check and request; re-validate every redirect target and follow at most 3; send no credentials, cookies or identifying headers; use only GET or HEAD with a 5-second timeout; and read at most 256 KB of the response. The response is never shown to visitors and never stored beyond the recorded result. *(Review refinement)* The validator is security-sensitive: its implementation requires the independent AI security review and its invariant tests before merge (project rule; team practice 'Independent security review')." Given a live URL that resolves to `169.254.169.254` or `10.0.0.5`, When validation runs, Then no request is sent and the result is "refused: non-public address". |
 | FR7.2 (Publish confirmation) | Add: each live link and repository link that will become public, with its latest validation result and date. |
 
 ---
@@ -107,11 +118,23 @@ Content checks per accepted format, confirmed against real sample files during d
 |---|---|---|
 | Out of Scope | "richer gallery features (featured work, grouping, filtering, tags)" | "richer gallery features (free-form filtering, tags, search), Journal" — featured work and category grouping move into v1. |
 | **FR9.1** | Home page is the Exhibition-wall gallery | "The home page shall show, in order: a featured carousel (when any exhibit is featured), the categories, and the Exhibition-wall gallery of published exhibits (D-14, D-16). Featured items and category counts include published exhibits only. A category with no published exhibit is not shown." Existing empty-state and image-failure criteria stay. |
-| New **FR9.7** — featured carousel | "The owner marks up to 5 published exhibits as featured and sets their order. The carousel never advances on its own. It is operable by keyboard, has visible previous and next controls and a position indicator, announces the change of slide politely to screen readers, and respects reduced motion (NFR8, WCAG 2.2.2)." Given no exhibit is featured, When the home page renders, Then no carousel or empty frame appears. |
-| New **FR9.8** — categories | "Each project has at most one category, chosen from a short list the owner manages (initially Games & AI Arenas, Astronomy & Exploration, Woodworking, Software & Tools). Each category has a page listing its published exhibits. A category is not a tag (FR4.7 unchanged)." |
+| New **FR9.7** — featured carousel | — | "The owner marks up to 5 published exhibits as featured and sets their order. The carousel never advances on its own. It is operable by keyboard, has visible previous and next controls and a position indicator, announces the change of slide politely to screen readers, and respects reduced motion (NFR8, WCAG 2.2.2)." Given no exhibit is featured, When the home page renders, Then no carousel or empty frame appears. |
+| New **FR9.8** — categories | — | "In v1 each project has at most one *primary* category, chosen from a short list the owner manages (initially Games & AI Arenas, Astronomy & Exploration, Woodworking, Software & Tools). Each category has a page listing its published exhibits. A category is not a tag (FR4.7 unchanged). *(Review refinement)* The domain model records classification as a project-to-category relationship, with one entry marked primary, not as a single field on the project. A later release can then allow several classifications without migrating published data. v1's Studio and public site use only the primary category." |
 | FR4.7 | "The first release has no topic tags (D-17)." | Unchanged. |
 
 ---
+
+## Boundaries preserved
+
+None of CR-01 to CR-05 relaxes an existing boundary. Each of these stays exactly as approved:
+
+- the **publication boundary**: explicit Publish with full confirmation, take-down, and nothing public without approval (FR7, FR8, NFR2, D-21, D-22);
+- **privacy**: no tracking or visitor data, private repositories never exposed (FR9.5, NFR9, D-15);
+- **owner-only Studio access** with **MFA** and server-side authorization (FR1, NFR1);
+- **cost controls**: free tiers by default, and paid use or new infrastructure only with approval (NFR4, FR5.8);
+- **security**: secrets, headers, rate limits, upload validation, the independent security review (NFR3, NFR15, NFR16, FR4.2, FR4.4, FR4.8, project rules).
+
+New behaviour introduced by these CRs sits inside those boundaries. The access metadata and link check (CR-03) run only in the owner-authenticated Studio. Featured and category data (CR-05) are published only through the existing Publish flow.
 
 ## Remaining open items (not decided here)
 
