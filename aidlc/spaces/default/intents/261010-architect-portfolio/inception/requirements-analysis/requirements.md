@@ -23,9 +23,12 @@ Acceptance criteria use Given/When/Then. "Owner" means Michael Broadfoot signed 
 
 Source: charter §4, §8; intent-backlog IB-1; wireframes S1.
 
-- **FR1.1** The Studio shall require sign-in through the identity provider and admit only the single configured owner identity.
+- **FR1.1** The Studio shall require sign-in through the identity provider and admit only the single configured owner identity. The server matches the owner on two configured values in the validated token: the Auth0 issuer and the immutable subject ID. Email address, display name and any user-editable claim never establish ownership. Public self-registration on the Auth0 tenant is disabled. (Review R-01; owner guidance.)
   - Given a visitor who is not signed in, When they open any Studio page, Then they see the sign-in screen and no Studio content.
   - Given someone signed in with any identity other than the owner's, When they open the Studio, Then they see "This workspace is private." and nothing about projects.
+  - Given a token whose email equals the owner's but whose subject ID differs (a look-alike or newly created account), When it calls any Studio endpoint, Then the call is refused with 403.
+  - Given a token with the owner's subject ID but issued by a different issuer, or an unverified, expired or malformed token, When it calls any Studio endpoint, Then the call is refused with 401 or 403.
+  - Given the Auth0 tenant's sign-up page, When anyone tries to create an account, Then sign-up is not available.
 - **FR1.2** Every Studio API operation shall verify, on the server, that the caller is the owner; client-side checks alone never grant access.
   - Given a request to any Studio API endpoint without a valid owner session, When it is received, Then it is refused with 401 or 403 and no data is returned or changed.
 - **FR1.3** The owner's sign-in shall require multi-factor authentication.
@@ -40,7 +43,8 @@ Source: charter §4, §8; IB-3; wireframes S3; D-15.
 - **FR2.1** The Studio shall list the owner's GitHub repositories, public and private, with name, visibility (shown as text), last-updated date and, where linked, the project it belongs to; the list is searchable by name.
   - Given the owner opens Discover, When the list loads, Then each repository shows its visibility as the word PRIVATE or public, not only as an icon.
   - Given a search with no match, When results return, Then the Studio says no repository matches and keeps the search text.
-- **FR2.2** GitHub access shall be read-only and limited to what discovery and AI evidence need (repository metadata, README and documentation files).
+- **FR2.2** GitHub access shall use a read-only credential scoped to the owner's repositories and to what discovery and AI evidence need (repository metadata, README and documentation files): a fine-grained personal access token or a GitHub App installation, chosen in design. It is a runtime secret under NFR3. (Review R-03.)
+  - Given the GitHub credential, When it is used to attempt any write to a repository, Then GitHub refuses it.
 - **FR2.3** A repository already linked to a project shall open that project rather than create a duplicate.
 - **FR2.4** When GitHub is unreachable or rate-limited, the Studio shall say so, offer a retry, and leave existing projects untouched.
   - Given GitHub returns an error or times out, When the owner opens Discover, Then the message "Can't reach GitHub right now" appears with a retry, and the Projects list still works.
@@ -51,7 +55,20 @@ Source: charter §4, §8; IB-3; wireframes S3; D-15.
 Source: charter §3, §8; IB-4; wireframes S2; D-21.
 
 - **FR3.1** The owner shall be able to create a project from a repository, or link a repository to an existing project; a project may link several repositories.
-- **FR3.2** Each project shall have exactly one status, shown in words: Draft, Published, Changes since last publish, or Taken down.
+- **FR3.2** Each project shall have exactly one status, shown in words: Draft, Published, Changes since last publish, or Taken down. Allowed transitions (Review R-06):
+
+  | From | Owner action | To |
+  |------|--------------|----|
+  | (new) | Create or link from a repository | Draft |
+  | Draft | Publish | Published |
+  | Published | Save an edit | Changes since last publish |
+  | Changes since last publish | Update the public exhibit | Published |
+  | Published, or Changes since last publish | Take down | Taken down |
+  | Taken down | Save an edit | Taken down (edits stay private) |
+  | Taken down | Publish | Published |
+
+  Any other transition is refused. Every Publish and Update goes through the full confirmation and checks in FR7.
+  - Given a project in Taken down, When the owner chooses Publish, Then the full Publish confirmation (FR7.2) and checks (FR7.3) run before anything becomes public.
 - **FR3.3** Saved changes shall persist across sessions and devices.
 - **FR3.4** If the same project is saved from two tabs or devices, the later save shall be refused with a clear conflict message rather than silently overwrite.
   - Given a project open in two tabs, When the first tab saves and then the second tab saves older content, Then the second save is refused with a message and nothing is lost.
@@ -62,11 +79,17 @@ Source: charter §3, §8; IB-4; wireframes S2; D-21.
 Source: charter §3, §8; IB-5 to IB-8; scope Q2 and Q4 (this stage); D-15, D-17, D-19.
 
 - **FR4.1** An exhibit shall have a title, a one-paragraph summary, and six narrative sections: inspiration, design challenges, architectural decisions, implementation, outcomes, lessons learned. Empty sections are omitted on the public page.
-- **FR4.2** The owner shall upload exhibit images in the Studio (Q4): JPEG, PNG or WebP, up to 10 MB each, with alt text per image. One image is designated the lead image.
+- **FR4.2** The owner shall upload exhibit images in the Studio (Q4): JPEG, PNG or WebP, up to 10 MB each, with alt text per image. One image is designated the lead image. Uploads are validated by their actual content (file signature), not by extension or declared type. Published images are derivatives re-encoded on export with all metadata removed — EXIF, GPS location, device, timestamps, embedded thumbnails and comments; originals stay in private storage. (Review R-02; owner guidance.)
   - Given an upload of an unsupported type or a file over 10 MB, When it is submitted, Then it is rejected with the reason and the rest of the exhibit is unaffected.
+  - Given a file named `photo.jpg` whose content is not a JPEG, PNG or WebP image, When it is uploaded, Then it is rejected.
+  - Given an uploaded photo containing GPS and device EXIF tags, When the exhibit is published, Then the public copy of that image contains no EXIF, GPS or device metadata.
 - **FR4.3** The owner shall add links out to repositories, a live application and a demo. A link to a private repository is never shown publicly (D-15).
   - Given an exhibit linked to a private repository, When it is published, Then the public page has no "View code" link for that repository.
-- **FR4.4** The owner shall attach build-it-yourself files (for example PDF, SKP, FCStd, DXF, STL, ZIP), up to 50 MB each; public links state the file type and size.
+- **FR4.4** The owner shall attach build-it-yourself files (for example PDF, SKP, FCStd, DXF, STL, ZIP), up to 50 MB each; public links state the file type and size. Each file is validated by its actual content against an allowed list of file types. Public downloads are always served as attachments, with a fixed safe content type for their file type, `Content-Disposition: attachment` and `X-Content-Type-Options: nosniff`, so a browser never renders or runs them in the site's context. (Review R-02; owner guidance.)
+  - Given a file whose content does not match an allowed type (for example an HTML or executable file renamed `.pdf`), When it is uploaded, Then it is rejected.
+  - Given a published download, When it is requested, Then the response carries `Content-Disposition: attachment`, `X-Content-Type-Options: nosniff` and the fixed content type for its file type.
+- **FR4.8** Image and file uploads shall go directly from the Studio to private storage through short-lived, single-use upload authorizations (for example pre-signed URLs) issued only to the owner. The size limit and allowed type are bound into each authorization, and the server re-checks content before the file can be attached to an exhibit. Uploads never pass through the API's request body. (Review R-04.)
+  - Given an upload authorization, When it is used after it expires, for a larger file than authorized, or by anyone without an owner session to request it, Then the upload is refused.
 - **FR4.5** Text the owner or the AI writes shall be rendered as plain formatted text; markup and scripts in it are escaped, never executed, on any page.
 - **FR4.6** Leaving the editor with unsaved changes shall ask first.
 - **FR4.7** The first release has no topic tags (D-17).
@@ -88,6 +111,9 @@ Source: charter §5, §8; IB-9; Q2, Q5, Q6; D-22; wireframes S4.
 - **FR5.7** A failed, timed-out (60 seconds) or malformed AI response shall leave all text unchanged and show "No suggestion this time" with a retry.
 - **FR5.8** Calls to a paid AI provider shall stay disabled until the owner has explicitly approved that pay-per-use spending. The owner sets a monthly suggestion limit when approving; past that limit, new suggestions are refused with a clear message until the next month or until the owner raises it (NFR4).
   - Given the owner has not approved AI spending, When a suggestion is requested, Then no provider call is made and the Studio explains that AI suggestions need approval.
+- **FR5.9** Private repository content shall be sent to an external AI provider only after the owner has approved that provider for private content, based on its documented data-use terms: no training on submitted content, and stated retention. The Studio names the provider that will receive repository text before each suggestion request, and records which provider was used with the suggestion. (Review R-05; owner guidance.)
+  - Given a configured provider that has not been approved for private content, When a suggestion is requested for a project linked to a private repository, Then no repository content is sent and the Studio explains why.
+  - Given an approved provider, When the owner opens the suggestion panel, Then the panel names the provider before the request is sent.
 
 ### FR6 — Preview
 
@@ -109,6 +135,9 @@ Source: charter §4, §5, §8; IB-2, IB-11; D-19, D-22; Q3.
 - **FR7.5** Edits to a published exhibit shall stay private until the owner confirms "Update the public exhibit"; meanwhile the status is "Changes since last publish".
 - **FR7.6** Publishing shall be safe to repeat: a double click or retry produces one consistent public exhibit.
 - **FR7.7** Each publish, update and take-down shall be recorded in an owner-visible activity log with time, exhibit and action.
+- **FR7.8** Publication operations (publish, update and take-down) for the same exhibit shall run one at a time, in the order the owner confirmed them. The public state always matches the last successfully completed owner action, never a mix of two. An edit saved while a publication operation runs is not included in it, and leaves the status at "Changes since last publish". (Review R-06; owner guidance.)
+  - Given the owner confirms Publish and then Take down in quick succession, When both complete, Then the exhibit is not public, and no page, card or asset from the publish remains in public storage.
+  - Given a publication operation fails partway, When the owner looks at the exhibit, Then the public state equals the last successful action and the Studio shows the failure with a retry.
 
 ### FR8 — Take down (Must Have, D-21)
 
@@ -118,6 +147,8 @@ Source: D-20, D-21; IB-16; wireframes S2, S4, P2.
 - **FR8.2** Take-down shall remove the exhibit's page, gallery card and public assets from public storage and from the content-delivery cache.
   - Given the owner confirms Take down, When it completes, Then within 5 minutes the exhibit no longer appears in the gallery, its address shows "This exhibit isn't on display" with a 404 status, and its images and files return 404.
 - **FR8.3** A taken-down exhibit shall keep its Studio content and can be published again later.
+- **FR8.4** Take-down removes content only from this site and its content-delivery cache. It cannot revoke copies already downloaded by visitors, or held in third-party caches, search-engine caches or archives. The take-down confirmation says so. (Owner guidance on R-06.)
+  - Given the owner opens the take-down confirmation, When it is shown, Then it states that copies already downloaded or cached elsewhere cannot be withdrawn.
 
 ### FR9 — Public site
 
@@ -145,19 +176,29 @@ Source: charter §2, §8; IB-14, IB-15; D-12.
 ## Non-Functional Requirements
 
 - **NFR1 — Authentication and authorization.** Owner-only Studio with MFA (FR1); server-side authorization on every Studio operation; the public site has no write path and no access to the Studio's database or API. Verified by the invariant tests in team practices (Studio endpoints reject callers who are not signed in). Source: charter §6; team practices.
-- **NFR2 — Publication boundary.** Public storage contains only exported, owner-approved content. No Studio data, draft, private repository content or AI suggestion reaches public storage except text the owner approved at Publish. Verified by invariant tests (nothing public without explicit publish; take-down removes; private material never exposed). Source: charter §4, §5; D-15, D-21, D-22; project rules.
-- **NFR3 — Secrets.** Runtime secrets (AI provider credentials, identity-provider client secrets, database credentials) live in AWS SSM Parameter Store as SecureString parameters, readable only by the roles that need them through least-privilege IAM. Deploy-time secrets that cannot use OIDC (such as the Cloudflare token) live in GitHub Actions environment secrets. Secrets never appear in code, configuration, browser bundles, logs or CI output. Secrets Manager is not used, because Parameter Store's standard tier is free. Source: project rule NEVER commit secrets; Q2; owner clarification 2026-10-10.
+- **NFR2 — Publication boundary.** Public storage contains only exported, owner-approved content. No Studio data, draft, private repository content or AI suggestion reaches public storage except text the owner approved at Publish. Original uploads, Studio data and the nightly export (NFR10) live in private storage that the public distribution can never serve. Verified by invariant tests: nothing public without explicit publish; take-down removes; private material never exposed; requests for original uploads or export objects through the public site return 403 or 404. Source: charter §4, §5; D-15, D-21, D-22; project rules; Review R-07.
+- **NFR3 — Secrets.** Runtime secrets (the read-only GitHub credential, AI provider credentials, identity-provider client secrets, database credentials) live in AWS SSM Parameter Store as SecureString parameters, readable only by the roles that need them through least-privilege IAM. Deploy-time secrets that cannot use OIDC (such as the Cloudflare token) live in GitHub Actions environment secrets. Secrets never appear in code, configuration, browser bundles, logs or CI output. Secrets Manager is not used, because Parameter Store's standard tier is free. Source: project rule NEVER commit secrets; Q2; owner clarification 2026-10-10.
 - **NFR4 — Cost.** Free tiers by default. Pay-per-use spending (AI calls, AWS usage beyond free allowances) happens only after the owner explicitly approves it; no dollar limit is assumed. AWS budget alerts notify the owner of actual and forecast spend and are not treated as hard caps. The real control on AI spend is the in-app gate and owner-set monthly limit (FR5.8). Any paid tier, new service or recurring expense needs the owner's approval. Source: Q1, Q5; owner clarification 2026-10-10; project rule NEVER introduce a recurring expense without approval.
 - **NFR5 — Public performance.** On a mid-range phone over a 4G connection, the gallery and an exhibit page reach Largest Contentful Paint in 2.5 seconds or less, measured with Lighthouse mobile in CI against the built site. Images are served in responsive sizes; hashed assets are cached immutably. Source: charter §3 (strong imagery); scope success measures.
 - **NFR6 — Studio responsiveness.** Studio API operations other than AI suggestions and file uploads answer within 1 second at the 95th percentile; an AI suggestion completes or times out within 60 seconds (FR5.7). Source: intent (low-effort curation).
 - **NFR7 — Availability.** The public site is served entirely from the content-delivery network and storage, with no runtime dependency on the API, database or identity provider (Q3). The Studio has no uptime target beyond the providers' own; there is no on-call. Source: Q3; stakeholder map (single owner).
 - **NFR8 — Accessibility.** Public site and Studio meet WCAG 2.1 AA: keyboard operable, visible focus, alt text on every published image, text contrast at least 4.5:1 on the dark theme, reduced motion respected. Automated axe checks report no serious or critical violations. Source: rough-mockups Q6; team practices.
 - **NFR9 — Visitor privacy.** No visitor accounts, cookies for tracking, analytics, profiling or server-side collection of appearance preferences; content-delivery access logging stays off for the public site. Source: charter §3; D-04; project rule.
-- **NFR10 — Data durability.** Studio content (projects, exhibit text, metadata) is exported nightly to versioned storage, so at most 24 hours of edits can be lost; uploaded images and files are kept in versioned storage. Restore is documented and tested once before launch. The free database tier has no automated backups, which is why this export exists. Source: corner sweep (store unavailable, data loss); NFR4.
+- **NFR10 — Data durability.** Studio content (projects, exhibit text, metadata) is exported nightly to versioned storage, so at most 24 hours of edits can be lost; uploaded images and files are kept in versioned storage. That storage is private, blocks all public access, is encrypted at rest, and is never an origin of the public distribution (Review R-07). Restore is documented and tested once before launch. The free database tier has no automated backups, which is why this export exists. Source: corner sweep (store unavailable, data loss); NFR4.
 - **NFR11 — Observability.** The API exposes a health endpoint used by post-deploy smoke checks; Studio API errors are logged with a request id and no secrets or personal data, kept 30 days; the activity log (FR7.7) is kept for the life of the project. No visitor-level logging. Source: team practices (smoke checks); NFR9.
 - **NFR12 — Browser support.** The latest two versions of Chrome, Edge, Firefox and Safari (desktop and mobile). Source: corner sweep (supported platforms).
 - **NFR13 — Quality gates.** The affirmed testing and code-style practices apply: 80% line coverage for the frontend and the API, the listed CI gates, invariant tests, and preview verification before production. Source: team practices.
 - **NFR14 — Portability.** Decisions, requirements, ADRs and agent instructions live in the repository (`docs/PROJECT_BRIEF.md`, `docs/decisions/`, `AGENTS.md`), so another AI assistant can continue from the records alone. Source: charter §7; project rules.
+
+- **NFR15 — Security response headers.** Every response from the public site and the Studio carries a baseline of security headers (Review R-08):
+  - a Content-Security-Policy that allows scripts only from the site itself (no inline or third-party scripts on the public site) and sets `frame-ancestors 'none'`;
+  - `Strict-Transport-Security` with a max-age of at least one year;
+  - `X-Content-Type-Options: nosniff`;
+  - `Referrer-Policy: strict-origin-when-cross-origin`, or stricter.
+
+  The Studio's policy also allows only the identity provider and the API origins it needs. Verified by an automated check in the post-deploy smoke tests and in preview.
+- **NFR16 — Rate limits.** The AI suggestion and upload-authorization endpoints, and Studio sign-in, enforce request-rate limits; requests beyond a limit receive 429 and cause no provider call or upload authorization. The AI limit applies in addition to the monthly suggestion limit (FR5.8). The specific rates are set in NFR Design. (Review R-08.)
+  - Given requests to the AI suggestion endpoint above its configured rate, When they arrive, Then the excess requests receive 429 and no provider call is made.
 
 ## Constraints
 
