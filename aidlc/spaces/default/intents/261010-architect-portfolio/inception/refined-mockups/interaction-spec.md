@@ -121,11 +121,11 @@ Unconfigured; spending approval needed; provider not approved for private source
 
 ### Responsive Behaviour
 
-Desktop aside; below 1024 px follow editor in DOM with jump link. Sources and long paths wrap. No fixed height clipping.
+Desktop aside; below 1024 px the panel follows the editor in DOM order. A "Jump to AI suggestions" link appears before the form for keyboard users; it is visible in the flow (or as skip link), has explicit text "Jump to AI suggestions", and on activation moves focus to the first focusable control in the SuggestionPanel (the Suggest button or first input). After insert/edit/discard, focus returns to the originating field or next logical editor control. Sources and long paths wrap. No fixed height clipping.
 
 ### Accessibility
 
-Native buttons and labelled suggestion textarea. Polite Generating status; at 60 seconds show No suggestion this time. Your text is unchanged. Retry follows server retry time for 429 and is never automatic. Provider permission and usage explanations are visible text.
+Native buttons and labelled suggestion textarea. "Jump to AI suggestions" link (visible text + aria-label) only below 1024 px; focus moves to panel on activation and returns after action. Polite Generating status; at 60 seconds show No suggestion this time. Your text is unchanged. Retry follows server retry time for 429 and is never automatic. Provider permission and usage explanations are visible text. Keyboard: Tab order includes the jump link when present; Escape not trapped in panel. Verification: axe + manual keyboard at 1024 px breakpoint.
 
 ### Usage Example
 
@@ -155,7 +155,7 @@ Preparing inventory; ready; blocked; stale; confirming; queued; running; complet
 
 ### Responsive Behaviour
 
-Large dialog on desktop, viewport dialog on phone. One scroll area; section headings and actions wrap. No nested dialog. All inventory groups can expand without hiding confirm controls behind overlays.
+Large dialog on desktop, viewport dialog on phone. One scroll region for inventory only; Cancel and Confirm actions are fixed at the bottom (or sticky below the scroll region) and remain fully accessible and in viewport at all times, even with long inventory (multiple narrative sections + 3+ images + files + warnings). Section headings wrap; no nested dialog; expandable groups do not obscure or push actions off-screen.
 
 ### Accessibility
 

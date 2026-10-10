@@ -15,7 +15,7 @@ This is a design checklist and implementation verification plan, not a claim of 
 | Text contrast | Opaque surfaces and tested token pairs, at least 4.5:1 | Token calculation plus rendered-state checks including hover/error/disabled explanations |
 | Non-text contrast | Visible borders/focus at least 3:1 | Inspect every control boundary and focus ring |
 | Keyboard | Native links/buttons/fields; no mouse-only upload or image view | Complete visitor and owner journeys without pointer |
-| Focus | Visible ring, logical DOM order; no CSS grid reorder | Tab/Shift+Tab at all breakpoints, 200% and 400% zoom |
+| Focus | Visible ring, logical DOM order; no CSS grid reorder | Tab/Shift+Tab at all breakpoints, 200% and 400% zoom. "Jump to AI suggestions" link (name, visibility below 1024px, focus to panel, return after action) verified at tablet breakpoint. |
 | Modal behavior | Label, focus containment, Cancel initial, Escape/return | Publish/update/take-down/image dialog tests; no nested traps |
 | Inputs | Visible labels, hints before input; grouped lead radios | Screen-reader name/description and error associations |
 | Validation | Error summary and field links; data retained | Empty title/no lead/missing alt/bad upload/conflict tests |
@@ -23,7 +23,7 @@ This is a design checklist and implementation verification plan, not a claim of 
 | Images | Alt for each published image; lead/alt publication gate | axe plus editorial review of meaningful alt; image failure fallback |
 | Reflow | 320 CSS px, wrapping paths/titles, single-column phones | No two-axis scrolling or clipped actions at zoom/breakpoints |
 | Text spacing | Flexible height, no ellipsis for essential content | Override line/paragraph/letter/word spacing |
-| Touch | Design minimum 44×44 px, 8 px separation | Measure targets; minimum is project choice, not mislabeled AA criterion |
+| Touch | Design minimum 44×44 px, 8 px separation | Measure targets; explicitly a project usability convention (not WCAG 2.1 AA requirement) |
 | Motion | No autoplay/parallax; reduced motion disables transitions | Emulate reduced motion; no flashing or unavoidable animation |
 | Color independence | PRIVATE/public and all four statuses spelled out | Grayscale check; errors never border-only |
 | Timing | Session recovery preserves edits; AI timeout preserves text | Reauthenticate as same owner; timeout and retry tests |

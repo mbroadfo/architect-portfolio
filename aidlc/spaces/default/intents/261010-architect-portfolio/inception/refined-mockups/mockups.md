@@ -6,7 +6,7 @@ Open `design-board.html` locally for desktop and phone compositions and critical
 
 Inputs: `../../ideation/rough-mockups/wireframes.md` (wireframes), `../../ideation/rough-mockups/user-flow.md` (user-flow), approved `proposed-default-fixes.md` beside them, `../requirements-analysis/requirements.md` (requirements), and `../practices-discovery/team-practices.md` (team-practices). User stories are skipped. Requirement IDs provide traceability.
 
-All six approved corrections are incorporated: private code links hidden; phone grid stacked; tags removed; plain email contact; lead image and alt text required; take-down in list/editor and gallery card in preview. Later requirements add Taken down status, upload validation, exact publication content, owner authentication and AI permissions.
+All six approved corrections are incorporated: private code links hidden; phone grid stacked; tags removed; plain email contact; lead image and alt text required; take-down in list/editor and gallery card in preview. Requirements add Taken down status, upload validation, exact publication content, owner authentication and AI permissions.
 
 ## Visual Proposal
 
