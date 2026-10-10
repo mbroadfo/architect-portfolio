@@ -20,28 +20,44 @@ export function App() {
 
   useEffect(() => {
     let cancelled = false;
-    const run = async (): Promise<void> => {
-      try {
-        const next = await fetchSnapshot(intent);
-        if (cancelled) return;
-        setSnapshot(next);
-        setError(null);
-        setWorkspaceInput((current) => current || next.workspace);
-      } catch (caught) {
-        if (cancelled) return;
-        setError(caught instanceof Error ? caught.message : "Could not read the workflow.");
+    let running = false;
+    let queued: "skip" | "refresh" | null = null;
+
+    const run = (cli: "skip" | "refresh"): void => {
+      if (running) {
+        if (cli === "refresh" || queued === null) queued = cli;
+        return;
       }
+      running = true;
+      void fetchSnapshot(intent, cli)
+        .then((next) => {
+          if (cancelled) return;
+          setSnapshot(next);
+          setError(null);
+          setWorkspaceInput((current) => current || next.workspace);
+        })
+        .catch((caught: unknown) => {
+          if (cancelled) return;
+          setError(caught instanceof Error ? caught.message : "Could not read the workflow.");
+        })
+        .finally(() => {
+          running = false;
+          const next = queued;
+          queued = null;
+          if (!cancelled && next) run(next);
+        });
     };
-    void run();
+
+    run("refresh");
     if (!auto) return () => {
       cancelled = true;
     };
-    const timer = window.setInterval(() => {
-      void run();
-    }, 5000);
+    const records = window.setInterval(() => run("skip"), 5000);
+    const commands = window.setInterval(() => run("refresh"), 60_000);
     return () => {
       cancelled = true;
-      window.clearInterval(timer);
+      window.clearInterval(records);
+      window.clearInterval(commands);
     };
   }, [intent, auto, reloadKey]);
 

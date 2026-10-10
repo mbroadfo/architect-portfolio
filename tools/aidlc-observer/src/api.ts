@@ -9,8 +9,9 @@ export interface ArtifactDocument {
   error?: string;
 }
 
-export async function fetchSnapshot(intent: string): Promise<Snapshot> {
+export async function fetchSnapshot(intent: string, cli: "skip" | "refresh"): Promise<Snapshot> {
   const params = new URLSearchParams();
+  params.set("cli", cli);
   if (intent) params.set("intent", intent);
   const queryText = params.toString();
   const query = queryText ? `?${queryText}` : "";

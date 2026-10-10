@@ -98,13 +98,14 @@ export function Dashboard(props: DashboardProps) {
             checked={props.auto}
             onChange={(event) => props.onAuto(event.target.checked)}
           />
-          Refresh every 5 seconds
+          Records every 5 seconds
         </label>
         <p className="updated">
           {snapshot ? `Read ${formatWhen(snapshot.generatedAt)}` : "Waiting for the first read"}
           {intent?.updatedAt ? ` · record ${formatWhen(intent.updatedAt)}` : ""}
         </p>
       </div>
+      <p className="hint cadence">File records refresh every 5 seconds. AI-DLC commands run on Refresh and once a minute.</p>
 
       {props.error ? <p className="banner bad" role="alert">{props.error}</p> : null}
       {snapshot && snapshot.warnings.length > 0 ? (

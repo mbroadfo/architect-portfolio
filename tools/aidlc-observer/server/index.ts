@@ -25,19 +25,33 @@ const MIME: Record<string, string> = {
   ".txt": "text/plain; charset=utf-8",
 };
 
+const COMMAND_CACHE_MS = 60_000;
+
 export interface ServerOptions {
   workspace: string;
   port: number;
   dev?: boolean;
   cli?: boolean;
   toolRoot?: string;
+  /** Replaces the real aidlc launch. Tests use this so they do not spawn the command. */
+  runCli?: (name: CliName, workspace: string) => Promise<CliOutput>;
+}
+
+type CliMode = "skip" | "refresh" | "auto";
+
+interface CliCache {
+  workspace: string;
+  at: number;
+  outputs: Record<CliName, CliOutput>;
 }
 
 interface ServerContext {
   getWorkspace: () => string;
   setWorkspace: (value: string) => void;
   useCli: boolean;
-  runCli: ((name: CliName, workspace: string) => Promise<CliOutput>) | null;
+  runCli: (name: CliName, workspace: string) => Promise<CliOutput>;
+  cliCache: CliCache | null;
+  cliInflight: { workspace: string; task: Promise<Record<CliName, CliOutput>> } | null;
 }
 
 export async function startServer(options: ServerOptions): Promise<Server> {
@@ -48,9 +62,12 @@ export async function startServer(options: ServerOptions): Promise<Server> {
     getWorkspace: () => workspace,
     setWorkspace: (value) => {
       workspace = value;
+      context.cliCache = null;
     },
     useCli: options.cli !== false,
-    runCli: options.cli === false ? null : runAidlc,
+    runCli: options.runCli ?? runAidlc,
+    cliCache: null,
+    cliInflight: null,
   };
 
   let vite: ViteDevServer | null = null;
@@ -141,10 +158,17 @@ async function handleApi(
       sendJson(res, 400, { ok: false, error: "Space name contains unsupported characters." });
       return;
     }
-    const snapshot = await collectSnapshot(context.getWorkspace(), {
+    const cli = cliMode(url.searchParams.get("cli"));
+    if (cli === "bad") {
+      sendJson(res, 400, { ok: false, error: "cli must be skip, refresh, or auto." });
+      return;
+    }
+    const workspace = context.getWorkspace();
+    const outputs = await commandOutputs(context, workspace, cli);
+    const snapshot = await collectSnapshot(workspace, {
       intent,
       space,
-      runCli: context.runCli,
+      runCli: outputs ? async (name) => outputs[name] : null,
     });
     sendJson(res, 200, snapshot);
     return;
@@ -302,6 +326,47 @@ function sendText(res: ServerResponse, status: number, body: string): void {
   res.end(body);
 }
 
+function cliMode(value: string | null): CliMode | "bad" {
+  if (value === null || value === "") return "auto";
+  if (value === "skip" || value === "refresh" || value === "auto") return value;
+  return "bad";
+}
+
+async function commandOutputs(
+  context: ServerContext,
+  workspace: string,
+  mode: CliMode,
+): Promise<Record<CliName, CliOutput> | null> {
+  if (!context.useCli) return null;
+  const cached = context.cliCache && context.cliCache.workspace === workspace ? context.cliCache : null;
+  if (mode === "skip") return cached?.outputs ?? null;
+  if (mode === "auto" && cached && Date.now() - cached.at < COMMAND_CACHE_MS) return cached.outputs;
+  if (context.cliInflight && context.cliInflight.workspace === workspace) return context.cliInflight.task;
+
+  const task = runCommandSet(context, workspace);
+  context.cliInflight = { workspace, task };
+  try {
+    return await task;
+  } finally {
+    if (context.cliInflight?.task === task) context.cliInflight = null;
+  }
+}
+
+async function runCommandSet(context: ServerContext, workspace: string): Promise<Record<CliName, CliOutput>> {
+  const [intentList, spaceList, runtimeSummary] = await Promise.all([
+    context.runCli("intent-list", workspace),
+    context.runCli("space-list", workspace),
+    context.runCli("runtime-summary", workspace),
+  ]);
+  const outputs = {
+    "intent-list": intentList,
+    "space-list": spaceList,
+    "runtime-summary": runtimeSummary,
+  };
+  context.cliCache = { workspace, at: Date.now(), outputs };
+  return outputs;
+}
+
 function findWorkspace(start: string): string | null {
   let dir = path.resolve(start);
   for (let hop = 0; hop < 8; hop += 1) {
@@ -323,7 +388,7 @@ function parseArgs(argv: string[]): { workspace?: string; port?: number; dev: bo
     if (arg === "--dev") dev = true;
     else if (arg === "--no-cli") cli = false;
     else if (arg === "--help" || arg === "-h") {
-      process.stdout.write(`AI-DLC Observer\n\n  --workspace <path>   Project to watch (default: walk upward for an aidlc directory)\n  --port <number>      Port on 127.0.0.1 (default: ${DEFAULT_PORT})\n  --dev                Serve the Vite UI\n  --no-cli             Do not call AI-DLC; read record files only\n`);
+      process.stdout.write(`AI-DLC Observer\n\n  --workspace <path>   Project to watch (default: walk upward for an aidlc directory)\n  --port <number>      Port on 127.0.0.1 (default: ${DEFAULT_PORT})\n  --dev                Serve the Vite UI\n  --no-cli             Do not call AI-DLC; read record files only\n\nThe page reads record files every few seconds. The three read-only AI-DLC\ncommands run on demand and about once a minute. On Windows, aidlc.exe is\nspawned with an argument list. cmd.exe is not used.\n`);
       process.exit(0);
     } else if (arg === "--workspace") {
       workspace = argv[index + 1];
