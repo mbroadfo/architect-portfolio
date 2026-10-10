@@ -7,6 +7,11 @@ Michael Broadfoot affirmed these practices in the Practices Discovery interview 
 3. separate human authority from agent authority;
 4. require an independent security review.
 
+A second gate revision then made two corrections:
+
+1. only the shared AI-DLC workflow state needs a single owner, and parallel coding agents are welcome;
+2. the spa-on-aws baseline is v2, which already uses GitHub OIDC.
+
 On affirmation, the five sections below replace the matching sections of `aidlc/spaces/default/memory/team.md` word for word. Evidence and reasoning: `evidence.md`.
 
 ## Way of Working
@@ -29,8 +34,8 @@ We use trunk-based development on `main`. It suits one owner working with AI age
   - an independent security review, where required (see below).
 
   After that approval, the agent squash-merges the pull request (`gh pr merge --squash`). The result is one commit on `main`, named by the Bolt slug. Michael does not click Merge (Q1). Construction worktrees map to base `main`, target `main`, strategy `squash`. A Bolt lands through its pull request, never through a local squash-merge pushed directly.
-- **Records pull requests, batched.** Routine AI-DLC records (stage artifacts, state and audit shards, `docs/`) are grouped into one records pull request per approved stage gate. When several gates close together, one pull request covers the phase. The active agent merges it once its checks pass and the gates it records have been approved. Architectural or policy content, such as an ADR, a security policy or `AGENTS.md` rules, is merged only after Michael has approved that content at its gate.
-- **One writer at a time.** Exactly one agent or harness is active at any time. Only that agent creates branches, opens or merges pull requests, and writes the AI-DLC workflow state. Before another agent takes over, the active one commits and pushes its work, merges or hands over its open pull requests, and records the handoff in a records pull request. The next agent can then continue from the repository alone.
+- **Records pull requests, batched.** Routine AI-DLC records (stage artifacts, state and audit shards, `docs/`) are grouped into one records pull request per approved stage gate. When several gates close together, one pull request covers the phase. The agent that currently owns the shared workflow state merges it once its checks pass and the gates it records have been approved. Architectural or policy content, such as an ADR, a security policy or `AGENTS.md` rules, is merged only after Michael has approved that content at its gate.
+- **Parallel coding agents, one owner of workflow state.** Independent coding agents, in any harness, may work at the same time, each on its own branch and worktree, as long as their changes stay isolated and reach `main` only through pull requests. This parallel, rotating way of working is central to how we build. Only the shared AI-DLC workflow state needs exclusive ownership: `aidlc-state.md`, the audit shards and the intent records under `aidlc/`. Exactly one agent or harness owns that state at any time, and only the owner writes it or merges records pull requests. Ownership changes only through a recorded handoff: the current owner commits and pushes the state, then records the handoff in a records pull request, so the next owner can continue from the repository alone.
 - **Who approves, and how that is enforced.** Agents may prepare commits, pull requests, tests and deployments. Today they work with Michael's own GitHub credentials (git and the `gh` CLI on Michael's machine). GitHub therefore cannot tell an agent's action from Michael's. A merge, review, deployment approval or ruleset change made with those credentials is not independent human approval, and we do not claim that GitHub enforces the difference. Only two things count as Michael's approval:
   - Michael's own answer at an AI-DLC gate. The audit trail records the reply, but as evidence, not as tamper-proof proof of authorship.
   - Michael personally clicking Approve on a GitHub deployment review.
@@ -105,25 +110,38 @@ Feature depth is added after that. This path is proven locally and in CI first. 
   Preview should live in a separate AWS account under AWS Organizations, which costs nothing extra, so preview credentials cannot reach production resources. The fallback is the same account, with preview roles limited to preview-named resources. Preview stays standing because it costs almost nothing when idle, and Terraform can destroy and rebuild it on demand.
 - **Preview cost and approval.** Our estimate is under $1 a month while idle, mostly cents for S3 storage and request charges above the free allowances. Infrastructure Design's cost estimate confirms the figure. Creating preview is new infrastructure, so it needs Michael's approval before it exists (charter §6).
 - **Who may deploy to preview (owner decision).** We recommend that Michael's approval to create preview also give standing authorization for agents to deploy pull-request builds there. Preview holds test data only and has no custom domain. Until Michael gives that authorization, each preview deploy needs Michael's authorization like any other deploy.
-- **Verify in preview before production.** Some pull requests change authentication, APIs, publication, take-down or infrastructure. Each of these is deployed to preview from its pull request: Terraform plan and apply against the preview state, then the site and Lambda deploy. It must pass its smoke checks and the end-to-end suite there, with the results recorded on the pull request, before it merges. Production receives only artifacts whose changes passed preview. Preview runs one at a time (a GitHub concurrency group), which fits the one-writer rule.
+- **Verify in preview before production.** Some pull requests change authentication, APIs, publication, take-down or infrastructure. Each of these is deployed to preview from its pull request: Terraform plan and apply against the preview state, then the site and Lambda deploy. It must pass its smoke checks and the end-to-end suite there, with the results recorded on the pull request, before it merges. Production receives only artifacts whose changes passed preview. Preview runs one at a time (a GitHub concurrency group). When several agents work in parallel, their pull requests queue for preview.
 - **Production.** The `production` environment lists Michael as its required reviewer. Every production deploy job runs only in that environment: Terraform apply, publishing the site and updating the Lambda function. Terraform applies exactly the plan reviewed in that run (`plan -out=tfplan`, then `apply tfplan`). Before launch, production is reachable only at its CloudFront default address, with no custom domain. Michael personally clicks the approval.
 - **What that approval does and does not prove.** As Way of Working explains, the approval is a procedural control until agents have their own identity. An agent holding Michael's credentials could technically approve the run through GitHub's API. Agents never do, and we do not describe that approval as independently enforced.
-- **DNS is its own step.** Cloudflare record changes go through a separate, separately approved run of the `production` environment: the custom domain, ACM certificate validation, and the 301 redirect from `mike.broadfoot.consulting` to `michael.broadfoot.consulting`. An infrastructure push never creates or changes DNS records as a side effect. Preview has no DNS records.
+- **DNS is its own step.** Cloudflare records are managed in Terraform with the Cloudflare provider, as in spa-on-aws v2, but in a separate Terraform root with its own state. That root covers the custom domain, ACM certificate validation, and the 301 redirect from `mike.broadfoot.consulting` to `michael.broadfoot.consulting`. It is applied only in its own, separately approved run of the `production` environment, so an infrastructure apply never changes live DNS as a side effect. The DNS root does not silently take over existing live records (no `allow_overwrite`); any existing record is imported deliberately. Preview has no DNS records.
 - **Credentials.** GitHub Actions reaches AWS through GitHub OIDC, with three roles:
   - a read-only role for pull-request plans;
   - a preview deploy role, trusted only for tokens from the `preview` environment;
   - a production deploy role, trusted only for `repo:mbroadfo/architect-portfolio:environment:production`.
 
   AWS checks those trust conditions on every token. We create no IAM users and no long-lived AWS access keys. The Cloudflare API token cannot use OIDC, so it is a least-privilege token for this one zone, stored as a secret on the `production` environment. Michael runs the one-time bootstrap (Terraform state bucket, OIDC provider, roles, preview account) with Michael's own credentials. Agents never use those credentials.
-- **What we reuse from `spa-on-aws`.** We keep these patterns:
-  - S3 + CloudFront with Origin Access Control;
-  - an ACM certificate in us-east-1;
+- **What we keep from `spa-on-aws` v2** (checked against GitHub `main`, commit `6130731`, which already uses GitHub OIDC and scoped IAM roles):
+  - GitHub OIDC federation with short-lived role credentials, and no AWS keys stored in GitHub;
+  - the split between a Terraform role and a deploy-only CI role, each with an inline policy scoped to the stack;
+  - the idempotent bootstrap: a versioned, public-access-blocked state bucket, the OIDC provider, both roles, and a prompt to deactivate the admin key afterwards;
+  - non-secret configuration as GitHub Variables, with only tokens as secrets;
+  - `plan -out=tfplan`, then `apply tfplan`;
+  - Cloudflare DNS managed in Terraform rather than by a separate job after apply;
+  - S3 + CloudFront with Origin Access Control and an ACM certificate in us-east-1;
   - the Terraform S3 backend with native state locking;
   - immutable caching for hashed assets and no-cache for `index.html`;
-  - CI workflows that run only for changed directories;
+  - workflows that run only for changed directories;
   - `cancel-in-progress: false` for infrastructure runs.
-
-  We replace its IAM users and access keys, its unconditional deploy on every push, its automatic DNS writes, and its personal-access-token writes to GitHub variables.
+- **What we change from `spa-on-aws` v2:**
+  - **Role trust.** Its roles trust the `main` branch subject (`repo:<repo>:ref:refs/heads/main`). Ours trust the GitHub environment subject instead: `production` for the production roles and `preview` for the preview role. Pull-request plans use a separate read-only role.
+  - **Deploy approval.** It applies Terraform and deploys on every push to `main`. Our apply and deploy jobs run only in the approval-gated environments.
+  - **DNS separation.** It keeps DNS in the same Terraform root, with `allow_overwrite`, so any infrastructure apply can change live records. Ours is a separate root with its own approved run, as described above.
+  - **The `GH_TOKEN` secret.** It stores the owner's personal `gh auth token` as a repository secret. That is a long-lived owner credential any workflow could use, which conflicts with separating human and agent authority. We remove it: values pass through job outputs, Terraform outputs and the workflow's own `GITHUB_TOKEN` with least-privilege `permissions:`, or, if a write to GitHub settings is truly needed, a short-lived GitHub App token.
+  - **Secret scope.** `CLOUDFLARE_API_TOKEN` and the runtime secrets move from repository secrets to secrets on the relevant environment.
+  - **Tighter policies where it is cheap:**
+    - The Terraform role's IAM permissions cover every `{app}-*` role, including its own, so it could rewrite its own policy. We limit them to the Lambda execution roles, or add a permissions boundary.
+    - We narrow its `cloudfront:*`, `acm:*` and `apigateway:*` on `*` where resource-level permissions allow.
+  - **CI hygiene.** We use `npm ci` instead of `npm install`, and add the lint, type and test gates its workflows lack.
 - **Smoke checks after every deploy, in preview and in production.**
   - The gallery returns 200 and shows its cards.
   - An exhibit page loads.

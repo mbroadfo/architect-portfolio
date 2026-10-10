@@ -12,9 +12,9 @@ On affirmation, every non-blank line under `## Mandated` and `## Forbidden` is a
 ## Mandated
 
 - ALWAYS get Michael Broadfoot's explicit approval before significant architectural changes, security policy changes and destructive operations. [charter §7 Autonomy policy]
-- ALWAYS authenticate GitHub Actions to AWS through GitHub OIDC with short-lived, least-privilege role credentials, never with long-lived IAM user access keys. [charter §6; charter Initiation findings: the spa-on-aws keys "must be replaced, not reused as-is"]
+- ALWAYS authenticate GitHub Actions to AWS through GitHub OIDC with short-lived, least-privilege role credentials, never with long-lived IAM user access keys. [charter §6 Preferred technology; owner second revision at Practices Discovery gate, 2026-10-10, item 2: keep the OIDC patterns spa-on-aws v2 already uses]
 - ALWAYS keep `docs/PROJECT_BRIEF.md`, `docs/decisions/` (Architecture Decision Records) and `AGENTS.md` up to date alongside the AI-DLC state, so Codex or Copilot can take over from the committed records alone. [charter Role; charter §7]
-- ALWAYS keep exactly one active agent or harness that writes to the repository and owns the shared AI-DLC workflow state, and complete a recorded handoff before another one starts. [charter §7; owner revision at Practices Discovery gate, 2026-10-10, item 1]
+- ALWAYS keep exactly one active owner of the shared AI-DLC workflow state, and change that ownership only through a recorded handoff. Independent coding agents may work concurrently on separate branches and worktrees when their changes are isolated and merged through pull requests. [charter §7; owner second revision at Practices Discovery gate, 2026-10-10, item 1]
 - ALWAYS bring every change into `main` through a pull request whose required checks pass, including AI-DLC records and docs, batching routine records into one records pull request per approved gate where practical. [owner revision at Practices Discovery gate, 2026-10-10, item 1]
 - ALWAYS verify changes affecting authentication, APIs, publication, take-down or infrastructure in a non-production environment, with their smoke and end-to-end checks passing, before deploying them to production. [owner revision at Practices Discovery gate, 2026-10-10, item 2]
 - ALWAYS get an independent security review, from an AI reviewer that did not write the change, for any change to authentication, authorization, private-material handling or publication boundaries. Record it on the pull request, with the automated verification passing, before the owner approves the change. [owner revision at Practices Discovery gate, 2026-10-10, item 4]
@@ -42,6 +42,10 @@ On affirmation, every non-blank line under `## Mandated` and `## Forbidden` is a
   2. pre-production verification;
   3. separate human and agent authority;
   4. independent security review.
+- Owner second revision at the Practices Discovery gate, 2026-10-10, recorded as Request Changes:
+  1. one active owner of shared AI-DLC workflow state, replacing "one active agent writing to the repository";
+  2. a corrected spa-on-aws baseline (v2 already uses GitHub OIDC and scoped IAM roles).
+- The charter's Initiation findings said spa-on-aws used long-lived IAM user keys. That was based on a stale local copy, so that wording is no longer cited. See `evidence.md`.
 - Considered and left out because they are product requirements, not working rules, and Requirements Analysis owns them: no visitor accounts (charter §3), a provider-independent AI interface (charter §5), and AI suggestions backed by source evidence (charter §5).
 - Kept as practices in `team-practices.md`, not as hard rules, so a later approved change can adjust them:
   - the specific `preview` design, including its cost estimate and the recommended standing authorization for preview deploys;

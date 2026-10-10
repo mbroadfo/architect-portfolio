@@ -40,7 +40,7 @@
 - **In Progress**: practices-discovery
 
 ## Runtime State
-- **Revision Count**: 1
+- **Revision Count**: 2
 - **Construction Checkpoints**: enabled
 - **Construction Iteration**: unit-major
 - **Construction Execution**: serial
@@ -106,7 +106,7 @@ Per unit: [TBD]
 - **Current Stage**: practices-discovery
 - **Next Stage**: requirements-analysis
 - **Status**: Running
-- **Last Updated**: 2026-10-10T18:14:08Z
+- **Last Updated**: 2026-10-10T18:24:05Z
 
 ## Session Resume Point
 - **Last Completed Stage**: approval-handoff

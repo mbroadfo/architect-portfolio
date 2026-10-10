@@ -5,7 +5,8 @@ This is the evidence after the lead's revision turn. It covers:
 - the lead's draft;
 - the owner's interview (`practices-discovery-questions.md`, Q1-Q4);
 - the integrated practices;
-- the owner's four-item revision at the affirmation gate (2026-10-10, recorded as Request Changes).
+- the owner's four-item revision at the affirmation gate (2026-10-10, recorded as Request Changes);
+- the owner's two-item second revision at the same gate (2026-10-10).
 
 ## Run context
 
@@ -21,14 +22,15 @@ This is the evidence after the lead's revision turn. It covers:
 
 | Source | What it gave |
 | --- | --- |
-| `docs/CHARTER.md` | Stack (React/TypeScript/Vite, Python Lambda, MongoDB Atlas, Auth0, S3 + CloudFront, Cloudflare DNS, Terraform, GitHub Actions with OIDC); public repository; autonomy policy (approval for architecture, security, paid services, destructive operations and production deploys; never deploy publicly or change live DNS without authorization; never commit secrets or unlicensed material); multi-agent portability; one owner of workflow state at a time; the spa-on-aws finding |
+| `docs/CHARTER.md` | Stack (React/TypeScript/Vite, Python Lambda, MongoDB Atlas, Auth0, S3 + CloudFront, Cloudflare DNS, Terraform, GitHub Actions with OIDC); public repository; autonomy policy (approval for architecture, security, paid services, destructive operations and production deploys; never deploy publicly or change live DNS without authorization; never commit secrets or unlicensed material); multi-agent portability; one owner of workflow state at a time; the spa-on-aws finding, which is stale and corrected under Deployment below |
 | `ideation/approval-handoff/decision-log.md` | D-04 (no analytics), D-12 (every deploy and DNS step needs owner approval), D-15, D-19, D-21, D-22 (publication and privacy invariants), P-01 (plan, Guard Policy off), P-03 (routine decisions answered from the record), P-04 (approved artifacts committed and pushed) |
-| `ideation/approval-handoff/initiative-brief.md` | Risk register: private-material exposure, cost ceiling, spa-on-aws keys, live DNS changes |
+| `ideation/approval-handoff/initiative-brief.md` | Risk register: private-material exposure, cost ceiling, spa-on-aws keys (stale, corrected under Deployment below), live DNS changes |
 | `aidlc-state.md` | Scope `classic`, plan `portfolio-inception-slice`, Test Strategy Standard, Depth Standard, Construction Execution serial, Construction Iteration unit-major |
 | `.claude/scopes/aidlc-portfolio-inception-slice.md` | `skeleton: off` |
 | `git log` (6 commits, `main` only, no other branches) | Records committed straight to `main` so far; imperative, stage-named commit subjects |
 | `.gitattributes` | `* text=auto eol=lf`: LF line endings already enforced |
-| `spa-on-aws` (`README.md`, `workflows/*.yml`, `terraform/main.tf`, `frontend/package.json`) | Reuse candidates and conflicts (see Deployment below) |
+| `spa-on-aws`: stale local clone (`README.md`, `workflows/*.yml`, `terraform/main.tf`, `scripts/bootstrap.sh`, `frontend/package.json`) | Superseded. The local `main` is 2 commits behind GitHub and has 1 unpushed commit, and it still showed the v1 key-based design. The earlier conclusions drawn from it were wrong (see the second revision below) |
+| `spa-on-aws` at GitHub `origin/main` `6130731` ("Merge pull request #1 from mbroadfo/v2-oidc"), read-only with `git show` (`scripts/bootstrap.ps1`, `workflows/devops-infra.yml`, `workflows/devops-frontend.yml`, `workflows/devops-backend.yml`, `terraform/main.tf`, `terraform/dns.tf`, `terraform/variables.tf`) | The current v2 baseline: OIDC federation, two scoped roles, Variables-based configuration, Terraform-managed Cloudflare DNS (see Deployment below). The local clone was not checked out, pulled or modified |
 | `.claude/knowledge/aidlc-shared/audit-format.md` | The audit trail is "operational evidence, not a tamper-proof human-authorship boundary" (`HUMAN_TURN` section). Used to describe AI-DLC gate approvals honestly |
 | `practices-discovery-questions.md` | Q1-Q4, each answered A |
 
@@ -38,8 +40,9 @@ This is the evidence after the lead's revision turn. It covers:
 
 - **Inferred**: Trunk-based development with squash-merge (the `org.md` default) fits one owner with rotating AI harnesses.
 - **Q1**: Each Bolt goes through a pull request with passing CI, and the agent squash-merges after the owner's AI-DLC approval.
-- **Revision item 1**: Every change, including records, now goes through a pull request. Routine records are batched into one records pull request per approved gate, or per phase. No agent pushes directly to `main`, and only one agent or harness writes at a time. This replaces the earlier "records go straight to `main`" practice and P-04's direct push.
+- **Revision item 1**: Every change, including records, now goes through a pull request. Routine records are batched into one records pull request per approved gate, or per phase. No agent pushes directly to `main`. This replaces the earlier "records go straight to `main`" practice and P-04's direct push.
 - **Revision items 3 and 4**: These add the approval and credential boundaries and the independent security review. Both are covered below.
+- **Second revision, item 1**: The first revision turn had written "exactly one active agent or harness writes to the repository". That is now "exactly one active owner of shared AI-DLC workflow state" (`aidlc-state.md`, audit shards, intent records). Independent coding agents may work concurrently on separate branches and worktrees, isolated and coordinated through pull requests. Only workflow-state changes need exclusive ownership and a recorded handoff. Records pull requests are merged by the current state owner. Parallel pull requests queue for the single preview environment.
 
 ### Walking Skeleton
 
@@ -56,15 +59,40 @@ This is the evidence after the lead's revision turn. It covers:
 - **Conflict found in the draft**: The `org.md` default deploys automatically on merge to staging. That conflicts with charter §7 and D-12. The narrowing to continuous delivery stands.
 - **Q2 and revision item 2**: Q2 chose a single production environment with no staging. The revision keeps the cost concern ("a permanent paid staging environment is not mandatory") but requires testing outside production before any public deploy. The simplest cost-effective answer is a serverless `preview` environment that costs almost nothing while idle.
 - **Q3 and revision item 3**: Q3 kept the owner as required reviewer on `production`. The revision requires saying plainly that this approval is procedural while agents hold the owner's credentials.
-- **spa-on-aws review** (unchanged):
-  - **Reusable**: S3 + CloudFront with Origin Access Control; ACM certificate in us-east-1; Terraform S3 backend with `use_lockfile`; `plan -out` then `apply tfplan`; cache headers; workflows filtered by path; `cancel-in-progress: false` for infrastructure.
-  - **Replaced**:
-    - long-lived `TERRAFORM_AWS_*` and `DEPLOY_AWS_*` keys, including an IAM user with AdministratorAccess;
-    - deploying on every push without approval;
-    - the automatic Cloudflare `dns` job;
-    - the `vars` job, which writes GitHub variables with a personal access token;
-    - the missing lint and test steps;
-    - `npm install` used instead of `npm ci`.
+- **spa-on-aws review, corrected in the second revision** (verified against GitHub `origin/main` `6130731`):
+  - **What v2 actually does**:
+    - `scripts/bootstrap.ps1` is a one-time, idempotent setup run with an admin AWS profile. It creates:
+      - the Terraform state bucket, versioned and with public access blocked;
+      - the GitHub OIDC provider;
+      - two IAM roles with inline policies: `{app}-terraform`, scoped to the stack rather than AdministratorAccess, though it allows `cloudfront:*`, `acm:*` and `apigateway:*` on `*`; and `{app}-ci`, which covers assets sync, invalidation, Lambda code update and SSM.
+    - Both roles trust only the repository's deploy branch: `repo:<repo>:ref:refs/heads/main`, plus the immutable `owner@id/repo@id` form. They do not trust a GitHub environment.
+    - It writes non-secret configuration as GitHub Variables. It stores `GH_TOKEN` (the owner's own `gh auth token`), `APP_SECRETS` and `CLOUDFLARE_API_TOKEN` as repository-level secrets.
+    - It tells the operator to deactivate the admin key afterwards.
+    - `devops-infra.yml` assumes the role through OIDC and runs `terraform plan -out=tfplan`, then `apply tfplan`, on every push to `main` (or `master`) that touches `terraform/`, with no environment approval.
+    - Cloudflare DNS (the ACM validation record and the app CNAME) is managed inside Terraform with the cloudflare provider, in `dns.tf`, with `allow_overwrite = true`. There is no separate DNS job.
+    - A `vars` job uses `GH_TOKEN` to write GitHub Variables. A `secrets` job writes `APP_SECRETS` to SSM using the CI role.
+    - The frontend and backend workflows deploy on push through the CI role, use `npm install`, and have no lint or test steps.
+  - **Kept**:
+    - OIDC federation;
+    - the split between the Terraform role and the CI role, with stack-scoped inline policies;
+    - the idempotent bootstrap;
+    - the split between Variables and secrets;
+    - `plan -out` then `apply tfplan`;
+    - Terraform-managed Cloudflare DNS, which is cleaner than a DNS job after apply;
+    - S3 + CloudFront with Origin Access Control, and ACM in us-east-1;
+    - the S3 backend with `use_lockfile`;
+    - cache headers;
+    - workflows filtered by path;
+    - `cancel-in-progress: false` for infrastructure.
+  - **Adapted**:
+    - Role trust moves from the `main` branch subject to the `production` and `preview` GitHub environment subjects, with a separate read-only role for pull-request plans.
+    - Apply and deploy jobs run only in the approval-gated environments.
+    - DNS moves to its own Terraform root, applied in its own approved run, without `allow_overwrite`. With it, any infrastructure apply could silently take over a live record.
+    - The `GH_TOKEN` repository secret is removed. It holds the owner's personal token, a long-lived owner credential any workflow could use, which conflicts with separating human and agent authority. It is replaced by job outputs, Terraform outputs, `GITHUB_TOKEN` with least-privilege `permissions:`, or a short-lived GitHub App token.
+    - `CLOUDFLARE_API_TOKEN` and the runtime secrets become environment secrets.
+    - Policies are tightened where it is cheap. The Terraform role's IAM actions on `role/{app}-*` include its own role, so it could edit its own policy (a privilege-escalation path), so we limit them to Lambda execution roles or add a permissions boundary. The `*` resource grants are narrowed where resource-level permissions exist.
+    - We use `npm ci` and add the CI quality gates.
+  - **Correction to earlier records**: The draft, the integration and the first revision turn of this stage all said spa-on-aws "uses long-lived IAM user keys with AdministratorAccess". That came from the stale local clone and is wrong for v2. The same stale claim appears in `docs/CHARTER.md` (Initiation findings bullet) and in the approved `ideation/approval-handoff/initiative-brief.md` (risk row "The reference deployment setup (spa-on-aws) uses long-lived administrator keys"). Those files were not edited by this stage. This correction is the record. The real residual risks in v2 are the branch-trusted roles, apply-on-push, the owner-token secret and DNS in the same apply. They are handled by the adaptations above.
 
 ### Code Style
 
@@ -90,12 +118,25 @@ The owner's words, verbatim:
 
 | Item | What changed | Where |
 | --- | --- | --- |
-| 1 Protect `main` | A ruleset on `main`: pull request required, required status check, no force-push or deletion, empty bypass list. All changes, records included, go through pull requests. Records are batched per approved gate or phase. One aggregate gate check always runs. One writer at a time, with a recorded handoff. No direct pushes | team-practices Way of Working; Mandated rules 4 and 5; Forbidden rule 3 |
+| 1 Protect `main` | A ruleset on `main`: pull request required, required status check, no force-push or deletion, empty bypass list. All changes, records included, go through pull requests. Records are batched per approved gate or phase. One aggregate gate check always runs. No direct pushes. (The first revision turn also wrote "one writer at a time"; the second revision narrowed this to one owner of shared workflow state, with parallel coding agents allowed.) | team-practices Way of Working; Mandated rules 4 and 5; Forbidden rule 3 |
 | 2 Pre-production verification | A `preview` environment from the same Terraform: serverless, Atlas M0, an Auth0 development tenant, test data, no domain, gated address, ideally a separate AWS account. Changes to authentication, APIs, publication, take-down or infrastructure must pass smoke and end-to-end checks there before merge and production. Creating preview needs the owner's approval | team-practices Deployment and Walking Skeleton; Mandated rule 6 |
 | 3 Human vs agent authority | States that actions taken with the owner's credentials are not approval. Lists which approvals count, which controls are technical, which are procedural, and the target agent identity | team-practices Way of Working and Deployment; Forbidden rules 2, 4 and 5 |
 | 4 Independent security review | Pull requests touching authentication, authorization, private-material handling or publication boundaries need a review by an AI session or model that did not write the change, recorded on the pull request, plus passing automated verification. A CI check requires the review record | team-practices Way of Working; Mandated rule 7 |
 
-### Technical versus procedural controls today
+## Owner second revision at the affirmation gate (2026-10-10)
+
+The owner's words, verbatim:
+
+> 1. Replace the "exactly one active agent writing to the repository" rule with "exactly one active owner of shared AI-DLC workflow state."
+>    Independent coding agents may work concurrently in separate branches and worktrees, provided their changes are isolated and coordinated through PRs. This is essential to our rotating and parallel multi-agent development strategy. Only shared workflow-state changes require exclusive ownership and a recorded handoff.
+> 2. Correct the spa-on-aws baseline. The current v2 implementation already uses GitHub OIDC and scoped IAM roles, not long-lived IAM user keys. Verify against the actual bootstrap script and workflows. Preserve the useful OIDC patterns while adapting deployment approvals and DNS handling.
+
+| Item | What changed | Where |
+| --- | --- | --- |
+| 1 One owner of workflow state | The "one writer at a time" bullet is now "Parallel coding agents, one owner of workflow state". Records pull requests are merged by the current state owner. Parallel pull requests queue for preview | team-practices Way of Working and Deployment; Mandated rule 4 reworded |
+| 2 spa-on-aws baseline | Checked against `origin/main` `6130731`. "What we reuse" is now two lists: what we keep from v2 and what we change. The DNS bullet now uses a separate Terraform root without `allow_overwrite`. Every claim of long-lived keys or AdministratorAccess is corrected | team-practices Deployment; Mandated rule 2 source citation; this file's sources table and spa-on-aws review |
+
+## Technical versus procedural controls today
 
 | Control | Kind today | Why |
 | --- | --- | --- |
@@ -109,7 +150,7 @@ The owner's words, verbatim:
 | Agents never use the owner's AWS administrator credentials | Procedural | Those credentials exist on the owner's machine for bootstrap |
 | Target: agents have their own GitHub identity (GitHub App or machine user: write only, no admin, not a reviewer, no bypass), and the owner's credentials are kept out of agent sessions | Becomes technical once in place | Only then can "Prevent self-review" and required pull-request reviews make the owner's approval technically distinct |
 
-### Preview cost estimate (to be confirmed in Infrastructure Design)
+## Preview cost estimate (to be confirmed in Infrastructure Design)
 
 | Item | Expected idle cost |
 | --- | --- |

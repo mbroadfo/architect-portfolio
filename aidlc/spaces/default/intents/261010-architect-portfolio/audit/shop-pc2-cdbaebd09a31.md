@@ -2821,3 +2821,425 @@
 **Details**: Re-entering gate after revision
 
 ---
+
+## Human Turn
+**Timestamp**: 2026-10-10T18:20:03Z
+**Event**: HUMAN_TURN
+**Session**: a72d6fbb-f63d-4ad1-8717-fc46f9982e73
+**Picked**: ["Practices Discovery is approved in principle. Two final corrections:\n\n1. Replace the \"exactly one active agent writing to the repository\" rule with \"exactly one active owner of shared AI-DLC workflow state.\"\n\n   Independent coding agents may work concurrently in separate branches and worktrees, provided their changes are isolated and coordinated through PRs. This is essential to our rotating and parallel multi-agent development strategy. Only shared workflow-state changes require exclusive ownership and a recorded handoff.\n\n2. Correct the spa-on-aws baseline. The current v2 implementation already uses GitHub OIDC and scoped IAM roles, not long-lived IAM user keys. Verify against the actual bootstrap script and workflows. Preserve the useful OIDC patterns while adapting deployment approvals and DNS handling.\n\nApply these corrections to team-practices.md, discovered-rules.md, and evidence.md wherever relevant.\n\nEverything else is acceptable. Do not reopen settled decisions or ask additional questions. Update PR #1 and return to the approval gate."]
+
+---
+
+## Question Replied
+**Timestamp**: 2026-10-10T18:20:04Z
+**Event**: QUESTION_REPLIED
+**Session**: a72d6fbb-f63d-4ad1-8717-fc46f9982e73
+**Question**: Practices Discovery (revised) complete. How would you like to proceed?
+**Reply**: Practices Discovery is approved in principle. Two final corrections:\n\n1. Replace the "exactly one active agent writing to the repository" rule with "exactly one active owner of shared AI-DLC workflow state."\n\n   Independent coding agents may work concurrently in separate branches and worktrees, provided their changes are isolated and coordinated through PRs. This is essential to our rotating and parallel multi-agent development strategy. Only shared workflow-state changes require exclusive ownership and a recorded handoff.\n\n2. Correct the spa-on-aws baseline. The current v2 implementation already uses GitHub OIDC and scoped IAM roles, not long-lived IAM user keys. Verify against the actual bootstrap script and workflows. Preserve the useful OIDC patterns while adapting deployment approvals and DNS handling.\n\nApply these corrections to team-practices.md, discovered-rules.md, and evidence.md wherever relevant.\n\nEverything else is acceptable. Do not reopen settled decisions or ask additional questions. Update PR #1 and return to the approval gate.
+
+---
+
+## Gate Rejected
+**Timestamp**: 2026-10-10T18:20:12Z
+**Event**: GATE_REJECTED
+**Stage**: practices-discovery
+**Feedback**: Practices Discovery is approved in principle. Two final corrections:
+
+---
+
+## Stage Revising
+**Timestamp**: 2026-10-10T18:20:12Z
+**Event**: STAGE_REVISING
+**Stage**: practices-discovery
+**Revision count**: 2
+**Feedback**: Practices Discovery is approved in principle. Two final corrections:
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-10-10T18:21:54Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/inception/practices-discovery/team-practices.md
+**Context**: inception > practices-discovery > team-practices.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-10-10T18:21:56Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/inception/practices-discovery/team-practices.md
+**Context**: inception > practices-discovery > team-practices.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-10-10T18:21:57Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/inception/practices-discovery/team-practices.md
+**Context**: inception > practices-discovery > team-practices.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-10-10T18:21:59Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/inception/practices-discovery/team-practices.md
+**Context**: inception > practices-discovery > team-practices.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-10-10T18:22:01Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/inception/practices-discovery/team-practices.md
+**Context**: inception > practices-discovery > team-practices.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-10-10T18:22:03Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/inception/practices-discovery/practices-discovery-timestamp.md
+**Context**: inception > practices-discovery > practices-discovery-timestamp.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-10-10T18:22:19Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/inception/practices-discovery/discovered-rules.md
+**Context**: inception > practices-discovery > discovered-rules.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-10-10T18:22:20Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/inception/practices-discovery/discovered-rules.md
+**Context**: inception > practices-discovery > discovered-rules.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-10-10T18:22:22Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/inception/practices-discovery/discovered-rules.md
+**Context**: inception > practices-discovery > discovered-rules.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-10-10T18:22:23Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/inception/practices-discovery/team-practices.md
+**Context**: inception > practices-discovery > team-practices.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-10-10T18:22:57Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/inception/practices-discovery/evidence.md
+**Context**: inception > practices-discovery > evidence.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-10-10T18:22:59Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/inception/practices-discovery/evidence.md
+**Context**: inception > practices-discovery > evidence.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-10-10T18:23:01Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/inception/practices-discovery/evidence.md
+**Context**: inception > practices-discovery > evidence.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-10-10T18:23:03Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/inception/practices-discovery/evidence.md
+**Context**: inception > practices-discovery > evidence.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-10-10T18:23:04Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/inception/practices-discovery/evidence.md
+**Context**: inception > practices-discovery > evidence.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-10-10T18:23:06Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/inception/practices-discovery/evidence.md
+**Context**: inception > practices-discovery > evidence.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-10-10T18:23:18Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/inception/practices-discovery/evidence.md
+**Context**: inception > practices-discovery > evidence.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-10-10T18:23:20Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/inception/practices-discovery/evidence.md
+**Context**: inception > practices-discovery > evidence.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-10-10T18:23:21Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/inception/practices-discovery/evidence.md
+**Context**: inception > practices-discovery > evidence.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-10-10T18:23:33Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/inception/practices-discovery/evidence.md
+**Context**: inception > practices-discovery > evidence.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-10-10T18:23:35Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/inception/practices-discovery/evidence.md
+**Context**: inception > practices-discovery > evidence.md
+
+---
+
+## Human Turn
+**Timestamp**: 2026-10-10T18:23:56Z
+**Event**: HUMAN_TURN
+**Session**: a72d6fbb-f63d-4ad1-8717-fc46f9982e73
+
+---
+
+## Subagent Completed
+**Timestamp**: 2026-10-10T18:23:57Z
+**Event**: SUBAGENT_COMPLETED
+**Agent Type**: aidlc-pipeline-deploy-agent
+**Agent ID**: acc1b831fa1fb5707
+
+---
+
+## Practices Discovered
+**Timestamp**: 2026-10-10T18:24:01Z
+**Event**: PRACTICES_DISCOVERED
+**Sources Scanned**: docs/CHARTER.md, ideation/approval-handoff/decision-log.md, ideation/approval-handoff/initiative-brief.md, aidlc-state.md, aidlc/spaces/default/memory/org.md, aidlc/spaces/default/memory/team.md, git history (main @ 5bcac65), spa-on-aws origin/main 6130731 (bootstrap.ps1, workflows, terraform main/dns/variables), practices-discovery-questions.md, owner revisions at Practices Discovery gate (2026-10-10, two rounds)
+**Drafts**: team-practices.md, discovered-rules.md
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-10T18:24:04Z
+**Event**: SENSOR_FIRED
+**Fire id**: 295e8d32
+**Sensor ID**: required-sections
+**Stage slug**: practices-discovery
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/practices-discovery/team-practices.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-10T18:24:04Z
+**Event**: SENSOR_PASSED
+**Fire id**: 295e8d32
+**Sensor ID**: required-sections
+**Stage slug**: practices-discovery
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/practices-discovery/team-practices.md
+**Duration ms**: 80
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-10T18:24:04Z
+**Event**: SENSOR_FIRED
+**Fire id**: de01cd8f
+**Sensor ID**: required-sections
+**Stage slug**: practices-discovery
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/practices-discovery/discovered-rules.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-10T18:24:04Z
+**Event**: SENSOR_PASSED
+**Fire id**: de01cd8f
+**Sensor ID**: required-sections
+**Stage slug**: practices-discovery
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/practices-discovery/discovered-rules.md
+**Duration ms**: 84
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-10T18:24:04Z
+**Event**: SENSOR_FIRED
+**Fire id**: 225e4ea4
+**Sensor ID**: required-sections
+**Stage slug**: practices-discovery
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/practices-discovery/evidence.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-10T18:24:04Z
+**Event**: SENSOR_PASSED
+**Fire id**: 225e4ea4
+**Sensor ID**: required-sections
+**Stage slug**: practices-discovery
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/practices-discovery/evidence.md
+**Duration ms**: 80
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-10T18:24:04Z
+**Event**: SENSOR_FIRED
+**Fire id**: 6e1a56e8
+**Sensor ID**: required-sections
+**Stage slug**: practices-discovery
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/practices-discovery/practices-discovery-timestamp.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-10T18:24:04Z
+**Event**: SENSOR_PASSED
+**Fire id**: 6e1a56e8
+**Sensor ID**: required-sections
+**Stage slug**: practices-discovery
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/practices-discovery/practices-discovery-timestamp.md
+**Duration ms**: 80
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-10T18:24:04Z
+**Event**: SENSOR_FIRED
+**Fire id**: b265a19a
+**Sensor ID**: upstream-coverage
+**Stage slug**: practices-discovery
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/practices-discovery/team-practices.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-10T18:24:04Z
+**Event**: SENSOR_PASSED
+**Fire id**: b265a19a
+**Sensor ID**: upstream-coverage
+**Stage slug**: practices-discovery
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/practices-discovery/team-practices.md
+**Duration ms**: 81
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-10T18:24:05Z
+**Event**: SENSOR_FIRED
+**Fire id**: f322c1b1
+**Sensor ID**: upstream-coverage
+**Stage slug**: practices-discovery
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/practices-discovery/discovered-rules.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-10T18:24:05Z
+**Event**: SENSOR_PASSED
+**Fire id**: f322c1b1
+**Sensor ID**: upstream-coverage
+**Stage slug**: practices-discovery
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/practices-discovery/discovered-rules.md
+**Duration ms**: 99
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-10T18:24:05Z
+**Event**: SENSOR_FIRED
+**Fire id**: eff4fee1
+**Sensor ID**: upstream-coverage
+**Stage slug**: practices-discovery
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/practices-discovery/evidence.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-10T18:24:05Z
+**Event**: SENSOR_PASSED
+**Fire id**: eff4fee1
+**Sensor ID**: upstream-coverage
+**Stage slug**: practices-discovery
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/practices-discovery/evidence.md
+**Duration ms**: 81
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-10T18:24:05Z
+**Event**: SENSOR_FIRED
+**Fire id**: fda5638f
+**Sensor ID**: upstream-coverage
+**Stage slug**: practices-discovery
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/practices-discovery/practices-discovery-timestamp.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-10T18:24:05Z
+**Event**: SENSOR_PASSED
+**Fire id**: fda5638f
+**Sensor ID**: upstream-coverage
+**Stage slug**: practices-discovery
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/practices-discovery/practices-discovery-timestamp.md
+**Duration ms**: 81
+
+---
+
+## Stage Awaiting Approval
+**Timestamp**: 2026-10-10T18:24:05Z
+**Event**: STAGE_AWAITING_APPROVAL
+**Stage**: practices-discovery
+**Details**: Re-entering gate after revision
+
+---
