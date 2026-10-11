@@ -23,3 +23,33 @@
 
 ### Summary
 The amendment is mostly traceable to CR-01 to CR-05 and D-23 to D-28, and it keeps the MFA, cost and no-tracking boundaries intact. The publication path for featured and category changes (A1-P01), the take-down and preview cases (A1-P02), the PDF contradiction (A1-P03) and the missing fail-closed rule for repository visibility (A1-P04) would cause rework or a boundary gap, so it is NOT-READY. The remaining findings are wording and precision fixes.
+
+### Re-review (A1.1, commit 2087934)
+
+**Verdict:** READY
+
+| ID | Status | Note |
+|---|---|---|
+| A1-P01 | Resolved (reviewer) | FR9.7 and FR9.8 now publish featured status and category only through Publish/Update (FR3.2 "Changes since last publish"). Reordering needs an explicit "Update featured order" confirmation. FR7.4 re-exports the home and category pages within 5 minutes. Each has a Given/When/Then. |
+| A1-P02 | Resolved (reviewer) | FR8.2 removes the exhibit from the carousel, category page and counts, with criteria for a featured exhibit and for the last exhibit in a category. FR6.1 now previews the slide and category placement. |
+| A1-P03 | Resolved (reviewer) | FR4.9 now says PDFs are download-only and drawings are shown inline only as images with alt text. A download criterion was added. |
+| A1-P04 | Resolved (reviewer) | FR4.10 has a fail-closed rule, with an export allow-list and an export scan criterion. NFR2 matches. |
+| A1-P05 | Resolved (reviewer) | A badge table covers OSI/SPDX, other/NOASSERTION, access and phone suitability. The access field is stated to describe the linked app. |
+| A1-P06 | Resolved (reviewer) | NFR16 has its 429 criteria again, plus one for the link check. |
+| A1-P07 | Resolved (reviewer) | Sign-in detection is defined (401/403 or a password field). "Refused" is a third label. Timeouts are 5s per hop and 15s overall. The allow-list handles multiple DNS answers and mapped IPv6. |
+| A1-P08 | Resolved (reviewer) | There is a corrupt-HEIC criterion. VSDX and FCStd have ZIP structure checks. Pixel limits, zip-bomb and XXE criteria were added. |
+| A1-P09 | Resolved (reviewer) | There are owner-set "Rights review complete" and "Live URL authorized" flags, and Publish is unavailable without the first. Criteria were added. |
+| A1-P10 | Resolved (reviewer) | FR9.6 cites `design-system-mapping.md`, which exists, plus a measurable token-pair contrast criterion. It depends on that file as approved at the Refined Mockups gate, which is still pending; see A1-P14. |
+| A1-P11 | Resolved (reviewer) | Four fixed categories with fixed addresses. No category is allowed. Category management is on the roadmap. |
+| A1-P12 | Resolved (reviewer) | FR10.2 and the assumptions are updated, and "Monopoly Arena" is stated as the working title. Out of Scope additions cite D-27. The tile change is flagged, but see A1-P13. |
+
+**New findings**
+
+| ID | Severity | Location | Finding | Required action |
+|---|---|---|---|---|
+| A1-P13 | Minor | FR9.1 | The text says the "equal-card grid of the CR-04 identity, D-26" replaces D-16's varied tiles. D-26 and the refined-mockups documents do not record an equal-card grid, so the change has no recorded source. | Cite where the owner decided it, or restore D-16's wording until the owner confirms. |
+| A1-P14 | Minor | FR9.6 | The token source is "as approved at the Refined Mockups gate", but that gate has not been approved (a Request Changes was recorded). The requirement therefore points to content that may still change. | Say that the file's version at approval governs, and re-check this requirement if the gate changes the tokens. |
+| A1-P15 | Minor | FR9.7, FR7.3, FR9.8 | Two small gaps. First, it is unclear whether a featured draft counts against the 5 limit. Second, FR7.3 does not list the new Publish blocks (FR10.6), and the category 404 text is not stated, because FR9.3's wording is exhibit-specific. | State that drafts count toward the 5. Add the FR10.6 block to FR7.3. State a category 404 message. |
+
+### Re-review summary
+All twelve earlier findings are resolved in the text. The three new findings are Minor wording and traceability items, so none blocks READY.

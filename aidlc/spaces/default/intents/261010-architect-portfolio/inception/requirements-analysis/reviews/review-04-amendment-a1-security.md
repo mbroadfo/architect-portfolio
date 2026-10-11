@@ -36,3 +36,35 @@ A1 keeps the approved boundaries in intent, and several of the new controls are 
 - **CR-04 (visual identity):** the referenced prototype brings in third-party font requests (A1-S16).
 
 The Minor findings (A1-S05, A1-S06, A1-S10) are precision fixes. Every finding can be fixed with the concise wording proposed, and none reopens an owner decision. Re-review the changed text once it is applied.
+
+### Re-review (A1.1, commit 2087934)
+
+**Verdict:** READY
+
+I checked each finding against the text of `requirements.md` at commit 2087934 (`git diff 5906fe0 2087934`). Each one is resolved at requirements level. The two new findings below are Minor and do not block.
+
+| ID | Status | Note |
+|---|---|---|
+| A1-S01 | Resolved (reviewer) | NFR17 "Addresses" is now an allow-list based on the IANA special-purpose registries. It normalizes IPv4-mapped and IPv4-embedding IPv6 forms and refuses the URL if any resolved address is refused. "Parsing" adds a single canonical parser and rejects userinfo and non-canonical IP literals. Test cases are added for `::ffff:10.0.0.5` and `fd00:ec2::254`. |
+| A1-S02 | Resolved (reviewer) | "Pinning and TLS": SNI and certificate checks use the original hostname, and verification is never disabled. Each redirect is re-resolved and re-pinned. The time limit is 5 s per hop and 15 s for the whole check. The request asks for identity encoding, and the 256 KB cap is counted after decoding. Each limit has a test case. |
+| A1-S03 | Resolved (reviewer) | NFR17 "No rendering" rules out a headless browser. FR10.5 now detects a sign-in page statically: a 401 or 403 status, or a password field in the capped response body. |
+| A1-S04 | Resolved (reviewer) | NFR17 "Isolation": no VPC attachment, or egress limited to public addresses, plus an execution identity that has no other permissions. Before merge, the NFR Design mechanism needs the review the project rules require. |
+| A1-S05 | Resolved (reviewer) | FR10.5 and NFR17 now use the same three labels. The final address is recorded without userinfo, query or fragment. Logging records the host, resolved address and decision, with no response body. Test cases cover rebinding, certificate errors, oversized responses and slow responses. |
+| A1-S06 | Resolved (reviewer) | The AI-endpoint test case is back under NFR16. A 429 test is added for the link check, and a check covers at most one URL per exhibit. |
+| A1-S07 | Resolved (reviewer) | FR4.2 sets a pixel limit before a full decode, memory and time limits, keeps only the primary image after applying orientation, and marks this a security-sensitive path. Test cases cover an oversized image and a HEIC file that cannot be converted. |
+| A1-S08 | Resolved (reviewer) | FR4.4 limits checks to the central directory and the named entry, enforces size and ratio limits, never extracts, and parses XML with DTDs and external entities off. Test cases cover a zip bomb and XXE. See A1-S17 for parsing that falls outside these limits. |
+| A1-S09 | Resolved (reviewer) | The FR7.2 confirmation now shows embedded metadata and ZIP entries, flags secret-like names, and states that the file is published unchanged. |
+| A1-S10 | Resolved (reviewer) | FR4.9 makes PDFs downloads only and adds a test case. FR4.4 and NFR15 add `Content-Security-Policy: sandbox; default-src 'none'` to downloads. |
+| A1-S11 | Resolved (reviewer) | FR4.10 adds the export allow-list and a derived-badge table. A test case and the NFR2 invariant scan the whole export, including HTML attributes, JSON, alt text and file names. |
+| A1-S12 | Resolved (reviewer) | FR4.10 now fails closed when visibility cannot be confirmed (error, rate limit or rename) and has a test case. FR10.5 publishes exactly the URL the owner entered. FR7.2 flags a redirect to a different registrable domain. |
+| A1-S13 | Resolved (reviewer) | FR10.7 adds exclusion by default and the "Live URL authorized" flag, keeps withheld values out of the repository, and adds a hash-based CI check that never prints them. Note: the check scans committed content, so pull-request text stays a procedural control. |
+| A1-S14 | Resolved (reviewer) | Featured status and category are exhibit fields that go public through Publish or Update (FR3.2). Reordering needs a "Update featured order" confirmation, which is logged and safe to repeat. Categories are fixed, so there is nothing to rename. Test cases are added. See A1-S18. |
+| A1-S15 | Resolved (reviewer) | FR8.2 now covers the carousel, category pages and counts, the 404 for an emptied category, re-export with cache invalidation, and release of the featured slot. Test cases are added, and NFR2 is extended. |
+| A1-S16 | Resolved (reviewer) | FR9.5 requires every request to go to the site's own origin, with a test case. NFR15 sets `default-src 'self'`. FR9.6 now cites `design-system-mapping.md` ("No remote fonts") instead of prototype R5. |
+
+New findings introduced by A1.1:
+
+| ID | Severity | Location | Finding | Required action |
+|---|---|---|---|---|
+| A1-S17 | Minor | FR7.2, FR4.4 | To show embedded metadata, the server must parse more than FR4.4's limits cover: a PDF's Info dictionary and XMP, and a VSDX's `docProps/core.xml`, which is not "the named entry". If extraction fails silently, the confirmation could show no metadata, and the owner would publish metadata they never saw. | Add to FR7.2: "Metadata extraction runs under the FR4.2 and FR4.4 limits: named entries only, size-capped, no DTDs or external entities, with time and memory limits. If extraction fails, the confirmation says the metadata could not be read; it never shows the file as having none." |
+| A1-S18 | Minor | FR7.4, FR8.2, NFR2 | Publish, Update and take-down now re-export shared pages (home, carousel, category). FR7.5, NFR2 and the FR9.8 test case imply those pages use only published state, but no test case checks it across exhibits. A naive re-export from Studio data would publish another exhibit's saved but unpublished card text, category or featured status, or an unconfirmed featured order. | Add to FR7.4: "Re-exported shared pages use only each other exhibit's last published state and the last confirmed featured order." Add a test case: "Given exhibit B has saved but unpublished changes, When exhibit A is published, Then no change to B appears publicly." |
