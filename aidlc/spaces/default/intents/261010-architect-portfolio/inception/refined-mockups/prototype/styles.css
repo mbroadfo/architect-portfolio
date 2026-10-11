@@ -9,6 +9,7 @@
   --panel-2: #1f1c18;
   --line: rgba(236, 224, 204, 0.10);
   --line-2: rgba(236, 224, 204, 0.20);
+  --control-border: #857b6d; /* identifies inputs and buttons: >= 3:1 on every surface */
   --text: #ede5d8;
   --text-2: #cbc1b1;
   --muted: #9d9282;
@@ -506,3 +507,6 @@ button { font: inherit; color: inherit; }
 .skip { position: absolute; left: 12px; top: -60px; z-index: 100; padding: 10px 14px; border-radius: 3px; background: var(--brass); color: var(--brass-ink); font: 600 14px/1 var(--f-ui); }
 .skip:focus { top: 12px; }
 main:focus { outline: none; }
+
+/* Non-text contrast (WCAG 1.4.11): component boundaries use --control-border */
+.search, .btn--ghost, .chip, .round-btn, .icon-btn:hover { border-color: var(--control-border); }

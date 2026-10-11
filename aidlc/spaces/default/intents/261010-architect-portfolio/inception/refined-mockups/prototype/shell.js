@@ -7,6 +7,9 @@ window.Shell = (() => {
   const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
   const ic = (id, cls = "ic") => `<svg class="${cls}" aria-hidden="true"><use href="#${id}"/></svg>`;
   const published = () => D.projects.filter((p) => !p.pending);
+  // ?export shows exactly what a production export would contain: no pending candidates (FR9.1, FR10.1).
+  const exportView = new URLSearchParams(location.search).has("export");
+  const pendingShown = () => (exportView ? [] : D.projects.filter((p) => p.pending));
   const liveCategories = () => D.categories.filter((c) => published().some((p) => p.category === c.id));
 
   function render({ active = "", current = "" } = {}) {
@@ -107,13 +110,17 @@ window.Shell = (() => {
     const c = D.cat(p.category);
     const img = p.lead
       ? `<a class="card__img" href="project.html?p=${p.slug}" tabindex="-1" aria-hidden="true"><img src="${p.lead.src}" alt="" loading="lazy" style="object-position:${p.lead.pos || "50% 50%"}">${chip(p.lead.kind)}</a>`
-      : `<div class="card__img card__img--empty"><span class="placeholder">${ic("i-flag", "ic ic--xl")}<span>Image awaiting approval</span><small>Source is private — nothing is drawn from it without approval (D-22)</small></span></div>`;
+      : p.repos.some((r) => r.visibility === "private")
+        ? `<div class="card__img card__img--empty"><span class="placeholder">${ic("i-flag", "ic ic--xl")}<span>Image awaiting approval</span><small>Source is private — nothing is drawn from it without approval (D-22)</small></span></div>`
+        : `<div class="card__img card__img--empty"><span class="placeholder">${ic("i-image", "ic ic--xl")}<span>No lead image yet</span><small>Choose a lead image with alt text before publishing (FR7.3)</small></span></div>`;
     const title = p.pending
       ? `<h3>${ic(p.icon)}<span>${esc(p.title)}</span></h3>`
       : `<h3>${ic(p.icon)}<a href="project.html?p=${p.slug}">${esc(p.title)}</a></h3>`;
     const summary = p.summary
       ? `<p>${esc(p.summary)}</p>`
-      : `<p class="pending">Description to come. It will be written only from material Michael approves for publication.</p>`;
+      : p.pending
+        ? `<p class="pending">Description to come. It will be written only from material Michael approves for publication.</p>`
+        : `<p class="pending">No summary yet.</p>`;
     const note = p.pending
       ? "Not published: content, rights (FR10.6) and live-URL (FR10.7) approvals outstanding — absent from the live site until approved"
       : p.provisional ? "Title and artwork provisional until the rights review (FR10.6)" : "";
@@ -129,5 +136,5 @@ window.Shell = (() => {
           </li>`;
   }
 
-  return { render, card, badgeHtml, chip, esc, ic, published, liveCategories };
+  return { render, card, badgeHtml, chip, esc, ic, published, pendingShown, liveCategories, exportView };
 })();

@@ -1,7 +1,7 @@
 {
-  "run": "2026-10-11T02:13:09.028Z",
-  "passed": 107,
-  "total": 107,
+  "run": "2026-10-11T02:20:30.590Z",
+  "passed": 112,
+  "total": 112,
   "results": [
     {
       "id": "R-home-1440",
@@ -9,12 +9,7 @@
       "pass": true,
       "evidence": {
         "overflowPx": 0,
-        "errors": [
-          "Access to XMLHttpRequest at 'file:///C:/Users/Mike/Documents/Code/architect-portfolio/aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-",
-          "Failed to load resource: net::ERR_FAILED",
-          "Access to XMLHttpRequest at 'file:///C:/Users/Mike/Documents/Code/architect-portfolio/aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-",
-          "Failed to load resource: net::ERR_FAILED"
-        ]
+        "errors": []
       }
     },
     {
@@ -25,9 +20,12 @@
     },
     {
       "id": "A-home",
-      "name": "index.html: axe — no serious or critical violations",
+      "name": "index.html: axe — no serious or critical violations, and the axe run logs no console errors",
       "pass": true,
-      "evidence": []
+      "evidence": {
+        "violations": [],
+        "consoleErrorsDuringAxe": []
+      }
     },
     {
       "id": "R-home-1024",
@@ -62,12 +60,7 @@
       "pass": true,
       "evidence": {
         "overflowPx": 0,
-        "errors": [
-          "Access to XMLHttpRequest at 'file:///C:/Users/Mike/Documents/Code/architect-portfolio/aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-",
-          "Failed to load resource: net::ERR_FAILED",
-          "Access to XMLHttpRequest at 'file:///C:/Users/Mike/Documents/Code/architect-portfolio/aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-",
-          "Failed to load resource: net::ERR_FAILED"
-        ]
+        "errors": []
       }
     },
     {
@@ -78,9 +71,12 @@
     },
     {
       "id": "A-catalog",
-      "name": "catalog.html: axe — no serious or critical violations",
+      "name": "catalog.html: axe — no serious or critical violations, and the axe run logs no console errors",
       "pass": true,
-      "evidence": []
+      "evidence": {
+        "violations": [],
+        "consoleErrorsDuringAxe": []
+      }
     },
     {
       "id": "R-catalog-1024",
@@ -115,12 +111,7 @@
       "pass": true,
       "evidence": {
         "overflowPx": 0,
-        "errors": [
-          "Access to XMLHttpRequest at 'file:///C:/Users/Mike/Documents/Code/architect-portfolio/aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-",
-          "Failed to load resource: net::ERR_FAILED",
-          "Access to XMLHttpRequest at 'file:///C:/Users/Mike/Documents/Code/architect-portfolio/aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-",
-          "Failed to load resource: net::ERR_FAILED"
-        ]
+        "errors": []
       }
     },
     {
@@ -131,9 +122,12 @@
     },
     {
       "id": "A-category-games",
-      "name": "catalog.html?category=games: axe — no serious or critical violations",
+      "name": "catalog.html?category=games: axe — no serious or critical violations, and the axe run logs no console errors",
       "pass": true,
-      "evidence": []
+      "evidence": {
+        "violations": [],
+        "consoleErrorsDuringAxe": []
+      }
     },
     {
       "id": "R-category-games-1024",
@@ -168,12 +162,7 @@
       "pass": true,
       "evidence": {
         "overflowPx": 0,
-        "errors": [
-          "Access to XMLHttpRequest at 'file:///C:/Users/Mike/Documents/Code/architect-portfolio/aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-",
-          "Failed to load resource: net::ERR_FAILED",
-          "Access to XMLHttpRequest at 'file:///C:/Users/Mike/Documents/Code/architect-portfolio/aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-",
-          "Failed to load resource: net::ERR_FAILED"
-        ]
+        "errors": []
       }
     },
     {
@@ -184,9 +173,12 @@
     },
     {
       "id": "A-project-stars",
-      "name": "project.html?p=stars: axe — no serious or critical violations",
+      "name": "project.html?p=stars: axe — no serious or critical violations, and the axe run logs no console errors",
       "pass": true,
-      "evidence": []
+      "evidence": {
+        "violations": [],
+        "consoleErrorsDuringAxe": []
+      }
     },
     {
       "id": "R-project-stars-1024",
@@ -221,12 +213,7 @@
       "pass": true,
       "evidence": {
         "overflowPx": 0,
-        "errors": [
-          "Access to XMLHttpRequest at 'file:///C:/Users/Mike/Documents/Code/architect-portfolio/aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-",
-          "Failed to load resource: net::ERR_FAILED",
-          "Access to XMLHttpRequest at 'file:///C:/Users/Mike/Documents/Code/architect-portfolio/aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-",
-          "Failed to load resource: net::ERR_FAILED"
-        ]
+        "errors": []
       }
     },
     {
@@ -237,9 +224,12 @@
     },
     {
       "id": "A-project-baduk",
-      "name": "project.html?p=baduk: axe — no serious or critical violations",
+      "name": "project.html?p=baduk: axe — no serious or critical violations, and the axe run logs no console errors",
       "pass": true,
-      "evidence": []
+      "evidence": {
+        "violations": [],
+        "consoleErrorsDuringAxe": []
+      }
     },
     {
       "id": "R-project-baduk-1024",
@@ -274,12 +264,7 @@
       "pass": true,
       "evidence": {
         "overflowPx": 0,
-        "errors": [
-          "Access to XMLHttpRequest at 'file:///C:/Users/Mike/Documents/Code/architect-portfolio/aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-",
-          "Failed to load resource: net::ERR_FAILED",
-          "Access to XMLHttpRequest at 'file:///C:/Users/Mike/Documents/Code/architect-portfolio/aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-",
-          "Failed to load resource: net::ERR_FAILED"
-        ]
+        "errors": []
       }
     },
     {
@@ -290,9 +275,12 @@
     },
     {
       "id": "A-project-monopoly",
-      "name": "project.html?p=monopoly-arena: axe — no serious or critical violations",
+      "name": "project.html?p=monopoly-arena: axe — no serious or critical violations, and the axe run logs no console errors",
       "pass": true,
-      "evidence": []
+      "evidence": {
+        "violations": [],
+        "consoleErrorsDuringAxe": []
+      }
     },
     {
       "id": "R-project-monopoly-1024",
@@ -327,12 +315,7 @@
       "pass": true,
       "evidence": {
         "overflowPx": 0,
-        "errors": [
-          "Access to XMLHttpRequest at 'file:///C:/Users/Mike/Documents/Code/architect-portfolio/aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-",
-          "Failed to load resource: net::ERR_FAILED",
-          "Access to XMLHttpRequest at 'file:///C:/Users/Mike/Documents/Code/architect-portfolio/aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-",
-          "Failed to load resource: net::ERR_FAILED"
-        ]
+        "errors": []
       }
     },
     {
@@ -343,9 +326,12 @@
     },
     {
       "id": "A-not-on-display",
-      "name": "project.html?p=risk: axe — no serious or critical violations",
+      "name": "project.html?p=risk: axe — no serious or critical violations, and the axe run logs no console errors",
       "pass": true,
-      "evidence": []
+      "evidence": {
+        "violations": [],
+        "consoleErrorsDuringAxe": []
+      }
     },
     {
       "id": "R-not-on-display-1024",
@@ -491,6 +477,30 @@
       }
     },
     {
+      "id": "F-export-index",
+      "name": "index.html?export: export view contains no unapproved candidate (no Risk card)",
+      "pass": true,
+      "evidence": {
+        "pending": 0
+      }
+    },
+    {
+      "id": "F-export-catalog",
+      "name": "catalog.html?export: export view contains no unapproved candidate (no Risk card)",
+      "pass": true,
+      "evidence": {
+        "pending": 0
+      }
+    },
+    {
+      "id": "F-export-catalog-games",
+      "name": "catalog.html?category=games&export: export view contains no unapproved candidate (no Risk card)",
+      "pass": true,
+      "evidence": {
+        "pending": 0
+      }
+    },
+    {
       "id": "D-lightbox",
       "name": "Gallery opens an enlarged view by keyboard, arrows step, Escape closes and focus returns (FR9.2)",
       "pass": true,
@@ -506,14 +516,7 @@
       "pass": true,
       "evidence": {
         "overflowPx": 0,
-        "errors": [
-          "Access to XMLHttpRequest at 'file:///C:/Users/Mike/Documents/Code/architect-portfolio/aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-",
-          "Failed to load resource: net::ERR_FAILED",
-          "Access to XMLHttpRequest at 'file:///C:/Users/Mike/Documents/Code/architect-portfolio/aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-",
-          "Failed to load resource: net::ERR_FAILED",
-          "Access to XMLHttpRequest at 'file:///C:/Users/Mike/Documents/Code/architect-portfolio/aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-",
-          "Failed to load resource: net::ERR_FAILED"
-        ]
+        "errors": []
       }
     },
     {
@@ -524,9 +527,12 @@
     },
     {
       "id": "A-studio-signin",
-      "name": "studio.html#signin: axe — no serious or critical violations",
+      "name": "studio.html#signin: axe — no serious or critical violations, and the axe run logs no console errors",
       "pass": true,
-      "evidence": []
+      "evidence": {
+        "violations": [],
+        "consoleErrorsDuringAxe": []
+      }
     },
     {
       "id": "R-studio-signin-390",
@@ -543,14 +549,7 @@
       "pass": true,
       "evidence": {
         "overflowPx": 0,
-        "errors": [
-          "Access to XMLHttpRequest at 'file:///C:/Users/Mike/Documents/Code/architect-portfolio/aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-",
-          "Failed to load resource: net::ERR_FAILED",
-          "Access to XMLHttpRequest at 'file:///C:/Users/Mike/Documents/Code/architect-portfolio/aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-",
-          "Failed to load resource: net::ERR_FAILED",
-          "Access to XMLHttpRequest at 'file:///C:/Users/Mike/Documents/Code/architect-portfolio/aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-",
-          "Failed to load resource: net::ERR_FAILED"
-        ]
+        "errors": []
       }
     },
     {
@@ -561,9 +560,12 @@
     },
     {
       "id": "A-studio-private",
-      "name": "studio.html#private: axe — no serious or critical violations",
+      "name": "studio.html#private: axe — no serious or critical violations, and the axe run logs no console errors",
       "pass": true,
-      "evidence": []
+      "evidence": {
+        "violations": [],
+        "consoleErrorsDuringAxe": []
+      }
     },
     {
       "id": "R-studio-private-390",
@@ -580,14 +582,7 @@
       "pass": true,
       "evidence": {
         "overflowPx": 0,
-        "errors": [
-          "Access to XMLHttpRequest at 'file:///C:/Users/Mike/Documents/Code/architect-portfolio/aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-",
-          "Failed to load resource: net::ERR_FAILED",
-          "Access to XMLHttpRequest at 'file:///C:/Users/Mike/Documents/Code/architect-portfolio/aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-",
-          "Failed to load resource: net::ERR_FAILED",
-          "Access to XMLHttpRequest at 'file:///C:/Users/Mike/Documents/Code/architect-portfolio/aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-",
-          "Failed to load resource: net::ERR_FAILED"
-        ]
+        "errors": []
       }
     },
     {
@@ -598,9 +593,12 @@
     },
     {
       "id": "A-studio-projects",
-      "name": "studio.html#projects: axe — no serious or critical violations",
+      "name": "studio.html#projects: axe — no serious or critical violations, and the axe run logs no console errors",
       "pass": true,
-      "evidence": []
+      "evidence": {
+        "violations": [],
+        "consoleErrorsDuringAxe": []
+      }
     },
     {
       "id": "R-studio-projects-390",
@@ -617,14 +615,7 @@
       "pass": true,
       "evidence": {
         "overflowPx": 0,
-        "errors": [
-          "Access to XMLHttpRequest at 'file:///C:/Users/Mike/Documents/Code/architect-portfolio/aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-",
-          "Failed to load resource: net::ERR_FAILED",
-          "Access to XMLHttpRequest at 'file:///C:/Users/Mike/Documents/Code/architect-portfolio/aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-",
-          "Failed to load resource: net::ERR_FAILED",
-          "Access to XMLHttpRequest at 'file:///C:/Users/Mike/Documents/Code/architect-portfolio/aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-",
-          "Failed to load resource: net::ERR_FAILED"
-        ]
+        "errors": []
       }
     },
     {
@@ -635,9 +626,12 @@
     },
     {
       "id": "A-studio-empty",
-      "name": "studio.html#projects/empty: axe — no serious or critical violations",
+      "name": "studio.html#projects/empty: axe — no serious or critical violations, and the axe run logs no console errors",
       "pass": true,
-      "evidence": []
+      "evidence": {
+        "violations": [],
+        "consoleErrorsDuringAxe": []
+      }
     },
     {
       "id": "R-studio-empty-390",
@@ -654,14 +648,7 @@
       "pass": true,
       "evidence": {
         "overflowPx": 0,
-        "errors": [
-          "Access to XMLHttpRequest at 'file:///C:/Users/Mike/Documents/Code/architect-portfolio/aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-",
-          "Failed to load resource: net::ERR_FAILED",
-          "Access to XMLHttpRequest at 'file:///C:/Users/Mike/Documents/Code/architect-portfolio/aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-",
-          "Failed to load resource: net::ERR_FAILED",
-          "Access to XMLHttpRequest at 'file:///C:/Users/Mike/Documents/Code/architect-portfolio/aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-",
-          "Failed to load resource: net::ERR_FAILED"
-        ]
+        "errors": []
       }
     },
     {
@@ -672,9 +659,12 @@
     },
     {
       "id": "A-studio-discover",
-      "name": "studio.html#discover: axe — no serious or critical violations",
+      "name": "studio.html#discover: axe — no serious or critical violations, and the axe run logs no console errors",
       "pass": true,
-      "evidence": []
+      "evidence": {
+        "violations": [],
+        "consoleErrorsDuringAxe": []
+      }
     },
     {
       "id": "R-studio-discover-390",
@@ -691,14 +681,7 @@
       "pass": true,
       "evidence": {
         "overflowPx": 0,
-        "errors": [
-          "Access to XMLHttpRequest at 'file:///C:/Users/Mike/Documents/Code/architect-portfolio/aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-",
-          "Failed to load resource: net::ERR_FAILED",
-          "Access to XMLHttpRequest at 'file:///C:/Users/Mike/Documents/Code/architect-portfolio/aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-",
-          "Failed to load resource: net::ERR_FAILED",
-          "Access to XMLHttpRequest at 'file:///C:/Users/Mike/Documents/Code/architect-portfolio/aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-",
-          "Failed to load resource: net::ERR_FAILED"
-        ]
+        "errors": []
       }
     },
     {
@@ -709,9 +692,12 @@
     },
     {
       "id": "A-studio-editor-stars",
-      "name": "studio.html#edit/stars: axe — no serious or critical violations",
+      "name": "studio.html#edit/stars: axe — no serious or critical violations, and the axe run logs no console errors",
       "pass": true,
-      "evidence": []
+      "evidence": {
+        "violations": [],
+        "consoleErrorsDuringAxe": []
+      }
     },
     {
       "id": "R-studio-editor-stars-390",
@@ -728,14 +714,7 @@
       "pass": true,
       "evidence": {
         "overflowPx": 0,
-        "errors": [
-          "Access to XMLHttpRequest at 'file:///C:/Users/Mike/Documents/Code/architect-portfolio/aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-",
-          "Failed to load resource: net::ERR_FAILED",
-          "Access to XMLHttpRequest at 'file:///C:/Users/Mike/Documents/Code/architect-portfolio/aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-",
-          "Failed to load resource: net::ERR_FAILED",
-          "Access to XMLHttpRequest at 'file:///C:/Users/Mike/Documents/Code/architect-portfolio/aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-",
-          "Failed to load resource: net::ERR_FAILED"
-        ]
+        "errors": []
       }
     },
     {
@@ -746,9 +725,12 @@
     },
     {
       "id": "A-studio-editor-risk",
-      "name": "studio.html#edit/risk: axe — no serious or critical violations",
+      "name": "studio.html#edit/risk: axe — no serious or critical violations, and the axe run logs no console errors",
       "pass": true,
-      "evidence": []
+      "evidence": {
+        "violations": [],
+        "consoleErrorsDuringAxe": []
+      }
     },
     {
       "id": "R-studio-editor-risk-390",
@@ -765,14 +747,7 @@
       "pass": true,
       "evidence": {
         "overflowPx": 0,
-        "errors": [
-          "Access to XMLHttpRequest at 'file:///C:/Users/Mike/Documents/Code/architect-portfolio/aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-",
-          "Failed to load resource: net::ERR_FAILED",
-          "Access to XMLHttpRequest at 'file:///C:/Users/Mike/Documents/Code/architect-portfolio/aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-",
-          "Failed to load resource: net::ERR_FAILED",
-          "Access to XMLHttpRequest at 'file:///C:/Users/Mike/Documents/Code/architect-portfolio/aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-",
-          "Failed to load resource: net::ERR_FAILED"
-        ]
+        "errors": []
       }
     },
     {
@@ -783,9 +758,12 @@
     },
     {
       "id": "A-studio-preview-baduk",
-      "name": "studio.html#preview/baduk: axe — no serious or critical violations",
+      "name": "studio.html#preview/baduk: axe — no serious or critical violations, and the axe run logs no console errors",
       "pass": true,
-      "evidence": []
+      "evidence": {
+        "violations": [],
+        "consoleErrorsDuringAxe": []
+      }
     },
     {
       "id": "R-studio-preview-baduk-390",
@@ -802,14 +780,7 @@
       "pass": true,
       "evidence": {
         "overflowPx": 0,
-        "errors": [
-          "Access to XMLHttpRequest at 'file:///C:/Users/Mike/Documents/Code/architect-portfolio/aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-",
-          "Failed to load resource: net::ERR_FAILED",
-          "Access to XMLHttpRequest at 'file:///C:/Users/Mike/Documents/Code/architect-portfolio/aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-",
-          "Failed to load resource: net::ERR_FAILED",
-          "Access to XMLHttpRequest at 'file:///C:/Users/Mike/Documents/Code/architect-portfolio/aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-",
-          "Failed to load resource: net::ERR_FAILED"
-        ]
+        "errors": []
       }
     },
     {
@@ -820,9 +791,12 @@
     },
     {
       "id": "A-studio-featured",
-      "name": "studio.html#featured: axe — no serious or critical violations",
+      "name": "studio.html#featured: axe — no serious or critical violations, and the axe run logs no console errors",
       "pass": true,
-      "evidence": []
+      "evidence": {
+        "violations": [],
+        "consoleErrorsDuringAxe": []
+      }
     },
     {
       "id": "R-studio-featured-390",
@@ -839,14 +813,7 @@
       "pass": true,
       "evidence": {
         "overflowPx": 0,
-        "errors": [
-          "Access to XMLHttpRequest at 'file:///C:/Users/Mike/Documents/Code/architect-portfolio/aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-",
-          "Failed to load resource: net::ERR_FAILED",
-          "Access to XMLHttpRequest at 'file:///C:/Users/Mike/Documents/Code/architect-portfolio/aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-",
-          "Failed to load resource: net::ERR_FAILED",
-          "Access to XMLHttpRequest at 'file:///C:/Users/Mike/Documents/Code/architect-portfolio/aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-",
-          "Failed to load resource: net::ERR_FAILED"
-        ]
+        "errors": []
       }
     },
     {
@@ -857,9 +824,12 @@
     },
     {
       "id": "A-studio-activity",
-      "name": "studio.html#activity: axe — no serious or critical violations",
+      "name": "studio.html#activity: axe — no serious or critical violations, and the axe run logs no console errors",
       "pass": true,
-      "evidence": []
+      "evidence": {
+        "violations": [],
+        "consoleErrorsDuringAxe": []
+      }
     },
     {
       "id": "R-studio-activity-390",
@@ -877,9 +847,15 @@
       "evidence": {
         "focused": "new-title",
         "emptyTitleError": true,
-        "hash": "#edit/new-mv36ux2w",
+        "hash": "#edit/new-mv374do0",
         "status": "Draft"
       }
+    },
+    {
+      "id": "S-placeholder",
+      "name": "A title-only project's card says it needs a lead image, and never claims a private source it doesn't have",
+      "pass": true,
+      "evidence": "No lead image yetChoose a lead image with alt text before publishing (FR7.3) Woodworking Hall table No summary yet."
     },
     {
       "id": "S-publish-blocked",
@@ -1072,6 +1048,56 @@
             "--brass-ink",
             "--brass-hi",
             9.98
+          ]
+        ]
+      }
+    },
+    {
+      "id": "T-nontext",
+      "name": "Control borders and the focus ring are at least 3:1 against every surface (WCAG 1.4.11)",
+      "pass": true,
+      "evidence": {
+        "low": [],
+        "pairs": [
+          [
+            "--control-border",
+            "--bg",
+            4.67
+          ],
+          [
+            "--control-border",
+            "--bg-2",
+            4.53
+          ],
+          [
+            "--control-border",
+            "--panel",
+            4.34
+          ],
+          [
+            "--control-border",
+            "--panel-2",
+            4.08
+          ],
+          [
+            "--brass-hi",
+            "--bg",
+            10.63
+          ],
+          [
+            "--brass-hi",
+            "--bg-2",
+            10.31
+          ],
+          [
+            "--brass-hi",
+            "--panel",
+            9.88
+          ],
+          [
+            "--brass-hi",
+            "--panel-2",
+            9.29
           ]
         ]
       }

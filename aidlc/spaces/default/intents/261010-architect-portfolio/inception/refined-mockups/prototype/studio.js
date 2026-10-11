@@ -293,7 +293,7 @@
               <label class="check"><input type="checkbox" name="rightsReview" ${p.rightsReview ? "checked" : ""}> Rights review complete — names and artwork cleared</label>
               <span class="field__hint">Required before this project can be published (FR10.6).</span></div>` : ""}
             <div class="field"><span class="field__label">Public badges (derived, not editable)</span>
-              <div class="card__foot" id="badge-preview">${badgesFor(p).map((b) => `<span class="badge">${esc(b)}</span>`).join("")}</div></div>
+              <div class="card__foot" id="badge-preview">${badgesFor(p).map((b) => `<span class="badge">${esc(b)}</span>`).join("") || `<span class="field__hint">None yet — badges appear when there's a live URL, a repository or a phone limitation.</span>`}</div></div>
           </fieldset>
         </form>
 

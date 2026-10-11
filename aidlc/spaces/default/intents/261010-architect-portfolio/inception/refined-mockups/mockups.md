@@ -25,7 +25,8 @@ Add `?notes` to any page to outline scope annotations.
 **Evidence:**
 
 - Genuine Playwright screenshots in `screenshots/r5-revision/`.
-- The repeatable verification suite `prototype/tests/verify.cjs`; its latest results are in `prototype/tests/results.json` and summarized in `verification.md`.
+- The repeatable verification suite `prototype/tests/verify.cjs` (112/112 checks); its latest results are in `prototype/tests/results.json` and summarized in `verification.md`.
+- An export view: add `?export` to the home or catalog pages to see exactly what a production export would contain. Pending candidates are left out (`home-export-view-desktop.png`).
 
 **Status:** proposed for the owner's Refined Mockups gate. Nothing here is published, and no project content is approved for publication.
 
@@ -70,7 +71,7 @@ Tokens, components and responsive rules are in `design-system-mapping.md`. All f
   - no autoplay; reduced motion removes the crossfade;
   - each slide links to its project page and, where a live URL is published, to the app.
 - **Explore Projects by Type (FR9.8):** wide tiles for populated categories only. Today that is Games & AI Arenas (2) and Astronomy & Exploration (1); Woodworking and Software & Tools appear once an exhibit in them is published.
-- **Selected Work (FR9.1):** the exhibition gallery as an equal-card grid — two columns on desktop, one on phones. Each card shows its category, title, summary and derived access badges (FR4.10). The unpublished Risk candidate is shown in its pending state for review only: it has no link and no image, and on the live site it would not appear until approved (FR10.1, FR10.7).
+- **Selected Work (FR9.1):** the exhibition gallery as an equal-card grid — two columns on desktop, one on phones. Each card shows its category, title, summary and derived access badges (FR4.10). The unpublished Risk candidate is shown in its pending state for review only: it has no link and no image. The export view (`?export`) shows what the live site would contain, and Risk is absent until approved (FR10.1, FR10.7; check F-export-*).
 - **About:** a short statement, with a marked owner content input for the biography and contact address.
 - **Footer (FR9.4):** GitHub, plain email link, copyright.
 
@@ -167,7 +168,8 @@ The Studio uses the same tokens with a utilitarian layout: a top bar with Projec
   - STARS and Baduk use live captures of their deployed public apps, labelled "Live capture".
   - Monopoly uses a labelled concept image ("Draft image · concept art"), and its board artwork is withheld until the rights review.
   - Risk shows "Image awaiting approval".
-  - Category tiles use labelled concept crops from the owner's concept board.
+  - Category tiles use the genuine live captures: Baduk for Games & AI Arenas, STARS for Astronomy & Exploration. Concept crops remain only for categories not yet shown.
+  - Fallback: if the Monopoly rights review isn't complete at launch, Monopoly stays in Draft (FR10.6). The only concept art on the public pages is then the neutral dice image, which shows no third-party trade dress.
 - **Copy:** drafted only from public READMEs and live pages, and labelled as draft. Nothing is drawn from Risk's private repository.
 - **Withheld values:** Risk's repository name and live URL appear in no file of this public repository (FR10.7).
 

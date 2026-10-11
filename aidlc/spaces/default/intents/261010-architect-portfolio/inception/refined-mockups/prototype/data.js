@@ -8,7 +8,7 @@ window.PORTFOLIO = (() => {
 
   const categories = [
     { id: "games", name: "Games & AI Arenas", sub: "Play them, or watch the bots", icon: "i-gamepad",
-      image: { src: "assets/draft/dice-hero.jpg", kind: "draft", alt: "" } },
+      image: { src: "assets/live/baduk-board.jpg", kind: "live", alt: "" } },
     { id: "astronomy", name: "Astronomy & Exploration", sub: "Instruments for the night sky", icon: "i-telescope",
       image: { src: "assets/live/stars.jpg", kind: "live", alt: "" } },
     { id: "woodworking", name: "Woodworking", sub: "Drawings, builds, and shop work", icon: "i-hammer",

@@ -25,7 +25,8 @@ All values are opaque except the borders and overlays.
 | `--panel` | `#181613` | Cards, panels, fieldsets |
 | `--panel-2` | `#1f1c18` | Image wells, raised panels |
 | `--line` | `rgba(236,224,204,.10)` | Hairline borders |
-| `--line-2` | `rgba(236,224,204,.20)` | Control borders |
+| `--line-2` | `rgba(236,224,204,.20)` | Card and panel borders (decorative) |
+| `--control-border` | `#857b6d` | Boundaries that identify inputs, search, chips and buttons (WCAG 1.4.11) |
 | `--text` | `#ede5d8` | Primary text, titles |
 | `--text-2` | `#cbc1b1` | Body and narrative text |
 | `--muted` | `#9d9282` | Labels, hints, metadata |
@@ -48,7 +49,14 @@ Measured by the verification suite (`T-contrast`, `prototype/tests/results.json`
 
 `--brass-ink` on `--brass` is 8.06; on `--brass-hi` it is 9.98.
 
-Non-text contrast (control borders, focus ring) is not measured automatically. The focus ring uses `--brass-hi`, which is well above 3:1 on every surface. The low-alpha `--line` hairlines are decorative, and no control relies on them alone.
+Non-text contrast (WCAG 1.4.11) is measured by the suite (`T-nontext`); every pair is at least 3:1.
+
+| Boundary \ Background | `--bg` | `--bg-2` | `--panel` | `--panel-2` |
+|---|---|---|---|---|
+| `--control-border` | 4.67 | 4.53 | 4.34 | 4.08 |
+| `--brass-hi` (focus ring) | 10.63 | 10.31 | 9.88 | 9.29 |
+
+The low-alpha `--line` and `--line-2` borders are decorative, and no control relies on them alone. (Stage review finding: the earlier 20%-alpha input borders were below 3:1. Fixed with `--control-border`.)
 
 ### Typography
 
@@ -110,4 +118,4 @@ The verification suite checked 390, 768, 1024 and 1440 px with no horizontal ove
 
 - The `--note` colour and draft chips are prototype review aids and are not part of the shipped identity.
 - Exact image derivative sizes for responsive delivery (NFR5) are set in NFR Design.
-- Non-text contrast is reviewed visually here; implementation adds an automated check if the component library allows it.
+- Implementation keeps the `T-nontext` check, or an equivalent, for the production component library.

@@ -2,9 +2,11 @@
 //
 // Usage (from this folder's parent, i.e. prototype/):
 //   PW=<path to playwright package> AXE=<path to axe-core/axe.min.js> node tests/verify.cjs
-// Writes screenshots to ../screenshots/r5-revision/ and results to tests/results.json.
+// Serves the prototype over a local HTTP server on 127.0.0.1 (no file:// quirks; axe can preload
+// stylesheets), writes screenshots to ../screenshots/r5-revision/ and results to tests/results.json.
 // Every check reports PASS or FAIL with evidence; nothing is assumed.
 const fs = require("fs");
+const http = require("http");
 const path = require("path");
 const { chromium } = require(process.env.PW || "playwright");
 
@@ -13,7 +15,16 @@ const SHOTS = path.resolve(ROOT, "..", "screenshots", "r5-revision");
 const AXE = fs.readFileSync(process.env.AXE, "utf8");
 fs.mkdirSync(SHOTS, { recursive: true });
 
-const url = (page) => "file:///" + path.join(ROOT, page.split(/[?#]/)[0]).split(path.sep).join("/") + page.slice(page.split(/[?#]/)[0].length);
+const MIME = { ".html": "text/html", ".css": "text/css", ".js": "text/javascript", ".jpg": "image/jpeg", ".png": "image/png", ".woff2": "font/woff2", ".txt": "text/plain", ".json": "application/json" };
+const server = http.createServer((req, res) => {
+  const rel = decodeURIComponent(new URL(req.url, "http://x").pathname).replace(/^\/+/, "");
+  const file = path.resolve(ROOT, rel || "index.html");
+  if (!file.startsWith(ROOT) || !fs.existsSync(file) || fs.statSync(file).isDirectory()) { res.writeHead(404); return res.end(); }
+  res.writeHead(200, { "Content-Type": MIME[path.extname(file)] || "application/octet-stream" });
+  fs.createReadStream(file).pipe(res);
+});
+let ORIGIN = "";
+const url = (page) => ORIGIN + "/" + page;
 const results = [];
 const check = (id, name, pass, evidence) => { results.push({ id, name, pass: !!pass, evidence }); console.log(`${pass ? "PASS" : "FAIL"}  ${id}  ${name}${pass ? "" : "  — " + JSON.stringify(evidence)}`); };
 
@@ -21,6 +32,8 @@ const DESKTOP = { width: 1440, height: 900 };
 const PHONE = { width: 390, height: 844 };
 
 (async () => {
+  await new Promise((r) => server.listen(0, "127.0.0.1", r));
+  ORIGIN = `http://127.0.0.1:${server.address().port}`;
   const browser = await chromium.launch();
 
   async function open(page, vp = DESKTOP, opts = {}) {
@@ -29,13 +42,14 @@ const PHONE = { width: 390, height: 844 };
     const errors = [], external = [];
     p.on("console", (m) => m.type() === "error" && errors.push(m.text().slice(0, 160)));
     p.on("pageerror", (e) => errors.push("pageerror: " + e.message.slice(0, 160)));
-    p.on("request", (r) => { const u = r.url(); if (!/^(file|data|blob):/.test(u)) external.push(u); });
+    p.on("request", (r) => { const u = r.url(); if (!u.startsWith(ORIGIN) && !/^(data|blob):/.test(u)) external.push(u); });
     await p.goto(url(page), { waitUntil: "load" });
     await p.evaluate(() => document.fonts.ready);
     await p.waitForTimeout(350);
     return { ctx, p, errors, external };
   }
-  const shot = (p, name, full = false) => p.screenshot({ path: path.join(SHOTS, name + ".png"), fullPage: full });
+  // Full-page captures start from the top so sticky bars render where they belong.
+  const shot = async (p, name, full = false) => { if (full) { await p.evaluate(() => window.scrollTo(0, 0)); await p.waitForTimeout(100); } return p.screenshot({ path: path.join(SHOTS, name + ".png"), fullPage: full }); };
   const overflow = (p) => p.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
   async function axe(p) {
     await p.addScriptTag({ content: AXE });
@@ -55,11 +69,12 @@ const PHONE = { width: 390, height: 844 };
     for (const [vpName, vp] of [["1440", DESKTOP], ["1024", { width: 1024, height: 900 }], ["768", { width: 768, height: 1024 }], ["390", PHONE]]) {
       const { ctx, p, errors, external } = await open(page, vp);
       const ov = await overflow(p);
-      check(`R-${name}-${vpName}`, `${page} at ${vpName}px: no horizontal overflow, no console errors`, ov <= 0 && !errors.length, { overflowPx: ov, errors });
+      check(`R-${name}-${vpName}`, `${page} at ${vpName}px: no horizontal overflow, no console errors`, ov <= 0 && !errors.length, { overflowPx: ov, errors: [...errors] });
       if (vpName === "1440") {
-        check(`P-${name}`, `${page}: requests nothing from a third-party origin (FR9.5)`, external.length === 0, external);
+        check(`P-${name}`, `${page}: requests nothing from a third-party origin (FR9.5)`, external.length === 0, [...external]);
+        const before = errors.length;
         const v = await axe(p);
-        check(`A-${name}`, `${page}: axe — no serious or critical violations`, v.length === 0, v);
+        check(`A-${name}`, `${page}: axe — no serious or critical violations, and the axe run logs no console errors`, v.length === 0 && errors.length === before, { violations: v, consoleErrorsDuringAxe: errors.slice(before) });
         await shot(p, `${name}-desktop`, name !== "home");
         if (name === "home") await shot(p, "home-desktop-full", true);
       }
@@ -156,6 +171,16 @@ const PHONE = { width: 390, height: 844 };
     await ctx.close();
   }
 
+  // export view: what a production export contains (FR9.1, FR10.1)
+  for (const page of ["index.html?export", "catalog.html?export", "catalog.html?category=games&export"]) {
+    const { ctx, p } = await open(page, DESKTOP);
+    const pending = await p.$$eval(".card--pending", (els) => els.length);
+    const text = await p.textContent("main");
+    check(`F-export-${page.split("?")[0].replace(".html", "")}${page.includes("games") ? "-games" : ""}`, `${page}: export view contains no unapproved candidate (no Risk card)`, pending === 0 && !/\bRisk\b/.test(text), { pending });
+    if (page === "index.html?export") await shot(p, "home-export-view-desktop", true);
+    await ctx.close();
+  }
+
   // ---------------------------------------------------------------- lightbox
   {
     const { ctx, p } = await open("project.html?p=stars", DESKTOP);
@@ -179,11 +204,12 @@ const PHONE = { width: 390, height: 844 };
     for (const [vpName, vp] of [["1440", DESKTOP], ["390", PHONE]]) {
       const { ctx, p, errors, external } = await open(page, vp);
       const ov = await overflow(p);
-      check(`R-${name}-${vpName}`, `${page} at ${vpName}px: no horizontal overflow, no console errors`, ov <= 0 && !errors.length, { overflowPx: ov, errors });
+      check(`R-${name}-${vpName}`, `${page} at ${vpName}px: no horizontal overflow, no console errors`, ov <= 0 && !errors.length, { overflowPx: ov, errors: [...errors] });
       if (vpName === "1440") {
-        check(`P-${name}`, `${page}: no third-party requests`, external.length === 0, external);
+        check(`P-${name}`, `${page}: no third-party requests`, external.length === 0, [...external]);
+        const before = errors.length;
         const v = await axe(p);
-        check(`A-${name}`, `${page}: axe — no serious or critical violations`, v.length === 0, v);
+        check(`A-${name}`, `${page}: axe — no serious or critical violations, and the axe run logs no console errors`, v.length === 0 && errors.length === before, { violations: v, consoleErrorsDuringAxe: errors.slice(before) });
       }
       await shot(p, `${name}-${vpName === "1440" ? "desktop" : "mobile"}`, true);
       await ctx.close();
@@ -208,6 +234,8 @@ const PHONE = { width: 390, height: 844 };
     const status = await p.textContent(".studio-head__sub .status");
     check("S-title-only", "A project can be created with only a title; it starts as Draft with no repository, and the AI panel says suggestions need a repository (FR3.1, FR5.1)",
       focused === "new-title" && err && hash.startsWith("#edit/new-") && /need a linked repository/.test(ai) && status === "Draft", { focused, emptyTitleError: err, hash, status });
+    const cardText = await p.textContent("#editor-form ~ .editor__aside .card");
+    check("S-placeholder", "A title-only project's card says it needs a lead image, and never claims a private source it doesn't have", /No lead image yet/.test(cardText) && !/Source is private/.test(cardText), cardText.replace(/\s+/g, " ").trim().slice(0, 160));
     await p.click('button[data-act="add-file"]'); await p.waitForTimeout(1100);
     await shot(p, "studio-editor-title-only", true);
     await p.click('button[data-act="publish"]'); await p.waitForTimeout(250);
@@ -307,10 +335,23 @@ const PHONE = { width: 390, height: 844 };
     });
     const low = pairs.filter(([, , r]) => r < 4.5);
     check("T-contrast", "Every text/background token pair is at least 4.5:1 (FR9.6, NFR8)", low.length === 0, { low, pairs });
+    const nontext = await p.evaluate(() => {
+      const cs = getComputedStyle(document.documentElement);
+      const v = (n) => cs.getPropertyValue(n).trim();
+      const lin = (c) => (c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4);
+      const L = (hex) => { const [r, g, b] = hex.replace("#", "").match(/../g).map((h) => lin(parseInt(h, 16) / 255)); return 0.2126 * r + 0.7152 * g + 0.0722 * b; };
+      const ratio = (a, b) => { const [x, y] = [L(v(a)), L(v(b))].sort((m, n) => n - m); return +((x + 0.05) / (y + 0.05)).toFixed(2); };
+      const out = [];
+      for (const fg of ["--control-border", "--brass-hi"]) for (const bg of ["--bg", "--bg-2", "--panel", "--panel-2"]) out.push([fg, bg, ratio(fg, bg)]);
+      return out;
+    });
+    const lowNT = nontext.filter(([, , r]) => r < 3);
+    check("T-nontext", "Control borders and the focus ring are at least 3:1 against every surface (WCAG 1.4.11)", lowNT.length === 0, { low: lowNT, pairs: nontext });
     await ctx.close();
   }
 
   await browser.close();
+  server.close();
   const passed = results.filter((r) => r.pass).length;
   fs.writeFileSync(path.join(__dirname, "results.json"), JSON.stringify({ run: new Date().toISOString(), passed, total: results.length, results }, null, 2));
   console.log(`\n${passed}/${results.length} checks passed`);

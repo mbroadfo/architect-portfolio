@@ -31,7 +31,7 @@
     const published = S.published();
     const shown = published.filter((p) => !cat || p.category === cat.id);
     // Prototype only: show the unpublished launch candidate in its pending state for design review.
-    const pending = D.projects.filter((p) => p.pending && (!cat || p.category === cat.id));
+    const pending = S.pendingShown().filter((p) => !cat || p.category === cat.id);
 
     if (cat) {
       document.title = `${cat.name} — Michael Broadfoot (Prototype R5)`;

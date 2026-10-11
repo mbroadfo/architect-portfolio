@@ -76,7 +76,7 @@
 
   // Selected work: published exhibits, then the pending launch candidate (prototype review only).
   document.getElementById("work-cards").innerHTML =
-    S.published().concat(D.projects.filter((p) => p.pending)).map(S.card).join("");
+    S.published().concat(S.pendingShown()).map(S.card).join("");
 
   // Mobile drawer
   const sidebar = document.getElementById("sidebar");
