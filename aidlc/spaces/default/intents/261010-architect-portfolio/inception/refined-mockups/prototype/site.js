@@ -16,7 +16,7 @@
         <h1 id="missing-h">This ${kind === "category" ? "category" : "exhibit"} isn't on display</h1>
         <p class="page-head__lede">It may have been taken down, or it hasn't been published yet.</p>
         <a class="btn btn--primary" href="catalog.html">See all work ${ic("i-arrow")}</a>
-      </section>`;
+      </section>${S.footerHtml()}`;
   }
 
   // ---------------------------------------------------------------- catalog
@@ -62,6 +62,8 @@
     document.title = `${p.title} — Michael Broadfoot (Prototype R5)`;
     const c = D.cat(p.category);
     const repo = p.repos.find((r) => r.visibility === "public");
+    // Public details derive only from exported fields: badges, live URL, public repositories (FR4.10).
+    const badgeTexts = (p.badges || D.badges(p)).map((b) => b.text);
     const sections = D.narrativeOrder.filter(([k]) => p.narrative[k]);
     const navItems = [["story", "Story"], ...(p.gallery.length || p.galleryNote ? [["gallery", "Gallery"]] : []),
       ...(p.files.length ? [["downloads", "Downloads"]] : []), ["details", "Details"]];
@@ -104,8 +106,8 @@
             <h2 id="details-h">Details</h2>
             <dl>
               ${c ? `<div><dt>${ic(c.icon)}Category</dt><dd><a href="catalog.html?category=${c.id}">${esc(c.name)}</a></dd></div>` : ""}
-              <div><dt>${ic("i-cloud")}Access</dt><dd>${p.access.liveUrl ? "Runs in your browser · no account needed" : "Not available online"}</dd></div>
-              <div><dt>${ic("i-gamepad")}Phones</dt><dd>${p.access.phone === "suitable" ? "Works on phones" : p.access.phone === "desktop" ? "Best on desktop" : "Not yet tested"}</dd></div>
+              <div><dt>${ic("i-cloud")}Access</dt><dd>${badgeTexts.includes("In browser") ? "Runs in your browser · no account needed" : badgeTexts.includes("Sign-in required") ? "Sign-in required" : badgeTexts.includes("By invitation") ? "By invitation" : "Not available online"}</dd></div>
+              ${badgeTexts.includes("Best on desktop") ? `<div><dt>${ic("i-gamepad")}Phones</dt><dd>Best on desktop</dd></div>` : ""}
               <div><dt>${ic("i-code")}Source</dt><dd>${repo ? (repo.licence ? `Open source · ${esc(repo.licence)}` : "Source available (all rights reserved)") : "Private"}</dd></div>
               <div><dt>${ic("i-grid")}Highlights</dt><dd>${p.meta.map(esc).join(", ")}</dd></div>
             </dl>
@@ -124,7 +126,7 @@
             </figure></li>`).join("")}</ul>`
             : `<p class="gallery-note" data-note="FR10.6: no artwork resembling third-party trade dress until the rights review">${esc(p.galleryNote || "No images yet.")}</p>`}
         </section>
-      </article>`;
+      </article>${S.footerHtml()}`;
 
     lightbox(p.gallery);
   }

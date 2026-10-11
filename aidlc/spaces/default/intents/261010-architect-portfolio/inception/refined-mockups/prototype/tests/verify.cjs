@@ -14,6 +14,12 @@ const ROOT = path.resolve(__dirname, "..");
 const SHOTS = path.resolve(ROOT, "..", "screenshots", "r5-revision");
 const AXE = fs.readFileSync(process.env.AXE, "utf8");
 fs.mkdirSync(SHOTS, { recursive: true });
+// Always rebuild the simulated public export from the approval model before testing it.
+require("child_process").execFileSync(process.execPath, [path.join(ROOT, "tools", "build-export.cjs")], { stdio: "inherit" });
+const EXPORT = path.join(ROOT, "export");
+// Identifiers of unapproved candidates: names, slugs, live hosts and their assets. None may
+// appear anywhere in the export payload — not merely be hidden in the DOM.
+const FORBIDDEN = [/monopoly/i, /\brisk\b/i, /arena\.xaminisalamini/i, /dice-hero/i, /pending approval/i, /cat-wood|cat-code/i];
 
 const MIME = { ".html": "text/html", ".css": "text/css", ".js": "text/javascript", ".jpg": "image/jpeg", ".png": "image/png", ".woff2": "font/woff2", ".txt": "text/plain", ".json": "application/json" };
 const server = http.createServer((req, res) => {
@@ -64,6 +70,10 @@ const PHONE = { width: 390, height: 844 };
     ["home", "index.html"], ["catalog", "catalog.html"], ["category-games", "catalog.html?category=games"],
     ["project-stars", "project.html?p=stars"], ["project-baduk", "project.html?p=baduk"],
     ["project-monopoly", "project.html?p=monopoly-arena"], ["not-on-display", "project.html?p=risk"],
+    // simulated public export (approved-publication snapshot only)
+    ["export-home", "export/index.html"], ["export-catalog", "export/catalog.html"], ["export-category-games", "export/catalog.html?category=games"],
+    ["export-project-stars", "export/project.html?p=stars"], ["export-project-baduk", "export/project.html?p=baduk"],
+    ["export-route-monopoly", "export/project.html?p=monopoly-arena"], ["export-route-risk", "export/project.html?p=risk"],
   ];
   for (const [name, page] of publicPages) {
     for (const [vpName, vp] of [["1440", DESKTOP], ["1024", { width: 1024, height: 900 }], ["768", { width: 768, height: 1024 }], ["390", PHONE]]) {
@@ -75,10 +85,10 @@ const PHONE = { width: 390, height: 844 };
         const before = errors.length;
         const v = await axe(p);
         check(`A-${name}`, `${page}: axe — no serious or critical violations, and the axe run logs no console errors`, v.length === 0 && errors.length === before, { violations: v, consoleErrorsDuringAxe: errors.slice(before) });
-        await shot(p, `${name}-desktop`, name !== "home");
+        if (name !== "export-route-risk") await shot(p, `${name}-desktop`, name !== "home"); // identical to the Monopoly route by design
         if (name === "home") await shot(p, "home-desktop-full", true);
       }
-      if (vpName === "390") await shot(p, `${name}-mobile`, true);
+      if (vpName === "390" && name !== "export-route-risk") await shot(p, `${name}-mobile`, true);
       await ctx.close();
     }
   }
@@ -171,13 +181,91 @@ const PHONE = { width: 390, height: 844 };
     await ctx.close();
   }
 
-  // export view: what a production export contains (FR9.1, FR10.1)
-  for (const page of ["index.html?export", "catalog.html?export", "catalog.html?category=games&export"]) {
+  // ---------------------------------------------------------------- approved-publication export
+  {
+    // 1. Static payload: every file shipped in export/ (FR7.1, FR10.1, FR10.6, FR10.7, NFR2).
+    const files = [];
+    const walk = (d) => { for (const f of fs.readdirSync(d)) { const full = path.join(d, f); fs.statSync(full).isDirectory() ? walk(full) : files.push(full); } };
+    walk(EXPORT);
+    const textual = files.filter((f) => /\.(html|js|css|json|txt)$/.test(f));
+    const hits = [];
+    for (const f of textual) { const t = fs.readFileSync(f, "utf8"); for (const re of FORBIDDEN) if (re.test(t)) hits.push(`${path.relative(EXPORT, f)}: ${re}`); }
+    for (const f of files) for (const re of FORBIDDEN) if (re.test(path.relative(EXPORT, f))) hits.push(`file name ${path.relative(EXPORT, f)}`);
+    check("X-payload", `Export payload (${files.length} files) contains no identifier of an unapproved candidate — Monopoly or Risk names, slugs, live hosts or assets`, hits.length === 0, hits);
+
+    // 2. Snapshot schema: allow-listed fields only (FR4.10).
+    const sandbox = { window: {} }; require("vm").createContext(sandbox);
+    require("vm").runInContext(fs.readFileSync(path.join(EXPORT, "publication.js"), "utf8"), sandbox);
+    const X = sandbox.window.PORTFOLIO;
+    const allowed = new Set(["slug", "title", "category", "icon", "featured", "meta", "summary", "lead", "gallery", "narrative", "files", "badges", "access", "repos"]);
+    const extra = X.projects.flatMap((q) => Object.keys(q).filter((k) => !allowed.has(k)).map((k) => `${q.slug}.${k}`));
+    const accessExtra = X.projects.flatMap((q) => Object.keys(q.access).filter((k) => k !== "liveUrl").map((k) => `${q.slug}.access.${k}`));
+    const privateRepos = X.projects.flatMap((q) => q.repos.filter((r) => r.visibility !== "public").map(() => q.slug));
+    check("X-schema", "Snapshot holds only approved projects with allow-listed fields: no publication state, access internals or private repositories (FR4.10)",
+      X.mode === "export" && X.projects.map((q) => q.slug).join() === "stars,baduk" && !extra.length && !accessExtra.length && !privateRepos.length,
+      { projects: X.projects.map((q) => q.slug), extra, accessExtra, privateRepos });
+
+    // 3. Assets: exactly the assets the approved projects use; no concept or unapproved art.
+    const assetFiles = files.filter((f) => f.includes(`${path.sep}assets${path.sep}`)).map((f) => path.relative(EXPORT, f).split(path.sep).join("/")).sort();
+    const referenced = [...new Set([...X.projects.flatMap((q) => [q.lead.src, ...q.gallery.map((g) => g.src)]), ...X.categories.map((c) => c.image.src)])].sort();
+    check("X-assets", "Export ships exactly the assets its approved projects reference, and no draft or unapproved art", JSON.stringify(assetFiles) === JSON.stringify(referenced) && !assetFiles.some((a) => a.startsWith("assets/draft/")), { assetFiles, referenced });
+
+    // 4. Runtime: rendered DOM and in-memory data on every export route, including direct routes.
+    const routes = ["export/index.html", "export/catalog.html", "export/catalog.html?category=games", "export/catalog.html?category=astronomy",
+      "export/project.html?p=stars", "export/project.html?p=baduk", "export/project.html?p=monopoly-arena", "export/project.html?p=risk"];
+    for (const page of routes) {
+      const { ctx, p } = await open(page, DESKTOP);
+      const requests = [];
+      p.on("request", (r) => requests.push(r.url()));
+      await p.reload({ waitUntil: "load" }); await p.waitForTimeout(250);
+      const html = await p.content();
+      const data = await p.evaluate(() => JSON.stringify(window.PORTFOLIO));
+      const leaks = FORBIDDEN.filter((re) => re.test(html) || re.test(data)).map(String);
+      const outside = requests.filter((u) => !u.startsWith(`${ORIGIN}/export/`));
+      const id = page.replace("export/", "").replace(/\.html/, "").replace(/[?=&]/g, "-");
+      check(`X-route-${id}`, `${page}: no unapproved data in the rendered page or the loaded data, and every request stays inside export/`, !leaks.length && !outside.length, { leaks, outside });
+      if (/monopoly-arena|risk/.test(page)) {
+        const h = await p.textContent("h1");
+        check(`X-direct-${id}`, `${page}: a direct route to an unapproved candidate shows "isn't on display" (FR9.3)`, /isn't on display/.test(h), h);
+      }
+      await ctx.close();
+    }
+
+    // 5. Featured, categories and counts derive from the snapshot.
+    {
+      const { ctx, p } = await open("export/index.html", DESKTOP);
+      const total = await p.textContent(".hero__total");
+      const dots = await p.$$eval(".hero__dots button", (b) => b.length);
+      const seen = [await p.textContent(".hero__title")];
+      for (let k = 0; k < 2; k++) { await p.click('.round-btn[data-dir="1"]'); await p.waitForTimeout(400); seen.push((await p.textContent(".hero__title")).trim()); }
+      const tiles = await p.$$eval(".type", (els) => els.map((e) => e.querySelector(".type__title").textContent + " " + e.querySelector(".type__count").textContent));
+      const cards = await p.$$eval("#work-cards .card h3", (els) => els.map((e) => e.textContent.trim()));
+      check("X-derived-home", "Export home: carousel, category tiles, counts and gallery come only from approved projects (STARS, Baduk)",
+        total === "02" && dots === 2 && seen.join("|").replace(/\s+/g, " ") === "STARS|Baduk|STARS" &&
+        JSON.stringify(tiles) === JSON.stringify(["Games & AI Arenas 1 project", "Astronomy & Exploration 1 project"]) && JSON.stringify(cards) === JSON.stringify(["STARS", "Baduk"]),
+        { total, dots, seen, tiles, cards });
+      await ctx.close();
+    }
+    {
+      const { ctx, p } = await open("export/catalog.html?category=games", DESKTOP);
+      const chips = await p.$$eval(".chip", (els) => els.map((e) => e.textContent.replace(/\s+/g, " ").trim()));
+      const cards = await p.$$eval(".card h3", (els) => els.map((e) => e.textContent.trim()));
+      check("X-derived-catalog", "Export catalog and category page list and count only approved projects", JSON.stringify(chips) === JSON.stringify(["All 2", "Games & AI Arenas 1", "Astronomy & Exploration 1"]) && JSON.stringify(cards) === JSON.stringify(["Baduk"]), { chips, cards });
+      await shot(p, "export-category-games-desktop", true);
+      await ctx.close();
+    }
+  }
+
+  // ---------------------------------------------------------------- email (FR9.4)
+  for (const page of ["index.html", "catalog.html", "project.html?p=stars", "project.html?p=risk", "export/index.html", "export/catalog.html", "export/project.html?p=stars", "export/project.html?p=monopoly-arena"]) {
     const { ctx, p } = await open(page, DESKTOP);
-    const pending = await p.$$eval(".card--pending", (els) => els.length);
-    const text = await p.textContent("main");
-    check(`F-export-${page.split("?")[0].replace(".html", "")}${page.includes("games") ? "-games" : ""}`, `${page}: export view contains no unapproved candidate (no Risk card)`, pending === 0 && !/\bRisk\b/.test(text), { pending });
-    if (page === "index.html?export") await shot(p, "home-export-view-desktop", true);
+    const footers = await p.$$eval("footer.site-foot", (f) => f.length);
+    const github = await p.$$eval('.site-foot a[href="https://github.com/mbroadfo"]', (a) => a.length);
+    check(`E-footer-${page.replace(/[/?=.]/g, "-")}`, `${page}: footer present once with the GitHub link and copyright (FR9.4)`, footers === 1 && github === 1, { footers, github });
+    const fake = await p.$$eval('a[href="#contact"]', (a) => a.length);
+    const mailto = await p.$$eval('.site-foot a[href^="mailto:"]', (a) => a.length);
+    const pendingInput = await p.$$eval(".site-foot .owner-input", (e) => e.map((x) => x.textContent.trim()));
+    check(`E-email-${page.replace(/[/?=.]/g, "-")}`, `${page}: no fake Email link — a real mailto: link, or the owner-content dependency shown as text`, fake === 0 && (mailto > 0 || pendingInput.some((t) => /Email address to come/.test(t))), { fake, mailto, pendingInput });
     await ctx.close();
   }
 

@@ -3,6 +3,12 @@
 // owner-approved (FR10.1). Risk's repository is private: nothing here is drawn from it,
 // and its live URL is withheld (FR10.7, D-15, D-22). Monopoly and Risk titles are
 // provisional pending a trademark and artwork review (FR10.6).
+//
+// `publication` is the approval model the simulated public export is built from
+// (tools/build-export.cjs). A project reaches the export only when it has a published version
+// AND its content approval is given AND no rights review is outstanding; its live URL is
+// exported only when authorized. Approvals marked "simulated" exist for the prototype
+// demonstration only — Michael has approved nothing for publication.
 window.PORTFOLIO = (() => {
   "use strict";
 
@@ -34,6 +40,7 @@ window.PORTFOLIO = (() => {
   const projects = [
     {
       slug: "stars", title: "STARS", category: "astronomy", featured: 1, provisional: false,
+      publication: { status: "Published", content: "approved (simulated)", rights: "not required", liveUrl: "authorized (simulated)" },
       icon: "i-star",
       meta: ["Astronomy", "3D", "Runs in your browser"],
       summary: "Fly through the real galaxy — 123,000 stars at their true 3D positions, with instruments no planetarium ships.",
@@ -58,6 +65,7 @@ window.PORTFOLIO = (() => {
     },
     {
       slug: "baduk", title: "Baduk", category: "games", featured: 2, provisional: false,
+      publication: { status: "Changes since last publish", content: "approved (simulated)", rights: "not required", liveUrl: "authorized (simulated)" },
       icon: "i-stones",
       meta: ["Go", "AI coach", "Runs in your browser"],
       summary: "Learn Go by playing it — four bots with distinct personalities, and a coach that explains every move.",
@@ -82,6 +90,7 @@ window.PORTFOLIO = (() => {
     },
     {
       slug: "monopoly-arena", title: "Monopoly Arena", category: "games", featured: 3, provisional: true,
+      publication: { status: "Draft", content: "not approved", rights: "outstanding", liveUrl: "not authorized" },
       icon: "i-dice",
       meta: ["AI bots", "Simulation", "Runs in your browser"],
       summary: "A full rules engine and animated board for pitting AI strategies against each other — or training new ones.",
@@ -103,6 +112,7 @@ window.PORTFOLIO = (() => {
     },
     {
       slug: "risk", title: "Risk", category: "games", featured: 0, provisional: true,
+      publication: { status: "Draft", content: "none", rights: "outstanding", liveUrl: "withheld" },
       icon: "i-flag",
       meta: [],
       summary: "",
@@ -126,7 +136,7 @@ window.PORTFOLIO = (() => {
   ];
 
   const byCategory = (id) => projects.filter((p) => p.category === id);
-  return { categories, projects, badges, narrativeOrder, byCategory,
+  return { mode: "review", categories, projects, badges, narrativeOrder, byCategory,
     find: (slug) => projects.find((p) => p.slug === slug),
     cat: (id) => categories.find((c) => c.id === id) };
 })();

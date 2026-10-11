@@ -1,7 +1,7 @@
 {
-  "run": "2026-10-11T02:20:30.590Z",
-  "passed": 112,
-  "total": 112,
+  "run": "2026-10-11T15:06:04.564Z",
+  "passed": 182,
+  "total": 182,
   "results": [
     {
       "id": "R-home-1440",
@@ -361,6 +361,363 @@
       }
     },
     {
+      "id": "R-export-home-1440",
+      "name": "export/index.html at 1440px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "P-export-home",
+      "name": "export/index.html: requests nothing from a third-party origin (FR9.5)",
+      "pass": true,
+      "evidence": []
+    },
+    {
+      "id": "A-export-home",
+      "name": "export/index.html: axe — no serious or critical violations, and the axe run logs no console errors",
+      "pass": true,
+      "evidence": {
+        "violations": [],
+        "consoleErrorsDuringAxe": []
+      }
+    },
+    {
+      "id": "R-export-home-1024",
+      "name": "export/index.html at 1024px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-export-home-768",
+      "name": "export/index.html at 768px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-export-home-390",
+      "name": "export/index.html at 390px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-export-catalog-1440",
+      "name": "export/catalog.html at 1440px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "P-export-catalog",
+      "name": "export/catalog.html: requests nothing from a third-party origin (FR9.5)",
+      "pass": true,
+      "evidence": []
+    },
+    {
+      "id": "A-export-catalog",
+      "name": "export/catalog.html: axe — no serious or critical violations, and the axe run logs no console errors",
+      "pass": true,
+      "evidence": {
+        "violations": [],
+        "consoleErrorsDuringAxe": []
+      }
+    },
+    {
+      "id": "R-export-catalog-1024",
+      "name": "export/catalog.html at 1024px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-export-catalog-768",
+      "name": "export/catalog.html at 768px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-export-catalog-390",
+      "name": "export/catalog.html at 390px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-export-category-games-1440",
+      "name": "export/catalog.html?category=games at 1440px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "P-export-category-games",
+      "name": "export/catalog.html?category=games: requests nothing from a third-party origin (FR9.5)",
+      "pass": true,
+      "evidence": []
+    },
+    {
+      "id": "A-export-category-games",
+      "name": "export/catalog.html?category=games: axe — no serious or critical violations, and the axe run logs no console errors",
+      "pass": true,
+      "evidence": {
+        "violations": [],
+        "consoleErrorsDuringAxe": []
+      }
+    },
+    {
+      "id": "R-export-category-games-1024",
+      "name": "export/catalog.html?category=games at 1024px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-export-category-games-768",
+      "name": "export/catalog.html?category=games at 768px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-export-category-games-390",
+      "name": "export/catalog.html?category=games at 390px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-export-project-stars-1440",
+      "name": "export/project.html?p=stars at 1440px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "P-export-project-stars",
+      "name": "export/project.html?p=stars: requests nothing from a third-party origin (FR9.5)",
+      "pass": true,
+      "evidence": []
+    },
+    {
+      "id": "A-export-project-stars",
+      "name": "export/project.html?p=stars: axe — no serious or critical violations, and the axe run logs no console errors",
+      "pass": true,
+      "evidence": {
+        "violations": [],
+        "consoleErrorsDuringAxe": []
+      }
+    },
+    {
+      "id": "R-export-project-stars-1024",
+      "name": "export/project.html?p=stars at 1024px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-export-project-stars-768",
+      "name": "export/project.html?p=stars at 768px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-export-project-stars-390",
+      "name": "export/project.html?p=stars at 390px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-export-project-baduk-1440",
+      "name": "export/project.html?p=baduk at 1440px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "P-export-project-baduk",
+      "name": "export/project.html?p=baduk: requests nothing from a third-party origin (FR9.5)",
+      "pass": true,
+      "evidence": []
+    },
+    {
+      "id": "A-export-project-baduk",
+      "name": "export/project.html?p=baduk: axe — no serious or critical violations, and the axe run logs no console errors",
+      "pass": true,
+      "evidence": {
+        "violations": [],
+        "consoleErrorsDuringAxe": []
+      }
+    },
+    {
+      "id": "R-export-project-baduk-1024",
+      "name": "export/project.html?p=baduk at 1024px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-export-project-baduk-768",
+      "name": "export/project.html?p=baduk at 768px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-export-project-baduk-390",
+      "name": "export/project.html?p=baduk at 390px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-export-route-monopoly-1440",
+      "name": "export/project.html?p=monopoly-arena at 1440px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "P-export-route-monopoly",
+      "name": "export/project.html?p=monopoly-arena: requests nothing from a third-party origin (FR9.5)",
+      "pass": true,
+      "evidence": []
+    },
+    {
+      "id": "A-export-route-monopoly",
+      "name": "export/project.html?p=monopoly-arena: axe — no serious or critical violations, and the axe run logs no console errors",
+      "pass": true,
+      "evidence": {
+        "violations": [],
+        "consoleErrorsDuringAxe": []
+      }
+    },
+    {
+      "id": "R-export-route-monopoly-1024",
+      "name": "export/project.html?p=monopoly-arena at 1024px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-export-route-monopoly-768",
+      "name": "export/project.html?p=monopoly-arena at 768px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-export-route-monopoly-390",
+      "name": "export/project.html?p=monopoly-arena at 390px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-export-route-risk-1440",
+      "name": "export/project.html?p=risk at 1440px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "P-export-route-risk",
+      "name": "export/project.html?p=risk: requests nothing from a third-party origin (FR9.5)",
+      "pass": true,
+      "evidence": []
+    },
+    {
+      "id": "A-export-route-risk",
+      "name": "export/project.html?p=risk: axe — no serious or critical violations, and the axe run logs no console errors",
+      "pass": true,
+      "evidence": {
+        "violations": [],
+        "consoleErrorsDuringAxe": []
+      }
+    },
+    {
+      "id": "R-export-route-risk-1024",
+      "name": "export/project.html?p=risk at 1024px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-export-route-risk-768",
+      "name": "export/project.html?p=risk at 768px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-export-route-risk-390",
+      "name": "export/project.html?p=risk at 390px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
       "id": "K-skip",
       "name": "First Tab lands on 'Skip to content' (WCAG 2.4.1)",
       "pass": true,
@@ -477,27 +834,337 @@
       }
     },
     {
-      "id": "F-export-index",
-      "name": "index.html?export: export view contains no unapproved candidate (no Risk card)",
+      "id": "X-payload",
+      "name": "Export payload (26 files) contains no identifier of an unapproved candidate — Monopoly or Risk names, slugs, live hosts or assets",
+      "pass": true,
+      "evidence": []
+    },
+    {
+      "id": "X-schema",
+      "name": "Snapshot holds only approved projects with allow-listed fields: no publication state, access internals or private repositories (FR4.10)",
       "pass": true,
       "evidence": {
-        "pending": 0
+        "projects": [
+          "stars",
+          "baduk"
+        ],
+        "extra": [],
+        "accessExtra": [],
+        "privateRepos": []
       }
     },
     {
-      "id": "F-export-catalog",
-      "name": "catalog.html?export: export view contains no unapproved candidate (no Risk card)",
+      "id": "X-assets",
+      "name": "Export ships exactly the assets its approved projects reference, and no draft or unapproved art",
       "pass": true,
       "evidence": {
-        "pending": 0
+        "assetFiles": [
+          "assets/live/baduk-board.jpg",
+          "assets/live/baduk-lessons.jpg",
+          "assets/live/baduk-phone.jpg",
+          "assets/live/baduk.jpg",
+          "assets/live/stars-controls.jpg",
+          "assets/live/stars-phone.jpg",
+          "assets/live/stars.jpg"
+        ],
+        "referenced": [
+          "assets/live/baduk-board.jpg",
+          "assets/live/baduk-lessons.jpg",
+          "assets/live/baduk-phone.jpg",
+          "assets/live/baduk.jpg",
+          "assets/live/stars-controls.jpg",
+          "assets/live/stars-phone.jpg",
+          "assets/live/stars.jpg"
+        ]
       }
     },
     {
-      "id": "F-export-catalog-games",
-      "name": "catalog.html?category=games&export: export view contains no unapproved candidate (no Risk card)",
+      "id": "X-route-index",
+      "name": "export/index.html: no unapproved data in the rendered page or the loaded data, and every request stays inside export/",
       "pass": true,
       "evidence": {
-        "pending": 0
+        "leaks": [],
+        "outside": []
+      }
+    },
+    {
+      "id": "X-route-catalog",
+      "name": "export/catalog.html: no unapproved data in the rendered page or the loaded data, and every request stays inside export/",
+      "pass": true,
+      "evidence": {
+        "leaks": [],
+        "outside": []
+      }
+    },
+    {
+      "id": "X-route-catalog-category-games",
+      "name": "export/catalog.html?category=games: no unapproved data in the rendered page or the loaded data, and every request stays inside export/",
+      "pass": true,
+      "evidence": {
+        "leaks": [],
+        "outside": []
+      }
+    },
+    {
+      "id": "X-route-catalog-category-astronomy",
+      "name": "export/catalog.html?category=astronomy: no unapproved data in the rendered page or the loaded data, and every request stays inside export/",
+      "pass": true,
+      "evidence": {
+        "leaks": [],
+        "outside": []
+      }
+    },
+    {
+      "id": "X-route-project-p-stars",
+      "name": "export/project.html?p=stars: no unapproved data in the rendered page or the loaded data, and every request stays inside export/",
+      "pass": true,
+      "evidence": {
+        "leaks": [],
+        "outside": []
+      }
+    },
+    {
+      "id": "X-route-project-p-baduk",
+      "name": "export/project.html?p=baduk: no unapproved data in the rendered page or the loaded data, and every request stays inside export/",
+      "pass": true,
+      "evidence": {
+        "leaks": [],
+        "outside": []
+      }
+    },
+    {
+      "id": "X-route-project-p-monopoly-arena",
+      "name": "export/project.html?p=monopoly-arena: no unapproved data in the rendered page or the loaded data, and every request stays inside export/",
+      "pass": true,
+      "evidence": {
+        "leaks": [],
+        "outside": []
+      }
+    },
+    {
+      "id": "X-direct-project-p-monopoly-arena",
+      "name": "export/project.html?p=monopoly-arena: a direct route to an unapproved candidate shows \"isn't on display\" (FR9.3)",
+      "pass": true,
+      "evidence": "This exhibit isn't on display"
+    },
+    {
+      "id": "X-route-project-p-risk",
+      "name": "export/project.html?p=risk: no unapproved data in the rendered page or the loaded data, and every request stays inside export/",
+      "pass": true,
+      "evidence": {
+        "leaks": [],
+        "outside": []
+      }
+    },
+    {
+      "id": "X-direct-project-p-risk",
+      "name": "export/project.html?p=risk: a direct route to an unapproved candidate shows \"isn't on display\" (FR9.3)",
+      "pass": true,
+      "evidence": "This exhibit isn't on display"
+    },
+    {
+      "id": "X-derived-home",
+      "name": "Export home: carousel, category tiles, counts and gallery come only from approved projects (STARS, Baduk)",
+      "pass": true,
+      "evidence": {
+        "total": "02",
+        "dots": 2,
+        "seen": [
+          "STARS",
+          "Baduk",
+          "STARS"
+        ],
+        "tiles": [
+          "Games & AI Arenas 1 project",
+          "Astronomy & Exploration 1 project"
+        ],
+        "cards": [
+          "STARS",
+          "Baduk"
+        ]
+      }
+    },
+    {
+      "id": "X-derived-catalog",
+      "name": "Export catalog and category page list and count only approved projects",
+      "pass": true,
+      "evidence": {
+        "chips": [
+          "All 2",
+          "Games & AI Arenas 1",
+          "Astronomy & Exploration 1"
+        ],
+        "cards": [
+          "Baduk"
+        ]
+      }
+    },
+    {
+      "id": "E-footer-index-html",
+      "name": "index.html: footer present once with the GitHub link and copyright (FR9.4)",
+      "pass": true,
+      "evidence": {
+        "footers": 1,
+        "github": 1
+      }
+    },
+    {
+      "id": "E-email-index-html",
+      "name": "index.html: no fake Email link — a real mailto: link, or the owner-content dependency shown as text",
+      "pass": true,
+      "evidence": {
+        "fake": 0,
+        "mailto": 0,
+        "pendingInput": [
+          "Email address to come"
+        ]
+      }
+    },
+    {
+      "id": "E-footer-catalog-html",
+      "name": "catalog.html: footer present once with the GitHub link and copyright (FR9.4)",
+      "pass": true,
+      "evidence": {
+        "footers": 1,
+        "github": 1
+      }
+    },
+    {
+      "id": "E-email-catalog-html",
+      "name": "catalog.html: no fake Email link — a real mailto: link, or the owner-content dependency shown as text",
+      "pass": true,
+      "evidence": {
+        "fake": 0,
+        "mailto": 0,
+        "pendingInput": [
+          "Email address to come"
+        ]
+      }
+    },
+    {
+      "id": "E-footer-project-html-p-stars",
+      "name": "project.html?p=stars: footer present once with the GitHub link and copyright (FR9.4)",
+      "pass": true,
+      "evidence": {
+        "footers": 1,
+        "github": 1
+      }
+    },
+    {
+      "id": "E-email-project-html-p-stars",
+      "name": "project.html?p=stars: no fake Email link — a real mailto: link, or the owner-content dependency shown as text",
+      "pass": true,
+      "evidence": {
+        "fake": 0,
+        "mailto": 0,
+        "pendingInput": [
+          "Email address to come"
+        ]
+      }
+    },
+    {
+      "id": "E-footer-project-html-p-risk",
+      "name": "project.html?p=risk: footer present once with the GitHub link and copyright (FR9.4)",
+      "pass": true,
+      "evidence": {
+        "footers": 1,
+        "github": 1
+      }
+    },
+    {
+      "id": "E-email-project-html-p-risk",
+      "name": "project.html?p=risk: no fake Email link — a real mailto: link, or the owner-content dependency shown as text",
+      "pass": true,
+      "evidence": {
+        "fake": 0,
+        "mailto": 0,
+        "pendingInput": [
+          "Email address to come"
+        ]
+      }
+    },
+    {
+      "id": "E-footer-export-index-html",
+      "name": "export/index.html: footer present once with the GitHub link and copyright (FR9.4)",
+      "pass": true,
+      "evidence": {
+        "footers": 1,
+        "github": 1
+      }
+    },
+    {
+      "id": "E-email-export-index-html",
+      "name": "export/index.html: no fake Email link — a real mailto: link, or the owner-content dependency shown as text",
+      "pass": true,
+      "evidence": {
+        "fake": 0,
+        "mailto": 0,
+        "pendingInput": [
+          "Email address to come"
+        ]
+      }
+    },
+    {
+      "id": "E-footer-export-catalog-html",
+      "name": "export/catalog.html: footer present once with the GitHub link and copyright (FR9.4)",
+      "pass": true,
+      "evidence": {
+        "footers": 1,
+        "github": 1
+      }
+    },
+    {
+      "id": "E-email-export-catalog-html",
+      "name": "export/catalog.html: no fake Email link — a real mailto: link, or the owner-content dependency shown as text",
+      "pass": true,
+      "evidence": {
+        "fake": 0,
+        "mailto": 0,
+        "pendingInput": [
+          "Email address to come"
+        ]
+      }
+    },
+    {
+      "id": "E-footer-export-project-html-p-stars",
+      "name": "export/project.html?p=stars: footer present once with the GitHub link and copyright (FR9.4)",
+      "pass": true,
+      "evidence": {
+        "footers": 1,
+        "github": 1
+      }
+    },
+    {
+      "id": "E-email-export-project-html-p-stars",
+      "name": "export/project.html?p=stars: no fake Email link — a real mailto: link, or the owner-content dependency shown as text",
+      "pass": true,
+      "evidence": {
+        "fake": 0,
+        "mailto": 0,
+        "pendingInput": [
+          "Email address to come"
+        ]
+      }
+    },
+    {
+      "id": "E-footer-export-project-html-p-monopoly-arena",
+      "name": "export/project.html?p=monopoly-arena: footer present once with the GitHub link and copyright (FR9.4)",
+      "pass": true,
+      "evidence": {
+        "footers": 1,
+        "github": 1
+      }
+    },
+    {
+      "id": "E-email-export-project-html-p-monopoly-arena",
+      "name": "export/project.html?p=monopoly-arena: no fake Email link — a real mailto: link, or the owner-content dependency shown as text",
+      "pass": true,
+      "evidence": {
+        "fake": 0,
+        "mailto": 0,
+        "pendingInput": [
+          "Email address to come"
+        ]
       }
     },
     {
@@ -847,7 +1514,7 @@
       "evidence": {
         "focused": "new-title",
         "emptyTitleError": true,
-        "hash": "#edit/new-mv374do0",
+        "hash": "#edit/new-mv3ygwih",
         "status": "Draft"
       }
     },

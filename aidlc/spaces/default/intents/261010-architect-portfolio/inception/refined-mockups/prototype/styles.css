@@ -510,3 +510,7 @@ main:focus { outline: none; }
 
 /* Non-text contrast (WCAG 1.4.11): component boundaries use --control-border */
 .search, .btn--ghost, .chip, .round-btn, .icon-btn:hover { border-color: var(--control-border); }
+
+/* Owner content inputs shown in place (e.g. the public email address, FR9.4) */
+.owner-input--inline { margin-top: 0; font-size: 12px; }
+.proto-strip code { font: 600 11px/1 var(--f-ui); color: var(--text-2); }

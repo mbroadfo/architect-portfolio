@@ -50,7 +50,7 @@
 
   <a class="skip" href="#main">Skip to content</a>
   <div class="proto-strip" role="note">
-    <p><strong>Prototype R5</strong> · Public site · Projects are the owner's launch candidates · <em>Live captures</em> are from the deployed apps; <em>Draft</em> images are concept art · Copy is not owner-approved</p>
+    <p><strong>Design review view</strong> · Shows unapproved launch candidates for review — this is not the public export (see <code>export/</code>) · <em>Live captures</em> are from the deployed apps; <em>Draft</em> images are concept art · Copy is not owner-approved</p>
     <button class="notes-toggle" type="button" aria-pressed="false">Show scope notes</button>
   </div>
 
@@ -75,10 +75,7 @@
           <li><a href="catalog.html"><svg class="ic" aria-hidden="true"><use href="#i-grid"/></svg>All Projects</a></li>
         </ul>
         <p class="side-nav__label" data-note="Only categories with a published exhibit appear (FR9.1, FR9.8)">Categories</p>
-        <ul>
-          <li><a href="catalog.html?category=games"><svg class="ic" aria-hidden="true"><use href="#i-gamepad"/></svg>Games &amp; AI Arenas</a></li>
-          <li><a href="catalog.html?category=astronomy"><svg class="ic" aria-hidden="true"><use href="#i-telescope"/></svg>Astronomy &amp; Exploration</a></li>
-        </ul>
+        <ul id="nav-cats"></ul>
         <ul class="side-nav__secondary">
           <li><a href="#about"><svg class="ic" aria-hidden="true"><use href="#i-info"/></svg>About</a></li>
         </ul>
@@ -120,43 +117,16 @@
           <button class="round-btn" type="button" data-dir="-1" aria-label="Previous featured project"><svg class="ic" aria-hidden="true"><use href="#i-prev"/></svg></button>
           <button class="round-btn" type="button" data-dir="1" aria-label="Next featured project"><svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></button>
         </div>
-        <div class="hero__dots" role="group" aria-label="Choose featured project">
-          <button type="button" aria-label="Featured project 1" aria-current="true"></button>
-          <button type="button" aria-label="Featured project 2"></button>
-          <button type="button" aria-label="Featured project 3"></button>
-        </div>
+        <div class="hero__dots" role="group" aria-label="Choose featured project" id="hero-dots"></div>
       </section>
 
       <!-- CATEGORIES (FR9.8): only categories with a published exhibit -->
-      <section class="section explore" aria-labelledby="explore-h" data-note="Categories with no published exhibit (Woodworking, Software &amp; Tools) stay hidden until one is published (FR9.1)">
+      <section class="section explore" aria-labelledby="explore-h" data-note="Categories, counts and featured items all derive from the page's data set; categories with no published exhibit stay hidden (FR9.1, FR9.8)">
         <header class="section__head">
           <h2 id="explore-h">Explore Projects by Type</h2>
           <a class="link-more" href="catalog.html">View all projects <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
         </header>
-        <ul class="types types--2">
-          <li class="type">
-            <a href="catalog.html?category=games">
-              <span class="type__img"><img src="assets/live/baduk-board.jpg" alt="" loading="lazy"><span class="draft-chip draft-chip--sm draft-chip--live">Live</span></span>
-              <span class="type__body">
-                <svg class="ic ic--lg" aria-hidden="true"><use href="#i-gamepad"/></svg>
-                <span class="type__title">Games &amp; AI Arenas</span>
-                <span class="type__sub">Play them, or watch the bots</span>
-                <span class="type__count">2 projects</span>
-              </span>
-            </a>
-          </li>
-          <li class="type">
-            <a href="catalog.html?category=astronomy">
-              <span class="type__img"><img src="assets/live/stars.jpg" alt="" loading="lazy"><span class="draft-chip draft-chip--sm draft-chip--live">Live</span></span>
-              <span class="type__body">
-                <svg class="ic ic--lg" aria-hidden="true"><use href="#i-telescope"/></svg>
-                <span class="type__title">Astronomy &amp; Exploration</span>
-                <span class="type__sub">Instruments for the night sky</span>
-                <span class="type__count">1 project</span>
-              </span>
-            </a>
-          </li>
-        </ul>
+        <ul class="types types--2" id="type-tiles"></ul>
         <a class="btn btn--ghost view-all-mobile" href="catalog.html">View all projects</a>
       </section>
 
@@ -180,11 +150,11 @@
         </div>
       </section>
 
-      <footer class="site-foot" id="contact">
+      <footer class="site-foot">
         <p class="site-foot__mark">Michael Broadfoot</p>
         <ul>
           <li><a href="https://github.com/mbroadfo"><svg class="ic" aria-hidden="true"><use href="#i-github"/></svg>GitHub</a></li>
-          <li><a href="#contact"><svg class="ic" aria-hidden="true"><use href="#i-mail"/></svg>Email</a></li>
+          <li><span class="owner-input owner-input--inline" data-note="Owner content input: the public email address (FR9.4). Becomes a mailto: link once Michael supplies it.">Email address to come</span></li>
         </ul>
         <p class="site-foot__copy">© 2026 Michael Broadfoot</p>
       </footer>

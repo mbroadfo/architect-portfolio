@@ -8,9 +8,27 @@ window.Shell = (() => {
   const ic = (id, cls = "ic") => `<svg class="${cls}" aria-hidden="true"><use href="#${id}"/></svg>`;
   const published = () => D.projects.filter((p) => !p.pending);
   // ?export shows exactly what a production export would contain: no pending candidates (FR9.1, FR10.1).
-  const exportView = new URLSearchParams(location.search).has("export");
-  const pendingShown = () => (exportView ? [] : D.projects.filter((p) => p.pending));
+  // Design-review data includes pending candidates; the export snapshot (export/publication.js)
+  // contains none, so nothing here can surface them on the simulated public site.
+  const pendingShown = () => D.projects.filter((p) => p.pending);
+  const BANNER = {
+    review: "<strong>Design review view</strong> · Shows unapproved launch candidates for review — this is not the public export · <em>Live captures</em> are from the deployed apps; <em>Draft</em> images are concept art · Copy is not owner-approved",
+    export: "<strong>Simulated public export</strong> · Built only from the approved-publication snapshot · Approvals here are simulated for the prototype; nothing is published",
+  };
   const liveCategories = () => D.categories.filter((c) => published().some((p) => p.category === c.id));
+
+  // FR9.4 footer. Pages that replace <main> content re-append it (site.js).
+  function footerHtml() {
+    return `
+      <footer class="site-foot">
+        <p class="site-foot__mark">Michael Broadfoot</p>
+        <ul>
+          <li><a href="https://github.com/mbroadfo">${ic("i-github")}GitHub</a></li>
+          <li><span class="owner-input owner-input--inline" data-note="Owner content input: the public email address (FR9.4). Becomes a mailto: link once Michael supplies it.">Email address to come</span></li>
+        </ul>
+        <p class="site-foot__copy">© 2026 Michael Broadfoot</p>
+      </footer>`;
+  }
 
   function render({ active = "", current = "" } = {}) {
     const nav = liveCategories().map((c) => `
@@ -19,7 +37,7 @@ window.Shell = (() => {
     document.body.insertAdjacentHTML("afterbegin", `
   <a class="skip" href="#main">Skip to content</a>
   <div class="proto-strip" role="note">
-    <p><strong>Prototype R5</strong> · Public site · <em>Live captures</em> are from the deployed apps; <em>Draft</em> images are concept art · Copy is drafted from public READMEs and is not owner-approved</p>
+    <p>${BANNER[D.mode] || BANNER.review}</p>
     <button class="notes-toggle" type="button" aria-pressed="false">Show scope notes</button>
   </div>`);
 
@@ -54,15 +72,7 @@ window.Shell = (() => {
     </aside>
     <div class="scrim" hidden></div>`);
 
-    document.querySelector("main").insertAdjacentHTML("beforeend", `
-      <footer class="site-foot">
-        <p class="site-foot__mark">Michael Broadfoot</p>
-        <ul>
-          <li><a href="https://github.com/mbroadfo">${ic("i-github")}GitHub</a></li>
-          <li><a href="#contact">${ic("i-mail")}Email</a></li>
-        </ul>
-        <p class="site-foot__copy">© 2026 Michael Broadfoot</p>
-      </footer>`);
+    document.querySelector("main").insertAdjacentHTML("beforeend", footerHtml());
 
     document.querySelector("main").setAttribute("tabindex", "-1");
     wire();
@@ -97,7 +107,7 @@ window.Shell = (() => {
   }
 
   function badgeHtml(p) {
-    return D.badges(p).map((b) => `<span class="badge${b.tone === "live" ? " badge--live" : b.tone === "pending" ? " badge--pending" : ""}">${esc(b.text)}</span>`).join("");
+    return (p.badges || D.badges(p)).map((b) => `<span class="badge${b.tone === "live" ? " badge--live" : b.tone === "pending" ? " badge--pending" : ""}">${esc(b.text)}</span>`).join("");
   }
 
   function chip(kind, text) {
@@ -136,5 +146,5 @@ window.Shell = (() => {
           </li>`;
   }
 
-  return { render, card, badgeHtml, chip, esc, ic, published, pendingShown, liveCategories, exportView };
+  return { render, footerHtml, card, badgeHtml, chip, esc, ic, published, pendingShown, liveCategories, BANNER };
 })();

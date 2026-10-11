@@ -15,14 +15,13 @@
   const FEATURED_MAX = 5;
 
   // ------------------------------------------------------------------ state
-  const initialStatus = { stars: "Published", baduk: "Changes since last publish", "monopoly-arena": "Draft", risk: "Draft" };
   let projects = D.projects.map((p, n) => {
     const imgs = [];
     if (p.lead) imgs.push({ src: p.lead.src, alt: p.lead.alt, lead: true, kind: p.lead.kind });
     for (const g of p.gallery) if (!imgs.some((i) => i.src === g.src)) imgs.push({ src: g.src, alt: g.alt, lead: false, kind: g.kind });
     return {
       id: p.slug, title: p.title, summary: p.summary || "", category: p.category, featured: p.featured || 0,
-      status: initialStatus[p.slug] || "Draft", provisional: p.provisional,
+      status: (p.publication && p.publication.status) || "Draft", provisional: p.provisional,
       rightsReview: !p.provisional, liveWithheld: !!p.access.liveWithheld, liveAuthorized: !p.access.liveWithheld,
       liveUrl: p.access.liveUrl || "", access: p.access.requirement, phone: p.access.phone,
       repos: p.repos.map((r) => ({ name: r.url ? r.url.split("/").pop() : null, visibility: r.visibility, licence: r.licence, url: r.url, readAt: NOW })),

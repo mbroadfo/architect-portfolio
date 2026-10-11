@@ -5577,3 +5577,43 @@ Owner instruction (Michael Broadfoot, 2026-10-10, Architect Portfolio - Autonomo
 **Details**: Re-entering gate after revision
 
 ---
+
+## Human Turn
+**Timestamp**: 2026-10-11T06:15:37Z
+**Event**: HUMAN_TURN
+**Session**: 01a126f9-aab1-7d03-9224-10e64acee492
+
+---
+
+## Human Turn
+**Timestamp**: 2026-10-11T14:55:15Z
+**Event**: HUMAN_TURN
+**Session**: 3bfff7e0-b2c2-48b0-8b00-081386f03bb3
+
+---
+
+## Gate Rejected
+**Timestamp**: 2026-10-11T14:56:28Z
+**Event**: GATE_REJECTED
+**Stage**: refined-mockups
+**Feedback**: Focused corrections only, visual baseline accepted: 1) build an explicit approved-publication snapshot that excludes every unauthorized project (Monopoly with its rights review outstanding, Risk), including metadata and assets, with featured, categories, counts, catalog, case studies and direct routes all derived from it; provisional projects stay only in the design-review and Studio views. 2) regression checks for Monopoly and Risk covering direct routes and the export data payload, proving unapproved data is absent and not merely hidden. 3) fix the public Email link (no fake #contact): use mailto only with a known address, otherwise track the owner-content dependency. 4) rerun verification, get a fresh independent review of the final committed artifacts, and resolve the stale R-00 record through the supported workflow without rewriting audit history. No redesign, merge, deploy, publish or stage advance.
+
+---
+
+## Stage Revising
+**Timestamp**: 2026-10-11T14:56:28Z
+**Event**: STAGE_REVISING
+**Stage**: refined-mockups
+**Revision count**: 5
+**Feedback**: Focused corrections only, visual baseline accepted: 1) build an explicit approved-publication snapshot that excludes every unauthorized project (Monopoly with its rights review outstanding, Risk), including metadata and assets, with featured, categories, counts, catalog, case studies and direct routes all derived from it; provisional projects stay only in the design-review and Studio views. 2) regression checks for Monopoly and Risk covering direct routes and the export data payload, proving unapproved data is absent and not merely hidden. 3) fix the public Email link (no fake #contact): use mailto only with a known address, otherwise track the owner-content dependency. 4) rerun verification, get a fresh independent review of the final committed artifacts, and resolve the stale R-00 record through the supported workflow without rewriting audit history. No redesign, merge, deploy, publish or stage advance.
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-10-11T14:59:03Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-mockups/prototype/tools/build-export.cjs
+**Context**: inception > refined-mockups > prototype > tools > build-export.cjs
+
+---
