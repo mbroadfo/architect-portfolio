@@ -112,3 +112,16 @@ X. Other (please specify)
   - API Gateway HTTP API;
   - EventBridge or SQS for sequencing;
   - S3 events for uploads.
+
+## Amendment D1 (2026-10-11)
+
+At the Delivery Planning gate (revision 6), Michael approved decision D1: "Yes — add U0 and the delivery-only ordering edges through the proper AI-DLC amendment process."
+
+The amendment changes only these:
+- **(a)** Add U0 `walking-slice`, listed first.
+- **(b)** Ordering-only edges contracts → walking-slice and platform → walking-slice.
+- **(c)** Ordering-only edges media-library, description-assistant and link-checker → studio-web.
+- **(d)** The listing order follows the new build sequence.
+- **(e)** U0 rows in the story map, as a supporting unit.
+
+The 11 units, their components, contracts, boundaries and FR traceability targets are unchanged. This plan is therefore approved by the owner's D1 decision, and the stage's Plan Approval is satisfied by it. The amended artifacts are re-reviewed and re-approved at this stage's gate.

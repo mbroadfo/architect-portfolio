@@ -4,7 +4,8 @@
 - components — `../domain-design/components.md` (12 components);
 - decisions — `../domain-design/decisions.md` (ADR-001 to ADR-012);
 - requirements — `../requirements-analysis/requirements.md`;
-- the plan Michael approved on 2026-10-11 (`units-generation-questions.md`): 11 units, with a React and TypeScript renderer and the clarifications recorded under Q6.
+- the plan Michael approved on 2026-10-11 (`units-generation-questions.md`): 11 units, with a React and TypeScript renderer and the clarifications recorded under Q6;
+- Amendment D1 (2026-10-11), which adds the delivery-only unit U0, making 12 units in total. U0 is classed `service` because its slice runs as a service locally, but its S1 to S3 output is never deployed.
 
 The dependency graph is in `unit-of-work-dependency.md`, and the mapping from requirements to units is in `unit-of-work-story-map.md`.
 
@@ -14,6 +15,7 @@ Units are **units of construction work**: code ownership and design scope. Deliv
 
 | Unit ID | Directory | Name | Kind | Components | Deployment model | Size |
 |---|---|---|---|---|---|---|
+| U0 | u0-walking-slice | walking-slice | service | — (delivery-only; owns no component) | S0 merges (CI baseline and repository layout); S1 to S3 run locally from a demonstration branch, never merged or deployed | L |
 | U1 | u1-contracts | contracts | spec | — (contracts between units) | Embedded: consumed in place by U3 to U11 | M |
 | U2 | u2-platform | platform | packaging | — (shared infrastructure) | Standalone Terraform roots | L |
 | U3 | u3-studio-api | studio-api | service | StudioApi, OwnerAccess, Projects, RepositoryCatalog | Standalone: hosts the back-end Python package | L |
@@ -26,7 +28,7 @@ Units are **units of construction work**: code ownership and design scope. Deliv
 | U10 | u10-content-backup | content-backup | service | ContentBackup | Shared: a scheduled entry point of the back-end package | S |
 | U11 | u11-studio-web | studio-web | ui | StudioWeb | Standalone static assets on the CDN; all owner data and actions are gated by the API | L |
 
-Every one of the 12 components belongs to exactly one unit.
+Every one of the 12 components belongs to exactly one of U1 to U11. U0 is a delivery-only unit added by Amendment D1 (2026-10-11, approved by Michael at the Delivery Planning gate). It owns no component and changes no boundary.
 
 **Size scale** (relative effort, in one-to-two-day Bolts, confirmed by Delivery Planning):
 
@@ -58,6 +60,18 @@ Every one of the 12 components belongs to exactly one unit.
    They must stay in that package and database. A split that moved Projects or Publication into another process or store would break ADR-012 and is out of bounds.
 
 ## Unit Definitions
+
+### U0 — walking-slice (service, L; delivery-only, Amendment D1)
+
+- **Owns:** no component.
+- **Delivers:**
+  - **S0:** the repository layout and the baseline CI. This includes the aggregate required check, gitleaks, the dependency audit, CodeQL, the content-bound security-review check, and a build-time guard against shipping a fake identity provider. It merges to `main`.
+  - **S1 to S3:** a thin, local, end-to-end walking slice. A project is created, saved, previewed and published as a static page, using a local fake identity provider, a MongoDB container and the local filesystem.
+- **Constraints:**
+  - S1 to S3 stay on the `slice/walking-slice` branch as a reference implementation and are never merged or deployed. Their code reaches `main` only through the owning units' own reviewed Bolts (U3, U7, U8, U9, U11).
+  - Placeholder data only.
+  - The published output is validated against the approved C2 schema.
+  - The branch is archived once U9 lands.
 
 ### U1 — contracts (spec, M)
 
@@ -227,6 +241,7 @@ So every reverse call goes through a U1 interface, with the implementation suppl
 
 | Deployable | Units | Runtime | Reached by |
 |---|---|---|---|
+| Walking slice (S1 to S3) | U0 | Python and Node, local stack | Owner's machine only; never deployed |
 | Studio API function | U3, U4 (module), U5, U9 (module) | Python | Owner, through the API entry point |
 | Publication runner and recovery entry points | U9 (and U3 modules for guards and slot release) | Python, same package | Queue, lease expiry and schedule; never visitors |
 | Nightly backup entry point | U10 | Python, same package | Schedule |

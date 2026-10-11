@@ -6,35 +6,43 @@
 - the decisions in `../domain-design/decisions.md`;
 - the requirements in `../requirements-analysis/requirements.md`.
 
-This document gives topology only: what depends on what. It does not recommend a build order or a critical path; Delivery Planning makes those choices.
+This document gives topology: what depends on what. It recommends no critical path. The only build order it encodes is through the five ordering-only edges of Amendment D1, which Michael approved as a Delivery Planning decision. Delivery Planning makes every other sequencing choice.
 
 "A depends on B" means A cannot be completed and integrated without B's contract or code, or without the package or foundation B hosts.
+
+**Amendment D1 (2026-10-11), approved by Michael at the Delivery Planning gate.** This adds the delivery-only unit `walking-slice` (U0) and five **ordering-only** edges. An edge marked ordering-only fixes the build order only, so the slice is built first and the Studio before media-library, description-assistant and link-checker. It carries no integration dependency. The 11 original units, their components and their contracts are unchanged.
 
 ## Dependency Graph
 
 ```yaml
 units:
+  - name: walking-slice
+    kind: service
+    depends_on: []
   - name: contracts
     kind: spec
-    depends_on: []
+    depends_on: [walking-slice]
   - name: platform
     kind: packaging
-    depends_on: []
+    depends_on: [walking-slice]
   - name: studio-api
-    kind: service
-    depends_on: [contracts, platform]
-  - name: media-library
-    kind: service
-    depends_on: [studio-api]
-  - name: description-assistant
-    kind: library
-    depends_on: [studio-api]
-  - name: link-checker
     kind: service
     depends_on: [contracts, platform]
   - name: site-renderer
     kind: library
     depends_on: [contracts]
+  - name: studio-web
+    kind: ui
+    depends_on: [contracts, studio-api, site-renderer]
+  - name: media-library
+    kind: service
+    depends_on: [studio-api, studio-web]
+  - name: description-assistant
+    kind: library
+    depends_on: [studio-api, studio-web]
+  - name: link-checker
+    kind: service
+    depends_on: [contracts, platform, studio-web]
   - name: site-publisher
     kind: service
     depends_on: [contracts, platform, site-renderer]
@@ -44,20 +52,25 @@ units:
   - name: content-backup
     kind: service
     depends_on: [publication, description-assistant, media-library]
-  - name: studio-web
-    kind: ui
-    depends_on: [contracts, studio-api, site-renderer]
 ```
 
 ```mermaid
 graph TD
+  contracts -.->|ordering only| walking_slice[walking-slice]
+  platform -.->|ordering only| walking_slice
   studio_api[studio-api] --> contracts
   studio_api --> platform
+  site_renderer[site-renderer] --> contracts
+  studio_web[studio-web] --> contracts
+  studio_web --> studio_api
+  studio_web --> site_renderer
   media_library[media-library] --> studio_api
+  media_library -.->|ordering only| studio_web
   description_assistant[description-assistant] --> studio_api
+  description_assistant -.->|ordering only| studio_web
   link_checker[link-checker] --> contracts
   link_checker --> platform
-  site_renderer[site-renderer] --> contracts
+  link_checker -.->|ordering only| studio_web
   site_publisher[site-publisher] --> contracts
   site_publisher --> platform
   site_publisher --> site_renderer
@@ -68,23 +81,21 @@ graph TD
   content_backup[content-backup] --> publication
   content_backup --> description_assistant
   content_backup --> media_library
-  studio_web[studio-web] --> contracts
-  studio_web --> studio_api
-  studio_web --> site_renderer
 ```
 
-Text fallback, as "unit → what it depends on":
-- **contracts** → nothing.
-- **platform** → nothing.
+Text fallback, as "unit → what it depends on". **(o)** marks an ordering-only edge.
+- **walking-slice** → nothing.
+- **contracts** → walking-slice (o).
+- **platform** → walking-slice (o).
 - **studio-api** → contracts and platform.
-- **media-library** → studio-api.
-- **description-assistant** → studio-api.
-- **link-checker** → contracts and platform.
 - **site-renderer** → contracts.
+- **studio-web** → contracts, studio-api and site-renderer.
+- **media-library** → studio-api, and studio-web (o).
+- **description-assistant** → studio-api, and studio-web (o).
+- **link-checker** → contracts and platform, and studio-web (o).
 - **site-publisher** → contracts, platform and site-renderer.
 - **publication** → studio-api, media-library, link-checker and site-publisher.
 - **content-backup** → publication, description-assistant and media-library.
-- **studio-web** → contracts, studio-api and site-renderer.
 
 The graph is acyclic.
 
@@ -92,6 +103,11 @@ The graph is acyclic.
 
 | Unit | Depends on | Reason |
 |---|---|---|
+| contracts | walking-slice | **Ordering-only** (D1): builds the slice first. The slice consumes the approved C2 schema, so no integration dependency runs this way |
+| platform | walking-slice | **Ordering-only** (D1): builds the slice first |
+| media-library | studio-web | **Ordering-only** (D1): builds the Studio earlier |
+| description-assistant | studio-web | **Ordering-only** (D1): builds the Studio earlier |
+| link-checker | studio-web | **Ordering-only** (D1): builds the Studio earlier |
 | studio-api | contracts | Implements the Studio API description |
 | studio-api | platform | Deploys into the shared API entry point, database, parameters and roles |
 | media-library | studio-api | Its module lives in the back-end package; Projects and StudioApi call it (attach check, upload authorization). Its isolated function deploys into U2's foundation, a dependency it reaches through studio-api |
@@ -135,16 +151,17 @@ Runtime calls inside the back-end package also run from U3 to U4, U5 and U9. The
 
 ## Parallel Development Opportunities
 
-Units with no dependency path between them are independent, and can be worked on at the same time against U1's contracts, with fakes where needed (team practice: parallel agents on isolated branches). Mutually independent sets include:
+Units with no dependency path between them are independent, and can be worked on at the same time against U1's contracts, with fakes where needed (team practice: parallel agents on isolated branches). Ordering-only edges count as paths here. Mutually independent sets include:
 
 - {contracts, platform};
-- {site-renderer, link-checker, studio-api};
-- {media-library, description-assistant, site-renderer, link-checker};
-- {site-publisher, studio-web, media-library, description-assistant}.
+- {studio-api, site-renderer};
+- {media-library, description-assistant, link-checker, site-publisher}.
+
+The approved delivery plan builds one unit at a time (unit-major, serial).
 
 Many topological orders are valid. Delivery Planning chooses among them and decides what comes first.
 
 ## Assumptions & Open Questions
 
 - Deployment wiring (queue, scheduler, events) is confirmed in NFR Design and Infrastructure Design.
-- The edges are integration dependencies. Units may start earlier against U1 contracts and fakes, as team practice allows.
+- **Edge types.** Edges are integration dependencies, except the five marked ordering-only (D1). Units may start earlier against U1 contracts and fakes, as team practice allows.

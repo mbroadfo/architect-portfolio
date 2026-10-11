@@ -106,6 +106,7 @@ The order of work inside each unit only. It implies nothing about the order of u
 
 | Unit | Order |
 |---|---|
+| U0 (u0-walking-slice) | No FR owned directly: delivery-only walking slice (S0 CI baseline merges; S1 to S3 are a local demonstration, Amendment D1) |
 | U1 (u1-contracts) | Contracts consumed by every other unit (no FR owned directly) |
 | U2 (u2-platform) | FR10.2, FR10.3, FR10.4 |
 | U3 (u3-studio-api) | FR1.1, FR1.2, FR1.3, FR2.1, FR2.2, FR2.3, FR2.4, FR2.5, FR3.1, FR3.3, FR3.4, FR4.1, FR4.7, FR5.3, FR9.8, FR10.6 |
@@ -122,7 +123,8 @@ The order of work inside each unit only. It implies nothing about the order of u
 
 - **FR IDs:** all 72 (10 groups and 62 sub-requirements) are assigned to exactly one implementing unit; there is no GAP.
 - **Units:**
-  - every unit other than U1 owns at least one row;
+  - every unit other than U0 and U1 owns at least one row;
+  - U0 (walking-slice) is delivery-only (Amendment D1): it owns no FR and supports CI and the early end-to-end demonstration;
   - U1 (contracts) owns no FR directly but supports FR4.10, and every integration contract;
   - U10 (content-backup) realizes NFR10 and supports the durability of every FR's data, so it carries the NFR10 row below.
 
