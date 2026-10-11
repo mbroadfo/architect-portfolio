@@ -4816,3 +4816,257 @@ Owner instruction: You are taking over as the sole active AI-DLC workflow owner 
 **Session**: 3bfff7e0-b2c2-48b0-8b00-081386f03bb3
 
 ---
+
+## Recovery: lead workflow ownership to Claude Code
+**Timestamp**: 2026-10-11T01:40:21Z
+Owner instruction (Michael Broadfoot, 2026-10-10): Claude Code is the lead engineering agent and sole AI-DLC workflow owner for intent 261010-architect-portfolio, resuming from the Refined Mockups checkpoint. Grok and Codex are inactive as workflow writers. This is an owner-directed takeover recorded in ownership-handoff.md (PR #9); no outgoing handoff by an earlier session is claimed. Uncommitted history from the earlier session was preserved verbatim and reconciled (reconciliation-2026-10-10.md, PR #10) before this note was written. Refined Mockups is not approved; no gate is approved or advanced by this note.
+
+---
+
+## Gate Rejected
+**Timestamp**: 2026-10-11T01:40:41Z
+**Event**: GATE_REJECTED
+**Stage**: refined-mockups
+**Feedback**: Request Changes, as first asked on 2026-10-10 (the engine could not record it at 21:51Z because no gate reply had been logged). The READY review from 20:56Z is stale: the stage artifacts changed substantially after it (commits bbc4f0d, cecdc5d, f749eef, 337b835, f448884). Revise Refined Mockups to the R5 prototype baseline and the selected concept imagery: the warm charcoal and brass studio identity; the four launch candidates STARS, Monopoly Arena, Baduk and Risk; a manual featured carousel; category browsing and the project catalog; project detail and case-study pages; access indicators; Studio support for title-only projects, optional GitHub associations, categories and featured status; and the existing sign-in, editing, preview, publish confirmation and take-down flows. Align with the requirements as updated by CR-01 to CR-05, authorized by the owner on 2026-10-10. Keep private repositories, private URLs and unapproved source-derived content out of public exports, and label concept assets as drafts. Obtain a fresh independent review of the revised stage before presenting this gate again.
+
+---
+
+## Stage Revising
+**Timestamp**: 2026-10-11T01:40:41Z
+**Event**: STAGE_REVISING
+**Stage**: refined-mockups
+**Revision count**: 4
+**Feedback**: Request Changes, as first asked on 2026-10-10 (the engine could not record it at 21:51Z because no gate reply had been logged). The READY review from 20:56Z is stale: the stage artifacts changed substantially after it (commits bbc4f0d, cecdc5d, f749eef, 337b835, f448884). Revise Refined Mockups to the R5 prototype baseline and the selected concept imagery: the warm charcoal and brass studio identity; the four launch candidates STARS, Monopoly Arena, Baduk and Risk; a manual featured carousel; category browsing and the project catalog; project detail and case-study pages; access indicators; Studio support for title-only projects, optional GitHub associations, categories and featured status; and the existing sign-in, editing, preview, publish confirmation and take-down flows. Align with the requirements as updated by CR-01 to CR-05, authorized by the owner on 2026-10-10. Keep private repositories, private URLs and unapproved source-derived content out of public exports, and label concept assets as drafts. Obtain a fresh independent review of the revised stage before presenting this gate again.
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-10-11T01:42:04Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/inception/requirements-analysis/requirements.md
+**Context**: inception > requirements-analysis > requirements.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-10-11T01:42:06Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/inception/requirements-analysis/requirements.md
+**Context**: inception > requirements-analysis > requirements.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-10-11T01:42:07Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/inception/requirements-analysis/requirements.md
+**Context**: inception > requirements-analysis > requirements.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-10-11T01:42:09Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/inception/requirements-analysis/requirements.md
+**Context**: inception > requirements-analysis > requirements.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-10-11T01:42:11Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/inception/requirements-analysis/requirements.md
+**Context**: inception > requirements-analysis > requirements.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-10-11T01:42:12Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/inception/requirements-analysis/requirements.md
+**Context**: inception > requirements-analysis > requirements.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-10-11T01:42:14Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/inception/requirements-analysis/requirements.md
+**Context**: inception > requirements-analysis > requirements.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-10-11T01:42:15Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/inception/requirements-analysis/requirements.md
+**Context**: inception > requirements-analysis > requirements.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-10-11T01:42:17Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/inception/requirements-analysis/requirements.md
+**Context**: inception > requirements-analysis > requirements.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-10-11T01:42:19Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/inception/requirements-analysis/requirements.md
+**Context**: inception > requirements-analysis > requirements.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-10-11T01:42:20Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/inception/requirements-analysis/requirements.md
+**Context**: inception > requirements-analysis > requirements.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-10-11T01:42:22Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/inception/requirements-analysis/requirements.md
+**Context**: inception > requirements-analysis > requirements.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-10-11T01:42:23Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/inception/requirements-analysis/requirements.md
+**Context**: inception > requirements-analysis > requirements.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-10-11T01:42:25Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/inception/requirements-analysis/requirements.md
+**Context**: inception > requirements-analysis > requirements.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-10-11T01:42:26Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/inception/requirements-analysis/requirements.md
+**Context**: inception > requirements-analysis > requirements.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-10-11T01:42:53Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/inception/requirements-analysis/requirements.md
+**Context**: inception > requirements-analysis > requirements.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-10-11T01:42:54Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/inception/requirements-analysis/requirements.md
+**Context**: inception > requirements-analysis > requirements.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-10-11T01:42:56Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/inception/requirements-analysis/requirements.md
+**Context**: inception > requirements-analysis > requirements.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-10-11T01:42:58Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/inception/requirements-analysis/requirements.md
+**Context**: inception > requirements-analysis > requirements.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-10-11T01:42:59Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/inception/requirements-analysis/requirements.md
+**Context**: inception > requirements-analysis > requirements.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-10-11T01:43:08Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/inception/requirements-analysis/requirements.md
+**Context**: inception > requirements-analysis > requirements.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-10-11T01:43:09Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/inception/requirements-analysis/requirements.md
+**Context**: inception > requirements-analysis > requirements.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-10-11T01:43:33Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/ideation/approval-handoff/decision-log.md
+**Context**: ideation > approval-handoff > decision-log.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-10-11T01:43:35Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/ideation/approval-handoff/decision-log.md
+**Context**: ideation > approval-handoff > decision-log.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-10-11T01:44:13Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-mockups/requirements-change-proposal.md
+**Context**: inception > refined-mockups > requirements-change-proposal.md
+
+---
+
+## Decision: requirements Amendment A1 (CR-01 to CR-05)
+**Timestamp**: 2026-10-11T01:44:14Z
+Owner instruction (Michael Broadfoot, 2026-10-10, Architect Portfolio - Autonomous Continuation) authorized change requests CR-01 to CR-05. Applied to inception/requirements-analysis/requirements.md as Amendment A1 with a change log; recorded as D-23 to D-28 and P-05 in the decision log; docs/PROJECT_BRIEF.md updated. Authorization covers requirements and design work only, not deployment, publication of any project, or approval of any stage gate. Monopoly and Risk branding provisional, STARS and Monopoly licensing unchanged, Risk private source and live URL withheld pending separate owner decisions.
+
+---

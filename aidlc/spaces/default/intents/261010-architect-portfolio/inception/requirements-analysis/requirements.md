@@ -2,9 +2,11 @@
 
 Sources: the initial request and `docs/CHARTER.md`; the approved Ideation artifacts — `intent-statement`, `scope-document` (with `intent-backlog`), `rough-mockups/wireframes.md` and `proposed-default-fixes.md`, and the decision log (D-01 to D-22); the affirmed `team-practices` (now `aidlc/spaces/default/memory/team.md`) and project rules (`project.md`); and this stage's answers (`requirements-analysis-questions.md`, Q1 to Q6). Every requirement names its source. IDs are permanent traceability keys.
 
+**Amendment A1 (2026-10-10).** This document includes change requests CR-01 to CR-05, applied after the owner authorized them in his instruction "Architect Portfolio — Autonomous Continuation" on 2026-10-10. They are recorded as D-23 to D-28 in the decision log. The independent architecture review relayed by the owner shaped their final text. The proposal, the review refinements and the evidence are in `inception/refined-mockups/requirements-change-proposal.md` and `launch-inventory.md`. The authorization covers these requirements and design work only. It does not cover deployment, publication of any particular project, or approval of any stage gate. Every change is listed in the Change Log at the end, and amended or new requirements cite their CR.
+
 ## Intent Analysis
 
-Michael Broadfoot wants one credible, image-rich home for a scattered body of work, aimed at prospective clients and employers, engineers and makers, and wants curating it to take little effort (intent-statement; D-01, D-02). The first release proves the whole loop on real work: the owner signs in to a private Studio, turns a GitHub repository into an exhibit with an AI-drafted description they review, previews it, publishes it explicitly, and can take it down; visitors see it in an image-led gallery at michael.broadfoot.consulting (scope-document; D-09, D-14, D-21). The three seed exhibits — AI Arcade, STARS and Mom's Recipe Box — are published this way (charter §8).
+Michael Broadfoot wants one credible, image-rich home for a scattered body of work, aimed at prospective clients and employers, engineers and makers, and wants curating it to take little effort (intent-statement; D-01, D-02). The first release proves the whole loop on real work: the owner signs in to a private Studio, turns a GitHub repository into an exhibit with an AI-drafted description they review, previews it, publishes it explicitly, and can take it down; visitors see it in an image-led gallery at michael.broadfoot.consulting (scope-document; D-09, D-14, D-21). The launch candidates — STARS, Monopoly, Baduk and Risk — are each eligible to be published this way, only after its own owner approval. None is required for launch (FR10.1; CR-01, which supersedes the charter §8 seed examples AI Arcade, STARS and Mom's Recipe Box).
 
 Two properties matter more than any feature: nothing private ever becomes public without the owner's explicit approval of that exact content (charter §4, §5; D-22), and the public site stays free of tracking (charter §3; D-04).
 
@@ -54,12 +56,14 @@ Source: charter §4, §8; IB-3; wireframes S3; D-15.
 
 Source: charter §3, §8; IB-4; wireframes S2; D-21.
 
-- **FR3.1** The owner shall be able to create a project from a repository, or link a repository to an existing project; a project may link several repositories.
+- **FR3.1** The owner shall be able to create a project with only a title, and may link zero, one or several repositories to it at any time. A repository link is optional; work such as woodworking, CAD and design projects is supported as fully as software. (CR-02.)
+  - Given no repository, When the owner creates a project titled "Hall table", Then a Draft project exists with no repository link.
+  - Given a project with no repository, When the owner links a repository later, Then the link is added and the project's content is unchanged.
 - **FR3.2** Each project shall have exactly one status, shown in words: Draft, Published, Changes since last publish, or Taken down. Allowed transitions (Review R-06):
 
   | From | Owner action | To |
   |------|--------------|----|
-  | (new) | Create or link from a repository | Draft |
+  | (new) | Create (title only, or from a repository) | Draft |
   | Draft | Publish | Published |
   | Published | Save an edit | Changes since last publish |
   | Changes since last publish | Update the public exhibit | Published |
@@ -72,20 +76,21 @@ Source: charter §3, §8; IB-4; wireframes S2; D-21.
 - **FR3.3** Saved changes shall persist across sessions and devices.
 - **FR3.4** If the same project is saved from two tabs or devices, the later save shall be refused with a clear conflict message rather than silently overwrite.
   - Given a project open in two tabs, When the first tab saves and then the second tab saves older content, Then the second save is refused with a message and nothing is lost.
-- **FR3.5** The Projects list shall show an empty state with a "Discover a GitHub repository" action when no projects exist.
+- **FR3.5** The Projects list shall show an empty state with both a "New project" action and a "Discover a GitHub repository" action when no projects exist. (CR-02.)
 
 ### FR4 — Exhibit content
 
 Source: charter §3, §8; IB-5 to IB-8; scope Q2 and Q4 (this stage); D-15, D-17, D-19.
 
 - **FR4.1** An exhibit shall have a title, a one-paragraph summary, and six narrative sections: inspiration, design challenges, architectural decisions, implementation, outcomes, lessons learned. Empty sections are omitted on the public page.
-- **FR4.2** The owner shall upload exhibit images in the Studio (Q4): JPEG, PNG or WebP, up to 10 MB each, with alt text per image. One image is designated the lead image. Uploads are validated by their actual content (file signature), not by extension or declared type. Published images are derivatives re-encoded on export with all metadata removed — EXIF, GPS location, device, timestamps, embedded thumbnails and comments; originals stay in private storage. (Review R-02; owner guidance.)
+- **FR4.2** The owner shall upload exhibit images in the Studio (Q4): JPEG, PNG, WebP or HEIC/HEIF, up to 10 MB each, with alt text per image. HEIC/HEIF photos are converted during upload processing to sanitized web images (JPEG or WebP); only the converted image is ever published, and the original stays in private storage (CR-02). One image is designated the lead image. Uploads are validated by their actual content (file signature), not by extension or declared type. Published images are derivatives re-encoded on export with all metadata removed — EXIF, GPS location, device, timestamps, embedded thumbnails and comments; originals stay in private storage. (Review R-02; owner guidance.)
   - Given an upload of an unsupported type or a file over 10 MB, When it is submitted, Then it is rejected with the reason and the rest of the exhibit is unaffected.
-  - Given a file named `photo.jpg` whose content is not a JPEG, PNG or WebP image, When it is uploaded, Then it is rejected.
+  - Given a file named `photo.jpg` whose content is not a JPEG, PNG, WebP or HEIC/HEIF image, When it is uploaded, Then it is rejected.
+  - Given an uploaded HEIC photo, When the exhibit is published, Then the public copy is a JPEG or WebP with no metadata, and no HEIC file is in public storage.
   - Given an uploaded photo containing GPS and device EXIF tags, When the exhibit is published, Then the public copy of that image contains no EXIF, GPS or device metadata.
 - **FR4.3** The owner shall add links out to repositories, a live application and a demo. A link to a private repository is never shown publicly (D-15).
   - Given an exhibit linked to a private repository, When it is published, Then the public page has no "View code" link for that repository.
-- **FR4.4** The owner shall attach build-it-yourself files (for example PDF, SKP, FCStd, DXF, STL, ZIP), up to 50 MB each; public links state the file type and size. Each file is validated by its actual content against an allowed list of file types. Public downloads are always served as attachments, with a fixed safe content type for their file type, `Content-Disposition: attachment` and `X-Content-Type-Options: nosniff`, so a browser never renders or runs them in the site's context. (Review R-02; owner guidance.)
+- **FR4.4** The owner shall attach maker and design files of the allowed types — PDF, SKP, FCStd, DXF, STL, ZIP and VSDX (CR-02) — up to 50 MB each. Other formats (for example DWG, STEP, 3MF) are deferred until a project needs them; public links state the file type and size. Each file is validated by its actual content against an allowed list of file types. Public downloads are always served as attachments, with a fixed safe content type for their file type, `Content-Disposition: attachment` and `X-Content-Type-Options: nosniff`, so a browser never renders or runs them in the site's context. (Review R-02; owner guidance.)
   - Given a file whose content does not match an allowed type (for example an HTML or executable file renamed `.pdf`), When it is uploaded, Then it is rejected.
   - Given a published download, When it is requested, Then the response carries `Content-Disposition: attachment`, `X-Content-Type-Options: nosniff` and the fixed content type for its file type.
 - **FR4.8** Image and file uploads shall go directly from the Studio to private storage through short-lived, single-use upload authorizations (for example pre-signed URLs) issued only to the owner. The size limit and allowed type are bound into each authorization, and the server re-checks content before the file can be attached to an exhibit. Uploads never pass through the API's request body. (Review R-04.)
@@ -93,12 +98,18 @@ Source: charter §3, §8; IB-5 to IB-8; scope Q2 and Q4 (this stage); D-15, D-17
 - **FR4.5** Text the owner or the AI writes shall be rendered as plain formatted text; markup and scripts in it are escaped, never executed, on any page.
 - **FR4.6** Leaving the editor with unsaved changes shall ask first.
 - **FR4.7** The first release has no topic tags (D-17).
+- **FR4.9** Maker and design attachments shall be stored privately, offered publicly only if the owner includes them at Publish, and never rendered or executed in the browser. A drawing is shown visually only through an owner-uploaded image or PDF. (CR-02.)
+  - Given an SKP file attached but not included at Publish, When the exhibit is published, Then the file is not in public storage and the page has no link to it.
+- **FR4.10** Each exhibit shall record access metadata separately from its narrative: an optional live URL; the access requirement (open, sign-in, invitation); phone suitability (suitable, desktop only, unknown); and, for each linked repository, its visibility and licence. Public badges ("In browser", "Source available", "Open source · ⟨licence⟩", "Source private") are derived only from these fields, never typed freehand. A repository with no licence is shown as "Source available", never "Open source". (CR-03.)
+  - Given a public repository with no licence, When the exhibit is published, Then its badge reads "Source available".
+  - Given a private repository, When the exhibit is published, Then the badge reads "Source private" and no repository link or name appears (FR4.3, D-15).
 
 ### FR5 — AI description suggestion
 
 Source: charter §5, §8; IB-9; Q2, Q5, Q6; D-22; wireframes S4.
 
-- **FR5.1** The owner shall request a description suggestion for a project; the suggestion is drawn from the linked repositories' README and documentation files.
+- **FR5.1** The owner shall request a description suggestion for a project; the suggestion is drawn from the linked repositories' README and documentation files. A project with no linked repository offers no suggestion, and the owner writes its text; this workflow is otherwise unchanged (CR-02).
+  - Given a project with no linked repository, When the owner opens the editor, Then no suggestion action is offered and the editor says suggestions need a linked repository.
 - **FR5.2** Each suggestion shall list the source files it was drawn from, and shall never overwrite existing text: the owner chooses Insert, Edit or Discard.
   - Given a suggestion is shown, When the owner does nothing, Then no exhibit field changes.
 - **FR5.3** The AI capability shall be reachable only through owner-authenticated Studio functions; it is never exposed to visitors or the public site (Q2).
@@ -128,7 +139,7 @@ Source: charter §8; IB-10; wireframes S5; D-20.
 Source: charter §4, §5, §8; IB-2, IB-11; D-19, D-22; Q3.
 
 - **FR7.1** Nothing shall become public except through the owner's explicit Publish confirmation.
-- **FR7.2** The Publish confirmation shall list everything that will become public — text sections, AI-originated text, images, downloadable files and links — and name any linked private repository whose content informed the text (D-22).
+- **FR7.2** The Publish confirmation shall list everything that will become public — text sections, AI-originated text, images, downloadable files and links — and name any linked private repository whose content informed the text (D-22). For each live link and repository link that will become public, it shows the latest reachability result and its time (FR10.5), and the featured status and primary category that will be published (FR9.7, FR9.8). (CR-03, CR-05.)
 - **FR7.3** Publish shall be blocked, with the reason shown, when the title is empty, there is no lead image, or any image lacks alt text (D-19).
 - **FR7.4** Publishing shall export the exhibit as static public content — its page, its gallery card and its assets — and update the gallery (Q3). The public site never reads the Studio's database or API.
   - Given the owner confirms Publish, When export completes, Then the exhibit page and its card are publicly visible within 5 minutes and the project status is Published.
@@ -154,24 +165,35 @@ Source: D-20, D-21; IB-16; wireframes S2, S4, P2.
 
 Source: charter §1, §2, §3; scope-document; wireframes P1, P2; D-04, D-09, D-14, D-16 to D-18.
 
-- **FR9.1** The home page shall be the Exhibition-wall gallery: image-led cards for published exhibits only, varied tiles in an orderly grid from tablet width up, a single column on phones (D-14, D-16).
+- **FR9.1** The home page shall show, in order: a featured carousel when any exhibit is featured (FR9.7), the categories (FR9.8), and the gallery of published exhibits — image-led cards for published exhibits only, in an orderly grid from tablet width up and a single column on phones (D-14, D-16; CR-05). Featured items and category counts include published exhibits only, and a category with no published exhibit is not shown.
   - Given no exhibit is published, When a visitor opens the site, Then the header and "New work is being installed." appear, with no broken grid.
   - Given a card's image fails to load, When the gallery renders, Then the card keeps its title and summary and still opens the exhibit.
 - **FR9.2** Each exhibit page shall show the lead image, title, summary and the links that exist, then the narrative sections, the image gallery (with an enlarged view) and the build-it-yourself downloads; absent blocks are omitted.
 - **FR9.3** An unknown or taken-down exhibit address shall show "This exhibit isn't on display" with a link to all work and a 404 status.
 - **FR9.4** The footer shall carry a GitHub link, a plain email contact link that collects nothing, and the copyright line (D-18).
 - **FR9.5** The public site shall set no tracking or analytics cookies, load no third-party analytics or advertising scripts, and require no visitor account (charter §3; D-04).
-- **FR9.6** The visual design shall follow the charter's "Engineering Studio" direction — dark navy, precise typography, strong imagery, restrained effects — without copying the inspiration sites' appearance or branding (charter §1, §3).
+- **FR9.6** The visual design shall follow the owner-approved crafted studio identity — warm charcoal with brass accents, editorial serif display type with a clean sans for interface text, sophisticated imagery, restrained interaction — as shown in Refined Mockups prototype R5, without copying any inspiration site's appearance or branding. Text contrast stays at least 4.5:1 (NFR8). (CR-04; replaces the charter's "Engineering Studio" dark-navy direction.)
+- **FR9.7** The owner shall mark up to 5 published exhibits as featured and set their order. The featured carousel never advances on its own; it is operable by keyboard, has visible previous and next controls and a position indicator, announces the change of slide politely to screen readers, and respects reduced motion (NFR8, WCAG 2.2.2). (CR-05.)
+  - Given no exhibit is featured, When the home page renders, Then no carousel or empty frame appears.
+  - Given the carousel has focus, When the visitor presses the right arrow key, Then the next featured exhibit is shown and announced, and nothing advances without input.
+- **FR9.8** In v1 each project shall have at most one primary category, chosen from a short list the owner manages (initially Games & AI Arenas, Astronomy & Exploration, Woodworking, Software & Tools). Each category has a page listing its published exhibits. A category is not a tag (FR4.7 unchanged). Classification is modelled as a project-to-category relationship with one entry marked primary, not as a single field on the project, so a later release can allow several classifications without migrating data; v1's Studio and public site use only the primary category. (CR-05; architecture review refinement.)
+  - Given a category with two published exhibits and one draft, When its page renders, Then it lists the two published exhibits only.
 
-### FR10 — Seed content and launch
+### FR10 — Launch content and launch
 
-Source: charter §2, §8; IB-14, IB-15; D-12.
+Source: charter §2, §8; IB-14, IB-15; D-12; CR-01, CR-03 (D-23, D-25).
 
-- **FR10.1** The three seed exhibits — AI Arcade, STARS and Mom's Recipe Box — shall be published through the Studio workflow, not hand-authored.
+- **FR10.1** The launch candidates — STARS, Monopoly, Baduk and Risk — are each eligible for individual publication through the Studio workflow, not hand-authored. None of them is mandatory for launch, and launch may proceed with any owner-approved subset. A candidate is published only after the owner has approved its content, its rights (names, artwork, imagery), its live URL, and its publication; a candidate without those approvals stays in Draft and does not delay launch. (CR-01; supersedes the three seed exhibits AI Arcade, STARS and Mom's Recipe Box.)
+  - Given STARS and Baduk are approved and Monopoly and Risk are not, When the owner approves launch (FR10.4), Then the site launches with STARS and Baduk published and Monopoly and Risk in Draft.
 - **FR10.2** The site shall be served over HTTPS at michael.broadfoot.consulting, and mike.broadfoot.consulting shall answer with a permanent (301) redirect that keeps the path and query string.
   - Given a request to `https://mike.broadfoot.consulting/work/ai-arcade?x=1`, When it is served, Then the response is 301 to `https://michael.broadfoot.consulting/work/ai-arcade?x=1`.
 - **FR10.3** The production site shall be indexable by search engines; the preview environment shall send `noindex` and not be openly browsable (team practices, Deployment).
 - **FR10.4** Going live and every DNS change shall happen only after the owner's explicit approval (project rule; D-12).
+- **FR10.5** When the owner opens Publish or Update for an exhibit with a live URL, the Studio shall check the link and record the result with its time: whether it answers over HTTPS, its final address after redirects, and whether a sign-in page was detected. Repository visibility and licence are read from GitHub at the same time. A failed check is a warning, not a block: the owner decides whether to publish, change the link or remove it. There is no scheduled monitoring, and nothing changes on the public site without an owner Publish or Update. A passing check shows only that the URL was reachable at that moment; it is never evidence that the linked app is secure, appropriate or authorized for publication. The Studio labels results "Reachable" or "Not reachable", never "Verified", "Safe" or "Approved". (CR-03; architecture review refinement.)
+  - Given a live URL that answers 404, When the owner opens Publish, Then the confirmation shows "Not reachable" and the owner chooses whether to continue.
+  - Given a URL that answers 200, When the confirmation renders, Then it reads "Reachable at ⟨time⟩" and states that reachability is not a security or publication check.
+- **FR10.6** Exhibit titles and artwork for Monopoly and Risk are provisional until the owner completes a trademark and artwork review. Until then, no artwork resembling third-party trade dress is published, and the Publish confirmation flags the review as outstanding. (CR-01.)
+- **FR10.7** Risk's live app URL shall not be published until the owner authorizes it after a privacy and security review of the live app. Risk's source repository is private and is never linked or exposed (FR4.3, D-15), and nothing is drawn from it for public text or imagery without the owner's approval (D-22, FR5.9). (CR-01.)
 
 ## Non-Functional Requirements
 
@@ -197,7 +219,18 @@ Source: charter §2, §8; IB-14, IB-15; D-12.
   - `Referrer-Policy: strict-origin-when-cross-origin`, or stricter.
 
   The Studio's policy also allows only the identity provider and the API origins it needs. Verified by an automated check in the post-deploy smoke tests and in preview.
-- **NFR16 — Rate limits.** The AI suggestion and upload-authorization endpoints, and Studio sign-in, enforce request-rate limits; requests beyond a limit receive 429 and cause no provider call or upload authorization. The AI limit applies in addition to the monthly suggestion limit (FR5.8). The specific rates are set in NFR Design. (Review R-08.)
+- **NFR16 — Rate limits.** The AI suggestion and upload-authorization endpoints, and Studio sign-in, enforce request-rate limits; requests beyond a limit receive 429 and cause no provider call or upload authorization. The AI limit applies in addition to the monthly suggestion limit (FR5.8). The specific rates are set in NFR Design. (Review R-08.) The link check (FR10.5) is rate-limited the same way (CR-03).
+- **NFR17 — SSRF protection for link checks.** The link check (FR10.5) runs only server-side, inside owner-authenticated Studio endpoints. It shall:
+  - allow only `https` on port 443;
+  - resolve the hostname and refuse loopback, private, link-local, carrier-grade NAT, multicast and unspecified addresses (IPv4 and IPv6), including the cloud metadata address `169.254.169.254`;
+  - connect to the validated address, so a DNS change between check and request (rebinding) cannot bypass it;
+  - re-validate every redirect target and follow at most 3;
+  - send no credentials, cookies or identifying headers;
+  - use only GET or HEAD with a 5-second timeout, and read at most 256 KB.
+
+  The response is never shown to visitors and never stored beyond the recorded result. The validator is security-sensitive: its implementation requires the independent AI security review and invariant tests before merge (project rule). (CR-03; architecture review refinement.)
+  - Given a live URL that resolves to `169.254.169.254` or `10.0.0.5`, When the check runs, Then no request is sent and the result is "Refused: non-public address".
+  - Given a public URL that redirects to `http://127.0.0.1/`, When the check runs, Then the redirect is not followed and the result is "Not reachable".
   - Given requests to the AI suggestion endpoint above its configured rate, When they arrive, Then the excess requests receive 429 and no provider call is made.
 
 ## Constraints
@@ -206,7 +239,7 @@ Source: charter §2, §8; IB-14, IB-15; D-12.
 |------------|--------|
 | React, TypeScript and Vite frontend; Python API on AWS Lambda; MongoDB Atlas; Auth0 for owner sign-in; S3 and CloudFront; Cloudflare DNS; Terraform; GitHub Actions with GitHub OIDC | charter §6 |
 | A modular monolith with clean contracts; public and administrative security boundaries kept separate | charter §6 |
-| GitHub is the only content connector in the first release | D-08 |
+| GitHub is the only content connector in the first release; projects may exist without any repository, with files uploaded by hand | D-08; CR-02 (D-24) |
 | Free tiers by default; pay-per-use spending only after explicit owner approval, with no pre-approved dollar limit; no new infrastructure, paid service or recurring expense without approval | Q1, Q5; owner clarification 2026-10-10; charter §6, §7 |
 | Runtime secrets in AWS SSM Parameter Store (standard tier), not Secrets Manager | owner clarification 2026-10-10 |
 | Two environments, `preview` and `production`; production deploys and DNS changes only through an owner-approved `production` run | team practices; project rules |
@@ -224,9 +257,17 @@ Source: charter §2, §8; IB-14, IB-15; D-12.
 
 ## Out of Scope
 
-Per the approved scope and its Future Roadmap: visitor appearance customization; richer gallery features (featured work, grouping, filtering, tags); invitation-only and other non-public access; Google Drive and Trimble/SketchUp connectors; visitor analytics of any kind; projects beyond the three seed exhibits; a second AI workflow; AI exposed to visitors (Q2).
+Per the approved scope and its Future Roadmap: visitor appearance customization; richer gallery features (free-form filtering, topic tags, search); a journal; invitation-only and other non-public access; visitor accounts; Google Drive and Trimble/SketchUp connectors; visitor analytics of any kind; a second AI workflow; AI exposed to visitors (Q2). Featured work and category browsing were moved into the first release by CR-05. The launch content is the four candidates of FR10.1 (CR-01), plus any project the owner creates without a repository (CR-02); none is mandatory.
 
 Added to the future roadmap at this stage: selecting exhibit images from a linked GitHub repository (Q4, owner clarification 2026-10-10).
+
+Added to the future roadmap by Amendment A1:
+
+- several categories per project (the model already allows it; FR9.8);
+- other CAD and model formats (for example DWG, STEP, 3MF) when a project needs them;
+- a larger attachment limit;
+- AI suggestions drawn from uploaded documents;
+- scheduled link monitoring (CR-02, CR-03, CR-05).
 
 ## Open Questions
 
@@ -241,3 +282,17 @@ Added to the future roadmap at this stage: selecting exhibit images from a linke
 ## Assumptions & Open Questions
 
 The Assumptions and Open Questions sections above are the complete list; neither blocks Inception.
+
+Owner decisions outstanding after Amendment A1. None blocks Inception, and none is approved by A1:
+
+- the trademark and artwork review for Monopoly and Risk (FR10.6);
+- the licensing decision for STARS and Monopoly, which stay unlicensed until it is made;
+- authorizing Risk's live URL after its privacy and security review (FR10.7);
+- publication approval of each candidate (FR10.1).
+
+## Change Log
+
+| Version | Date | Change | Authority |
+|---------|------|--------|-----------|
+| 1.0 | 2026-10-10 | Requirements Analysis approved | Owner approval at the Requirements Analysis gate, 2026-10-10T19:02:36Z |
+| A1 | 2026-10-10 | CR-01: launch candidates STARS, Monopoly, Baduk, Risk; any approved subset may launch (Intent Analysis, FR10.1, FR10.6, FR10.7, Out of Scope). CR-02: projects without a repository; HEIC conversion; VSDX added; 50 MB limit kept (FR3.1, FR3.2, FR3.5, FR4.2, FR4.4, FR4.9, FR5.1, Constraints). CR-03: access metadata, reachability check at publication, SSRF protection (FR4.10, FR7.2, FR10.5, NFR16, NFR17). CR-04: crafted studio identity (FR9.6). CR-05: featured carousel and categories in v1 (FR9.1, FR9.7, FR9.8, FR7.2, Out of Scope). | Owner instruction "Architect Portfolio — Autonomous Continuation", 2026-10-10, authorizing CR-01 to CR-05 (D-23 to D-28). Refinements from the independent architecture review relayed by the owner. |

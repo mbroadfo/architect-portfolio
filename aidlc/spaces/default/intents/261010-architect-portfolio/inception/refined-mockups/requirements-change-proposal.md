@@ -1,6 +1,8 @@
 # Requirements Change Proposal — CR-01 to CR-05
 
-Status: **PROPOSED OWNER DECISIONS — awaiting Michael Broadfoot's final sign-off.**
+Status: **AUTHORIZED AND APPLIED** as Amendment A1 to `requirements.md` (2026-10-10), on the owner's instruction "Architect Portfolio — Autonomous Continuation", which authorized CR-01 to CR-05. Recorded as D-23 to D-28. This document is kept as the proposal and review history; `requirements.md` is now authoritative. The authorization covers requirements and design work only. It does not cover deployment, publication of any particular project, or approval of any stage gate.
+
+Previous status: proposed owner decisions awaiting final sign-off.
 
 The approved `inception/requirements-analysis/requirements.md` is **unchanged**. Nothing here is implemented, and nothing has been deployed.
 
