@@ -7732,3 +7732,361 @@ Owner (Michael Broadfoot, 2026-10-11), with the Units Generation approval: R-07 
 **Stage**: contract-design
 
 ---
+
+## Human Turn
+**Timestamp**: 2026-10-11T19:57:09Z
+**Event**: HUMAN_TURN
+**Session**: 3bfff7e0-b2c2-48b0-8b00-081386f03bb3
+**Picked**: ["Approve Contract Design and proceed to Delivery Planning.\n\nCarry R-18 as a mandatory Functional Design correction:\n\n1. Explicitly name preview downloads as the third authorized direct-to-storage channel alongside uploads and preview images.\n2. Specify the shared Error response body for all applicable API error responses. Where a protocol response intentionally has no body, document that exception rather than inventing one.\n3. Include contract tests demonstrating consistency between the OpenAPI responses and actual handlers.\n\nPreserve the approved publication, authorization, privacy and static-site boundaries.\n\nContinue autonomously through Delivery Planning and routine reviews. Do not merge, deploy, publish or incur unapproved infrastructure costs. Return only for the required approval gate or a genuinely consequential decision."]
+
+---
+
+## Question Replied
+**Timestamp**: 2026-10-11T19:57:09Z
+**Event**: QUESTION_REPLIED
+**Session**: 3bfff7e0-b2c2-48b0-8b00-081386f03bb3
+**Question**: Contract Design is ready for your decision (inception/contract-design/, PR #12). How do you want to proceed?
+**Reply**: Approve Contract Design and proceed to Delivery Planning.\n\nCarry R-18 as a mandatory Functional Design correction:\n\n1. Explicitly name preview downloads as the third authorized direct-to-storage channel alongside uploads and preview images.\n2. Specify the shared Error response body for all applicable API error responses. Where a protocol response intentionally has no body, document that exception rather than inventing one.\n3. Include contract tests demonstrating consistency between the OpenAPI responses and actual handlers.\n\nPreserve the approved publication, authorization, privacy and static-site boundaries.\n\nContinue autonomously through Delivery Planning and routine reviews. Do not merge, deploy, publish or incur unapproved infrastructure costs. Return only for the required approval gate or a genuinely consequential decision.
+
+---
+
+## Gate Approved
+**Timestamp**: 2026-10-11T19:57:18Z
+**Event**: GATE_APPROVED
+**Stage**: contract-design
+**User Input**: Approve
+**Review Finding Dispositions**: {"version":1,"dispositions":[{"artifact":"aidlc/spaces/default/intents/261010-architect-portfolio/inception/contract-design/contract-summary.md","id":"R-18","fingerprint":"sha256:933de27fd7adca54e33fbc7f2c8d715461f75284aff8aabd518d77eb3cfff9d6","status":"Accepted risk","decided_at_severity":"Minor","reviewed_record":{"path":".aidlc-engine/reviews/contract-design/stage/eb0e207bc4954be7/3.json","digest":"sha256:ffdecf527c55873058b40f7a6f0b04249fa30fa741cbce1cabc7e921e5adb36d"}}]}
+
+---
+
+## Stage Completion
+**Timestamp**: 2026-10-11T19:57:18Z
+**Event**: STAGE_COMPLETED
+**Stage**: contract-design
+**Validation Basis**: {"graphContract":"sha256:ad5599bf4da38de3dec2bfb4bf705de33d27113e18b6a160549a97c4b694fea3","inputs":[{"artifact":"components","contentHash":"sha256:1cdf6a7caa49b6976d39c3d39d9adeec6a1c86eb581ebc208ea4dc200c846ed8","instanceCount":1,"presentCount":1,"producer":"domain-design","required":false,"structureHash":"sha256:3b58fe458221c55c1c72d99d2e6aa482c69e4853625084ddbac2b96108e6a170"},{"artifact":"requirements","contentHash":"sha256:0937765018e2ab646ea080d9a76386e94bf0581578bfdd47ea5f8e6fc97bd58a","instanceCount":1,"presentCount":1,"producer":"requirements-analysis","required":false,"structureHash":"sha256:bb8a4d6a26ef7a69949872e948516b3c9b4ddb0e63b88c2975b69baa2c2a5cb3"},{"artifact":"unit-of-work-dependency","contentHash":"sha256:1ba2698d43c830cfbbdcbfd6afbeaa41440b8408ace93d809294ece26ee5d226","instanceCount":1,"presentCount":1,"producer":"units-generation","required":true,"structureHash":"sha256:9c2c1a5fa6fe80357ffe43d538e1152729882c1776a3d043e77e418ad365e418"},{"artifact":"unit-of-work","contentHash":"sha256:f389a0a227a25608a8d7c85fab53090ce49b9d5040efa3c2c15833440280c070","instanceCount":1,"presentCount":1,"producer":"units-generation","required":true,"structureHash":"sha256:33b32a3709962b89085c0129174ef571602a1621f6a5f81875e8661719379dd7"}],"outputs":[{"artifact":"contract-summary","contentHash":"sha256:e97d932a2c336bf08dd81b0ec43463616ac03b26e63e283aa65d3597e5d812c0","instanceCount":1,"presentCount":1,"producer":"contract-design","required":true,"structureHash":"sha256:a8794c38dc2306d92b2b856fd05ea2a12dd949c651797fda8ffba2bf43d2525b"}],"projectType":"greenfield","schema":3}
+**Details**: Stage Contract Design approved by gate
+**Tokens In**: 156
+**Tokens Out**: 110121
+**Cache Read**: 21842728
+**Cache Write**: 1148735
+**Cost USD**: 12.51
+**By Model**: opus-5-5=10.13; sonnet-5-5=2.38; <synthetic>=null
+**By Agent**: main=10.13; aidlc-architecture-reviewer-agent=2.38
+**Tokens By Model**: opus-5-5=82/82.3k/18.1M/608.4k; sonnet-5-5=74/27.8k/3.7M/540.3k
+**Tokens By Agent**: main=82/82.3k/18.1M/608.4k; aidlc-architecture-reviewer-agent=74/27.8k/3.7M/540.3k
+
+---
+
+## Stage Start
+**Timestamp**: 2026-10-11T19:57:18Z
+**Event**: STAGE_STARTED
+**Stage**: delivery-planning
+**Agent**: aidlc-delivery-agent
+**Answer Mode**: guide (reused from intent-capture)
+
+---
+
+## Owner Gate Conditions (Contract Design)
+**Timestamp**: 2026-10-11T19:57:19Z
+Owner (Michael Broadfoot, 2026-10-11), with the Contract Design approval: carry R-18 as a mandatory Functional Design correction. (1) Explicitly name preview downloads as the third authorized direct-to-storage channel alongside uploads and preview images. (2) Specify the shared Error response body for all applicable API error responses; where a protocol response intentionally has no body, document that exception rather than inventing one. (3) Include contract tests demonstrating consistency between the OpenAPI responses and actual handlers. Preserve the approved publication, authorization, privacy and static-site boundaries. Continue autonomously through Delivery Planning and routine reviews; do not merge, deploy, publish or incur unapproved infrastructure costs; return only for the required approval gate or a genuinely consequential decision.
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-10-11T19:59:02Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/inception/delivery-planning/delivery-planning-questions.md
+**Context**: inception > delivery-planning > delivery-planning-questions.md
+
+---
+
+## Decision Recorded
+**Timestamp**: 2026-10-11T19:59:05Z
+**Event**: DECISION_RECORDED
+**Stage**: delivery-planning
+**Decision**: Q1-Q7 (sequencing approach, scoring, Bolt size, parallelism, external dependencies, top risk, staffing) answered from approved records
+**Options**: Q1: DAG with risk first,value first,skeleton first,Other; Q2: light WSJF,full WSJF,none,Other; Q3: unit slices,one per unit,cross-unit,Other; Q4: serial single owner,swarm,Other; Q5: owner approvals and accounts; Q6: boundary risks early; Q7: this session,team-owned,Other
+
+---
+
+## Question Answered
+**Timestamp**: 2026-10-11T19:59:06Z
+**Event**: QUESTION_ANSWERED
+**Stage**: delivery-planning
+**Details**: Q1: A; Q2: A; Q3: A; Q4: A; Q5: see external-dependency-map; Q6: boundaries early; Q7: A (derived from approved records)
+**Answer Source**: chosen by the agent as the person asked
+**Instruction**: Continue autonomously through Delivery Planning and routine reviews. Do not merge, deploy, publish or incur unapproved infrastructure costs. Return only for the required approval gate or a genuinely consequential decision.
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-10-11T20:00:25Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/inception/delivery-planning/bolt-plan.md
+**Context**: inception > delivery-planning > bolt-plan.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-10-11T20:00:30Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/inception/delivery-planning/team-allocation.md
+**Context**: inception > delivery-planning > team-allocation.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-10-11T20:01:13Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/inception/delivery-planning/risk-and-sequencing-rationale.md
+**Context**: inception > delivery-planning > risk-and-sequencing-rationale.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-10-11T20:01:17Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/inception/delivery-planning/external-dependency-map.md
+**Context**: inception > delivery-planning > external-dependency-map.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-10-11T20:01:57Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/verification/phase-check-inception.md
+**Context**: verification > phase-check-inception.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-10-11T20:02:20Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/inception/delivery-planning/external-dependency-map.md
+**Context**: inception > delivery-planning > external-dependency-map.md
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-11T20:02:25Z
+**Event**: SENSOR_FIRED
+**Fire id**: 22d5a117
+**Sensor ID**: required-sections
+**Stage slug**: delivery-planning
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/delivery-planning/bolt-plan.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-11T20:02:26Z
+**Event**: SENSOR_PASSED
+**Fire id**: 22d5a117
+**Sensor ID**: required-sections
+**Stage slug**: delivery-planning
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/delivery-planning/bolt-plan.md
+**Duration ms**: 317
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-11T20:02:26Z
+**Event**: SENSOR_FIRED
+**Fire id**: 2157a553
+**Sensor ID**: required-sections
+**Stage slug**: delivery-planning
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/delivery-planning/team-allocation.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-11T20:02:26Z
+**Event**: SENSOR_PASSED
+**Fire id**: 2157a553
+**Sensor ID**: required-sections
+**Stage slug**: delivery-planning
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/delivery-planning/team-allocation.md
+**Duration ms**: 202
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-11T20:02:27Z
+**Event**: SENSOR_FIRED
+**Fire id**: 84af5ebe
+**Sensor ID**: required-sections
+**Stage slug**: delivery-planning
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/delivery-planning/risk-and-sequencing-rationale.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-11T20:02:27Z
+**Event**: SENSOR_PASSED
+**Fire id**: 84af5ebe
+**Sensor ID**: required-sections
+**Stage slug**: delivery-planning
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/delivery-planning/risk-and-sequencing-rationale.md
+**Duration ms**: 274
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-11T20:02:27Z
+**Event**: SENSOR_FIRED
+**Fire id**: 814e2496
+**Sensor ID**: required-sections
+**Stage slug**: delivery-planning
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/delivery-planning/external-dependency-map.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-11T20:02:27Z
+**Event**: SENSOR_PASSED
+**Fire id**: 814e2496
+**Sensor ID**: required-sections
+**Stage slug**: delivery-planning
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/delivery-planning/external-dependency-map.md
+**Duration ms**: 218
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-11T20:02:28Z
+**Event**: SENSOR_FIRED
+**Fire id**: 13a5e9ce
+**Sensor ID**: required-sections
+**Stage slug**: delivery-planning
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/delivery-planning/delivery-planning-questions.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-11T20:02:28Z
+**Event**: SENSOR_PASSED
+**Fire id**: 13a5e9ce
+**Sensor ID**: required-sections
+**Stage slug**: delivery-planning
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/delivery-planning/delivery-planning-questions.md
+**Duration ms**: 296
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-11T20:02:29Z
+**Event**: SENSOR_FIRED
+**Fire id**: 151a454c
+**Sensor ID**: upstream-coverage
+**Stage slug**: delivery-planning
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/delivery-planning/bolt-plan.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-11T20:02:29Z
+**Event**: SENSOR_PASSED
+**Fire id**: 151a454c
+**Sensor ID**: upstream-coverage
+**Stage slug**: delivery-planning
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/delivery-planning/bolt-plan.md
+**Duration ms**: 268
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-11T20:02:29Z
+**Event**: SENSOR_FIRED
+**Fire id**: a60bce58
+**Sensor ID**: upstream-coverage
+**Stage slug**: delivery-planning
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/delivery-planning/team-allocation.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-11T20:02:30Z
+**Event**: SENSOR_PASSED
+**Fire id**: a60bce58
+**Sensor ID**: upstream-coverage
+**Stage slug**: delivery-planning
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/delivery-planning/team-allocation.md
+**Duration ms**: 312
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-11T20:02:30Z
+**Event**: SENSOR_FIRED
+**Fire id**: 0a1008fa
+**Sensor ID**: upstream-coverage
+**Stage slug**: delivery-planning
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/delivery-planning/risk-and-sequencing-rationale.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-11T20:02:30Z
+**Event**: SENSOR_PASSED
+**Fire id**: 0a1008fa
+**Sensor ID**: upstream-coverage
+**Stage slug**: delivery-planning
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/delivery-planning/risk-and-sequencing-rationale.md
+**Duration ms**: 349
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-11T20:02:31Z
+**Event**: SENSOR_FIRED
+**Fire id**: 7f1f3814
+**Sensor ID**: upstream-coverage
+**Stage slug**: delivery-planning
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/delivery-planning/external-dependency-map.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-11T20:02:31Z
+**Event**: SENSOR_PASSED
+**Fire id**: 7f1f3814
+**Sensor ID**: upstream-coverage
+**Stage slug**: delivery-planning
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/delivery-planning/external-dependency-map.md
+**Duration ms**: 327
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-11T20:02:31Z
+**Event**: SENSOR_FIRED
+**Fire id**: 08f57034
+**Sensor ID**: upstream-coverage
+**Stage slug**: delivery-planning
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/delivery-planning/delivery-planning-questions.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-11T20:02:32Z
+**Event**: SENSOR_PASSED
+**Fire id**: 08f57034
+**Sensor ID**: upstream-coverage
+**Stage slug**: delivery-planning
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/delivery-planning/delivery-planning-questions.md
+**Duration ms**: 325
+
+---
+
+## Stage Awaiting Approval
+**Timestamp**: 2026-10-11T20:02:32Z
+**Event**: STAGE_AWAITING_APPROVAL
+**Stage**: delivery-planning
+
+---
