@@ -1,40 +1,19 @@
-// Prototype behaviour: featured carousel, mobile menu, scope-notes overlay.
-// No autoplay (WCAG 2.2.2); the page is fully readable without this script.
+// Home page behaviour: featured carousel (FR9.7), selected-work cards, mobile menu and the
+// scope-notes overlay. No autoplay (WCAG 2.2.2); the hero is readable without this script.
 (() => {
   "use strict";
+  const D = window.PORTFOLIO;
+  const S = window.Shell;
 
-  // Featured: the three public launch candidates. Risk is not featured until
-  // Michael approves its public image, description and live link (D-22).
-  const slides = [
-    {
-      img: "assets/live/stars.jpg",
-      alt: "STARS: a 3D atlas of real stars around the Sun, with Sirius, Procyon and Altair labelled",
-      pos: "50% 50%",
-      chip: "Live capture · stars.xaminisalamini.com",
-      title: ["STARS"],
-      meta: ["Astronomy", "3D", "Runs in your browser"],
-      desc: "Fly through the real galaxy — 123,000 stars at their true 3D positions, with instruments no planetarium ships: measurement tethers, closure rates, deep-time scrubbing.",
-    },
-    {
-      img: "assets/live/baduk-board.jpg",
-      alt: "A 9×9 Go game in progress between two bots, with the move log beside the board",
-      pos: "50% 40%",
-      light: true,
-      chip: "Live capture · baduk.xaminisalamini.com",
-      title: ["Baduk"],
-      meta: ["Go", "AI coach", "Runs in your browser"],
-      desc: "Learn Go by playing it — four bots from random to search-ahead, and a coach that explains every move.",
-    },
-    {
-      img: "assets/draft/dice-hero.jpg",
-      alt: "Two dice on a green gaming table",
-      pos: "30% 50%",
-      chip: "Draft image · concept art",
-      title: ["Monopoly", "Arena"],
-      meta: ["AI bots", "Simulation", "Runs in your browser"],
-      desc: "A full rules engine and animated board for pitting AI strategies against each other — or training new ones.",
-    },
-  ];
+  // Featured: published exhibits only, in the owner's order (FR9.7). Risk is not published.
+  const slides = D.projects
+    .filter((p) => p.featured && !p.pending)
+    .sort((a, b) => a.featured - b.featured)
+    .map((p) => ({
+      slug: p.slug, img: p.lead.src, alt: p.lead.alt, pos: p.lead.pos, light: p.slug === "baduk",
+      chip: p.lead.kind === "live" ? `Live capture · ${new URL(p.access.liveUrl).host}` : "Draft image · concept art",
+      title: p.title.split(" "), meta: p.meta, desc: p.summary, live: p.access.liveUrl,
+    }));
 
   const hero = document.querySelector(".hero");
   const img = hero.querySelector(".hero__img");
@@ -42,6 +21,8 @@
   const meta = hero.querySelector(".hero__meta");
   const desc = hero.querySelector(".hero__desc");
   const chip = hero.querySelector(".hero__media .draft-chip");
+  const view = hero.querySelector(".hero__view");
+  const open = hero.querySelector(".hero__open");
   const index = hero.querySelector(".hero__index");
   const dots = [...hero.querySelectorAll(".hero__dots button")];
   const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -56,6 +37,9 @@
       img.src = s.img;
       img.alt = s.alt;
       img.style.objectPosition = s.pos;
+      img.classList.toggle("is-light", !!s.light);
+      chip.textContent = s.chip;
+      chip.classList.toggle("draft-chip--live", s.chip.startsWith("Live"));
       title.replaceChildren(...s.title.flatMap((line, k) => (k ? [" ", document.createElement("br"), line] : [line])));
       meta.replaceChildren(...s.meta.flatMap((m, k) => {
         if (!k) return [m];
@@ -64,9 +48,9 @@
         return [" ", dot, " ", m];
       }));
       desc.textContent = s.desc;
-      img.classList.toggle("is-light", !!s.light);
-      chip.textContent = s.chip;
-      chip.classList.toggle("draft-chip--live", s.chip.startsWith("Live"));
+      view.href = `project.html?p=${s.slug}`;
+      open.hidden = !s.live;
+      if (s.live) open.href = s.live;
       index.textContent = pad(i + 1);
       dots.forEach((d, k) => d.setAttribute("aria-current", String(k === i)));
       img.classList.remove("is-out");
@@ -85,20 +69,25 @@
     b.addEventListener("click", () => go(current + Number(b.dataset.dir))));
   dots.forEach((d, k) => d.addEventListener("click", () => go(k)));
   hero.addEventListener("keydown", (e) => {
+    if (e.target.closest("a")) return;
     if (e.key === "ArrowRight") go(current + 1);
     if (e.key === "ArrowLeft") go(current - 1);
   });
+
+  // Selected work: published exhibits, then the pending launch candidate (prototype review only).
+  document.getElementById("work-cards").innerHTML =
+    S.published().concat(D.projects.filter((p) => p.pending)).map(S.card).join("");
 
   // Mobile drawer
   const sidebar = document.getElementById("sidebar");
   const menuBtn = document.querySelector(".menu-btn");
   const closeBtn = document.querySelector(".close-btn");
   const scrim = document.querySelector(".scrim");
-  function setMenu(open) {
-    sidebar.classList.toggle("is-open", open);
-    menuBtn.setAttribute("aria-expanded", String(open));
-    scrim.hidden = !open;
-    (open ? closeBtn : menuBtn).focus();
+  function setMenu(isOpen) {
+    sidebar.classList.toggle("is-open", isOpen);
+    menuBtn.setAttribute("aria-expanded", String(isOpen));
+    scrim.hidden = !isOpen;
+    (isOpen ? closeBtn : menuBtn).focus();
   }
   menuBtn.addEventListener("click", () => setMenu(true));
   closeBtn.addEventListener("click", () => setMenu(false));
@@ -106,8 +95,6 @@
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape" && sidebar.classList.contains("is-open")) setMenu(false);
   });
-
-  document.querySelector(".search").addEventListener("submit", (e) => e.preventDefault());
 
   // Scope notes overlay (prototype aid): toggle, or open with ?notes
   const toggle = document.querySelector(".notes-toggle");

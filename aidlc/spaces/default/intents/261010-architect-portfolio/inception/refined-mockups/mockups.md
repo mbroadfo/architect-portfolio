@@ -1,109 +1,204 @@
-# Refined Mockups — Michael Broadfoot’s Studio
+# Refined Mockups — Michael Broadfoot, Crafted Studio (Revision R5)
 
-## Review Surface and Sources
+## Sources and Review Surface
 
-Open `design-board.html` locally for desktop and phone compositions and critical state specimens. It has no scripts, external resources, live data or network calls. It is a static design artifact, not an application or proof of implemented security. All imagery is conceptual moodboard only; real project photography, screenshots, CAD renders and workshop photos will replace placeholders later.
+**Inputs (consumed):**
 
-Inputs: `../../ideation/rough-mockups/wireframes.md` (wireframes), `../../ideation/rough-mockups/user-flow.md` (user-flow), approved `proposed-default-fixes.md` beside them, `../requirements-analysis/requirements.md` (requirements), and `../practices-discovery/team-practices.md` (team-practices). User stories are skipped. Requirement IDs provide traceability.
+- wireframes — `../../ideation/rough-mockups/wireframes.md` (screen IDs P1, P2, S1–S6 are kept);
+- user-flow — `../../ideation/rough-mockups/user-flow.md`;
+- requirements — `../requirements-analysis/requirements.md`, as amended by A1 to A1.2 (CR-01 to CR-05, D-23 to D-28);
+- team-practices — `../practices-discovery/team-practices.md`.
 
-All six approved corrections are incorporated: private code links hidden; phone grid stacked; tags removed; plain email contact; lead image and alt text required; take-down in list/editor and gallery card in preview. Requirements add Taken down status, upload validation, exact publication content, owner authentication and AI permissions.
+User Stories is skipped in the approved plan, so no stories artifact is invented.
 
-## Visual Proposal
+**Design baseline:** prototype R5 and the owner's concept board (`prototype/reference/concept-board.png`), as the owner directed on 2026-10-10.
 
-The public experience is framed as “Michael Broadfoot’s Studio — Selected Works”. It feels like a professional systems architect’s and maker’s curated studio: crafted, warm, cinematic, editorial, premium, technical and intentional.
+**Review surface.** A working prototype, not static boards. Open the files in `prototype/` in a browser:
 
-Base: deep charcoal / blue-black (#0D1117, #11151C).  
-Accents: warm walnut/bronze/brass (#8B5E3C, #C9A66B, #A67C52).  
-Secondary surfaces: parchment/cream where useful (#F5F0E6).  
-Imagery is large and cinematic. Typography has strong hierarchy. Less dashboard cards, more studio presence and selected works.
+- `index.html` — home;
+- `catalog.html` and `catalog.html?category=games` — catalog and category pages;
+- `project.html?p=stars` — project page;
+- `studio.html` — the Studio.
 
-No fake wood overkill. Suggest materiality and premium craft.
+Add `?notes` to any page to outline scope annotations.
 
-Proposed tokens are in `design-system-mapping.md`.
+**Evidence:**
 
-Image placeholders explicitly request real screenshots, workshop photos, CAD / SketchUp / FreeCAD images, diagrams and code visuals; they do not pretend to depict finished projects. Sample descriptions require separate content approval before publication.
+- Genuine Playwright screenshots in `screenshots/r5-revision/`.
+- The repeatable verification suite `prototype/tests/verify.cjs`; its latest results are in `prototype/tests/results.json` and summarized in `verification.md`.
 
-## Public Portfolio Structure
+**Status:** proposed for the owner's Refined Mockups gate. Nothing here is published, and no project content is approved for publication.
 
-### 1. Hero / Identity Section (P1 Home)
-- Name: MICHAEL BROADFOOT
-- Positioning: Systems Architect · Engineer · Maker
-- Concise statement: I architect software, systems and crafted artifacts that are precise, honest and worth keeping.
-- Visually compelling lead image or montage (concept: workshop + code + architecture drawing)
-- Subtle invitation to explore selected works.
+## Revision History
 
-### 2. Featured Work
-One prominent flagship (e.g. a browser-ready app from the first-release focus).
-- Large cinematic image
-- Short narrative teaser
-- Clear access mode (e.g. “Try in browser”)
-- Link to full case study
+| Revision | What changed | Outcome |
+|---|---|---|
+| R1–R2 | Design board in the charter's navy "Engineering Studio" direction; Product Lead review READY (20:56Z) | Superseded |
+| R3 | Earlier sessions revised to a warm "studio" aesthetic in `design-board.html`, with placeholder screenshots | Owner rejected; kept as history |
+| R4 | First working HTML prototype built from the owner's concept board | Owner: "right direction" |
+| R5 | Real launch candidates and live captures. The revision added: catalog, category and project pages; the Studio; self-hosted fonts; a verification suite | This revision |
 
-### 3. Selected Works / Categories
-Organized, beautiful discovery area.
-- Grouped by project category (Browser Apps first for v1; later Woodworking / Physical Making, Architecture / Cloud, AI / Experiments, etc.)
-- Within categories, cards or entries also surface access / interaction mode (Try, View source, Download & build, Read case study, Invitation only, etc.)
-- Not a flat cluttered wall or interchangeable grid. Curated presence. Category-driven browsing with clear mode indicators.
-- Supports growth: new categories and modes slot in without redesign.
+The owner's Request Changes was recorded through the engine on 2026-10-11T01:40Z (Revision Count 4). The READY review from 20:56Z is stale and is replaced by a fresh review of this revision. `design-board.html` is retained as history only and is not part of the proposal.
 
-### 4. How I Think / Approach
-Editorial section on architectural thinking, constraints, prototypes, system design mindset, craftsmanship.
-- Short pieces or excerpts that feel like studio notes.
+## Visual Direction
 
-### 5. Project Detail / Case Study Page (P2)
-For each project:
-- Lead image (cinematic)
-- Summary
-- Category (e.g. Browser Apps)
-- Access / interaction mode (e.g. Try in browser • View source)
-- Narrative / case study (inspiration, design challenges, architectural decisions, implementation, outcomes, lessons)
-- Gallery (real images later)
-- Build files / repo / external links as appropriate, with proper private-repo handling
-- Lifecycle state indicators only where relevant to the visitor (published / taken down handled gracefully)
+The crafted studio identity (CR-04, D-26, FR9.6):
 
-## Screen Specifications (Revised Public)
+- **Colour:** warm charcoal surfaces with brass accents.
+- **Type:** an editorial serif display face (Cormorant Garamond) for titles, a reading serif (Source Serif 4) for narrative, and a clean sans (Inter) for interface text.
+- **Imagery:** large, cinematic image fields blended into the copy column.
+- **Interaction:** restrained — gentle image scale on hover, no autoplay, no parallax.
 
-| Screen | Desktop composition | Phone/tablet adaptation | Traceability |
+Tokens, components and responsive rules are in `design-system-mapping.md`. All fonts are self-hosted under the SIL Open Font License, so the public site requests nothing from third-party origins (FR9.5, NFR15).
+
+## Public Screens
+
+### P1 — Home
+
+`home-desktop.png`, `home-desktop-full.png`, `home-mobile-first-screen.png`, `home-mobile.png`, `home-desktop-slide3.png`, `home-scope-notes.png`.
+
+- **Sidebar (desktop) or top bar with drawer (below 1100 px):**
+  - wordmark and tagline;
+  - Home and All Projects;
+  - one link per populated category;
+  - About;
+  - the owner's credo with signature.
+- **Featured carousel (FR9.7):**
+  - published, featured exhibits in the owner's order: STARS, Baduk, Monopoly Arena;
+  - previous/next controls and a `01 / 03` position indicator, plus dots on phones;
+  - keyboard arrows; slide copy announced politely;
+  - no autoplay; reduced motion removes the crossfade;
+  - each slide links to its project page and, where a live URL is published, to the app.
+- **Explore Projects by Type (FR9.8):** wide tiles for populated categories only. Today that is Games & AI Arenas (2) and Astronomy & Exploration (1); Woodworking and Software & Tools appear once an exhibit in them is published.
+- **Selected Work (FR9.1):** the exhibition gallery as an equal-card grid — two columns on desktop, one on phones. Each card shows its category, title, summary and derived access badges (FR4.10). The unpublished Risk candidate is shown in its pending state for review only: it has no link and no image, and on the live site it would not appear until approved (FR10.1, FR10.7).
+- **About:** a short statement, with a marked owner content input for the biography and contact address.
+- **Footer (FR9.4):** GitHub, plain email link, copyright.
+
+### P1b — Catalog and category pages
+
+`catalog-desktop.png`, `catalog-mobile.png`, `category-games-desktop.png`, `category-games-mobile.png`, `category-empty-not-on-display.png`.
+
+- "All Projects" with category chips showing published counts (All 3 · Games & AI Arenas 2 · Astronomy & Exploration 1) and a count line ("3 published exhibits").
+- A category page uses the same layout under the category's own heading.
+- An empty or unknown category shows "This category isn't on display" with a link to all work; production returns 404 (FR9.8).
+- Grid: three columns on desktop, two on tablet, one on phones.
+
+### P2 — Project detail and case study (FR9.2)
+
+`project-stars-desktop.png`, `project-stars-mobile.png`, `project-baduk-desktop.png`, `project-monopoly-desktop.png`, `project-stars-lightbox.png`.
+
+- **Hero:** lead image blended into the copy; a back link to the category; title, summary and highlights.
+- **Actions:** "Open the app" (live URL as published) and "View source" (public repositories only).
+- **Badges:** derived from access metadata (FR4.10).
+- **Sticky in-page navigation:** Story · Gallery · Details.
+- **Story:** the six narrative sections, with empty ones omitted, under a "Draft case study" label because the copy is drafted from public READMEs and is not owner-approved.
+- **Details panel:** category, access, phone suitability, source, highlights.
+- **Gallery:** image buttons that open an enlarged view (native dialog). Arrow keys step, Escape closes, and focus returns to the image.
+- **Monopoly Arena** shows its provisional status and withholds screenshots until the rights review (FR10.6).
+
+### P3 — Not on display (FR9.3)
+
+`not-on-display-desktop.png`, `not-on-display-mobile.png`. An unknown, unpublished or taken-down exhibit shows "This exhibit isn't on display" with a link to all work; production returns 404. Risk's address shows this state because it is not published.
+
+## Studio Screens (owner only)
+
+The Studio uses the same tokens with a utilitarian layout: a top bar with Projects · Discover · Featured order · Activity · Sign out. All data is simulated in the prototype.
+
+| ID | Screen | What it shows | Screenshots |
 |---|---|---|---|
-| P1 Home (Studio) | Hero with name + positioning + lead montage; Featured flagship below; Selected Works by category (curated groups, not dense grid); How I Think section; Footer with plain contact. | Stacked: hero, featured, categories (cards or list), approach notes. | FR9, new direction |
-| P2 Project Detail | Lead image; title + category + access mode; summary; narrative sections; gallery; build/repo links; back to studio. | Same order, wrapping; image enlargement in accessible dialog. | FR4, FR9 |
-| (Studio screens S1–S7 remain largely as previously approved — functional and restrained) | ... | ... | Preserve approved workflows |
+| S1 | Sign in; private workspace | Identity-provider handoff with second factor; no sign-up. Non-owner: "This workspace is private." (FR1.1, FR1.3) | `studio-signin-*`, `studio-private-*` |
+| S2 | Projects | Table on desktop, stacked cards on phones. Title with Provisional tag, category, status in words, featured position, source (PRIVATE spelled out), Edit · Preview · Take down. Empty state offers **New project** and **Discover a GitHub repository** (FR3.5) | `studio-projects-*`, `studio-empty-*` |
+| S2a | New project | Title-only creation with an optional category; inline error and focus on an empty title; creates a Draft with no repository (FR3.1) | `studio-new-project-dialog.png` |
+| S3 | Discover | Real public repositories and dates; private repositories as a masked "PRIVATE" row; search with a kept-text no-match state; Open or Create project (FR2.1–FR2.5) | `studio-discover-*` |
+| S4 | Editor | Save status (unsaved, saved, revision); fieldsets for Basics, Story, Images, Maker and design files, Links and access; skip link to the AI panel below 1100 px; leave guard (FR4.6) | `studio-editor-stars-*`, `studio-editor-risk-*`, `studio-editor-title-only.png`, `studio-leave-guard.png` |
+| S5 | Preview | "Preview — not public" banner; gallery card, featured slide and category placement (FR6.1); full page preview link | `studio-preview-baduk-*` |
+| S6 | Publish / Update confirmation | Full inventory (FR7.2) in one scroll region with Cancel and Confirm fixed below. Blockers link to their fields and disable Confirm (FR7.3, FR10.6) | `studio-publish-ready-baduk.png`, `studio-publish-blocked-title-only.png`, `studio-publish-blocked-rights-review.png`, `studio-publish-risk-withheld.png` |
+| S7 | Take-down confirmation | Names the exhibit; covers carousel and category effects and the released featured slot; warns about outside copies (FR8.2, FR8.4) | `studio-takedown-dialog.png` |
+| S8 | Featured order | Up to 5 featured, drafts counted; move up/down; private until **Update featured order** lists the public order (FR9.7) | `studio-featured-*`, `studio-featured-order-confirm.png` |
+| S9 | Activity | Every publish, update, take-down and featured-order change (FR7.7) | `studio-activity-*` |
 
-## Screen State Matrix (Updated for new public)
+**Editor details (S4):**
 
-| Screen | Empty | Loading / operation | Success | Error / partial |
-|---|---|---|---|---|
-| P1 | Quiet “New work is being installed.” with presence | Reserved image space | Featured + curated categories visible | Failed image keeps context and link |
-| P2 | Omit absent blocks gracefully | Reserved image | Full approved case study | Unknown/taken down: graceful “not on display” with navigation; real HTTP 404 |
+- **Basics:** title (required), with a provisional-title note for Monopoly and Risk; summary; primary category; "Feature in the carousel" (goes public with Publish or Update; at most 5).
+- **Story:** six narrative fields.
+- **Images:** accepted types and limits stated before the picker, HEIC conversion explained, alt text per image, lead image radio.
+- **Maker and design files:** allowed types, include-at-Publish per file, checking → accepted state.
+- **Links and access:**
+  - live URL (for Risk, withheld and disabled, with a "Live URL authorized" flag, FR10.7);
+  - access requirement and phone suitability;
+  - linked repositories with visibility and licence as read from GitHub, or "PRIVATE — never linked or named publicly";
+  - the rights-review flag where it is required (FR10.6);
+  - derived badges, not editable.
+- **AI panel:** names the provider before any request and explains every blocked state. No provider is approved and no spending is approved (FR5.8); a private repository also needs provider approval (FR5.9). A project with no repository says suggestions need one (FR5.1).
+- **Card preview.**
 
-(Studio states preserved from prior approved version.)
+**Publish confirmation (S6) inventory:**
+
+- text sections, with AI-originated text identified;
+- images with alt text, lead marked;
+- files with embedded metadata and ZIP entries, with secret-like names flagged and "published unchanged" stated;
+- the live URL exactly as entered, with its check result: "Reachable at ⟨time⟩", never "Verified", "Safe" or "Approved";
+- repositories as confirmed public at that time, or "no name or link published";
+- derived badges;
+- category and featured placement;
+- private-source and rights-review notices.
+
+## Screen State Matrix
+
+| Screen | Loading | Empty | Error / blocked | Success | Notes |
+|---|---|---|---|---|---|
+| P1 Home | Static export, no loading state | No featured: carousel omitted. No published: header plus "New work is being installed." (FR9.1) | Card image failure keeps the title and still links | Carousel, categories, gallery | Populated categories only |
+| P1b Catalog / category | Static | Category with no published exhibit: not on display | Unknown category: not on display | Chips with counts | Counts are published only |
+| P2 Project | Static | Empty narrative sections omitted; no gallery: note | Unknown or unpublished: P3 | Enlarged view | Private repositories never linked |
+| S1 Sign in | Provider handoff | — | Non-owner: private message; expired session restores edits (FR1.4) | Projects | MFA always |
+| S2 Projects | — | New project / Discover | GitHub unreachable message keeps the list working (FR2.4) | Status words | Take down only when public |
+| S2a New project | — | Empty title: inline error, focus | — | Draft created → editor | Repository optional |
+| S3 Discover | List loading | No match: message, search kept | "Can't reach GitHub right now", with retry (FR2.4) | Open / Create | PRIVATE spelled out |
+| S4 Editor | Saving | No images or files: hints | Save error keeps edits; conflict shown side by side | Saved revision | Leave guard |
+| S5 Preview | — | Not featured / no category: stated | — | Banner always | Never public |
+| S6 Publish | Preparing inventory | — | Blockers linked to fields; Confirm disabled with reasons | Published / Updated and logged | Initial focus Cancel |
+| S7 Take down | — | — | Failure keeps the last public state, with retry (FR7.8) | Taken down; slot released | Outside copies warning |
+| S8 Featured order | — | None featured: carousel hidden | More than 5: blocked in the editor | Order updated and logged | Private until confirmed |
+
+## Launch Content and Imagery
+
+- **Candidates (CR-01):** STARS, Monopoly (working title "Monopoly Arena"), Baduk and Risk. Each needs its own approval; any approved subset may launch.
+- **Imagery:**
+  - STARS and Baduk use live captures of their deployed public apps, labelled "Live capture".
+  - Monopoly uses a labelled concept image ("Draft image · concept art"), and its board artwork is withheld until the rights review.
+  - Risk shows "Image awaiting approval".
+  - Category tiles use labelled concept crops from the owner's concept board.
+- **Copy:** drafted only from public READMEs and live pages, and labelled as draft. Nothing is drawn from Risk's private repository.
+- **Withheld values:** Risk's repository name and live URL appear in no file of this public repository (FR10.7).
 
 ## Requirements Coverage
 
-(Updated to reflect new public structure while preserving all prior FR/NFR coverage for Studio, publication boundary, auth, etc.)
-
-| Group | Coverage / implementation obligation |
-|---|---|
-| FR1–FR8 | Studio workflows unchanged (sign-in, discovery, edit, preview, explicit publish, take-down). |
-| FR9 | Public now restructured as Studio / Selected Works with hero, featured, category browsing, approach section, detail pages. No analytics/accounts/tags, plain contact. |
-| FR10 | Seed titles on concept board only. |
-| NFRs | Accessibility, privacy, performance, security boundaries, cost gates preserved. New visual tokens must still meet contrast and touch targets. |
+| Requirement | Where it is designed | Verified by (`verification.md`) |
+|---|---|---|
+| FR1.1, FR1.3 Owner sign-in, MFA, private workspace | S1 | Screenshots; axe |
+| FR2.1–FR2.5 Discovery | S3 | Screenshots; axe |
+| FR3.1, FR3.2, FR3.5 Title-only projects, statuses, empty state | S2, S2a, S4 | S-title-only, S-published |
+| FR4.2, FR4.4, FR4.9 Images, attachments, downloads only | S4 Images / Files | S-file-inventory |
+| FR4.6 Leave guard | S4 | S-leave-guard |
+| FR4.10 Access metadata and derived badges | S4, P1, P2 | F-risk-nolink; screenshots |
+| FR5.1, FR5.8, FR5.9 AI panel states | S4 | S-title-only; screenshots |
+| FR6.1 Preview of card, carousel and category | S5 | Screenshots |
+| FR7.2, FR7.3 Inventory and blockers | S6 | S-publish-blocked, S-rights-block, S-file-inventory, S-escape |
+| FR8.2, FR8.4 Take-down | S7 | S-takedown |
+| FR9.1 Home | P1 | F-home-categories, F-counts |
+| FR9.2 Project page and enlarged view | P2 | D-lightbox, F-mobile-actions |
+| FR9.3, FR9.8 Not on display, categories | P3, P1b | F-empty-category |
+| FR9.5, NFR15 No third-party origins | All public pages | P-* (no external requests) |
+| FR9.6, NFR8 Identity and contrast | All | T-contrast; A-* (axe) |
+| FR9.7 Carousel | P1, S8 | C-no-autoplay, C-keyboard, C-links, M-reduced-motion, S-order |
+| FR10.5 Reachability labels | S6 | S-reachable |
+| FR10.6 Rights review | S2, S4, S6, P2 | S-rights-block |
+| FR10.7 Withheld live URL, private source | S4, S6, P1 | S-risk-url, F-risk-nolink |
+| NFR8 Keyboard, focus, skip link, reflow | All | K-skip, K-skip-target, K-focus-visible, R-* (390/768/1024/1440) |
 
 ## Assumptions & Open Questions
 
-This proposes a new public-facing identity and structure. The private Studio, publishing controls, security boundaries and all approved requirements remain valid and are not reopened.
-
-Imagery is concept only. Real project assets will be supplied later.
-
-Content approval, spending approval, deployment approval and this design gate are separate decisions.
-
-Secure recovery, provider choice, infrastructure remain architecture work.
-
-## Design Notes for Expansion
-
-The category + access-mode + lifecycle separation allows graceful growth:
-- Browser Apps start as primary v1 class.
-- Woodworking, cloud architecture, AI experiments, downloadable tools, invitation-only items add new categories or modes without breaking the system.
-- Curated “Selected Works” prevents the “zoo of unrelated creations” feel.
-
-The design starts focused and extends. 
+- **Owner inputs before launch:** real imagery and approved copy for each candidate; biography; contact email address.
+- **Owner decisions** (D-28; none is approved by this design): the trademark and artwork review for Monopoly and Risk; licensing for STARS and Monopoly; authorizing Risk's live URL after its privacy and security review; publication approval of each candidate.
+- **Prototype limits:** pages are rendered client-side from `data.js`, while production pre-renders them at export (FR7.4). The prototype cannot set HTTP status codes, headers or CSP; those are verified in implementation (NFR15). Studio behaviour is simulated in memory.
+- **Later stages:** the AI provider, GitHub credential mechanism, secure edit recovery, exact rate limits, image pixel limit and the link-check isolation design belong to Domain, NFR and Infrastructure Design.

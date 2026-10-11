@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Project — Michael Broadfoot (Prototype R5)</title>
+  <link rel="stylesheet" href="fonts/fonts.css">
+  <link rel="stylesheet" href="styles.css">
+  <script src="icons.js" defer></script>
+  <script src="data.js" defer></script>
+  <script src="shell.js" defer></script>
+  <script src="site.js" defer></script>
+</head>
+<body data-page="project">
+  <div class="shell">
+    <main id="main"></main>
+  </div>
+  <dialog class="lightbox" id="lightbox" aria-labelledby="lightbox-caption">
+    <div class="lightbox__frame">
+      <img id="lightbox-img" src="" alt="">
+      <p class="lightbox__caption" id="lightbox-caption"></p>
+      <div class="lightbox__controls">
+        <button class="round-btn" type="button" data-step="-1" aria-label="Previous image"><svg class="ic" aria-hidden="true"><use href="#i-prev"/></svg></button>
+        <span class="lightbox__count" id="lightbox-count"></span>
+        <button class="round-btn" type="button" data-step="1" aria-label="Next image"><svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+        <button class="btn btn--ghost lightbox__close" type="button" id="lightbox-close">Close</button>
+      </div>
+    </div>
+  </dialog>
+  <noscript><p class="noscript">This prototype page renders with JavaScript. The production site is a static export with every page pre-rendered (FR7.4).</p></noscript>
+</body>
+</html>

@@ -1,40 +1,60 @@
-# Refined Mockups — Homepage Prototype
+# Refined Mockups — Working Prototype (R5)
 
-Status: **R5, draft for owner review.** Not approved. Requirements are unchanged. The proposed changes are in `../requirements-change-proposal.md` (CR-01 to CR-05, recorded as proposed owner decisions awaiting final sign-off), and the verified deployment facts are in `../launch-inventory.md`.
+Status: **design proposal for the owner's Refined Mockups gate.** Not approved, and nothing here is published. It implements the requirements as amended by A1 to A1.2 (CR-01 to CR-05). The design narrative is in `../mockups.md`; the results are in `../verification.md`.
 
-Open `index.html` in a browser. Add `?notes` to the address, or press **Show scope notes**, to outline everything outside the approved first release. Each project card then shows its verified deployment and access facts.
+## Open it
 
-## R5 (current)
+Open these files directly in a browser; no server or build step is needed:
 
-- **Projects:** the owner's launch candidates replace the invented ones: STARS, Monopoly Arena, Baduk and Risk (CR-01).
-- **Featured carousel:** shows the three public candidates. Risk is not featured until Michael approves its public image, text and live link.
-- **Explore by Type:** uses one axis, what a project *is*:
-  - Games & AI Arenas: 3 projects;
-  - Astronomy & Exploration: 1 project;
-  - Woodworking: "Coming from the shop", which needs CR-02;
-  - Software & Tools: nothing published yet.
+| Page | File |
+|---|---|
+| Home | `index.html` |
+| All projects | `catalog.html` |
+| A category | `catalog.html?category=games`, `catalog.html?category=astronomy` |
+| Project case studies | `project.html?p=stars`, `project.html?p=baduk`, `project.html?p=monopoly-arena` |
+| Not on display | `project.html?p=risk`, `catalog.html?category=woodworking` |
+| Studio (owner only, simulated) | `studio.html` — start at sign-in, or open `#projects`, `#discover`, `#edit/stars`, `#featured`, `#activity` directly |
 
-  Access is shown as badges instead: "In browser", "Source available", "Open source · MIT", "Source private".
-- **Badges** match the inventory. STARS and Monopoly are public repositories with no licence, so they show "Source available". Only Baduk shows "Open source". Risk shows "Source private" and has no source link (D-15). Its live link is marked pending approval.
-- **Imagery:**
-  - *Live captures* of the deployed STARS and Baduk apps, taken with Playwright on 2026-10-10.
-  - *Draft concept art* cropped from the owner's concept board, for Monopoly and the type tiles. The Monopoly board itself is not captured because its artwork resembles third-party trade dress (see the inventory).
-  - Risk: a placeholder until Michael approves an image.
-- **Copy** for the three public apps is drafted from their public READMEs and live pages. Risk has no copy because its source is private (D-22). None of the copy is owner-approved.
-- **Screenshots:** `../screenshots/proto-r5-*.png` — desktop 1440, mobile 390, tablet 1024, open menu, second slide, scope notes. No horizontal overflow and no console errors.
+Add `?notes` to any page, or press **Show scope notes**, to outline requirement annotations.
 
-## R4 (history)
+## What is real and what is draft
 
-The first prototype showed the concept board's sample projects. Its screenshots are `../screenshots/proto-*.png`, the files without the `r5` prefix. The concept-board crops that only R4 used are not committed.
+- **Live captures** (`assets/live/`): screenshots of the deployed public STARS and Baduk apps, captured with Playwright on 2026-10-10 and labelled "Live capture".
+- **Draft concept art** (`assets/draft/`): crops of the owner's concept board (`reference/concept-board.png`), labelled "Draft". Monopoly keeps placeholder art until its rights review (FR10.6).
+- **Risk:** no image, no copy and no links. Its repository is private, and its live URL is withheld from this public repository (FR10.7).
+- **Copy:** drafted from public READMEs and live pages, labelled "Draft case study", and not owner-approved.
+- **Studio:** all data is simulated in memory. Nothing is saved, sent, checked or published.
+- **Fonts** (`fonts/`): self-hosted, under the SIL Open Font License 1.1 (licences included), so the pages make no third-party requests.
 
-The earlier `01-desktop-home.png`, `02-desktop-catalog.png` and `04-desktop-detail.png` are byte-identical: one image saved under three names. They are kept as design history.
+## Files
 
-## Proposed for v1, still awaiting sign-off (outlined in scope notes)
+- **Pages:** `index.html`, `catalog.html`, `project.html`, `studio.html`.
+- **Styles:**
+  - `styles.css` — tokens and the public site;
+  - `studio.css` — the Studio;
+  - `fonts/fonts.css`.
+- **Scripts:**
+  - `data.js` — content and badge derivation;
+  - `shell.js` — public sidebar, cards and footer;
+  - `app.js` — home carousel;
+  - `site.js` — catalog and project pages;
+  - `studio.js` — Studio views and dialogs;
+  - `icons.js` — icon sprite.
+- **Tests:** `tests/verify.cjs` (verification suite) and `tests/results.json` (latest run).
 
-- **Palette:** the warm charcoal and brass direction replaces "dark navy" in FR9.6 (CR-04).
-- **Featured carousel and categories:** proposed for v1 (CR-05). On the live site, categories with no published exhibit are hidden; the prototype shows empty ones only to illustrate the layout. Topic tags stay out (FR4.7).
-- **Journal and Search:** deferred (owner decision).
+## Re-run the verification
 
-## Production notes
+You need Node 22, Playwright 1.64 with Chromium, and axe-core 4.10.2. Then, from this folder:
 
-Fonts come from Google Fonts for this prototype only, and production self-hosts them (FR9.5, NFR9, NFR15). The prototype loads no inline scripts, which keeps it compatible with the CSP in NFR15.
+```bash
+PW=<path to node_modules/playwright> AXE=<path to axe-core/axe.min.js> node tests/verify.cjs
+```
+
+The suite regenerates every screenshot in `../screenshots/r5-revision/` and writes `tests/results.json`. Each check reports PASS or FAIL with evidence.
+
+## History
+
+- **R4:** the first prototype built from the concept board; its screenshots are `../screenshots/proto-*.png`.
+- **R5 first cut:** the four candidates on the home page; screenshots `../screenshots/proto-r5-*.png`.
+- **R5 revision (this one):** catalog, category and project pages; Studio; self-hosted fonts; skip links; verification suite; screenshots `../screenshots/r5-revision/`.
+- **Older material:** `../design-board.html` and the earlier screenshots (`01–04`, `gallery-*`, `editor-*`) are kept as history only.

@@ -5,11 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex">
   <title>Michael Broadfoot — Selected Work (Prototype R5)</title>
-  <!-- Prototype only: production self-hosts fonts so the public site makes no third-party requests (FR9.5, NFR9, NFR15). -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600&family=Mrs+Saint+Delafield&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;1,8..60,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="fonts/fonts.css">
   <link rel="stylesheet" href="styles.css">
+  <script src="data.js" defer></script>
+  <script src="shell.js" defer></script>
   <script src="app.js" defer></script>
 </head>
 <body>
@@ -36,51 +35,54 @@
     <symbol id="i-stones" viewBox="0 0 24 24"><path d="M3 3v18M9 3v18M15 3v18M21 3v18M3 9h18M3 15h18" opacity=".45"/><circle cx="9" cy="9" r="3.2"/><circle cx="15" cy="15" r="3.2" fill="currentColor"/></symbol>
     <symbol id="i-flag" viewBox="0 0 24 24"><path d="M5 21V4"/><path d="M5 4h11l-2 4 2 4H5"/></symbol>
     <symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="1.5"/><circle cx="9" cy="10" r="1.6"/><path d="m21 16-5-5-9 9"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-edit" viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="m14 6 4 4"/></symbol>
+    <symbol id="i-eye-off" viewBox="0 0 24 24"><path d="M3 3l18 18"/><path d="M10.6 5.2A10 10 0 0 1 12 5c6.5 0 10 7 10 7a17 17 0 0 1-3.2 4.1M6.1 6.4C3.5 8.2 2 12 2 12s3.5 7 10 7a9.6 9.6 0 0 0 4.2-1"/></symbol>
+    <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V4"/><path d="m6 10 6-6 6 6"/><path d="M4 20h16"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 5 5 9-10"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3 2 20h20z"/><path d="M12 10v4M12 17h.01"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 3H6v18h12V7z"/><path d="M14 3v4h4"/></symbol>
+    <symbol id="i-log" viewBox="0 0 24 24"><path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/></symbol>
+    <symbol id="i-sparkle" viewBox="0 0 24 24"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol><symbol id="i-cloud" viewBox="0 0 24 24"><path d="M7 18h10.5a4.5 4.5 0 0 0 .5-8.97A6 6 0 0 0 6.34 8.5 4.75 4.75 0 0 0 7 18z"/></symbol><symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v12"/><path d="m6 10 6 6 6-6"/><path d="M4 20h16"/></symbol>
   </svg>
 
+  <a class="skip" href="#main">Skip to content</a>
   <div class="proto-strip" role="note">
-    <p><strong>Prototype R5</strong> · Homepage only · Projects are the owner’s launch candidates · <em>Live captures</em> are from the deployed apps; <em>Draft</em> images are concept art · Copy is not owner-approved</p>
+    <p><strong>Prototype R5</strong> · Public site · Projects are the owner's launch candidates · <em>Live captures</em> are from the deployed apps; <em>Draft</em> images are concept art · Copy is not owner-approved</p>
     <button class="notes-toggle" type="button" aria-pressed="false">Show scope notes</button>
   </div>
 
   <div class="shell">
     <header class="mobile-bar">
-      <a class="wordmark wordmark--stacked" href="#">Michael<br>Broadfoot</a>
+      <a class="wordmark wordmark--stacked" href="index.html">Michael<br>Broadfoot</a>
       <button class="icon-btn menu-btn" type="button" aria-controls="sidebar" aria-expanded="false" aria-label="Open menu">
-        <svg class="ic"><use href="#i-menu"/></svg>
+        <svg class="ic" aria-hidden="true"><use href="#i-menu"/></svg>
       </button>
     </header>
 
     <aside class="sidebar" id="sidebar" aria-label="Site">
       <div class="sidebar__top">
-        <a class="wordmark" href="#">Michael Broadfoot</a>
+        <a class="wordmark" href="index.html">Michael Broadfoot</a>
         <p class="tagline">Systems Architect <span aria-hidden="true">·</span> Builder <span aria-hidden="true">·</span> Explorer</p>
-        <button class="icon-btn close-btn" type="button" aria-label="Close menu"><svg class="ic"><use href="#i-close"/></svg></button>
+        <button class="icon-btn close-btn" type="button" aria-label="Close menu"><svg class="ic" aria-hidden="true"><use href="#i-close"/></svg></button>
       </div>
 
       <nav class="side-nav" aria-label="Primary">
         <ul>
-          <li><a href="#" aria-current="page"><svg class="ic"><use href="#i-home"/></svg>Home</a></li>
-          <li><a href="#work"><svg class="ic"><use href="#i-grid"/></svg>All Projects</a></li>
+          <li><a href="index.html" aria-current="page"><svg class="ic" aria-hidden="true"><use href="#i-home"/></svg>Home</a></li>
+          <li><a href="catalog.html"><svg class="ic" aria-hidden="true"><use href="#i-grid"/></svg>All Projects</a></li>
         </ul>
-        <p class="side-nav__label" data-note="Categories: proposed for v1 (CR-05)">Collections</p>
+        <p class="side-nav__label" data-note="Only categories with a published exhibit appear (FR9.1, FR9.8)">Categories</p>
         <ul>
-          <li><a href="#"><svg class="ic"><use href="#i-gamepad"/></svg>Games &amp; AI Arenas</a></li>
-          <li><a href="#"><svg class="ic"><use href="#i-telescope"/></svg>Astronomy &amp; Exploration</a></li>
-          <li><a href="#"><svg class="ic"><use href="#i-hammer"/></svg>Woodworking</a></li>
-          <li><a href="#"><svg class="ic"><use href="#i-code"/></svg>Software &amp; Tools</a></li>
+          <li><a href="catalog.html?category=games"><svg class="ic" aria-hidden="true"><use href="#i-gamepad"/></svg>Games &amp; AI Arenas</a></li>
+          <li><a href="catalog.html?category=astronomy"><svg class="ic" aria-hidden="true"><use href="#i-telescope"/></svg>Astronomy &amp; Exploration</a></li>
         </ul>
         <ul class="side-nav__secondary">
-          <li data-note="Journal: deferred"><a href="#"><svg class="ic"><use href="#i-book"/></svg>Journal</a></li>
-          <li><a href="#"><svg class="ic"><use href="#i-info"/></svg>About</a></li>
+          <li><a href="#about"><svg class="ic" aria-hidden="true"><use href="#i-info"/></svg>About</a></li>
         </ul>
       </nav>
-
-      <form class="search" role="search" data-note="Search: deferred">
-        <label class="visually-hidden" for="q">Search projects</label>
-        <svg class="ic" aria-hidden="true"><use href="#i-search"/></svg>
-        <input id="q" type="search" placeholder="Search projects…" autocomplete="off">
-      </form>
 
       <figure class="credo">
         <blockquote>Good systems — in software, in wood, in life — start with structure, curiosity, and respect for the material.</blockquote>
@@ -89,13 +91,12 @@
     </aside>
     <div class="scrim" hidden></div>
 
-    <main id="main">
-      <!-- FEATURED -->
-      <section class="hero" aria-roledescription="carousel" aria-label="Featured work" data-note="Featured carousel: proposed for v1 (CR-05, FR9.7)">
+    <main id="main" tabindex="-1">
+      <!-- FEATURED (FR9.7): manual carousel of published, featured exhibits -->
+      <section class="hero" aria-roledescription="carousel" aria-label="Featured work" data-note="Featured carousel (FR9.7): manual, keyboard operable, never auto-advances">
         <nav class="top-nav" aria-label="Sections">
-          <a href="#work">Projects</a>
-          <a href="#" data-note="Deferred">Journal</a>
-          <a href="#">About</a>
+          <a href="catalog.html">Projects</a>
+          <a href="#about">About</a>
         </nav>
 
         <div class="hero__media">
@@ -107,17 +108,17 @@
           <p class="eyebrow">Featured</p>
           <h1 class="hero__title">STARS</h1>
           <p class="hero__meta">Astronomy <span>·</span> 3D <span>·</span> Runs in your browser</p>
-          <p class="hero__desc">Fly through the real galaxy — 123,000 stars at their true 3D positions, with instruments no planetarium ships: measurement tethers, closure rates, deep-time scrubbing.</p>
+          <p class="hero__desc">Fly through the real galaxy — 123,000 stars at their true 3D positions, with instruments no planetarium ships.</p>
           <div class="hero__actions">
-            <a class="btn btn--primary" href="#">View Project <svg class="ic"><use href="#i-arrow"/></svg></a>
-            <a class="btn btn--ghost" href="#">Open the App <svg class="ic"><use href="#i-external"/></svg></a>
+            <a class="btn btn--primary hero__view" href="project.html?p=stars">View Project <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+            <a class="btn btn--ghost hero__open" href="https://stars.xaminisalamini.com/" rel="noopener">Open the App <svg class="ic" aria-hidden="true"><use href="#i-external"/></svg></a>
           </div>
         </div>
 
         <div class="hero__controls">
           <p class="hero__count"><span class="hero__index">01</span> <span aria-hidden="true">/</span> <span class="hero__total">03</span></p>
-          <button class="round-btn" type="button" data-dir="-1" aria-label="Previous featured project"><svg class="ic"><use href="#i-prev"/></svg></button>
-          <button class="round-btn" type="button" data-dir="1" aria-label="Next featured project"><svg class="ic"><use href="#i-arrow"/></svg></button>
+          <button class="round-btn" type="button" data-dir="-1" aria-label="Previous featured project"><svg class="ic" aria-hidden="true"><use href="#i-prev"/></svg></button>
+          <button class="round-btn" type="button" data-dir="1" aria-label="Next featured project"><svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></button>
         </div>
         <div class="hero__dots" role="group" aria-label="Choose featured project">
           <button type="button" aria-label="Featured project 1" aria-current="true"></button>
@@ -126,125 +127,64 @@
         </div>
       </section>
 
-      <!-- EXPLORE BY TYPE (one axis: what the project is; access is shown as badges) -->
-      <section class="section explore" aria-labelledby="explore-h" data-note="Categories: proposed for v1 (CR-05) · empty categories hidden on the live site · not tags (FR4.7)">
+      <!-- CATEGORIES (FR9.8): only categories with a published exhibit -->
+      <section class="section explore" aria-labelledby="explore-h" data-note="Categories with no published exhibit (Woodworking, Software &amp; Tools) stay hidden until one is published (FR9.1)">
         <header class="section__head">
           <h2 id="explore-h">Explore Projects by Type</h2>
-          <a class="link-more" href="#work">View all projects <svg class="ic"><use href="#i-arrow"/></svg></a>
+          <a class="link-more" href="catalog.html">View all projects <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
         </header>
-        <ul class="types types--4">
+        <ul class="types types--2">
           <li class="type">
-            <a href="#">
+            <a href="catalog.html?category=games">
               <span class="type__img"><img src="assets/draft/dice-hero.jpg" alt="" loading="lazy"><span class="draft-chip draft-chip--sm">Draft</span></span>
               <span class="type__body">
-                <svg class="ic ic--lg"><use href="#i-gamepad"/></svg>
+                <svg class="ic ic--lg" aria-hidden="true"><use href="#i-gamepad"/></svg>
                 <span class="type__title">Games &amp; AI Arenas</span>
                 <span class="type__sub">Play them, or watch the bots</span>
-                <span class="type__count">3 projects</span>
+                <span class="type__count">2 projects</span>
               </span>
             </a>
           </li>
           <li class="type">
-            <a href="#">
+            <a href="catalog.html?category=astronomy">
               <span class="type__img"><img src="assets/live/stars.jpg" alt="" loading="lazy"><span class="draft-chip draft-chip--sm draft-chip--live">Live</span></span>
               <span class="type__body">
-                <svg class="ic ic--lg"><use href="#i-telescope"/></svg>
+                <svg class="ic ic--lg" aria-hidden="true"><use href="#i-telescope"/></svg>
                 <span class="type__title">Astronomy &amp; Exploration</span>
                 <span class="type__sub">Instruments for the night sky</span>
                 <span class="type__count">1 project</span>
               </span>
             </a>
           </li>
-          <li class="type" data-note="Projects without a repository: CR-02">
-            <a href="#">
-              <span class="type__img"><img src="assets/draft/cat-wood.jpg" alt="" loading="lazy"><span class="draft-chip draft-chip--sm">Draft</span></span>
-              <span class="type__body">
-                <svg class="ic ic--lg"><use href="#i-hammer"/></svg>
-                <span class="type__title">Woodworking</span>
-                <span class="type__sub">Drawings, builds, and shop work</span>
-                <span class="type__count type__count--muted">Coming from the shop</span>
-              </span>
-            </a>
-          </li>
-          <li class="type">
-            <a href="#">
-              <span class="type__img"><img src="assets/draft/cat-code.jpg" alt="" loading="lazy"><span class="draft-chip draft-chip--sm">Draft</span></span>
-              <span class="type__body">
-                <svg class="ic ic--lg"><use href="#i-code"/></svg>
-                <span class="type__title">Software &amp; Tools</span>
-                <span class="type__sub">Clone, build, or download</span>
-                <span class="type__count type__count--muted">Nothing published yet</span>
-              </span>
-            </a>
-          </li>
         </ul>
-        <a class="btn btn--ghost view-all-mobile" href="#work">View all projects</a>
+        <a class="btn btn--ghost view-all-mobile" href="catalog.html">View all projects</a>
       </section>
 
-      <!-- SELECTED WORK — the FR9.1 exhibition wall, populated with the CR-01 launch candidates -->
+      <!-- SELECTED WORK (FR9.1): published exhibits; cards rendered from data.js -->
       <section class="section work" id="work" aria-labelledby="work-h">
         <header class="section__head">
           <div>
             <h2 id="work-h">Selected Work</h2>
             <p class="section__sub">Working instruments and game arenas — open them and try them.</p>
           </div>
-          <a class="link-more" href="#">All projects <svg class="ic"><use href="#i-arrow"/></svg></a>
+          <a class="link-more" href="catalog.html">All projects <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
         </header>
-
-        <ul class="cards cards--2">
-          <li class="card" data-note="Verified 2026-10-10: live, no sign-in, phone OK · source public, no licence">
-            <a class="card__img" href="#"><img src="assets/live/stars.jpg" alt="A 3D atlas of real stars around the Sun" loading="lazy"><span class="draft-chip draft-chip--sm draft-chip--live">Live capture</span></a>
-            <div class="card__body">
-              <h3><svg class="ic"><use href="#i-star"/></svg><a href="#">STARS</a></h3>
-              <p>Fly through the real galaxy — stars at their true 3D positions, with instruments no planetarium ships: measurement tethers, closure rates, deep-time scrubbing.</p>
-              <div class="card__foot">
-                <span class="badge badge--live">In browser</span><span class="badge">Source available</span>
-                <a class="icon-link" href="#" aria-label="Open STARS"><svg class="ic"><use href="#i-external"/></svg></a>
-              </div>
-            </div>
-          </li>
-          <li class="card" data-note="Verified 2026-10-10: live, no sign-in, phone OK · source public, MIT">
-            <a class="card__img" href="#"><img src="assets/live/baduk.jpg" alt="A 9×9 Go game in progress between two bots, with the move log beside the board" loading="lazy"><span class="draft-chip draft-chip--sm draft-chip--live">Live capture</span></a>
-            <div class="card__body">
-              <h3><svg class="ic"><use href="#i-stones"/></svg><a href="#">Baduk</a></h3>
-              <p>A playspace for learning Go — play people or bots at four levels, with a coach that explains every move and the reasoning behind it.</p>
-              <div class="card__foot">
-                <span class="badge badge--live">In browser</span><span class="badge">Open source · MIT</span>
-                <a class="icon-link" href="#" aria-label="Open Baduk"><svg class="ic"><use href="#i-external"/></svg></a>
-              </div>
-            </div>
-          </li>
-          <li class="card" data-note="Verified 2026-10-10: live, no sign-in, 25px overflow on phone · source public, no licence · title provisional (FR10.6)">
-            <a class="card__img" href="#"><img src="assets/draft/dice-hero.jpg" alt="Two dice on a green gaming table" loading="lazy"><span class="draft-chip draft-chip--sm">Draft image · concept art</span></a>
-            <div class="card__body">
-              <h3><svg class="ic"><use href="#i-dice"/></svg><a href="#">Monopoly Arena</a></h3>
-              <p>A full rules engine and animated board for pitting AI bots against each other — watch strategies buy, build and bankrupt, or train new ones.</p>
-              <div class="card__foot">
-                <span class="badge badge--live">In browser</span><span class="badge">Source available</span>
-                <a class="icon-link" href="#" aria-label="Open Monopoly Arena"><svg class="ic"><use href="#i-external"/></svg></a>
-              </div>
-            </div>
-          </li>
-          <li class="card" data-note="Live, no sign-in, desktop-only · URL unpublished until authorized + privacy/security review (FR10.7) · source private · title provisional">
-            <a class="card__img card__img--empty" href="#">
-              <span class="placeholder"><svg class="ic ic--xl"><use href="#i-flag"/></svg><span>Image awaiting approval</span><small>Source is private — nothing is drawn from it without approval (D-22)</small></span>
-            </a>
-            <div class="card__body">
-              <h3><svg class="ic"><use href="#i-flag"/></svg><a href="#">Risk</a></h3>
-              <p class="pending">Description to come. It will be written only from material Michael approves for publication.</p>
-              <div class="card__foot">
-                <span class="badge badge--pending">Live link pending approval</span><span class="badge">Source private</span>
-              </div>
-            </div>
-          </li>
-        </ul>
+        <ul class="cards cards--2" id="work-cards"></ul>
       </section>
 
-      <footer class="site-foot">
+      <section class="section about" id="about" aria-labelledby="about-h">
+        <header class="section__head"><h2 id="about-h">About</h2></header>
+        <div class="about__body">
+          <p>Systems architect, builder and explorer — software, instruments and things made in the shop, each one built to be used.</p>
+          <p class="owner-input">Owner content input: biography and contact address to be supplied by Michael (FR9.4)</p>
+        </div>
+      </section>
+
+      <footer class="site-foot" id="contact">
         <p class="site-foot__mark">Michael Broadfoot</p>
         <ul>
-          <li><a href="#"><svg class="ic"><use href="#i-github"/></svg>GitHub</a></li>
-          <li><a href="#"><svg class="ic"><use href="#i-mail"/></svg>Email</a></li>
+          <li><a href="https://github.com/mbroadfo"><svg class="ic" aria-hidden="true"><use href="#i-github"/></svg>GitHub</a></li>
+          <li><a href="#contact"><svg class="ic" aria-hidden="true"><use href="#i-mail"/></svg>Email</a></li>
         </ul>
         <p class="site-foot__copy">© 2026 Michael Broadfoot</p>
       </footer>
