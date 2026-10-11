@@ -22,7 +22,11 @@ B. Value first: the visible public site before anything else.
 C. A formal walking skeleton across all units before anything else.
 X. Other (please specify)
 
-[Answer]: A — team practice (Walking Skeleton) says the plan declares `skeleton: off`, so there is no skeleton ceremony. It also says Delivery Planning "orders the work so the thinnest integrated path comes first" and lists four things to prove early:
+[Answer]: Revised at Michael's Request Changes (2026-10-11): an early, thin, end-to-end walking slice first, as the delivery-only unit U0, with CI first (S0) (D1 in `bolt-plan.md`). After it comes the approved dependency graph one unit at a time, with the Studio moved earlier and risk first where the order is open.
+
+Michael's words: "Introduce an early, thin, end-to-end walking slice: a local or preview implementation demonstrating a project created, saved, previewed and published as a static public page, using fake or isolated dependencies initially."
+
+The original answer, A, is kept below for the record. Team practice (Walking Skeleton) says the plan declares `skeleton: off`, so there is no skeleton ceremony. It also says Delivery Planning "orders the work so the thinnest integrated path comes first" and lists four things to prove early:
 - the public page builds and is served;
 - the API answers a health check;
 - CI passes using OIDC;
@@ -46,7 +50,9 @@ B. One Bolt per unit.
 C. Thin slices that cut across units.
 X. Other (please specify)
 
-[Answer]: A — this follows team practice (one short-lived branch per Bolt, merged within one to two days, one squash commit) and the size scale in `unit-of-work.md`. Under unit-major Construction, cross-unit slices would contradict the approved iteration order.
+[Answer]: A, unchanged. Bolts are still pull-request sized: 34 in total, with S0 to S3 and B05a added and B30 moved into Build and Test. Each unit's engine checkpoint presents its demonstration, progress, review recommendations and individual Bolt decisions together (D2-A).
+
+This follows team practice (one short-lived branch per Bolt, merged within one to two days, one squash commit) and the size scale in `unit-of-work.md`. Under unit-major Construction, cross-unit slices would contradict the approved iteration order.
 
 ### Q4. Can Bolts be built at the same time?
 
@@ -54,7 +60,14 @@ A. Construction runs one Bolt at a time from this session (unit-major, serial). 
 B. Swarm execution.
 X. Other (please specify)
 
-[Answer]: A — the recorded Construction settings are checkpoints enabled, unit-major, serial. Project rule: exactly one owner of the workflow state (P-05: Claude Code). Changing to parallel execution is Michael's choice and is not assumed.
+[Answer]: Revised after evaluation (revisions 3 and 4): stay unit-major and serial. The engine's parallel swarm was evaluated and is not recommended now:
+- it lands one squash commit per unit, while team practice needs one per Bolt;
+- `org.md` fixes the merge target as `main`;
+- preview deployments and security reviews are serial bottlenecks anyway.
+
+The changes swarm would need are listed in `bolt-plan.md`, for Michael to choose later.
+
+The original answer, A, is kept for the record. The recorded Construction settings are checkpoints enabled, unit-major, serial. Project rule: exactly one owner of the workflow state (P-05: Claude Code). Changing to parallel execution is Michael's choice and is not assumed.
 
 ### Q5. What outside this team could hold the work up?
 

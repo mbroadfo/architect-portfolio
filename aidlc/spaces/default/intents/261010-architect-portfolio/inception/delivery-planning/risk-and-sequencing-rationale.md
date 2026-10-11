@@ -1,4 +1,4 @@
-# Risk and Sequencing Rationale
+# Risk and Sequencing Rationale (revision 6)
 
 **Inputs:**
 - unit-of-work-dependency (the approved dependency graph);
@@ -7,70 +7,87 @@
 - contract-summary;
 - requirements;
 - team-practices;
-- the answers in `delivery-planning-questions.md`.
+- Michael's Request Changes at the Delivery Planning gate, 2026-10-11:
+  - working software as early as possible;
+  - less administrative overhead;
+  - the same engineering discipline;
+- the advisory reviews of revisions 2, 3 and 4.
 
-A **Bolt** is one build pass over part of a unit of work, ending in working, tested code merged through one pull request. This document explains why the 30 Bolts in `bolt-plan.md` are in that order.
+A **Bolt** is one build pass over part of a unit of work, ending in working, tested code merged through one pull request. A **walking slice** is the smallest piece of real code that runs end to end. This document explains the order in `bolt-plan.md`.
 
-## The Approach: Dependency First, Then Risk First, With a Light Tie-Breaking Score
+## The Approach
 
-1. **The approved dependency graph sets the order.** Construction runs one unit at a time, and the engine walks the units in the graph's order. Units can only start once what they depend on exists. So the order of units follows the graph, and no deviation from topological order is proposed.
-2. **Within each set of ready units, risk first.** The design concentrates risk in four boundaries (ADR-001):
-   - owner-only access;
-   - untrusted uploads;
-   - SSRF-safe link checks;
-   - the publication boundary, including its concurrency rules (ADR-002, ADR-004, ADR-012).
+1. **Walking slice first, with CI underneath it and a preview path soon after.** Martin Fowler and Alistair Cockburn recommend building the walking skeleton first: it proves the parts connect and gives working software immediately. S0 lays down the CI that every later pull request depends on, and B05a (M2) makes preview verification real for every 🧪 Bolt.
+2. **Then the approved graph, one unit at a time, with the Studio moved earlier.** Construction stays unit-major and serial, so landing per Bolt stays simple and traceable. D1 adds ordering-only edges, so the Studio (U11) is built straight after the renderer it needs.
+3. **Risk first wherever the order is open.** The riskiest boundaries come early:
+   - owner-only access (U3, M3);
+   - SSRF (U6, M4);
+   - untrusted uploads (U4, M4);
+   - the publication boundary (U8 and U9, M5).
+4. **Ties are broken with a light score:** (value + time criticality + risk reduction) ÷ size, in the style of WSJF (Weighted Shortest Job First; Reinertsen, SAFe).
 
-   Building the contracts first, and putting OwnerAccess at the start of the back end, means a mistake in a boundary is found when it is cheap to fix. This follows Cohn's advice to sequence by risk and by the knowledge gained, and the "risk reduction" term of WSJF (Weighted Shortest Job First, Reinertsen and SAFe).
-3. **Within each unit, the thinnest piece that runs end to end comes first.** Team practice names four early proofs, and each lands as early as the graph allows:
-   - CI plans with OIDC (B04);
-   - the Terraform plan is clean (B04);
-   - the API answers a health check (B06);
-   - the public page builds and is served (B20).
-4. **Ties are broken with a light score:** (value + time criticality + risk reduction) ÷ size, each scored from 1 to 5. Only ties among ready units use it.
+## Why the Slice Is a Unit of Its Own (D1)
 
-## Unit Order and Its Justification
+Under the current settings (unit-major, serial), the engine builds **each unit completely, one after another**, in dependency order. A slice that crosses U3, U7, U8, U9 and U11 can therefore come first only as its own unit placed first.
 
-| Position | Unit | Why here |
-|---|---|---|
-| 1 | U1 contracts | Has no dependencies, and every other unit builds against it. It fixes the publication allow-list (C2) and the R-07 and R-08 tests early: the highest risk reduction for its size |
-| 2 | U2 platform | Has no dependencies. Proves OIDC and a clean plan. It is the foundation every service deploys onto, and the first Bolts that depend on Michael's bootstrap (E1) |
-| 3 | U3 studio-api | Every back-end module and U11 depend on it. OwnerAccess (B07) is the authorization boundary for everything after it |
-| 4 | U4 media-library | Ready after U3. The untrusted-file boundary; U9 and U10 need it |
-| 5 | U5 description-assistant | Ready after U3. Small, and built with a fake provider, so it spends nothing (FR5.8). Its real provider waits on E6 anyway |
-| 6 | U6 link-checker | Ready after U1 and U2. The SSRF boundary; U9 needs it |
-| 7 | U7 site-renderer | Ready after U1. Reproduces the approved design from the snapshot; U8 and U11 need it |
-| 8 | U8 site-publisher | Ready after U7. Enforces R-07; U9 needs it. Its last Bolt is the "public page is served" proof |
-| 9 | U9 publication | Needs U3, U4, U6 and U8. The largest unit and the publication boundary. Its five Bolts follow ADR-012, then ADR-004, then recovery, then the snapshot |
-| 10 | U10 content-backup | Needs U9, U5 and U4. Small, and needed before launch, not before publishing works |
-| 11 | U11 studio-web | Needs U3 and U7. Built last, so it integrates against real endpoints for every flow. Its end-to-end journeys (B30) verify the whole loop |
+| Option | First end-to-end demo | Changes needed | Verdict |
+|---|---|---|---|
+| **A. Delivery-only unit U0, placed first by ordering-only edges (recommended)** | M1, after the four slice Bolts | Units Generation amendment (D1). The 11 units' boundaries, components and contracts do not change | Recommended |
+| B. No new unit; each unit's first Bolt is its slice portion | Only once U9 lands (M5), about 24 Bolts in | None | Too late for the goal |
+| C. Engine walking-skeleton mode (`skeleton: on`) plus a slice unit | The same as A | D1, **plus** changing the team practice's "Walking Skeleton" section from scope-dependent to on | A works without the practice change. C would add a formal skeleton checkpoint, which A's verification command already provides |
 
-**Tie-break notes** (from the light score):
-- **U4, U5, U6 and U7** are ready together once U1 to U3 exist.
-  - Scored on risk alone, the order would be U6, then U4, then U7, then U5.
-  - The engine walks the graph in its listed order (U4, U5, U6, U7).
-  - The difference does not matter: none of the four depends on another; U5 is small, uses only a fake provider, and spends nothing; and U6 and U4 both come before U9, which consumes them.
-  - So no change to the approved graph is proposed.
-- **U11 last, not earlier.** Building U11 straight after U3 would show something sooner, but every Studio flow beyond sign-in needs U4, U5 and U9. Built last, U11 has nothing to fake and its end-to-end journeys are real.
+The edges U1 → U0 and U2 → U0 are **ordering-only**. The slice's real data flow runs the other way: it consumes the approved C2 schema. The edges U4, U5, U6 → U11 are also ordering-only, and put the Studio earlier.
+
+## Build Order and Its Justification
+
+| Order | Unit | Milestone | Why here |
+|---|---|---|---|
+| 1 | U0 walking-slice | M1 | CI in place, then working software immediately. It proves the package host, renderer, static output, Studio page and allow-list connect |
+| 2 | U1 contracts | M2 | Every unit builds against it. It formalises the C2 schema and the R-07 and R-08 tests |
+| 3 | U2 platform | M2 | The foundation, OIDC plan and CDN contract, and **B05a, the per-pull-request preview deploy path**. With E2 approved, every 🧪 Bolt from here is verified in preview and merged after approval |
+| 4 | U3 studio-api | M3 | The authorization boundary. It replaces the slice's Projects and owner check |
+| 5 | U7 site-renderer | M3 | The real public pages and the Node/browser parity proof. It replaces the slice's renderer |
+| 6 | U11 studio-web | M3 | **The real Studio user interface, moved from 11th to 6th.** It validates the agreed experience and the C1 contract against the real U3. U4, U5 and U9 endpoints are contract fakes until those units land |
+| 7 to 9 | U4, U5, U6 | M4 | The untrusted-file and SSRF boundaries, and the AI gates (fake provider, nothing spent). The Studio switches to their real endpoints |
+| 10 | U8 site-publisher | M5 | R-07 enforcement, and real public storage writes |
+| 11 | U9 publication | M5 | The publication boundary and the concurrency guarantees (CS-01 to CS-20). The slice is retired |
+| 12 | U10 content-backup | M6 | Backup and a tested restore before launch |
+| — | Build and Test | after M6 | The end-to-end Playwright journeys (formerly B30), which need every unit |
+
+## Why Parallel Engine Execution Is Not Recommended Now
+
+This is summarized in `bolt-plan.md` ("Parallel Execution: Evaluated, Not Recommended Now"). In short:
+- the engine's swarm lands **one squash commit per unit**, while team practice needs **one per Bolt**;
+- `org.md` fixes the merge target as `main`;
+- preview deployments and independent security reviews are serial bottlenecks anyway.
+
+ADR-012 atomicity would be safe under swarm, but traceability and the trunk-based rules would need `org.md` and `team.md` changes. Michael can choose swarm later, with those changes.
 
 ## Risks Tackled Early, and Where
 
 | Risk | Where it is retired | Evidence |
 |---|---|---|
-| The allow-list leaks a private field | B01, B25 | C2 is strict; PB-02 export scan |
-| An authorization gap in the Studio | B07 | R-08 registry and spy-handler tests; FR1 criteria |
-| Unauthorized storage keys reach the public site | B19, B20 | C3 tests K1 to K18 and P1; IAM test |
-| Untrusted uploads | B11, B12 | FR4.2 and FR4.4 criteria; isolated processor |
-| SSRF | B15, B16 | NFR17 criteria; zero-permission identity |
-| Publication races and crashes | B22 to B24 | CS-01 to CS-20, as deterministic interleaving tests |
-| Preview and the live site drift apart | B18 | Node and browser parity test |
-| Cost overrun | All | Fakes for paid services in CI (team practice); AI disabled until approved (FR5.8); nothing created without approval |
+| No CI to enforce quality and security | S0 (M1) | Aggregate required check, gitleaks, audit, CodeQL, content-bound security-review check |
+| "Verify in preview before merge" holds only on paper | B05a (M2) | Per-pull-request preview deploy with smoke checks |
+| The pieces do not connect | S1 to S3 (M1) | `make slice-check`: create, save, preview, publish, allow-list scan |
+| The fake identity provider leaks into a deployable | S1 | Build-time check that it is absent from every non-local artifact |
+| The allow-list leaks a private field | S2, B01, B25 | C2 is strict from the slice onward; PB-02 export scan |
+| An authorization gap | S1 (thin), B07 (M3) | Unauthenticated rejection from S1; R-08 registry and spy-handler tests in B07 |
+| The Studio user experience or contract is wrong | S3, B27 to B29 (M3) | Real Studio against the real U3, and the C1 contract for the rest |
+| SSRF | B15, B16 (M4) | NFR17 criteria; zero-permission identity |
+| Untrusted uploads | B11, B12 (M4) | FR4.2 and FR4.4 criteria; isolated processor |
+| Unauthorized storage keys | B19, B20 (M5) | C3 tests K1 to K18 and P1; IAM test |
+| Publication races and crashes | B22 to B24 (M5) | CS-01 to CS-20 interleaving tests |
+| The slice lingers as production code | M1 onward | Only S0 merges. S1 to S3 stay on a demonstration branch and are never deployed; their code reaches `main` only through the owning units' reviewed, preview-verified Bolts. The branch is archived at M5 |
+| Cost overrun | All | Fakes for paid services; AI disabled until approved; nothing created without approval |
 
 ## Risks That Remain Open
 
-- **Preview does not exist yet (E2).** The 🧪 Bolts cannot merge until it does. This is the main schedule risk. Fallback: build and review those Bolts in sequence; merges queue for E2.
-- **Merges are not yet authorized (E10).** Construction work accumulates on Bolt branches until Michael authorizes merging under team practice.
-- **Owner content and rights for launch (E9).** These do not block Construction; they block publishing real exhibits.
+- **E1 (AWS bootstrap) is on the critical path for B04 and B05a (M2).** If it slips, B04 is approved-pending-E1 with local validation, and later units continue.
+- **E2 (`preview`) gates every 🧪 merge.** Until it is approved and B05a exists (M2), the U1 and U2 Bolts wait in their unit stacks. The slice never merges, so it never waits. That is the plan's one temporary deviation from the one-to-two-day branch rule. Security reviews are bound to content, so rebases do not invalidate them.
+- **E10 (merge authorization)** is still Michael's.
+- **Throughput.** Independent security review sessions are needed for about 20 🔒 Bolts. They are run by the single records owner, one at a time.
 
 ## Assumptions & Open Questions
 
-- The scores are judgments, and they affect only tie-breaks that the graph already leaves open. The full Bolt sequence is in `bolt-plan.md`; the dependencies are in `external-dependency-map.md`.
+- The order shown assumes the engine resolves the amended graph as listed. Any difference is reported at M1, and the milestones follow the engine.
