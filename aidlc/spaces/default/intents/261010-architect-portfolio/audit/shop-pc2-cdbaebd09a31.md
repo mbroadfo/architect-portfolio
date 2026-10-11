@@ -9340,3 +9340,276 @@ Owner (Michael Broadfoot, 2026-10-11): Delivery Planning revision 6 approved. D1
 **Stage**: delivery-planning
 
 ---
+
+## Human Turn
+**Timestamp**: 2026-10-11T23:19:18Z
+**Event**: HUMAN_TURN
+**Session**: 3bfff7e0-b2c2-48b0-8b00-081386f03bb3
+**Picked**: ["Approve"]
+
+---
+
+## Question Replied
+**Timestamp**: 2026-10-11T23:19:18Z
+**Event**: QUESTION_REPLIED
+**Session**: 3bfff7e0-b2c2-48b0-8b00-081386f03bb3
+**Question**: Re-approve Delivery Planning revision 6 (with the six consistency corrections; D1 executed, D2-A gated unit checkpoints)? Approval closes Inception and starts Construction with U0 — the walking slice (S0 CI baseline, then the local demo).
+**Reply**: Approve
+
+---
+
+## Gate Approved
+**Timestamp**: 2026-10-11T23:19:32Z
+**Event**: GATE_APPROVED
+**Stage**: delivery-planning
+**User Input**: Approve
+
+---
+
+## Stage Completion
+**Timestamp**: 2026-10-11T23:19:32Z
+**Event**: STAGE_COMPLETED
+**Stage**: delivery-planning
+**Validation Basis**: {"graphContract":"sha256:a107b7327c50c8716649b92e85898e6621eb07b7364abb8cf88794d8672f5550","inputs":[{"artifact":"components","contentHash":"sha256:1cdf6a7caa49b6976d39c3d39d9adeec6a1c86eb581ebc208ea4dc200c846ed8","instanceCount":1,"presentCount":1,"producer":"domain-design","required":true,"structureHash":"sha256:3b58fe458221c55c1c72d99d2e6aa482c69e4853625084ddbac2b96108e6a170"},{"artifact":"contract-summary","contentHash":"sha256:37150c33538474009cc31b0e188a1c4d3e5c322cde95decf880c8a5821e4a1bb","instanceCount":1,"presentCount":1,"producer":"contract-design","required":false,"structureHash":"sha256:a8794c38dc2306d92b2b856fd05ea2a12dd949c651797fda8ffba2bf43d2525b"},{"artifact":"mockups","contentHash":"sha256:71721cd21dc031e507e311d6be46f34ebbe7f6c0cbe15d83cc2135c13c8caf28","instanceCount":1,"presentCount":1,"producer":"refined-mockups","required":false,"structureHash":"sha256:5283e4fe916d8d4c7623f2d52f9dea582f1ceb4c8fdf38fe14568b60271b8a91"},{"artifact":"requirements","contentHash":"sha256:0937765018e2ab646ea080d9a76386e94bf0581578bfdd47ea5f8e6fc97bd58a","instanceCount":1,"presentCount":1,"producer":"requirements-analysis","required":true,"structureHash":"sha256:bb8a4d6a26ef7a69949872e948516b3c9b4ddb0e63b88c2975b69baa2c2a5cb3"},{"artifact":"team-practices","contentHash":"sha256:6f771c9b5a5e071a6d25aaf6d21a573aea965c2356121dfdd8a4d10799fdddd1","instanceCount":1,"presentCount":1,"producer":"practices-discovery","required":false,"structureHash":"sha256:b0e6a533c80fc07476fc01e92acc2c2bc52c980a7aa37a507b9074c08670a6a6"},{"artifact":"unit-of-work-dependency","contentHash":"sha256:ff1dfecc8be053a07ee0bb9a57fe038e1fcfd4fd26586dd3c464073bde548d39","instanceCount":1,"presentCount":1,"producer":"units-generation","required":true,"structureHash":"sha256:9c2c1a5fa6fe80357ffe43d538e1152729882c1776a3d043e77e418ad365e418"},{"artifact":"unit-of-work-story-map","contentHash":"sha256:233af2a54badc4f1609ca31113405bf885ad58f57b82c95d89f8d1f33aff631a","instanceCount":1,"presentCount":1,"producer":"units-generation","required":false,"structureHash":"sha256:62ac788fce87fb0edc101e7e0205bb6e8ea014cccf6bed87aeea0778c9bba263"},{"artifact":"unit-of-work","contentHash":"sha256:dce4fcb058294c63554896d102a17adfafbe967b72502b3e61c7194048fc02b3","instanceCount":1,"presentCount":1,"producer":"units-generation","required":true,"structureHash":"sha256:33b32a3709962b89085c0129174ef571602a1621f6a5f81875e8661719379dd7"}],"outputs":[{"artifact":"bolt-plan","contentHash":"sha256:f3d407fd4f95ce14d1d96fa7382a0635fcdbfb674addbf6416fc8fc4c8888ab8","instanceCount":1,"presentCount":1,"producer":"delivery-planning","required":true,"structureHash":"sha256:4f913a01c64b0422e6dfd84c3cf9c0e104220bf04851ef886e8a48c3b0084867"},{"artifact":"delivery-planning-questions","contentHash":"sha256:688cff6b6d6fb2c19b95e177cb2e17d69a2cf01303f6e51765f1eaef12320420","instanceCount":1,"presentCount":1,"producer":"delivery-planning","required":true,"structureHash":"sha256:957c6fbcfa0bbd17f0149ee59cfbcff8fbe3ab876df0f104cfb8d0cf684a3f3f"},{"artifact":"external-dependency-map","contentHash":"sha256:f87ecf132fdc633d5502a6aa68f95ba0341a940595758ed82fd7328e0b06374d","instanceCount":1,"presentCount":1,"producer":"delivery-planning","required":true,"structureHash":"sha256:55350f0a386869a9aae356daf3692a12694e3e9a85f61ff57a5c40166ec67a8e"},{"artifact":"risk-and-sequencing-rationale","contentHash":"sha256:1ad194cc72cf2b98d2fda203fc63885f865c86539d6410fa9191c7fb72681cf0","instanceCount":1,"presentCount":1,"producer":"delivery-planning","required":true,"structureHash":"sha256:2c19b2239beaa1446c0b1f390e3c1542445f6f0374ebe4598b7011ae4d4c4f66"},{"artifact":"team-allocation","contentHash":"sha256:cfc562fdab9c62d7b23d45e97ea589b9954901f2cbdd6e8da7c8dea92f295194","instanceCount":1,"presentCount":1,"producer":"delivery-planning","required":true,"structureHash":"sha256:467f5a9385d7951cfe68c82a3231c8b5ae4e2557bf006633095c28cd9e0d7ba2"}],"projectType":"greenfield","schema":3}
+**Details**: Stage Delivery Planning approved by gate
+**Tokens In**: 176
+**Tokens Out**: 212657
+**Cache Read**: 35047585
+**Cache Write**: 721414
+**Cost USD**: 13.42
+**By Model**: opus-5-5=10.55; sonnet-5-5=2.87
+**By Agent**: main=10.55; aidlc-architecture-reviewer-agent=2.87
+**Tokens By Model**: opus-5-5=100/138.5k/30.9M/198.7k; sonnet-5-5=76/74.2k/4.1M/522.7k
+**Tokens By Agent**: main=100/138.5k/30.9M/198.7k; aidlc-architecture-reviewer-agent=76/74.2k/4.1M/522.7k
+
+---
+
+## Phase Completion
+**Timestamp**: 2026-10-11T23:19:32Z
+**Event**: PHASE_COMPLETED
+**From phase**: inception
+**To phase**: construction
+**Stages completed**: 14
+
+---
+
+## Phase Verification
+**Timestamp**: 2026-10-11T23:19:32Z
+**Event**: PHASE_VERIFIED
+**Phase boundary**: inception → construction
+
+---
+
+## Phase Start
+**Timestamp**: 2026-10-11T23:19:32Z
+**Event**: PHASE_STARTED
+**Phase**: construction
+**Scope**: classic
+
+---
+
+## Stage Start
+**Timestamp**: 2026-10-11T23:19:32Z
+**Event**: STAGE_STARTED
+**Stage**: functional-design
+**Agent**: aidlc-architect-agent
+**Answer Mode**: guide (reused from intent-capture)
+
+---
+
+## Autonomy Mode Set
+**Timestamp**: 2026-10-11T23:20:00Z
+**Event**: AUTONOMY_MODE_SET
+**Mode**: gated
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-10-11T23:20:36Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/construction/walking-slice/functional-design/functional-design-questions.md
+**Context**: construction > walking-slice > functional-design > functional-design-questions.md
+
+---
+
+## Decision Recorded
+**Timestamp**: 2026-10-11T23:20:38Z
+**Event**: DECISION_RECORDED
+**Stage**: functional-design
+**Decision**: U0 functional design Q1-Q5 (slice scope, local owner identity, publish target, data, slice code lifecycle) answered from the approved bolt plan
+**Options**: Q1: thin path,broader,Other; Q2: local fake IdP with guard,no auth,Other; Q3: local static folder,cloud,Other; Q4: placeholder,Other; Q5: S0 merges only,Other
+**Unit**: walking-slice
+
+---
+
+## Question Answered
+**Timestamp**: 2026-10-11T23:20:38Z
+**Event**: QUESTION_ANSWERED
+**Stage**: functional-design
+**Details**: Q1: A; Q2: A; Q3: A; Q4: A; Q5: A (from the approved bolt plan revision 6)
+**Unit**: walking-slice
+**Answer Source**: chosen by the agent as the person asked
+**Instruction**: Proceed through any required one-time re-approvals and then begin the early walking slice. Continue autonomously. Only escalate important decisions or mandatory human approval gates.
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-10-11T23:21:08Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/construction/walking-slice/functional-design/entities.md
+**Context**: construction > walking-slice > functional-design > entities.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-10-11T23:21:10Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/construction/walking-slice/functional-design/rules.md
+**Context**: construction > walking-slice > functional-design > rules.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-10-11T23:21:38Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/construction/walking-slice/functional-design/functional-spec.md
+**Context**: construction > walking-slice > functional-design > functional-spec.md
+
+---
+
+## Review Requested
+**Timestamp**: 2026-10-11T23:22:19Z
+**Event**: REVIEW_REQUESTED
+**Stage**: functional-design
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: walking-slice
+**Iteration**: 1
+**Artifact Fingerprint**: sha256:84b8fe49800759344b1d9fda53779ccf786a0cc2b5b8b8bec6307f28c558d25c
+**Request Id**: review:03b9899f6be3262657193d8463823052
+**Review File**: .aidlc-engine/reviews/functional-design/units/walking-slice/eb5d56411b849cf9/1.03b9899f6be3262657193d8463823052.review.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-10-11T23:22:39Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/.aidlc-engine/reviewer-dispatch.json
+**Context**: .aidlc-engine > reviewer-dispatch.json
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-10-11T23:23:34Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/.aidlc-engine/reviews/functional-design/units/walking-slice/eb5d56411b849cf9/1.03b9899f6be3262657193d8463823052.review.md
+**Context**: .aidlc-engine > reviews > functional-design > units > walking-slice > eb5d56411b849cf9 > 1.03b9899f6be3262657193d8463823052.review.md
+
+---
+
+## Subagent Completed
+**Timestamp**: 2026-10-11T23:23:42Z
+**Event**: SUBAGENT_COMPLETED
+**Agent Type**: aidlc-architecture-reviewer-agent
+**Agent ID**: aaf59afedbae5f364
+
+---
+
+## Human Turn
+**Timestamp**: 2026-10-11T23:23:43Z
+**Event**: HUMAN_TURN
+**Session**: 3bfff7e0-b2c2-48b0-8b00-081386f03bb3
+
+---
+
+## Review Completed
+**Timestamp**: 2026-10-11T23:23:57Z
+**Event**: REVIEW_COMPLETED
+**Stage**: functional-design
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: walking-slice
+**Iteration**: 1
+**Verdict**: NOT-READY
+**Request Fingerprint**: sha256:84b8fe49800759344b1d9fda53779ccf786a0cc2b5b8b8bec6307f28c558d25c
+**Artifact Fingerprint**: sha256:84b8fe49800759344b1d9fda53779ccf786a0cc2b5b8b8bec6307f28c558d25c
+**Request Id**: review:03b9899f6be3262657193d8463823052
+**Review Record**: .aidlc-engine/reviews/functional-design/units/walking-slice/eb5d56411b849cf9/1.json
+**Review Record Digest**: sha256:669046d4da0ffa8d46ae6b7653b510189b6672c90e11575654763d8506c02a0f
+
+---
+
+## Review Requested
+**Timestamp**: 2026-10-11T23:24:55Z
+**Event**: REVIEW_REQUESTED
+**Stage**: functional-design
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: walking-slice
+**Iteration**: 2
+**Artifact Fingerprint**: sha256:79731a51c157bdcd8be243d7a5850a4f09130e4eaadb9b0a1b15cd708cf36a5a
+**Request Id**: review:9a7494355414903bd557e37ac354b2b1
+**Review File**: .aidlc-engine/reviews/functional-design/units/walking-slice/eb5d56411b849cf9/2.9a7494355414903bd557e37ac354b2b1.review.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-10-11T23:26:01Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/.aidlc-engine/reviews/functional-design/units/walking-slice/eb5d56411b849cf9/2.9a7494355414903bd557e37ac354b2b1.review.md
+**Context**: .aidlc-engine > reviews > functional-design > units > walking-slice > eb5d56411b849cf9 > 2.9a7494355414903bd557e37ac354b2b1.review.md
+
+---
+
+## Subagent Completed
+**Timestamp**: 2026-10-11T23:26:07Z
+**Event**: SUBAGENT_COMPLETED
+**Agent Type**: aidlc-architecture-reviewer-agent
+**Agent ID**: aa4e6cc0075bacd10
+
+---
+
+## Human Turn
+**Timestamp**: 2026-10-11T23:26:09Z
+**Event**: HUMAN_TURN
+**Session**: 3bfff7e0-b2c2-48b0-8b00-081386f03bb3
+
+---
+
+## Review Completed
+**Timestamp**: 2026-10-11T23:26:19Z
+**Event**: REVIEW_COMPLETED
+**Stage**: functional-design
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: walking-slice
+**Iteration**: 2
+**Verdict**: READY
+**Request Fingerprint**: sha256:79731a51c157bdcd8be243d7a5850a4f09130e4eaadb9b0a1b15cd708cf36a5a
+**Artifact Fingerprint**: sha256:79731a51c157bdcd8be243d7a5850a4f09130e4eaadb9b0a1b15cd708cf36a5a
+**Request Id**: review:9a7494355414903bd557e37ac354b2b1
+**Review Record**: .aidlc-engine/reviews/functional-design/units/walking-slice/eb5d56411b849cf9/2.json
+**Review Record Digest**: sha256:41f1f9fc1d2cd3eafbe464a1e5b0442f7d40a06e6a19ed22bafb7012434d75c0
+
+---
+
+## Unit Started
+**Timestamp**: 2026-10-11T23:26:51Z
+**Event**: UNIT_STARTED
+**Stage**: functional-design
+**Unit**: walking-slice
+**Run floor**: STAGE_JUMPED:2026-10-11T20:51:43Z#1
+
+---
+
+## Unit Completed
+**Timestamp**: 2026-10-11T23:26:51Z
+**Event**: UNIT_COMPLETED
+**Stage**: functional-design
+**Unit**: walking-slice
+**Run floor**: STAGE_JUMPED:2026-10-11T20:51:43Z#1
+
+---

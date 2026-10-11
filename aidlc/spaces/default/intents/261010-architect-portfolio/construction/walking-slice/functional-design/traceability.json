@@ -1,0 +1,512 @@
+{
+  "stage": "functional-design",
+  "unit": "walking-slice",
+  "upstream_ids": [
+    "AC0.1",
+    "AC0.2",
+    "AC0.3",
+    "AC0.4",
+    "AC0.5",
+    "AC0.6",
+    "AC0.7",
+    "AC0.8",
+    "AC0.9",
+    "AC0.11",
+    "AC0.10",
+    "AC0.1a",
+    "FR1",
+    "FR2",
+    "FR3",
+    "FR4",
+    "FR5",
+    "FR6",
+    "FR7",
+    "FR8",
+    "FR9",
+    "FR10",
+    "FR1.1",
+    "FR1.2",
+    "FR1.3",
+    "FR1.4",
+    "FR2.1",
+    "FR2.2",
+    "FR2.3",
+    "FR2.4",
+    "FR2.5",
+    "FR3.1",
+    "FR3.2",
+    "FR3.3",
+    "FR3.4",
+    "FR3.5",
+    "FR4.1",
+    "FR4.2",
+    "FR4.3",
+    "FR4.4",
+    "FR4.5",
+    "FR4.6",
+    "FR4.7",
+    "FR4.8",
+    "FR4.9",
+    "FR4.10",
+    "FR5.1",
+    "FR5.2",
+    "FR5.3",
+    "FR5.4",
+    "FR5.5",
+    "FR5.6",
+    "FR5.7",
+    "FR5.8",
+    "FR5.9",
+    "FR6.1",
+    "FR6.2",
+    "FR7.1",
+    "FR7.2",
+    "FR7.3",
+    "FR7.4",
+    "FR7.5",
+    "FR7.6",
+    "FR7.7",
+    "FR7.8",
+    "FR8.1",
+    "FR8.2",
+    "FR8.3",
+    "FR8.4",
+    "FR9.1",
+    "FR9.2",
+    "FR9.3",
+    "FR9.4",
+    "FR9.5",
+    "FR9.6",
+    "FR9.7",
+    "FR9.8",
+    "FR10.1",
+    "FR10.2",
+    "FR10.3",
+    "FR10.4",
+    "FR10.5",
+    "FR10.6",
+    "FR10.7"
+  ],
+  "coverage": [
+    {
+      "id": "AC0.1",
+      "status": "OK",
+      "target": "BR1.1"
+    },
+    {
+      "id": "AC0.2",
+      "status": "OK",
+      "target": "BR1.2"
+    },
+    {
+      "id": "AC0.3",
+      "status": "OK",
+      "target": "BR2.1"
+    },
+    {
+      "id": "AC0.4",
+      "status": "OK",
+      "target": "BR2.2"
+    },
+    {
+      "id": "AC0.5",
+      "status": "OK",
+      "target": "BR4.1, BR4.2"
+    },
+    {
+      "id": "AC0.6",
+      "status": "OK",
+      "target": "BR3.1, BR3.2, BR3.3, BR4.2"
+    },
+    {
+      "id": "AC0.7",
+      "status": "OK",
+      "target": "BR3.1"
+    },
+    {
+      "id": "AC0.8",
+      "status": "OK",
+      "target": "BR3.4, BR3.1"
+    },
+    {
+      "id": "AC0.9",
+      "status": "OK",
+      "target": "BR3.2, BR3.3"
+    },
+    {
+      "id": "AC0.11",
+      "status": "OK",
+      "target": "BR5.2"
+    },
+    {
+      "id": "AC0.10",
+      "status": "OK",
+      "target": "BR5.1"
+    },
+    {
+      "id": "AC0.1a",
+      "status": "OK",
+      "target": "BR1.3"
+    },
+    {
+      "id": "FR1",
+      "status": "N/A",
+      "target": "Owned by U3 (u3-studio-api); outside the delivery-only walking slice"
+    },
+    {
+      "id": "FR2",
+      "status": "N/A",
+      "target": "Owned by U3 (u3-studio-api); outside the delivery-only walking slice"
+    },
+    {
+      "id": "FR3",
+      "status": "N/A",
+      "target": "Owned by U3 (u3-studio-api); outside the delivery-only walking slice"
+    },
+    {
+      "id": "FR4",
+      "status": "N/A",
+      "target": "Owned by U4 (u4-media-library); outside the delivery-only walking slice"
+    },
+    {
+      "id": "FR5",
+      "status": "N/A",
+      "target": "Owned by U5 (u5-description-assistant); outside the delivery-only walking slice"
+    },
+    {
+      "id": "FR6",
+      "status": "N/A",
+      "target": "Owned by U7 (u7-site-renderer); outside the delivery-only walking slice"
+    },
+    {
+      "id": "FR7",
+      "status": "N/A",
+      "target": "Owned by U9 (u9-publication); outside the delivery-only walking slice"
+    },
+    {
+      "id": "FR8",
+      "status": "N/A",
+      "target": "Owned by U9 (u9-publication); outside the delivery-only walking slice"
+    },
+    {
+      "id": "FR9",
+      "status": "N/A",
+      "target": "Owned by U7 (u7-site-renderer); outside the delivery-only walking slice"
+    },
+    {
+      "id": "FR10",
+      "status": "N/A",
+      "target": "Owned by U9 (u9-publication); outside the delivery-only walking slice"
+    },
+    {
+      "id": "FR1.1",
+      "status": "OK",
+      "target": "BR1.1"
+    },
+    {
+      "id": "FR1.2",
+      "status": "OK",
+      "target": "BR1.1"
+    },
+    {
+      "id": "FR1.3",
+      "status": "N/A",
+      "target": "Owned by U3 (u3-studio-api); outside the delivery-only walking slice"
+    },
+    {
+      "id": "FR1.4",
+      "status": "N/A",
+      "target": "Owned by U11 (u11-studio-web); outside the delivery-only walking slice"
+    },
+    {
+      "id": "FR2.1",
+      "status": "N/A",
+      "target": "Owned by U3 (u3-studio-api); outside the delivery-only walking slice"
+    },
+    {
+      "id": "FR2.2",
+      "status": "N/A",
+      "target": "Owned by U3 (u3-studio-api); outside the delivery-only walking slice"
+    },
+    {
+      "id": "FR2.3",
+      "status": "N/A",
+      "target": "Owned by U3 (u3-studio-api); outside the delivery-only walking slice"
+    },
+    {
+      "id": "FR2.4",
+      "status": "N/A",
+      "target": "Owned by U3 (u3-studio-api); outside the delivery-only walking slice"
+    },
+    {
+      "id": "FR2.5",
+      "status": "N/A",
+      "target": "Owned by U3 (u3-studio-api); outside the delivery-only walking slice"
+    },
+    {
+      "id": "FR3.1",
+      "status": "OK",
+      "target": "BR2.2"
+    },
+    {
+      "id": "FR3.2",
+      "status": "OK",
+      "target": "BR3.4"
+    },
+    {
+      "id": "FR3.3",
+      "status": "OK",
+      "target": "BR2.1"
+    },
+    {
+      "id": "FR3.4",
+      "status": "OK",
+      "target": "BR2.1"
+    },
+    {
+      "id": "FR3.5",
+      "status": "N/A",
+      "target": "Owned by U11 (u11-studio-web); outside the delivery-only walking slice"
+    },
+    {
+      "id": "FR4.1",
+      "status": "OK",
+      "target": "BR2.2"
+    },
+    {
+      "id": "FR4.2",
+      "status": "N/A",
+      "target": "Owned by U4 (u4-media-library); outside the delivery-only walking slice"
+    },
+    {
+      "id": "FR4.3",
+      "status": "N/A",
+      "target": "Owned by U9 (u9-publication); outside the delivery-only walking slice"
+    },
+    {
+      "id": "FR4.4",
+      "status": "N/A",
+      "target": "Owned by U4 (u4-media-library); outside the delivery-only walking slice"
+    },
+    {
+      "id": "FR4.5",
+      "status": "OK",
+      "target": "BR4.2"
+    },
+    {
+      "id": "FR4.6",
+      "status": "N/A",
+      "target": "Owned by U11 (u11-studio-web); outside the delivery-only walking slice"
+    },
+    {
+      "id": "FR4.7",
+      "status": "N/A",
+      "target": "Owned by U3 (u3-studio-api); outside the delivery-only walking slice"
+    },
+    {
+      "id": "FR4.8",
+      "status": "N/A",
+      "target": "Owned by U4 (u4-media-library); outside the delivery-only walking slice"
+    },
+    {
+      "id": "FR4.9",
+      "status": "N/A",
+      "target": "Owned by U4 (u4-media-library); outside the delivery-only walking slice"
+    },
+    {
+      "id": "FR4.10",
+      "status": "OK",
+      "target": "BR3.2"
+    },
+    {
+      "id": "FR5.1",
+      "status": "N/A",
+      "target": "Owned by U5 (u5-description-assistant); outside the delivery-only walking slice"
+    },
+    {
+      "id": "FR5.2",
+      "status": "N/A",
+      "target": "Owned by U5 (u5-description-assistant); outside the delivery-only walking slice"
+    },
+    {
+      "id": "FR5.3",
+      "status": "N/A",
+      "target": "Owned by U3 (u3-studio-api); outside the delivery-only walking slice"
+    },
+    {
+      "id": "FR5.4",
+      "status": "N/A",
+      "target": "Owned by U5 (u5-description-assistant); outside the delivery-only walking slice"
+    },
+    {
+      "id": "FR5.5",
+      "status": "N/A",
+      "target": "Owned by U5 (u5-description-assistant); outside the delivery-only walking slice"
+    },
+    {
+      "id": "FR5.6",
+      "status": "N/A",
+      "target": "Owned by U5 (u5-description-assistant); outside the delivery-only walking slice"
+    },
+    {
+      "id": "FR5.7",
+      "status": "N/A",
+      "target": "Owned by U5 (u5-description-assistant); outside the delivery-only walking slice"
+    },
+    {
+      "id": "FR5.8",
+      "status": "N/A",
+      "target": "Owned by U5 (u5-description-assistant); outside the delivery-only walking slice"
+    },
+    {
+      "id": "FR5.9",
+      "status": "N/A",
+      "target": "Owned by U5 (u5-description-assistant); outside the delivery-only walking slice"
+    },
+    {
+      "id": "FR6.1",
+      "status": "OK",
+      "target": "BR4.1"
+    },
+    {
+      "id": "FR6.2",
+      "status": "OK",
+      "target": "BR4.1"
+    },
+    {
+      "id": "FR7.1",
+      "status": "OK",
+      "target": "BR3.1"
+    },
+    {
+      "id": "FR7.2",
+      "status": "N/A",
+      "target": "Owned by U9 (u9-publication); outside the delivery-only walking slice"
+    },
+    {
+      "id": "FR7.3",
+      "status": "N/A",
+      "target": "Owned by U9 (u9-publication); outside the delivery-only walking slice"
+    },
+    {
+      "id": "FR7.4",
+      "status": "OK",
+      "target": "BR3.3"
+    },
+    {
+      "id": "FR7.5",
+      "status": "N/A",
+      "target": "Owned by U9 (u9-publication); outside the delivery-only walking slice"
+    },
+    {
+      "id": "FR7.6",
+      "status": "N/A",
+      "target": "Owned by U9 (u9-publication); outside the delivery-only walking slice"
+    },
+    {
+      "id": "FR7.7",
+      "status": "N/A",
+      "target": "Owned by U9 (u9-publication); outside the delivery-only walking slice"
+    },
+    {
+      "id": "FR7.8",
+      "status": "N/A",
+      "target": "Owned by U9 (u9-publication); outside the delivery-only walking slice"
+    },
+    {
+      "id": "FR8.1",
+      "status": "N/A",
+      "target": "Owned by U9 (u9-publication); outside the delivery-only walking slice"
+    },
+    {
+      "id": "FR8.2",
+      "status": "N/A",
+      "target": "Owned by U8 (u8-site-publisher); outside the delivery-only walking slice"
+    },
+    {
+      "id": "FR8.3",
+      "status": "N/A",
+      "target": "Owned by U9 (u9-publication); outside the delivery-only walking slice"
+    },
+    {
+      "id": "FR8.4",
+      "status": "N/A",
+      "target": "Owned by U11 (u11-studio-web); outside the delivery-only walking slice"
+    },
+    {
+      "id": "FR9.1",
+      "status": "N/A",
+      "target": "Owned by U7 (u7-site-renderer); outside the delivery-only walking slice"
+    },
+    {
+      "id": "FR9.2",
+      "status": "N/A",
+      "target": "Owned by U7 (u7-site-renderer); outside the delivery-only walking slice"
+    },
+    {
+      "id": "FR9.3",
+      "status": "N/A",
+      "target": "Owned by U7 (u7-site-renderer); outside the delivery-only walking slice"
+    },
+    {
+      "id": "FR9.4",
+      "status": "N/A",
+      "target": "Owned by U7 (u7-site-renderer); outside the delivery-only walking slice"
+    },
+    {
+      "id": "FR9.5",
+      "status": "N/A",
+      "target": "Owned by U7 (u7-site-renderer); outside the delivery-only walking slice"
+    },
+    {
+      "id": "FR9.6",
+      "status": "N/A",
+      "target": "Owned by U7 (u7-site-renderer); outside the delivery-only walking slice"
+    },
+    {
+      "id": "FR9.7",
+      "status": "N/A",
+      "target": "Owned by U9 (u9-publication); outside the delivery-only walking slice"
+    },
+    {
+      "id": "FR9.8",
+      "status": "N/A",
+      "target": "Owned by U3 (u3-studio-api); outside the delivery-only walking slice"
+    },
+    {
+      "id": "FR10.1",
+      "status": "N/A",
+      "target": "Owned by U9 (u9-publication); outside the delivery-only walking slice"
+    },
+    {
+      "id": "FR10.2",
+      "status": "N/A",
+      "target": "Owned by U2 (u2-platform); outside the delivery-only walking slice"
+    },
+    {
+      "id": "FR10.3",
+      "status": "N/A",
+      "target": "Owned by U2 (u2-platform); outside the delivery-only walking slice"
+    },
+    {
+      "id": "FR10.4",
+      "status": "N/A",
+      "target": "Owned by U2 (u2-platform); outside the delivery-only walking slice"
+    },
+    {
+      "id": "FR10.5",
+      "status": "N/A",
+      "target": "Owned by U6 (u6-link-checker); outside the delivery-only walking slice"
+    },
+    {
+      "id": "FR10.6",
+      "status": "N/A",
+      "target": "Owned by U3 (u3-studio-api); outside the delivery-only walking slice"
+    },
+    {
+      "id": "FR10.7",
+      "status": "N/A",
+      "target": "Owned by U9 (u9-publication); outside the delivery-only walking slice"
+    }
+  ]
+}
