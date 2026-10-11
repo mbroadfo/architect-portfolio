@@ -4257,3 +4257,299 @@ Owner instruction: You are taking over as the sole active AI-DLC workflow owner 
 **Session**: 01a1275e-64ae-7372-802a-54af5cf711f0
 
 ---
+
+## Error Logged
+**Timestamp**: 2026-10-10T20:53:50Z
+**Event**: ERROR_LOGGED
+**Tool**: aidlc-log
+**Command**: aidlc-log engine log review --stage refined-mockups --reviewer aidlc-product-lead-agent --iteration 1
+**Error**: Cannot start another review for "refined-mockups" because iteration 1 is still waiting for a verdict. Record that verdict, or repeat the same iteration with --retry-pending if the reviewer did not run.\n{"kind":"ask","ask_type":"guard-recovery","response_route":"execute-remedy","question":"Refined Mockups can't go ahead as things stand: which way would you like to go on?","stage":"refined-mockups","reason_codes":["REVIEW_VERDICT_PENDING"],"remedies":[{"op":"record-verdict","action":"Record the verdict for pending review iteration 1 if the reviewer returned: `aidlc engine log review --stage refined-mockups --reviewer aidlc-product-lead-agent --iteration 1 --verdict '<READY|NOT-READY>' --project-dir 'C:\\Users\\Mike\\Documents\\Code\\architect-portfolio'`.","requiresHuman":false,"executableNow":true,"interaction":"external-work"},{"op":"retry-pending","action":"Retry pending review iteration 1 with --retry-pending.","requiresHuman":false,"executableNow":true,"interaction":"external-work"}],"agent_work":true}
+
+---
+
+## Review Requested
+**Timestamp**: 2026-10-10T20:54:18Z
+**Event**: REVIEW_REQUESTED
+**Stage**: refined-mockups
+**Reviewer**: aidlc-product-lead-agent
+**Iteration**: 1
+**Retry**: pending-request
+**Artifact Fingerprint**: sha256:e2e18ff60c95c315b1793112ac0b2da20fb9186aa846330b97cb8c4f714784a5
+**Request Id**: review:6eb585a25fe36797322cb51d31575a3d
+**Review File**: .aidlc-engine/reviews/refined-mockups/stage/99182c1e87eb7ded/1.6eb585a25fe36797322cb51d31575a3d.review.md
+
+---
+
+## Review Completed
+**Timestamp**: 2026-10-10T20:56:44Z
+**Event**: REVIEW_COMPLETED
+**Stage**: refined-mockups
+**Reviewer**: aidlc-product-lead-agent
+**Iteration**: 1
+**Verdict**: READY
+**Request Fingerprint**: sha256:e2e18ff60c95c315b1793112ac0b2da20fb9186aa846330b97cb8c4f714784a5
+**Artifact Fingerprint**: sha256:e2e18ff60c95c315b1793112ac0b2da20fb9186aa846330b97cb8c4f714784a5
+**Request Id**: review:6eb585a25fe36797322cb51d31575a3d
+**Review Record**: .aidlc-engine/reviews/refined-mockups/stage/99182c1e87eb7ded/1.json
+**Review Record Digest**: sha256:76f8ae9c79425b7e0601729d5e964c82e17bfcd94ef3f83d680ced0d3a009b01
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-10T20:56:48Z
+**Event**: SENSOR_FIRED
+**Fire id**: 84757d1d
+**Sensor ID**: required-sections
+**Stage slug**: refined-mockups
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-mockups/mockups.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-10T20:56:48Z
+**Event**: SENSOR_PASSED
+**Fire id**: 84757d1d
+**Sensor ID**: required-sections
+**Stage slug**: refined-mockups
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-mockups/mockups.md
+**Duration ms**: 90
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-10T20:56:49Z
+**Event**: SENSOR_FIRED
+**Fire id**: 6eccaf49
+**Sensor ID**: required-sections
+**Stage slug**: refined-mockups
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-mockups/interaction-spec.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-10T20:56:49Z
+**Event**: SENSOR_PASSED
+**Fire id**: 6eccaf49
+**Sensor ID**: required-sections
+**Stage slug**: refined-mockups
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-mockups/interaction-spec.md
+**Duration ms**: 91
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-10T20:56:49Z
+**Event**: SENSOR_FIRED
+**Fire id**: 33d6756e
+**Sensor ID**: required-sections
+**Stage slug**: refined-mockups
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-mockups/design-system-mapping.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-10T20:56:49Z
+**Event**: SENSOR_PASSED
+**Fire id**: 33d6756e
+**Sensor ID**: required-sections
+**Stage slug**: refined-mockups
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-mockups/design-system-mapping.md
+**Duration ms**: 88
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-10T20:56:49Z
+**Event**: SENSOR_FIRED
+**Fire id**: 719a17b9
+**Sensor ID**: required-sections
+**Stage slug**: refined-mockups
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-mockups/accessibility-checklist.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-10T20:56:49Z
+**Event**: SENSOR_PASSED
+**Fire id**: 719a17b9
+**Sensor ID**: required-sections
+**Stage slug**: refined-mockups
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-mockups/accessibility-checklist.md
+**Duration ms**: 89
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-10T20:56:49Z
+**Event**: SENSOR_FIRED
+**Fire id**: e3799120
+**Sensor ID**: required-sections
+**Stage slug**: refined-mockups
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-mockups/refined-mockups-questions.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-10T20:56:49Z
+**Event**: SENSOR_PASSED
+**Fire id**: e3799120
+**Sensor ID**: required-sections
+**Stage slug**: refined-mockups
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-mockups/refined-mockups-questions.md
+**Duration ms**: 87
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-10T20:56:49Z
+**Event**: SENSOR_FIRED
+**Fire id**: 473dfc38
+**Sensor ID**: upstream-coverage
+**Stage slug**: refined-mockups
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-mockups/mockups.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-10T20:56:50Z
+**Event**: SENSOR_PASSED
+**Fire id**: 473dfc38
+**Sensor ID**: upstream-coverage
+**Stage slug**: refined-mockups
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-mockups/mockups.md
+**Duration ms**: 87
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-10T20:56:50Z
+**Event**: SENSOR_FIRED
+**Fire id**: c72094ce
+**Sensor ID**: upstream-coverage
+**Stage slug**: refined-mockups
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-mockups/interaction-spec.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-10T20:56:50Z
+**Event**: SENSOR_PASSED
+**Fire id**: c72094ce
+**Sensor ID**: upstream-coverage
+**Stage slug**: refined-mockups
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-mockups/interaction-spec.md
+**Duration ms**: 86
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-10T20:56:50Z
+**Event**: SENSOR_FIRED
+**Fire id**: 24c76a9a
+**Sensor ID**: upstream-coverage
+**Stage slug**: refined-mockups
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-mockups/design-system-mapping.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-10T20:56:50Z
+**Event**: SENSOR_PASSED
+**Fire id**: 24c76a9a
+**Sensor ID**: upstream-coverage
+**Stage slug**: refined-mockups
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-mockups/design-system-mapping.md
+**Duration ms**: 87
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-10T20:56:50Z
+**Event**: SENSOR_FIRED
+**Fire id**: 985202e3
+**Sensor ID**: upstream-coverage
+**Stage slug**: refined-mockups
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-mockups/accessibility-checklist.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-10T20:56:50Z
+**Event**: SENSOR_PASSED
+**Fire id**: 985202e3
+**Sensor ID**: upstream-coverage
+**Stage slug**: refined-mockups
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-mockups/accessibility-checklist.md
+**Duration ms**: 90
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-10T20:56:50Z
+**Event**: SENSOR_FIRED
+**Fire id**: 51a52a4b
+**Sensor ID**: upstream-coverage
+**Stage slug**: refined-mockups
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-mockups/refined-mockups-questions.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-10T20:56:50Z
+**Event**: SENSOR_PASSED
+**Fire id**: 51a52a4b
+**Sensor ID**: upstream-coverage
+**Stage slug**: refined-mockups
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-mockups/refined-mockups-questions.md
+**Duration ms**: 89
+
+---
+
+## Stage Awaiting Approval
+**Timestamp**: 2026-10-10T20:56:51Z
+**Event**: STAGE_AWAITING_APPROVAL
+**Stage**: refined-mockups
+
+---
+
+## Error Logged
+**Timestamp**: 2026-10-10T21:11:45Z
+**Event**: ERROR_LOGGED
+**Tool**: aidlc-log
+**Command**: aidlc-log engine log review --stage refined-mockups --reviewer aidlc-product-lead-agent --iteration 1 --retry-pending
+**Error**: Cannot retry review iteration 1 for "refined-mockups" because no pending request with that number exists. Start the expected review pass instead.
+
+---
+
+## Error Logged
+**Timestamp**: 2026-10-10T21:11:51Z
+**Event**: ERROR_LOGGED
+**Tool**: aidlc-log
+**Command**: aidlc-log engine log review --stage refined-mockups --reviewer aidlc-product-lead-agent --iteration 1
+**Error**: Cannot request review pass 2 for "refined-mockups" because this stage allows 1 review pass. Do not ask the reviewer again; include the findings in the approval summary for the human.\n{"kind":"ask","ask_type":"guard-recovery","response_route":"execute-remedy","question":"Refined Mockups can't go ahead as things stand: which way would you like to go on?","stage":"refined-mockups","reason_codes":["REVIEW_BUDGET_EXHAUSTED"],"remedies":[{"op":"present-approval-gate","label":"Decide at approval","description":"I'll bring Refined Mockups to you for approval with what its review raised, instead of asking for another review.","action":"Present the unresolved review findings at the approval gate for the human instead of starting another review pass.","requiresHuman":true,"executableNow":true,"interaction":"human-input"},{"op":"request-changes","label":"Request Changes","description":"Tell me what should change in Refined Mockups, and I'll revise it.","action":"When the person already said what should change for stage \"refined-mockups\", submit Request Changes with their exact text unchanged as the report reason. Otherwise ask \"What should change?\" and end the turn, then submit their answer the same way. Either way that unlocks revision and a fresh review.","requiresHuman":true,"executableNow":true,"interaction":"human-input"}]}
+
+---
+
+## Error Logged
+**Timestamp**: 2026-10-10T21:51:42Z
+**Event**: ERROR_LOGGED
+**Tool**: aidlc-state
+**Command**: aidlc-state engine state reject refined-mockups --feedback=Request Changes — Refined Mockups. Full direction provided in user message: shift from generic exhibit/catalog to distinctive professional architect/maker portfolio (crafted, warm, cinematic, editorial, premium, technical, intentional). New aesthetic (deep charcoal/blue-black, walnut/bronze/brass, parchment/cream). New conceptual model (Michael Broadfoot’s Studio / Selected Works). Separate category, access mode, lifecycle. Focused first-release on browser apps but extensible. New IA: hero/identity, featured, selected works/categories, how I think/approach, project detail. Imagery as concept only. Revise public mockups, design system, interaction spec, board. Keep Studio functional. Commit/push to records branch/PR, stop for review. Summarize changes at end. --user-input Request Changes --project-dir <project-dir>
+**Error**: Cannot request changes for "refined-mockups" because no new human reply has been received for this approval question. Wait for the human to type Request Changes and their feedback, then retry. The person's message since then was a command to AIDLC, not a reply to this question: carry out the command and leave the question open for their reply. If the person already replied, that reply was not recorded for this question. Tell them exactly this, with nothing about why: "Your answer didn't reach AI-DLC. Please give it once more. If it happens again, type /aidlc --doctor." Never offer to turn a check off for them.
+
+---
+
+## Session Start
+**Timestamp**: 2026-10-10T22:27:47Z
+**Event**: SESSION_STARTED
+**Source**: startup
+**Session**: 637c26b9-c35a-4296-a2d8-f59e8e0168b9
+
+---
+
+## Session End
+**Timestamp**: 2026-10-10T22:27:48Z
+**Event**: SESSION_ENDED
+**Reason**: other
+
+---
