@@ -6853,3 +6853,432 @@ Owner (Michael Broadfoot, 2026-10-11), with the Refined Mockups approval: "This 
 **Answer Mode**: guide (reused from intent-capture)
 
 ---
+
+## Artifact Created
+**Timestamp**: 2026-10-11T16:00:40Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/inception/units-generation/units-generation-questions.md
+**Context**: inception > units-generation > units-generation-questions.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-10-11T16:00:47Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/.aidlc-engine/answer-text/answer.txt
+**Context**: .aidlc-engine > answer-text > answer.txt
+
+---
+
+## Decision Recorded
+**Timestamp**: 2026-10-11T16:00:49Z
+**Event**: DECISION_RECORDED
+**Stage**: units-generation
+**Decision**: Q1-Q5 (boundary strategy, granularity, parallelism, integration contracts, deployment model) answered from approved records
+**Options**: Q1: by component grouped by runtime,one per component,by target,Other; Q2: medium,coarse,Other; Q3: DAG with parallelism,sequential,Other; Q4: contracts unit,shared DB,Other; Q5: hybrid,single function,all independent,Other
+
+---
+
+## Question Answered
+**Timestamp**: 2026-10-11T16:00:50Z
+**Event**: QUESTION_ANSWERED
+**Stage**: units-generation
+**Details**: Q1: A; Q2: A; Q3: A; Q4: A; Q5: A (derived from approved records; Q6 put to the owner at Plan Approval)
+**Answer Source**: chosen by the agent as the person asked
+**Instruction**: I'm spending too much time answering process questions. Handle routine decisions autonomously using the approved charter, recorded decisions, and sensible defaults. Batch genuinely unresolved questions.
+
+---
+
+## Decision Recorded
+**Timestamp**: 2026-10-11T16:00:50Z
+**Event**: DECISION_RECORDED
+**Stage**: units-generation
+**Decision**: Units Generation Plan Approval, with Q6 public-site rendering technology
+**Options**: Approve Plan (React/TypeScript renderer),Approve Plan with Python templates,Revise Plan
+
+---
+
+## Human Turn
+**Timestamp**: 2026-10-11T16:04:32Z
+**Event**: HUMAN_TURN
+**Session**: 3bfff7e0-b2c2-48b0-8b00-081386f03bb3
+**Picked**: ["Other"]
+
+---
+
+## Question Replied
+**Timestamp**: 2026-10-11T16:04:32Z
+**Event**: QUESTION_REPLIED
+**Session**: 3bfff7e0-b2c2-48b0-8b00-081386f03bb3
+**Question**: Approve the Units Generation plan (11 units, details above), and how should the public pages be rendered?
+**Reply**: Other
+
+---
+
+## Human Turn
+**Timestamp**: 2026-10-11T16:04:39Z
+**Event**: HUMAN_TURN
+**Session**: 3bfff7e0-b2c2-48b0-8b00-081386f03bb3
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-10-11T16:04:48Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/.aidlc-engine/answer-text/answer.txt
+**Context**: .aidlc-engine > answer-text > answer.txt
+
+---
+
+## Question Answered
+**Timestamp**: 2026-10-11T16:04:50Z
+**Event**: QUESTION_ANSWERED
+**Stage**: units-generation
+**Details**: Approve Plan (React/TypeScript renderer). Owner clarifications: React for static generation at publication time, not request-time server rendering; public pages remain static CDN assets with no visitor-facing Node service or public API dependency. U7 is a reusable rendering library shared by authenticated preview and publication. U8 consumes only the explicitly approved, allow-listed public snapshot. U9/Python stays authoritative for publication sequencing, atomic confirmation, fencing, recovery and take-down; the Node publisher makes no publication or authorization decisions. Minimal public JavaScript; carousel and gallery interactivity without hydrating the whole site. Versioned, schema-validated Python-to-TypeScript contract. Unit boundaries must not compromise ADR-012 atomicity. Proceed autonomously through Units Generation and its normal reviews; preserve subsequent approval gates.
+**Person Reply**: <pasted_content id="037e">\nApprove the 11-unit plan using the React/TypeScript renderer.\n\nArchitecture clarification: use React for static generation at publication time, not request-time server rendering. Public pages must remain static CDN assets with no visitor-facing Node service or public API dependency.\n\nU7 must be a reusable rendering library shared by authenticated preview and publication. U8 must consume only the explicitly approved, allow-listed public snapshot.\n\nKeep U9/Python authoritative for publication sequencing, atomic confirmation, fencing, recovery and take-down. The Node publisher must not independently make publication or authorization decisions.\n\nKeep the public JavaScript payload minimal; interactive carousel and gallery behaviour should not require hydrating the entire site.\n\nEnsure the Python-to-TypeScript contract is versioned and schema-validated. Unit boundaries must not compromise the cross-component atomicity required by ADR-012.\n\nProceed autonomously through Units Generation and its normal reviews. Preserve subsequent approval gates.\n</pasted_content id="037e">
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-10-11T16:04:59Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/inception/units-generation/units-generation-questions.md
+**Context**: inception > units-generation > units-generation-questions.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-10-11T16:06:21Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/inception/units-generation/unit-of-work.md
+**Context**: inception > units-generation > unit-of-work.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-10-11T16:07:24Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/inception/units-generation/unit-of-work-dependency.md
+**Context**: inception > units-generation > unit-of-work-dependency.md
+
+---
+
+## Review Requested
+**Timestamp**: 2026-10-11T16:07:37Z
+**Event**: REVIEW_REQUESTED
+**Stage**: units-generation
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Iteration**: 1
+**Artifact Fingerprint**: sha256:565be6ad525b49e042711f5167cb991e5e67620ae0284c13cfd292e8e076e1d9
+**Request Id**: review:0e6806650463521a966ed5f498b6fed3
+**Review File**: .aidlc-engine/reviews/units-generation/stage/8f718c15e1f0de9b/1.0e6806650463521a966ed5f498b6fed3.review.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-10-11T16:09:39Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/.aidlc-engine/reviews/units-generation/stage/8f718c15e1f0de9b/1.0e6806650463521a966ed5f498b6fed3.review.md
+**Context**: .aidlc-engine > reviews > units-generation > stage > 8f718c15e1f0de9b > 1.0e6806650463521a966ed5f498b6fed3.review.md
+
+---
+
+## Subagent Completed
+**Timestamp**: 2026-10-11T16:09:48Z
+**Event**: SUBAGENT_COMPLETED
+**Agent Type**: aidlc-architecture-reviewer-agent
+**Agent ID**: afd0943ee32299162
+
+---
+
+## Human Turn
+**Timestamp**: 2026-10-11T16:09:50Z
+**Event**: HUMAN_TURN
+**Session**: 3bfff7e0-b2c2-48b0-8b00-081386f03bb3
+
+---
+
+## Review Completed
+**Timestamp**: 2026-10-11T16:10:08Z
+**Event**: REVIEW_COMPLETED
+**Stage**: units-generation
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Iteration**: 1
+**Verdict**: READY
+**Request Fingerprint**: sha256:565be6ad525b49e042711f5167cb991e5e67620ae0284c13cfd292e8e076e1d9
+**Artifact Fingerprint**: sha256:565be6ad525b49e042711f5167cb991e5e67620ae0284c13cfd292e8e076e1d9
+**Request Id**: review:0e6806650463521a966ed5f498b6fed3
+**Review Record**: .aidlc-engine/reviews/units-generation/stage/8f718c15e1f0de9b/1.json
+**Review Record Digest**: sha256:3c918678b0f131912208dad376150eed5230967ca9d42510251b737925c79b25
+
+---
+
+## Change Accepted
+**Timestamp**: 2026-10-11T16:11:20Z
+**Event**: CHANGE_ACCEPTED
+**Stage**: units-generation
+**Checkpoint**: review-receipt
+**Changed**: (paths unavailable)
+**Recorded**: sha256:565be6ad525b49e042711f5167cb991e5e67620ae0284c13cfd292e8e076e1d9
+**Current**: sha256:6027c85b044ef501818ff790d6c2244a4f6997947815aba09f5ed15422241e24
+**Details**: The Units Generation documents changed after they were reviewed; carrying on.
+
+---
+
+## Review Requested
+**Timestamp**: 2026-10-11T16:11:20Z
+**Event**: REVIEW_REQUESTED
+**Stage**: units-generation
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Iteration**: 2
+**Artifact Fingerprint**: sha256:6027c85b044ef501818ff790d6c2244a4f6997947815aba09f5ed15422241e24
+**Request Id**: review:d5011e1d8d91f7373322c515fb376e22
+**Review File**: .aidlc-engine/reviews/units-generation/stage/8f718c15e1f0de9b/2.d5011e1d8d91f7373322c515fb376e22.review.md
+
+---
+
+## Change Accepted
+**Timestamp**: 2026-10-11T16:11:35Z
+**Event**: CHANGE_ACCEPTED
+**Stage**: units-generation
+**Checkpoint**: review-receipt
+**Changed**: (paths unavailable)
+**Recorded**: sha256:565be6ad525b49e042711f5167cb991e5e67620ae0284c13cfd292e8e076e1d9
+**Current**: sha256:9abc20d9cae9084567525bc66bd4af699863eeb397f6ea11d4189c2341b6a080
+**Details**: The Units Generation documents changed after they were reviewed; carrying on.
+
+---
+
+## Review Requested
+**Timestamp**: 2026-10-11T16:11:35Z
+**Event**: REVIEW_REQUESTED
+**Stage**: units-generation
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Iteration**: 2
+**Artifact Fingerprint**: sha256:9abc20d9cae9084567525bc66bd4af699863eeb397f6ea11d4189c2341b6a080
+**Request Id**: review:54010759bd30808eb842b2d6f6f00070
+**Replaces Request Id**: review:d5011e1d8d91f7373322c515fb376e22
+**Review File**: .aidlc-engine/reviews/units-generation/stage/8f718c15e1f0de9b/2.54010759bd30808eb842b2d6f6f00070.review.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-10-11T16:12:28Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/.aidlc-engine/reviews/units-generation/stage/8f718c15e1f0de9b/2.54010759bd30808eb842b2d6f6f00070.review.md
+**Context**: .aidlc-engine > reviews > units-generation > stage > 8f718c15e1f0de9b > 2.54010759bd30808eb842b2d6f6f00070.review.md
+
+---
+
+## Subagent Completed
+**Timestamp**: 2026-10-11T16:12:35Z
+**Event**: SUBAGENT_COMPLETED
+**Agent Type**: aidlc-architecture-reviewer-agent
+**Agent ID**: a7ac640dac5fa83be
+
+---
+
+## Human Turn
+**Timestamp**: 2026-10-11T16:12:36Z
+**Event**: HUMAN_TURN
+**Session**: 3bfff7e0-b2c2-48b0-8b00-081386f03bb3
+
+---
+
+## Review Completed
+**Timestamp**: 2026-10-11T16:12:42Z
+**Event**: REVIEW_COMPLETED
+**Stage**: units-generation
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Iteration**: 2
+**Verdict**: READY
+**Request Fingerprint**: sha256:9abc20d9cae9084567525bc66bd4af699863eeb397f6ea11d4189c2341b6a080
+**Artifact Fingerprint**: sha256:9abc20d9cae9084567525bc66bd4af699863eeb397f6ea11d4189c2341b6a080
+**Request Id**: review:54010759bd30808eb842b2d6f6f00070
+**Review Record**: .aidlc-engine/reviews/units-generation/stage/8f718c15e1f0de9b/2.json
+**Review Record Digest**: sha256:656777550fb98fdcc6a8cb6585e52945c64e9de1262f4e289ee657c3ce84ddf7
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-11T16:12:50Z
+**Event**: SENSOR_FIRED
+**Fire id**: ac05a954
+**Sensor ID**: required-sections
+**Stage slug**: units-generation
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/units-generation/unit-of-work.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-11T16:12:50Z
+**Event**: SENSOR_PASSED
+**Fire id**: ac05a954
+**Sensor ID**: required-sections
+**Stage slug**: units-generation
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/units-generation/unit-of-work.md
+**Duration ms**: 95
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-11T16:12:50Z
+**Event**: SENSOR_FIRED
+**Fire id**: 839a7256
+**Sensor ID**: required-sections
+**Stage slug**: units-generation
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/units-generation/unit-of-work-dependency.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-11T16:12:50Z
+**Event**: SENSOR_PASSED
+**Fire id**: 839a7256
+**Sensor ID**: required-sections
+**Stage slug**: units-generation
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/units-generation/unit-of-work-dependency.md
+**Duration ms**: 83
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-11T16:12:50Z
+**Event**: SENSOR_FIRED
+**Fire id**: 0491dfce
+**Sensor ID**: required-sections
+**Stage slug**: units-generation
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/units-generation/unit-of-work-story-map.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-11T16:12:50Z
+**Event**: SENSOR_PASSED
+**Fire id**: 0491dfce
+**Sensor ID**: required-sections
+**Stage slug**: units-generation
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/units-generation/unit-of-work-story-map.md
+**Duration ms**: 87
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-11T16:12:50Z
+**Event**: SENSOR_FIRED
+**Fire id**: 04ff3f66
+**Sensor ID**: required-sections
+**Stage slug**: units-generation
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/units-generation/traceability.json
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-11T16:12:50Z
+**Event**: SENSOR_PASSED
+**Fire id**: 04ff3f66
+**Sensor ID**: required-sections
+**Stage slug**: units-generation
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/units-generation/traceability.json
+**Duration ms**: 82
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-11T16:12:50Z
+**Event**: SENSOR_FIRED
+**Fire id**: dc308412
+**Sensor ID**: upstream-coverage
+**Stage slug**: units-generation
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/units-generation/unit-of-work.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-11T16:12:51Z
+**Event**: SENSOR_PASSED
+**Fire id**: dc308412
+**Sensor ID**: upstream-coverage
+**Stage slug**: units-generation
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/units-generation/unit-of-work.md
+**Duration ms**: 85
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-11T16:12:51Z
+**Event**: SENSOR_FIRED
+**Fire id**: e4a03603
+**Sensor ID**: upstream-coverage
+**Stage slug**: units-generation
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/units-generation/unit-of-work-dependency.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-11T16:12:51Z
+**Event**: SENSOR_PASSED
+**Fire id**: e4a03603
+**Sensor ID**: upstream-coverage
+**Stage slug**: units-generation
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/units-generation/unit-of-work-dependency.md
+**Duration ms**: 96
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-11T16:12:51Z
+**Event**: SENSOR_FIRED
+**Fire id**: dc3d7133
+**Sensor ID**: upstream-coverage
+**Stage slug**: units-generation
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/units-generation/unit-of-work-story-map.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-11T16:12:51Z
+**Event**: SENSOR_PASSED
+**Fire id**: dc3d7133
+**Sensor ID**: upstream-coverage
+**Stage slug**: units-generation
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/units-generation/unit-of-work-story-map.md
+**Duration ms**: 96
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-11T16:12:51Z
+**Event**: SENSOR_FIRED
+**Fire id**: d95292d4
+**Sensor ID**: upstream-coverage
+**Stage slug**: units-generation
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/units-generation/traceability.json
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-11T16:12:51Z
+**Event**: SENSOR_PASSED
+**Fire id**: d95292d4
+**Sensor ID**: upstream-coverage
+**Stage slug**: units-generation
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/units-generation/traceability.json
+**Duration ms**: 87
+
+---
+
+## Stage Awaiting Approval
+**Timestamp**: 2026-10-11T16:12:51Z
+**Event**: STAGE_AWAITING_APPROVAL
+**Stage**: units-generation
+
+---

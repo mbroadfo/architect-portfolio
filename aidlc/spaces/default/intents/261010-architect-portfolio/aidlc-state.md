@@ -78,7 +78,7 @@
 - [ ] user-stories — SKIP
 - [x] refined-mockups — EXECUTE
 - [x] domain-design — EXECUTE
-- [-] units-generation — EXECUTE
+- [?] units-generation — EXECUTE
 - [ ] contract-design — EXECUTE
 - [ ] delivery-planning — EXECUTE
 
@@ -106,7 +106,7 @@ Per unit: [TBD]
 - **Current Stage**: units-generation
 - **Next Stage**: contract-design
 - **Status**: Running
-- **Last Updated**: 2026-10-11T15:57:58Z
+- **Last Updated**: 2026-10-11T16:12:51Z
 
 ## Session Resume Point
 - **Last Completed Stage**: domain-design
