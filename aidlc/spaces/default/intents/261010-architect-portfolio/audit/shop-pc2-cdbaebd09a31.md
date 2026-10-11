@@ -6801,3 +6801,55 @@ Owner (Michael Broadfoot, 2026-10-11), with the Refined Mockups approval: "This 
 **Details**: Re-entering gate after revision
 
 ---
+
+## Human Turn
+**Timestamp**: 2026-10-11T15:57:54Z
+**Event**: HUMAN_TURN
+**Session**: 3bfff7e0-b2c2-48b0-8b00-081386f03bb3
+**Picked**: ["Approve"]
+
+---
+
+## Question Replied
+**Timestamp**: 2026-10-11T15:57:54Z
+**Event**: QUESTION_REPLIED
+**Session**: 3bfff7e0-b2c2-48b0-8b00-081386f03bb3
+**Question**: Domain Design (revised) is ready for your decision. Files are under inception/domain-design/ (PR #12). How do you want to proceed?
+**Reply**: Approve
+
+---
+
+## Gate Approved
+**Timestamp**: 2026-10-11T15:57:58Z
+**Event**: GATE_APPROVED
+**Stage**: domain-design
+**User Input**: Approve
+
+---
+
+## Stage Completion
+**Timestamp**: 2026-10-11T15:57:58Z
+**Event**: STAGE_COMPLETED
+**Stage**: domain-design
+**Validation Basis**: {"graphContract":"sha256:4e5ba0b6334a8c25f8dea5929cee93c113f34e58b422ef110b998ef5ff29e179","inputs":[{"artifact":"requirements","contentHash":"sha256:0937765018e2ab646ea080d9a76386e94bf0581578bfdd47ea5f8e6fc97bd58a","instanceCount":1,"presentCount":1,"producer":"requirements-analysis","required":true,"structureHash":"sha256:bb8a4d6a26ef7a69949872e948516b3c9b4ddb0e63b88c2975b69baa2c2a5cb3"},{"artifact":"team-practices","contentHash":"sha256:6f771c9b5a5e071a6d25aaf6d21a573aea965c2356121dfdd8a4d10799fdddd1","instanceCount":1,"presentCount":1,"producer":"practices-discovery","required":false,"structureHash":"sha256:b0e6a533c80fc07476fc01e92acc2c2bc52c980a7aa37a507b9074c08670a6a6"}],"outputs":[{"artifact":"components","contentHash":"sha256:1cdf6a7caa49b6976d39c3d39d9adeec6a1c86eb581ebc208ea4dc200c846ed8","instanceCount":1,"presentCount":1,"producer":"domain-design","required":true,"structureHash":"sha256:3b58fe458221c55c1c72d99d2e6aa482c69e4853625084ddbac2b96108e6a170"},{"artifact":"decisions","contentHash":"sha256:29d2d0c66fa25927504f8962a46b6f37c6f2ff9c67c4044b55235fd69f7b9d7e","instanceCount":1,"presentCount":1,"producer":"domain-design","required":true,"structureHash":"sha256:fdf5cf6f85306215027b102c49f14b2ae5843e72cc52868a83668554271ecf17"},{"artifact":"traceability","contentHash":"sha256:aa33d740d9df2fe46735d55f656f377ac2d09ceb81b27a993ded823d35c3663f","instanceCount":1,"presentCount":1,"producer":"domain-design","required":true,"structureHash":"sha256:2183e788ef7c0cb98ceb8e73a4115c65d8e6b4f1be01c497a8deceea4cacae76"}],"projectType":"greenfield","schema":3}
+**Details**: Stage Domain Design approved by gate
+**Tokens In**: 226
+**Tokens Out**: 155711
+**Cache Read**: 19150028
+**Cache Write**: 756793
+**Cost USD**: 9.99
+**By Model**: opus-5-5=8.03; sonnet-5-5=1.96
+**By Agent**: main=8.03; aidlc-architecture-reviewer-agent=1.96
+**Tokens By Model**: opus-5-5=166/141k/16.6M/236.4k; sonnet-5-5=60/14.7k/2.6M/520.4k
+**Tokens By Agent**: main=166/141k/16.6M/236.4k; aidlc-architecture-reviewer-agent=60/14.7k/2.6M/520.4k
+
+---
+
+## Stage Start
+**Timestamp**: 2026-10-11T15:57:58Z
+**Event**: STAGE_STARTED
+**Stage**: units-generation
+**Agent**: aidlc-architect-agent
+**Answer Mode**: guide (reused from intent-capture)
+
+---

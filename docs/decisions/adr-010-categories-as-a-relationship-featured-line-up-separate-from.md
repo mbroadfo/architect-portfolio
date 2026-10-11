@@ -1,0 +1,38 @@
+# ADR-010: Categories as a relationship; featured line-up separate from the published order
+
+- **Status:** Accepted — approved by Michael Broadfoot at the Domain Design gate, 2026-10-11.
+- **Source of record:** `aidlc/spaces/default/intents/261010-architect-portfolio/inception/domain-design/decisions.md`. Component names refer to `components.md` in the same folder.
+
+- **Context**
+  - FR9.8:
+    - four fixed categories with fixed addresses;
+    - at most one primary category in v1;
+    - modelled as a relationship so several classifications need no migration later (D-27).
+  - FR9.7:
+    - up to five featured, drafts included;
+    - featured status is published with each exhibit;
+    - carousel order reaches the public site only through "Update featured order";
+    - take-down releases the slot and it is not restored on republish (FR8.2).
+- **Decision**
+  - **Projects** owns:
+    - Category, as reference data seeded with the four fixed categories;
+    - CategoryAssignment, with a `primary` flag;
+    - the draft FeaturedLineup;
+    - the featured flag on Project.
+  - **Publication** owns PublishedFeaturedOrder, the ordered list of published featured exhibits.
+    - Publishing or updating an exhibit as featured, when it is not already listed, appends it at the end.
+    - Publishing or updating it as not featured removes it.
+    - Take-down removes it from the published order. Through Projects, it also removes the exhibit from the draft line-up and clears its featured flag, so the slot is not restored on a later publish.
+    - "Update featured order" publishes exactly the candidate order frozen in its ticket (ADR-012). The ticket is taken from the draft line-up, restricted to exhibits that are live and published as featured, and its run-time basis check must pass (ADR-004).
+    - In every case the other entries keep their relative order.
+    - Publish is blocked if it would put more than five exhibits in the published carousel.
+    - A featured-order confirmation binds to the line-up revision and the published order version that were shown (ADR-012).
+- **Consequences**
+  - Positive:
+    - classification can grow without migration;
+    - the draft order never leaks into the public carousel;
+    - take-down semantics live in one operation.
+  - Negative: two orderings exist (draft and published), by design.
+- **Alternatives Rejected**
+  - **A single `category` field on Project:** this contradicts FR9.8's model.
+  - **One featured order applied immediately:** it would publish draft ordering without confirmation, contrary to FR9.7.

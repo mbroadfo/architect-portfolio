@@ -1,0 +1,31 @@
+# ADR-006: MediaLibrary owns the bytes; Projects owns how an exhibit uses them
+
+- **Status:** Accepted — approved by Michael Broadfoot at the Domain Design gate, 2026-10-11.
+- **Source of record:** `aidlc/spaces/default/intents/261010-architect-portfolio/inception/domain-design/decisions.md`. Component names refer to `components.md` in the same folder.
+
+- **Context**
+  - Uploads are untrusted and security-sensitive:
+    - content checks by file signature;
+    - HEIC conversion;
+    - pixel and decode limits;
+    - ZIP ratio limits and XXE protection;
+    - single-use upload authorizations (FR4.2, FR4.4, FR4.8).
+  - Alt text, lead image and image order are exhibit content: they are checked at Publish (FR7.3, D-19) and versioned with the draft.
+  - Published images must be metadata-free derivatives; originals stay private (FR4.2, FR4.9, NFR2).
+- **Decision**
+  - **MediaLibrary** owns MediaAsset and UploadAuthorization:
+    - validation and conversion;
+    - private originals;
+    - attachment metadata and entry listing;
+    - public derivatives, produced only on request from the exporter.
+  - **Projects** owns ExhibitImage and ExhibitAttachment: which assets, order, lead, alt text, captions and labels. It accepts an asset only after MediaLibrary confirms it passed validation and was uploaded for the same project; an asset from another project is refused.
+  - **StudioApi** requests an upload authorization from MediaLibrary only for a project that Projects confirms exists. The authorization binds the project, size and type.
+- **Consequences**
+  - Positive:
+    - one component, and one review target, touches untrusted bytes;
+    - exhibit edits never re-process files;
+    - its decoding can later get its own execution identity without touching Projects.
+  - Negative: attaching an image needs a cross-component check.
+- **Alternatives Rejected**
+  - **Projects owns files completely:** this would mix untrusted-file processing into the most frequently changed component.
+  - **MediaLibrary owns alt text:** alt text is exhibit content, and it would then escape draft versioning.
