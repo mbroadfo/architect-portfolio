@@ -303,12 +303,12 @@
     {
       "id": "FR7.1",
       "status": "OK",
-      "target": "PublicationOperation"
+      "target": "ConfirmationTicket"
     },
     {
       "id": "FR7.2",
       "status": "OK",
-      "target": "PublicationOperation"
+      "target": "ConfirmationTicket"
     },
     {
       "id": "FR7.3",
@@ -338,7 +338,7 @@
     {
       "id": "FR7.8",
       "status": "OK",
-      "target": "PublicationOperation"
+      "target": "PublicSiteState"
     },
     {
       "id": "FR8.1",

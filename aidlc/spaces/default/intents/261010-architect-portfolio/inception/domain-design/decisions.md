@@ -1,6 +1,6 @@
 # Domain Design — Architecture Decision Records
 
-Status of every ADR: **Proposed**. They become accepted when Michael approves the Domain Design gate. They are then copied to `docs/decisions/`, as the project rule requires.
+Status of every ADR: **Proposed** (ADR-001 to ADR-012). They become accepted when Michael approves the Domain Design gate. They are then copied to `docs/decisions/`, as the project rule requires.
 
 The component names are those in `components.md`. Sources:
 - requirements: `../requirements-analysis/requirements.md`, with Amendment A1 to A1.2;
@@ -57,13 +57,23 @@ The component names are those in `components.md`. Sources:
   - repositories confirmed public, with their licence;
   - primary category and featured flag.
 
-  SiteRenderer and PublicSiteExporter receive only a public site model built from PublishedVersions and the published featured order. They have no access to Projects or to any private record. The evidence shown in the confirmation (check results, private repository names, attachment metadata) is kept in the PublicationOperation, never in the PublishedVersion.
+  The candidate version is projected from the reviewed draft revision when the confirmation is prepared, and it is the version published if the confirmation is accepted (ADR-012).
+  - **Public site model.** Publication is its only builder. The model contains:
+    - the current PublishedVersion of every live exhibit;
+    - the PublishedFeaturedOrder;
+    - the categories derived from those versions.
+
+    Each version freezes its primary category with slug, name and position, so the model never reads Projects' reference data. SiteRenderer and PublicSiteExporter receive only this model and have no access to Projects or to any private record.
+  - **Repositories.** They reach a PublishedVersion only as repositories confirmed public at preparation, with their licence. A free-form link that points at a repository host blocks Publish (FR4.3).
+  - **Confirmation evidence.** The check results, private repository names and attachment metadata the owner was shown are kept in the ConfirmationTicket, never in the PublishedVersion.
 - **Consequences**
   - Positive:
     - the boundary is structural, not a filter, so a mistake in rendering cannot leak a draft;
     - the export-scan invariant tests (NFR2) have one, small input type to reason about;
     - the prototype's approved model carries straight into the design.
-  - Negative: content is stored twice (draft and published); this is a negligible cost at this scale.
+  - Negative:
+    - content is stored twice (draft and published); this is a negligible cost at this scale;
+    - renaming a category, a roadmap item, will need a site-wide republish, because names are frozen into versions.
 - **Alternatives Rejected**
   - **Filtering the live project record at export time:** unapproved data would reach the export code path, which is exactly the failure the owner rejected.
   - **Copying public fields into the project record:** this mixes approved and draft state in one record with two writers.
@@ -88,29 +98,58 @@ The component names are those in `components.md`. Sources:
   - Positive:
     - one writer per fact;
     - FR3.2's transitions and FR7.8's concurrency rule hold by construction;
-    - no cross-component transaction.
+    - status itself needs no cross-component transaction. The atomic acceptance and commit steps (ADR-012, ADR-004) exist for publication, not for status.
   - Negative: listing statuses needs both components, which StudioApi composes.
 - **Alternatives Rejected**
   - **A stored status field updated by both components:** two writers, a race between save and publish, and a cross-component transaction.
 
-## ADR-004: Publication operations run one at a time per exhibit and are idempotent
+## ADR-004: One site-wide, fenced sequence for every operation that changes public pages
 
 - **Context**
-  - Publish, update and take-down for one exhibit must run in confirmation order, with the public state always equal to the last successful action (FR7.8).
-  - They must be safe to repeat (FR7.6).
-  - Featured order is published by its own confirmation (FR9.7).
-  - Content must be public or removed within 5 minutes (FR7.4, FR8.2).
-- **Decision** — Each confirmation creates a PublicationOperation with an idempotency key. Operations are processed one at a time:
-  - per exhibit for publish, update and take-down;
-  - one at a time overall for featured-order changes and the shared pages they touch.
+  - Publish, update and take-down of any exhibit, and "Update featured order", all rewrite shared public pages: the home page, carousel, category pages and counts (FR7.4, FR8.2, FR9.7).
+  - Operations for one exhibit must run in confirmation order, and the public state must always equal the last successful action (FR7.8).
+  - Operations must be safe to repeat (FR7.6) and complete on the public site within 5 minutes (FR7.4, FR8.2).
+  - The first draft serialized operations per exhibit only. The architecture review (R-02) showed that two exhibits' operations could then build shared pages from stale views, so a taken-down exhibit could reappear on the home page. The owner required every shared-page operation to be serialized across projects (Request Changes, 2026-10-11).
+- **Decision**
+  - **One sequence.** Every accepted publication operation gets the next number in one site-wide sequence. Operations run one at a time in that order, whatever exhibit they concern. This also keeps each exhibit's operations in confirmation order.
+  - **Fresh start for each run.** Each run starts from the last committed public state (its base generation), applies its own change, builds the complete public site model, and exports the exhibit's objects and every shared page the change affects.
+  - **Run-time basis check.** When an operation starts, every operation accepted before it has committed or failed. It re-checks its state-dependent preconditions against that committed state, and if any no longer holds it fails as "basis changed — review again", with no public change:
+    - the action is legal for the exhibit's publication state;
+    - the carousel limit holds;
+    - for "Update featured order", the published order version and the set of live featured exhibits equal its basis.
 
-  A repeated confirmation with the same key returns the original operation. A failed operation leaves the previous public state and is shown with a retry. Every completed operation writes an ActivityEntry (FR7.7). The queueing mechanism is chosen in NFR Design.
+    The acceptance check of the ticket's basis (ADR-012) refuses early; this check is the guarantee.
+  - **Attempts, leases and fencing.** Every attempt (first run, automatic retry or manual retry) takes a lease on the sequence and a new token from a strictly increasing site-wide counter.
+    - The lease outlasts the attempt's maximum execution time, and an attempt starts only after the previous lease has expired or been released, so two attempts never run at once.
+    - PublicSiteExporter records the highest accepted token in a site-wide fence that is never deleted, and refuses any write with a lower token, so a stalled attempt cannot overwrite newer state or recreate a withdrawn object. The fence and the exporter's other records live in a private store, never in public storage.
+    - Because each manual retry gets a fresh token, tokens used by later operations never block it.
+  - **Commit.** After a successful export, one transaction commits, only if the attempt's token still holds the lease and the site generation still equals its base generation:
+    - the new publication records and featured order;
+    - the next site generation;
+    - the ActivityEntry;
+    - for a take-down, the release of the draft featured slot through Projects.
+  - **Idempotency.** A repeated confirmation of the same ticket returns the operation already accepted. A retry re-runs that same operation, and only when no later operation for the same exhibit has succeeded; otherwise it is marked superseded.
+  - **Failure.** A failed operation restores public storage to the last committed generation and is shown with a retry.
+  - **Abandoned attempts.** An attempt can stop without reporting (a crash, or a timeout past its lease). When its lease expires without a commit or a completed restore, a recovery attempt runs before anything else. Lease expiry triggers it, backed by a periodic check, so it never waits for a later operation. The recovery attempt takes a new lease and a higher token, marks the abandoned attempt failed, and restores public storage to the last committed model. An abandoned attempt counts as one of its operation's attempts, including against a take-down's automatic-attempt budget.
+  - **Retry window.** A manual retry of a Publish, Update or featured-order operation is allowed only while its ticket is unexpired; after that the owner prepares again. A take-down retry is always allowed. A failed take-down that a later Publish or Update supersedes is marked superseded. That confirmation warns that the exhibit stays public. A failed take-down is retried automatically, ahead of later operations, a bounded number of times. Once those attempts are exhausted it is marked failed, releases the lease and the sequence moves on, so the queue is never blocked. The Studio then shows a persistent "Take-down failed — still public" alert with a manual retry (FR8.1).
+  - **Five minutes.** NFR Design sets the per-attempt time budget and the number of automatic take-down attempts so that an operation, the work queued ahead of it and its automatic attempts finish within 5 minutes. With a single owner the queue stays short. An operation that still fails is restored and reported as failed, never as complete.
+  - **Mechanism.** The queue, lease and fencing implementation are chosen in NFR Design. The properties above are fixed here.
 - **Consequences**
-  - Positive: no mixed public state; retries and double clicks are harmless; the activity log comes from the same record.
-  - Negative: a burst of confirmations is processed sequentially, which is acceptable for a single owner.
+  - Positive:
+    - no shared page can be built from a stale view;
+    - no stale run can overwrite newer state;
+    - every completed state equals the last successful operation;
+    - preconditions that depend on public state are re-checked against the state the operation actually runs on;
+    - retries and double clicks are harmless;
+    - the activity log and the site generation come from the same commit.
+  - Negative:
+    - unrelated exhibits wait for each other, which is acceptable for one owner;
+    - each operation re-exports shared pages, a few small static files.
 - **Alternatives Rejected**
-  - **Concurrent operations with last-writer-wins:** this violates FR7.8.
-  - **A global lock across all exhibits:** it is simpler but would block unrelated exhibits for no benefit.
+  - **Per-exhibit queues (the first draft):** shared pages could be written from stale views (review R-02).
+  - **The sequence number as the fencing token (the second draft):** a retry could not be told apart from the stalled attempt it replaced, and a retry after later operations would have been blocked. Tokens are therefore per attempt.
+  - **Concurrent operations with last-writer-wins:** violates FR7.8.
+  - **Per-exhibit queues plus a lock only around shared-page writes:** this also works, but it needs two coordination mechanisms. The order in which shared pages are written would then differ from the order in which operations were accepted. One sequence is simpler and gives a single, auditable order.
 
 ## ADR-005: The link checker is stateless and isolated; Publication keeps its results
 
@@ -140,7 +179,8 @@ The component names are those in `components.md`. Sources:
     - private originals;
     - attachment metadata and entry listing;
     - public derivatives, produced only on request from the exporter.
-  - **Projects** owns ExhibitImage and ExhibitAttachment: which assets, order, lead, alt text, captions and labels. It accepts an asset only after MediaLibrary confirms it passed validation.
+  - **Projects** owns ExhibitImage and ExhibitAttachment: which assets, order, lead, alt text, captions and labels. It accepts an asset only after MediaLibrary confirms it passed validation and was uploaded for the same project; an asset from another project is refused.
+  - **StudioApi** requests an upload authorization from MediaLibrary only for a project that Projects confirms exists. The authorization binds the project, size and type.
 - **Consequences**
   - Positive:
     - one component, and one review target, touches untrusted bytes;
@@ -223,7 +263,14 @@ The component names are those in `components.md`. Sources:
     - CategoryAssignment, with a `primary` flag;
     - the draft FeaturedLineup;
     - the featured flag on Project.
-  - **Publication** owns PublishedFeaturedOrder, changed only by a featured-order operation. Take-down removes the project from the line-up and clears its featured flag, through Projects.
+  - **Publication** owns PublishedFeaturedOrder, the ordered list of published featured exhibits.
+    - Publishing or updating an exhibit as featured, when it is not already listed, appends it at the end.
+    - Publishing or updating it as not featured removes it.
+    - Take-down removes it from the published order. Through Projects, it also removes the exhibit from the draft line-up and clears its featured flag, so the slot is not restored on a later publish.
+    - "Update featured order" publishes exactly the candidate order frozen in its ticket (ADR-012). The ticket is taken from the draft line-up, restricted to exhibits that are live and published as featured, and its run-time basis check must pass (ADR-004).
+    - In every case the other entries keep their relative order.
+    - Publish is blocked if it would put more than five exhibits in the published carousel.
+    - A featured-order confirmation binds to the line-up revision and the published order version that were shown (ADR-012).
 - **Consequences**
   - Positive:
     - classification can grow without migration;
@@ -247,6 +294,7 @@ The component names are those in `components.md`. Sources:
     - Discover, by listing from RepositoryCatalog and looking up links in Projects;
     - suggestion insertion, by reading provenance from DescriptionAssistant and saving it through Projects;
     - status listing, from Projects and Publication.
+  - **Health endpoint.** The single unauthenticated route is `GET /health`. It is rate-limited, reads no domain data, and returns a fixed status body with no version, configuration, project or owner information. Every other route requires the owner.
   - **OwnerAccess** is a small, separately reviewed component that holds no data.
 - **Consequences**
   - Positive:
@@ -257,3 +305,47 @@ The component names are those in `components.md`. Sources:
 - **Alternatives Rejected**
   - **Each component checks authorization itself:** the rule would be duplicated, and an endpoint could miss it.
   - **Direct calls between components:** Projects → DescriptionAssistant and RepositoryCatalog → Projects would form cycles.
+
+## ADR-012: A confirmation is bound to the exact reviewed revision and inventory
+
+- **Context**
+  - Nothing may become public except through the owner's explicit confirmation of exactly what the confirmation listed (FR7.1, FR7.2, D-22).
+  - Preparation and confirmation happen at different moments, and the owner may have the editor open in another tab (FR3.4).
+  - The architecture review (R-01) found the first draft did not tie the confirmation to what was reviewed. The owner required three things (Request Changes, 2026-10-11):
+    - the confirmation is bound to the exact reviewed revision and inventory;
+    - a stale confirmation is rejected and the owner reviews again;
+    - the revision check is atomic with accepting the operation.
+- **Decision**
+  - **Preparation.** Preparing Publish or Update reads draft revision N and freezes, at that moment, two things:
+    - the candidate PublishedVersion projected from revision N;
+    - the complete inventory shown to the owner, including check results, visibility and attachment entries.
+
+    Both go into a single-use ConfirmationTicket with an expiry and a digest of the inventory. Every ticket records its basis, the public state it was prepared against:
+    - the exhibit's last accepted operation, counting operations accepted but not yet run;
+    - for featured changes, the published featured order version and the set of live featured exhibits.
+
+    A featured-order ticket also freezes the exact candidate order shown and binds to the draft line-up revision. Every line-up change increments that revision, including a slot released by take-down.
+  - **Acceptance.** The confirmation sends the ticket id, the inventory digest that was displayed, and a confirmation id generated once per confirmation. A repeat of the same confirmation returns the accepted operation, while a different confirmation presenting a used ticket is refused. In one atomic step, Publication:
+    1. checks that the ticket is unused, unexpired and of the right kind, that the digest matches, and that the exhibit's last accepted operation still equals the ticket's basis;
+    2. calls the Projects revision guard. The guard succeeds only if the draft revision is still N. It records the accepted operation by a conditional write to the project record, without changing the revision, so a concurrent save conflicts with it. Publishing then shows "Published", and a later save shows "Changes since last publish". Every saved draft change, including images, attachments, category, featured flag and rights flags, increments the revision;
+    3. for a featured-order ticket, calls the Projects line-up guard in place of the revision guard. The guard succeeds only if the line-up revision is unchanged, and records the acceptance in the line-up's `publicationGuard` by a conditional write that does not change the revision;
+    4. marks the ticket used;
+    5. takes the next sequence number and records the PublicationOperation.
+
+    If any check fails, nothing is accepted. The owner sees that the exhibit changed since review and prepares again.
+  - **What is published.** The operation publishes the ticket's frozen candidate version (its `sourceRevision` always equals N), or for a featured-order ticket its frozen candidate order. Preconditions that depend on public state are re-checked when the operation runs (ADR-004).
+  - **Mechanism.** NFR Design chooses it, for example one database transaction spanning the guard and the operation insert, with each component writing only its own records.
+- **Consequences**
+  - Positive:
+    - a stale confirmation is always refused;
+    - because the candidate is frozen at preparation, even a mechanism failure could not publish content the owner did not see;
+    - an edit that lands just after acceptance stays private, and the status correctly becomes "Changes since last publish" (ADR-003);
+    - repeated confirmations of one ticket are idempotent (ADR-004).
+  - Negative:
+    - the owner must re-prepare after any edit, which is intended;
+    - tickets and frozen candidates add stored records;
+    - the atomic step spans two components' records, so their persistence must support it.
+- **Alternatives Rejected**
+  - **Re-project the draft at confirmation time:** content edited after review could be published.
+  - **Check the revision only, without freezing the candidate:** this relies wholly on the atomic check, with no second line of defence.
+  - **Lock the project against edits while a confirmation is open:** the owner could be locked out by an abandoned tab. Optimistic refusal with re-review is simpler and never blocks editing.
