@@ -5347,3 +5347,233 @@ Owner instruction (Michael Broadfoot, 2026-10-10, Architect Portfolio - Autonomo
 **Details**: <project-dir>\aidlc\spaces\default\intents\261010-architect-portfolio\inception\refined-mockups\design-system-mapping.md
 
 ---
+
+## Change Accepted
+**Timestamp**: 2026-10-11T02:22:05Z
+**Event**: CHANGE_ACCEPTED
+**Stage**: refined-mockups
+**Checkpoint**: review-receipt
+**Changed**: (paths unavailable)
+**Recorded**: sha256:dff5893e78cb6caaf732abd0b9f418088b345b8b93843b44c479d854798f5c0d
+**Current**: sha256:ed13d3744857b9728eeeb091315e35349715e329699ad65d9391b86b4c8ae4e4
+**Details**: The Refined Mockups documents changed after they were reviewed; carrying on.
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-11T02:22:05Z
+**Event**: SENSOR_FIRED
+**Fire id**: 2bac0a7c
+**Sensor ID**: required-sections
+**Stage slug**: refined-mockups
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-mockups/mockups.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-11T02:22:05Z
+**Event**: SENSOR_PASSED
+**Fire id**: 2bac0a7c
+**Sensor ID**: required-sections
+**Stage slug**: refined-mockups
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-mockups/mockups.md
+**Duration ms**: 92
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-11T02:22:05Z
+**Event**: SENSOR_FIRED
+**Fire id**: 86f15dd9
+**Sensor ID**: required-sections
+**Stage slug**: refined-mockups
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-mockups/interaction-spec.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-11T02:22:05Z
+**Event**: SENSOR_PASSED
+**Fire id**: 86f15dd9
+**Sensor ID**: required-sections
+**Stage slug**: refined-mockups
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-mockups/interaction-spec.md
+**Duration ms**: 85
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-11T02:22:06Z
+**Event**: SENSOR_FIRED
+**Fire id**: 8db9dc21
+**Sensor ID**: required-sections
+**Stage slug**: refined-mockups
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-mockups/design-system-mapping.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-11T02:22:06Z
+**Event**: SENSOR_PASSED
+**Fire id**: 8db9dc21
+**Sensor ID**: required-sections
+**Stage slug**: refined-mockups
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-mockups/design-system-mapping.md
+**Duration ms**: 83
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-11T02:22:06Z
+**Event**: SENSOR_FIRED
+**Fire id**: 105065d1
+**Sensor ID**: required-sections
+**Stage slug**: refined-mockups
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-mockups/accessibility-checklist.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-11T02:22:06Z
+**Event**: SENSOR_PASSED
+**Fire id**: 105065d1
+**Sensor ID**: required-sections
+**Stage slug**: refined-mockups
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-mockups/accessibility-checklist.md
+**Duration ms**: 82
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-11T02:22:06Z
+**Event**: SENSOR_FIRED
+**Fire id**: 5f64c56a
+**Sensor ID**: required-sections
+**Stage slug**: refined-mockups
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-mockups/refined-mockups-questions.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-11T02:22:06Z
+**Event**: SENSOR_PASSED
+**Fire id**: 5f64c56a
+**Sensor ID**: required-sections
+**Stage slug**: refined-mockups
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-mockups/refined-mockups-questions.md
+**Duration ms**: 87
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-11T02:22:06Z
+**Event**: SENSOR_FIRED
+**Fire id**: daf512cc
+**Sensor ID**: upstream-coverage
+**Stage slug**: refined-mockups
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-mockups/mockups.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-11T02:22:06Z
+**Event**: SENSOR_PASSED
+**Fire id**: daf512cc
+**Sensor ID**: upstream-coverage
+**Stage slug**: refined-mockups
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-mockups/mockups.md
+**Duration ms**: 89
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-11T02:22:06Z
+**Event**: SENSOR_FIRED
+**Fire id**: fb211f1b
+**Sensor ID**: upstream-coverage
+**Stage slug**: refined-mockups
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-mockups/interaction-spec.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-11T02:22:07Z
+**Event**: SENSOR_PASSED
+**Fire id**: fb211f1b
+**Sensor ID**: upstream-coverage
+**Stage slug**: refined-mockups
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-mockups/interaction-spec.md
+**Duration ms**: 91
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-11T02:22:07Z
+**Event**: SENSOR_FIRED
+**Fire id**: 1b76b850
+**Sensor ID**: upstream-coverage
+**Stage slug**: refined-mockups
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-mockups/design-system-mapping.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-11T02:22:07Z
+**Event**: SENSOR_PASSED
+**Fire id**: 1b76b850
+**Sensor ID**: upstream-coverage
+**Stage slug**: refined-mockups
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-mockups/design-system-mapping.md
+**Duration ms**: 85
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-11T02:22:07Z
+**Event**: SENSOR_FIRED
+**Fire id**: db71812a
+**Sensor ID**: upstream-coverage
+**Stage slug**: refined-mockups
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-mockups/accessibility-checklist.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-11T02:22:07Z
+**Event**: SENSOR_PASSED
+**Fire id**: db71812a
+**Sensor ID**: upstream-coverage
+**Stage slug**: refined-mockups
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-mockups/accessibility-checklist.md
+**Duration ms**: 85
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-11T02:22:07Z
+**Event**: SENSOR_FIRED
+**Fire id**: 11adfa67
+**Sensor ID**: upstream-coverage
+**Stage slug**: refined-mockups
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-mockups/refined-mockups-questions.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-11T02:22:07Z
+**Event**: SENSOR_PASSED
+**Fire id**: 11adfa67
+**Sensor ID**: upstream-coverage
+**Stage slug**: refined-mockups
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/refined-mockups/refined-mockups-questions.md
+**Duration ms**: 84
+
+---
+
+## Stage Awaiting Approval
+**Timestamp**: 2026-10-11T02:22:07Z
+**Event**: STAGE_AWAITING_APPROVAL
+**Stage**: refined-mockups
+**Details**: Re-entering gate after revision
+
+---
