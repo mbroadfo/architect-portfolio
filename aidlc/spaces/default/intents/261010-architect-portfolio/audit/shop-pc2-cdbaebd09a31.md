@@ -8905,3 +8905,438 @@ Owner (Michael Broadfoot, 2026-10-11): Delivery Planning revision 6 approved. D1
 **Stage**: units-generation
 
 ---
+
+## Human Turn
+**Timestamp**: 2026-10-11T21:17:08Z
+**Event**: HUMAN_TURN
+**Session**: 3bfff7e0-b2c2-48b0-8b00-081386f03bb3
+**Picked**: ["Approve"]
+
+---
+
+## Question Replied
+**Timestamp**: 2026-10-11T21:17:08Z
+**Event**: QUESTION_REPLIED
+**Session**: 3bfff7e0-b2c2-48b0-8b00-081386f03bb3
+**Question**: Re-approve Units Generation with Amendment D1 (U0 walking-slice + five ordering-only edges; 11 units unchanged)?
+**Reply**: Approve
+
+---
+
+## Gate Approved
+**Timestamp**: 2026-10-11T21:17:18Z
+**Event**: GATE_APPROVED
+**Stage**: units-generation
+**User Input**: Approve
+**Review Finding Dispositions**: {"version":1,"dispositions":[{"artifact":"aidlc/spaces/default/intents/261010-architect-portfolio/inception/units-generation/unit-of-work.md","id":"R-09","fingerprint":"sha256:755a934362eca1a9a45e9ca6b7bb32cd599516e692090015f7cb4c311ac71778","status":"Accepted risk","decided_at_severity":"Minor","reviewed_record":{"path":".aidlc-engine/reviews/units-generation/stage/48f1254eb04633b8/1.json","digest":"sha256:e6b720fd09a83e1209398afd21c66bd072374ca6245bd642adb5ada66e9e8d18"}},{"artifact":"aidlc/spaces/default/intents/261010-architect-portfolio/inception/units-generation/unit-of-work.md","id":"R-10","fingerprint":"sha256:ca92e0390e6d5c923a04d9fe1805ef6396142e9a032bd1e37e8990cfb1bc6954","status":"Accepted risk","decided_at_severity":"Minor","reviewed_record":{"path":".aidlc-engine/reviews/units-generation/stage/48f1254eb04633b8/1.json","digest":"sha256:e6b720fd09a83e1209398afd21c66bd072374ca6245bd642adb5ada66e9e8d18"}}]}
+
+---
+
+## Stage Completion
+**Timestamp**: 2026-10-11T21:17:18Z
+**Event**: STAGE_COMPLETED
+**Stage**: units-generation
+**Validation Basis**: {"graphContract":"sha256:baf39a0a351356930786ca985bbb7c5893e8db3e93715525a8e909b629765ee7","inputs":[{"artifact":"components","contentHash":"sha256:1cdf6a7caa49b6976d39c3d39d9adeec6a1c86eb581ebc208ea4dc200c846ed8","instanceCount":1,"presentCount":1,"producer":"domain-design","required":true,"structureHash":"sha256:3b58fe458221c55c1c72d99d2e6aa482c69e4853625084ddbac2b96108e6a170"},{"artifact":"decisions","contentHash":"sha256:29d2d0c66fa25927504f8962a46b6f37c6f2ff9c67c4044b55235fd69f7b9d7e","instanceCount":1,"presentCount":1,"producer":"domain-design","required":false,"structureHash":"sha256:fdf5cf6f85306215027b102c49f14b2ae5843e72cc52868a83668554271ecf17"},{"artifact":"requirements","contentHash":"sha256:0937765018e2ab646ea080d9a76386e94bf0581578bfdd47ea5f8e6fc97bd58a","instanceCount":1,"presentCount":1,"producer":"requirements-analysis","required":true,"structureHash":"sha256:bb8a4d6a26ef7a69949872e948516b3c9b4ddb0e63b88c2975b69baa2c2a5cb3"}],"outputs":[{"artifact":"traceability","contentHash":"sha256:558f8146c45e73ebe0d359f916edc5a38bbf1bc809306568bb479b5084921477","instanceCount":1,"presentCount":1,"producer":"units-generation","required":true,"structureHash":"sha256:cd3f50650c81b43e8c10b8a45f70e20b555686808c89395f9a1ef6714af8c563"},{"artifact":"unit-of-work-dependency","contentHash":"sha256:ff1dfecc8be053a07ee0bb9a57fe038e1fcfd4fd26586dd3c464073bde548d39","instanceCount":1,"presentCount":1,"producer":"units-generation","required":true,"structureHash":"sha256:9c2c1a5fa6fe80357ffe43d538e1152729882c1776a3d043e77e418ad365e418"},{"artifact":"unit-of-work-story-map","contentHash":"sha256:233af2a54badc4f1609ca31113405bf885ad58f57b82c95d89f8d1f33aff631a","instanceCount":1,"presentCount":1,"producer":"units-generation","required":true,"structureHash":"sha256:62ac788fce87fb0edc101e7e0205bb6e8ea014cccf6bed87aeea0778c9bba263"},{"artifact":"unit-of-work","contentHash":"sha256:dce4fcb058294c63554896d102a17adfafbe967b72502b3e61c7194048fc02b3","instanceCount":1,"presentCount":1,"producer":"units-generation","required":true,"structureHash":"sha256:33b32a3709962b89085c0129174ef571602a1621f6a5f81875e8661719379dd7"}],"projectType":"greenfield","schema":3}
+**Details**: Stage Units Generation approved by gate
+**Tokens In**: 118
+**Tokens Out**: 72486
+**Cache Read**: 21732684
+**Cache Write**: 370620
+**Cost USD**: 7.15
+**By Model**: opus-5-5=6.14; sonnet-5-5=1.01
+**By Agent**: main=6.14; aidlc-architecture-reviewer-agent=1.01
+**Tokens By Model**: opus-5-5=90/64.3k/20.6M/92.5k; sonnet-5-5=28/8.1k/1.2M/278.1k
+**Tokens By Agent**: main=90/64.3k/20.6M/92.5k; aidlc-architecture-reviewer-agent=28/8.1k/1.2M/278.1k
+
+---
+
+## Stage Start
+**Timestamp**: 2026-10-11T21:17:18Z
+**Event**: STAGE_STARTED
+**Stage**: contract-design
+**Agent**: aidlc-architect-agent
+**Answer Mode**: guide (reused from intent-capture)
+
+---
+
+## Review Requested
+**Timestamp**: 2026-10-11T21:17:36Z
+**Event**: REVIEW_REQUESTED
+**Stage**: contract-design
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Iteration**: 1
+**Artifact Fingerprint**: sha256:d4a9e6a361dfb669458d71bd04880315b7ba4e6baede52c0c49a326d4a3f5c7e
+**Request Id**: review:6e43880f8d923a56d3450ccaed11a127
+**Review File**: .aidlc-engine/reviews/contract-design/stage/5607144e0df45852/1.6e43880f8d923a56d3450ccaed11a127.review.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-10-11T21:18:12Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/.aidlc-engine/reviews/contract-design/stage/5607144e0df45852/1.6e43880f8d923a56d3450ccaed11a127.review.md
+**Context**: .aidlc-engine > reviews > contract-design > stage > 5607144e0df45852 > 1.6e43880f8d923a56d3450ccaed11a127.review.md
+
+---
+
+## Subagent Completed
+**Timestamp**: 2026-10-11T21:18:15Z
+**Event**: SUBAGENT_COMPLETED
+**Agent Type**: aidlc-architecture-reviewer-agent
+**Agent ID**: ad9a415453ff9d006
+
+---
+
+## Human Turn
+**Timestamp**: 2026-10-11T21:18:16Z
+**Event**: HUMAN_TURN
+**Session**: 3bfff7e0-b2c2-48b0-8b00-081386f03bb3
+
+---
+
+## Review Completed
+**Timestamp**: 2026-10-11T21:18:23Z
+**Event**: REVIEW_COMPLETED
+**Stage**: contract-design
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Iteration**: 1
+**Verdict**: READY
+**Request Fingerprint**: sha256:d4a9e6a361dfb669458d71bd04880315b7ba4e6baede52c0c49a326d4a3f5c7e
+**Artifact Fingerprint**: sha256:d4a9e6a361dfb669458d71bd04880315b7ba4e6baede52c0c49a326d4a3f5c7e
+**Request Id**: review:6e43880f8d923a56d3450ccaed11a127
+**Review Record**: .aidlc-engine/reviews/contract-design/stage/5607144e0df45852/1.json
+**Review Record Digest**: sha256:7f247aab81ed4c7492d28336f949cbd0a96c6ed4628993ff00701e97ca4818a3
+
+---
+
+## Change Accepted
+**Timestamp**: 2026-10-11T21:18:24Z
+**Event**: CHANGE_ACCEPTED
+**Stage**: contract-design
+**Checkpoint**: review-receipt
+**Changed**: (paths unavailable)
+**Recorded**: sha256:d4a9e6a361dfb669458d71bd04880315b7ba4e6baede52c0c49a326d4a3f5c7e
+**Current**: sha256:7aff4414b0d6403f8f653313eb3876428f9bec813329d9f3cac287abd8bc9641
+**Details**: The Contract Design document changed after it was reviewed; carrying on.
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-11T21:18:24Z
+**Event**: SENSOR_FIRED
+**Fire id**: 67e9ed19
+**Sensor ID**: required-sections
+**Stage slug**: contract-design
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/contract-design/contract-summary.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-11T21:18:25Z
+**Event**: SENSOR_PASSED
+**Fire id**: 67e9ed19
+**Sensor ID**: required-sections
+**Stage slug**: contract-design
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/contract-design/contract-summary.md
+**Duration ms**: 185
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-11T21:18:25Z
+**Event**: SENSOR_FIRED
+**Fire id**: f13d1c2a
+**Sensor ID**: upstream-coverage
+**Stage slug**: contract-design
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/contract-design/contract-summary.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-11T21:18:25Z
+**Event**: SENSOR_PASSED
+**Fire id**: f13d1c2a
+**Sensor ID**: upstream-coverage
+**Stage slug**: contract-design
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/contract-design/contract-summary.md
+**Duration ms**: 155
+
+---
+
+## Stage Awaiting Approval
+**Timestamp**: 2026-10-11T21:18:25Z
+**Event**: STAGE_AWAITING_APPROVAL
+**Stage**: contract-design
+
+---
+
+## Human Turn
+**Timestamp**: 2026-10-11T21:23:22Z
+**Event**: HUMAN_TURN
+**Session**: 3bfff7e0-b2c2-48b0-8b00-081386f03bb3
+**Picked**: ["Approve"]
+
+---
+
+## Question Replied
+**Timestamp**: 2026-10-11T21:23:22Z
+**Event**: QUESTION_REPLIED
+**Session**: 3bfff7e0-b2c2-48b0-8b00-081386f03bb3
+**Question**: Re-approve Contract Design? It is unchanged apart from a note that U0 adds no contract (review READY). R-18 remains a mandatory Functional Design correction.
+**Reply**: Approve
+
+---
+
+## Gate Approved
+**Timestamp**: 2026-10-11T21:23:32Z
+**Event**: GATE_APPROVED
+**Stage**: contract-design
+**User Input**: Approve
+**Review Finding Dispositions**: {"version":1,"dispositions":[{"artifact":"aidlc/spaces/default/intents/261010-architect-portfolio/inception/contract-design/contract-summary.md","id":"R-19","fingerprint":"sha256:4f63eda203fef23e50e4328ba6ebf873c9465a4a2d9502c6fcbd3352e700151c","status":"Accepted risk","decided_at_severity":"Minor","reviewed_record":{"path":".aidlc-engine/reviews/contract-design/stage/5607144e0df45852/1.json","digest":"sha256:7f247aab81ed4c7492d28336f949cbd0a96c6ed4628993ff00701e97ca4818a3"}}]}
+
+---
+
+## Stage Completion
+**Timestamp**: 2026-10-11T21:23:32Z
+**Event**: STAGE_COMPLETED
+**Stage**: contract-design
+**Validation Basis**: {"graphContract":"sha256:ad5599bf4da38de3dec2bfb4bf705de33d27113e18b6a160549a97c4b694fea3","inputs":[{"artifact":"components","contentHash":"sha256:1cdf6a7caa49b6976d39c3d39d9adeec6a1c86eb581ebc208ea4dc200c846ed8","instanceCount":1,"presentCount":1,"producer":"domain-design","required":false,"structureHash":"sha256:3b58fe458221c55c1c72d99d2e6aa482c69e4853625084ddbac2b96108e6a170"},{"artifact":"requirements","contentHash":"sha256:0937765018e2ab646ea080d9a76386e94bf0581578bfdd47ea5f8e6fc97bd58a","instanceCount":1,"presentCount":1,"producer":"requirements-analysis","required":false,"structureHash":"sha256:bb8a4d6a26ef7a69949872e948516b3c9b4ddb0e63b88c2975b69baa2c2a5cb3"},{"artifact":"unit-of-work-dependency","contentHash":"sha256:ff1dfecc8be053a07ee0bb9a57fe038e1fcfd4fd26586dd3c464073bde548d39","instanceCount":1,"presentCount":1,"producer":"units-generation","required":true,"structureHash":"sha256:9c2c1a5fa6fe80357ffe43d538e1152729882c1776a3d043e77e418ad365e418"},{"artifact":"unit-of-work","contentHash":"sha256:dce4fcb058294c63554896d102a17adfafbe967b72502b3e61c7194048fc02b3","instanceCount":1,"presentCount":1,"producer":"units-generation","required":true,"structureHash":"sha256:33b32a3709962b89085c0129174ef571602a1621f6a5f81875e8661719379dd7"}],"outputs":[{"artifact":"contract-summary","contentHash":"sha256:37150c33538474009cc31b0e188a1c4d3e5c322cde95decf880c8a5821e4a1bb","instanceCount":1,"presentCount":1,"producer":"contract-design","required":true,"structureHash":"sha256:a8794c38dc2306d92b2b856fd05ea2a12dd949c651797fda8ffba2bf43d2525b"}],"projectType":"greenfield","schema":3}
+**Details**: Stage Contract Design approved by gate
+**Tokens In**: 170
+**Tokens Out**: 112931
+**Cache Read**: 24927234
+**Cache Write**: 1237614
+**Cost USD**: 13.43
+**By Model**: opus-5-5=10.81; sonnet-5-5=2.62; <synthetic>=null
+**By Agent**: main=10.81; aidlc-architecture-reviewer-agent=2.62
+**Tokens By Model**: opus-5-5=90/85.1k/21M/613.1k; sonnet-5-5=80/27.8k/3.9M/624.5k
+**Tokens By Agent**: main=90/85.1k/21M/613.1k; aidlc-architecture-reviewer-agent=80/27.8k/3.9M/624.5k
+
+---
+
+## Stage Start
+**Timestamp**: 2026-10-11T21:23:32Z
+**Event**: STAGE_STARTED
+**Stage**: delivery-planning
+**Agent**: aidlc-delivery-agent
+**Answer Mode**: guide (reused from intent-capture)
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-11T21:24:26Z
+**Event**: SENSOR_FIRED
+**Fire id**: c2abf509
+**Sensor ID**: required-sections
+**Stage slug**: delivery-planning
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/delivery-planning/bolt-plan.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-11T21:24:26Z
+**Event**: SENSOR_PASSED
+**Fire id**: c2abf509
+**Sensor ID**: required-sections
+**Stage slug**: delivery-planning
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/delivery-planning/bolt-plan.md
+**Duration ms**: 162
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-11T21:24:26Z
+**Event**: SENSOR_FIRED
+**Fire id**: 88c592f5
+**Sensor ID**: required-sections
+**Stage slug**: delivery-planning
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/delivery-planning/team-allocation.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-11T21:24:27Z
+**Event**: SENSOR_PASSED
+**Fire id**: 88c592f5
+**Sensor ID**: required-sections
+**Stage slug**: delivery-planning
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/delivery-planning/team-allocation.md
+**Duration ms**: 160
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-11T21:24:27Z
+**Event**: SENSOR_FIRED
+**Fire id**: 88bce325
+**Sensor ID**: required-sections
+**Stage slug**: delivery-planning
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/delivery-planning/risk-and-sequencing-rationale.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-11T21:24:27Z
+**Event**: SENSOR_PASSED
+**Fire id**: 88bce325
+**Sensor ID**: required-sections
+**Stage slug**: delivery-planning
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/delivery-planning/risk-and-sequencing-rationale.md
+**Duration ms**: 187
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-11T21:24:27Z
+**Event**: SENSOR_FIRED
+**Fire id**: c4781fa9
+**Sensor ID**: required-sections
+**Stage slug**: delivery-planning
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/delivery-planning/external-dependency-map.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-11T21:24:27Z
+**Event**: SENSOR_PASSED
+**Fire id**: c4781fa9
+**Sensor ID**: required-sections
+**Stage slug**: delivery-planning
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/delivery-planning/external-dependency-map.md
+**Duration ms**: 175
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-11T21:24:28Z
+**Event**: SENSOR_FIRED
+**Fire id**: a6ac58b0
+**Sensor ID**: required-sections
+**Stage slug**: delivery-planning
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/delivery-planning/delivery-planning-questions.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-11T21:24:28Z
+**Event**: SENSOR_PASSED
+**Fire id**: a6ac58b0
+**Sensor ID**: required-sections
+**Stage slug**: delivery-planning
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/delivery-planning/delivery-planning-questions.md
+**Duration ms**: 149
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-11T21:24:28Z
+**Event**: SENSOR_FIRED
+**Fire id**: d2c29752
+**Sensor ID**: upstream-coverage
+**Stage slug**: delivery-planning
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/delivery-planning/bolt-plan.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-11T21:24:28Z
+**Event**: SENSOR_PASSED
+**Fire id**: d2c29752
+**Sensor ID**: upstream-coverage
+**Stage slug**: delivery-planning
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/delivery-planning/bolt-plan.md
+**Duration ms**: 168
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-11T21:24:28Z
+**Event**: SENSOR_FIRED
+**Fire id**: 4697ebd2
+**Sensor ID**: upstream-coverage
+**Stage slug**: delivery-planning
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/delivery-planning/team-allocation.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-11T21:24:29Z
+**Event**: SENSOR_PASSED
+**Fire id**: 4697ebd2
+**Sensor ID**: upstream-coverage
+**Stage slug**: delivery-planning
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/delivery-planning/team-allocation.md
+**Duration ms**: 150
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-11T21:24:29Z
+**Event**: SENSOR_FIRED
+**Fire id**: 49965d9d
+**Sensor ID**: upstream-coverage
+**Stage slug**: delivery-planning
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/delivery-planning/risk-and-sequencing-rationale.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-11T21:24:29Z
+**Event**: SENSOR_PASSED
+**Fire id**: 49965d9d
+**Sensor ID**: upstream-coverage
+**Stage slug**: delivery-planning
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/delivery-planning/risk-and-sequencing-rationale.md
+**Duration ms**: 149
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-11T21:24:29Z
+**Event**: SENSOR_FIRED
+**Fire id**: 43774cf7
+**Sensor ID**: upstream-coverage
+**Stage slug**: delivery-planning
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/delivery-planning/external-dependency-map.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-11T21:24:29Z
+**Event**: SENSOR_PASSED
+**Fire id**: 43774cf7
+**Sensor ID**: upstream-coverage
+**Stage slug**: delivery-planning
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/delivery-planning/external-dependency-map.md
+**Duration ms**: 139
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-11T21:24:29Z
+**Event**: SENSOR_FIRED
+**Fire id**: 2c1fc210
+**Sensor ID**: upstream-coverage
+**Stage slug**: delivery-planning
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/delivery-planning/delivery-planning-questions.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-11T21:24:30Z
+**Event**: SENSOR_PASSED
+**Fire id**: 2c1fc210
+**Sensor ID**: upstream-coverage
+**Stage slug**: delivery-planning
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/delivery-planning/delivery-planning-questions.md
+**Duration ms**: 136
+
+---
+
+## Stage Awaiting Approval
+**Timestamp**: 2026-10-11T21:24:30Z
+**Event**: STAGE_AWAITING_APPROVAL
+**Stage**: delivery-planning
+
+---

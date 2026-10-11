@@ -2,7 +2,7 @@
 
 **Verdict: PASS.** Every functional requirement traces to a component and to a unit. There are no GAP, ORPHAN, invalid-target or missing-upstream findings. No stage owes a revisit before Construction.
 
-The check was run at Delivery Planning on 2026-10-11 with `aidlc engine sensor-traceability` against each Inception `traceability.json`.
+The check was run at Delivery Planning on 2026-10-11 with `aidlc engine sensor-traceability` against each Inception `traceability.json`. It was re-run after Amendment D1, with the same result: U0 is delivery-only and owns no FR.
 
 ## Traceability Sources
 
@@ -27,10 +27,10 @@ All three are infrastructure requirements with no application code. Each has an 
 
 | Check | Result |
 |---|---|
-| Every component belongs to exactly one unit (12 components → 11 units) | OK (`unit-of-work.md`) |
+| Every component belongs to exactly one unit (12 components → U1 to U11; U0 is delivery-only and owns none) | OK (`unit-of-work.md`) |
 | The unit dependency graph is acyclic and its edge block is well-formed | OK (required-sections sensor, `edge_block: ok`) |
 | Every unit edge and integration point has a contract | OK (`contract-summary.md` C1 to C11) |
-| The Bolt sequence follows the graph's order | OK (`bolt-plan.md`; no deviation) |
+| The Bolt sequence follows the graph's order | OK (`bolt-plan.md` revision 6; the order is fixed by the D1 ordering-only edges) |
 | Owner-required corrections are carried forward | R-07 and R-08 resolved in Contract Design. R-18 is assigned to Functional Design and to B02 (P-08) |
 
 ## Assumptions & Open Questions

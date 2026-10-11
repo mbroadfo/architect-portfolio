@@ -79,8 +79,8 @@ Michael asked whether independent implementation work can run on isolated branch
 3. **Review records and rebases.** Team practice requires "a recorded review for its latest commit". S0 implements that check so that a rebase of an already-reviewed Bolt is accepted only if the change is provably identical (the same `git patch-id`), and every content change needs a new review. This is a **provisional design**: the CI Pipeline stage confirms it, and until then the stricter reading (a new review after any rebase) applies if Michael prefers it.
 4. **A Bolt Michael does not accept.** He answers Request Changes at the unit checkpoint, naming it (D2-A). The Bolt is fixed, or removed from the unit and replanned, and the checkpoint is presented again. Nothing in the unit merges until the unit is approved.
 5. **Merge decisions.** Recommended: a standing merge authorization, decided once (E10). Under it, the Bolts of an approved unit merge as soon as their evidence is clean (CI, 🔒 review, 🧪 preview), with no separate merge stop. If Michael prefers to decide merges each time, that adds about 12 stops (see "Human Stops").
-6. **Before preview exists** (until B05a works and E2 is approved), the U1 and U2 Bolts wait in their unit stacks. That is the plan's one temporary deviation from the one-to-two-day branch rule, and it ends at M2. The slice does not wait at all, because it never merges (Phase A).
-7. **Traceable throughout:** Bolt ID → branch → pull request → CI run → security review (bound to content) → unit checkpoint decision → squash commit on `main`.
+6. **Before preview exists** (until B05a works and E2 is approved), the U1 and U2 Bolts wait in their unit stacks. That is one of the plan's two deviations from the one-to-two-day branch rule (the other is `slice/walking-slice`), and it ends at M2. The slice does not wait at all, because it never merges (Phase A).
+7. **Traceable throughout:** Bolt ID → branch → pull request → CI run → security review (bound to content) → unit checkpoint decision → squash commit on `main`. For S1 to S3, the chain ends at the commit on `slice/walking-slice`.
 
 ## Definition of Done for Every Bolt
 
@@ -148,7 +148,7 @@ Its tests:
 - uses placeholder data and a bundled fixture image only, with no withheld values;
 - is never deployed anywhere: not to preview, and not to production.
 
-**Only S0 merges.** S0 (the CI baseline and repository layout) merges to `main` after its unit checkpoint. S1 to S3 are **demonstration Bolts**: they stay on the branch `slice/walking-slice` as the reference implementation and are never merged or deployed. Their pull requests are opened as drafts labelled "demonstration, do not merge", so CI and the security reviews are recorded on them, and they are closed unmerged when the branch is archived at M5. This branch is deliberately long-lived, from M1 to M5. It is the one exception to the short-lived-branch rule; it is acceptable because it never merges. They therefore carry no 🧪 marker, and team practice's "verify in preview before merge" does not apply to them. Their 🔒 security review still runs before M1.
+**Only S0 merges.** S0 (the CI baseline and repository layout) merges to `main` after its unit checkpoint. S1 to S3 are **demonstration Bolts**: they stay on the branch `slice/walking-slice` as the reference implementation and are never merged or deployed. Their pull requests are opened as drafts labelled "demonstration, do not merge", so CI and the security reviews are recorded on them, and they are closed unmerged when the branch is archived at M5. This branch is deliberately long-lived, from M1 to M5. It is one of the plan's two exceptions to the short-lived-branch rule (the other is the U1 and U2 wait before preview exists). It is acceptable because it never merges. They therefore carry no 🧪 marker, and team practice's "verify in preview before merge" does not apply to them. Their 🔒 security review still runs before M1.
 
 U3, U7, U8, U9 and U11 bring the slice's code into `main` only through their own Bolts. Each of those Bolts cites the slice commit it starts from, and passes its own review and preview verification. U0's own design stages run first and are deliberately light, with one Plan Approval.
 
@@ -187,7 +187,7 @@ Creating `preview` needs Michael's approval (E2). Whether agents may deploy pull
 
 **How B05a verifies itself and its unit.** B05a's own pull request is the first deployment it performs: its workflow applies the U2 stack (B03 to B05a) to the newly created `preview`.
 
-At M2 no function or rendered site exists yet, so the smoke checks then cover only what U2 provides:
+At M2 no function or rendered site exists yet. B05a therefore **deploys a placeholder `index.html`, `404.html` and `category-404.html` to preview**, and the M2 smoke checks request them. The checks cover only what U2 provides:
 - the CDN serves a placeholder page with the NFR15 headers;
 - the preview gate and `noindex` work;
 - 404 routing to `404.html` and `category-404.html` works;
@@ -220,7 +220,7 @@ Scope, 🔒 and 🧪 markers and early-proof labels are unchanged from revision 
 | B03 | U2 platform | `u2-foundation-modules` | Terraform modules and the `preview` and `production` roots, with no resources applied; `fmt`, `validate`, tflint |  |  | M2 |
 | B04 | U2 platform | `u2-oidc-ci-plan` | CI job running `terraform plan` through the read-only OIDC role (**early proof: CI passes using OIDC; Terraform plan is clean**) | 🔒 | 🧪 | M2 |
 | B05 | U2 platform | `u2-cdn-headers-dns-root` | CDN with the NFR15 headers, the FR4.4 download policy, 404 routing, the `noindex` gate for preview, and the separate DNS root (plan only) | 🔒 | 🧪 | M2 |
-| B05a | U2 platform | `u2-preview-deploy-path` | Per-pull-request preview deploy through the preview OIDC role: Terraform apply to preview, site and function deploy, smoke checks; serialized (see M2) | 🔒 | 🧪 | M2 |
+| B05a | U2 platform | `u2-preview-deploy-path` | Per-pull-request preview deploy through the preview OIDC role: Terraform apply to preview; site and function deploy (placeholder objects only until U3 and U7 land): a placeholder `index.html`, `404.html` and `category-404.html`; smoke checks; serialized (see M2) | 🔒 | 🧪 | M2 |
 | B06 | U3 studio-api | `u3-api-host-health` | Python package host, route registry and pipeline, `GET /health` (**early proof: API answers a health check**) |  | 🧪 | M3 |
 | B07 | U3 studio-api | `u3-owner-access` | OwnerAccess (issuer plus subject), 401/403 on every route, R-08 registry tests with spy handlers, rate-limit hooks | 🔒 | 🧪 | M3 |
 | B08 | U3 studio-api | `u3-projects-core` | Projects: title-only create, optimistic revisions, slug, categories, featured line-up, revision and line-up guards (C7) | 🔒 | 🧪 | M3 |
@@ -284,7 +284,7 @@ Each entry gives the Definition of Done items beyond the baseline (**DoD**), wha
   - **Demo:** the plan diff, then the preview smoke check after E2.
 
 - **B05a `u2-preview-deploy-path`**
-  - **DoD:** a pull request's build deploys to `preview` through the preview OIDC role only; deployments are serialized; smoke checks run; there is no production permission and no stored keys. Needs E1 and E2.
+  - **DoD:** deploys a placeholder `index.html`, `404.html` and `category-404.html` to preview, and the M2 smoke checks request them. A pull request's build deploys to `preview` through the preview OIDC role only; deployments are serialized; smoke checks run; there is no production permission and no stored keys. Needs E1 and E2.
   - **Proves:** "verify in preview before merge" works.
   - **Demo:** a pull request's preview deployment with green smoke checks.
 

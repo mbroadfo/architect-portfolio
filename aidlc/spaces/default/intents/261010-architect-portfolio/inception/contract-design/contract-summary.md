@@ -1,7 +1,7 @@
 # Contract Summary
 
 **Inputs:**
-- unit-of-work — `../units-generation/unit-of-work.md` (11 units and cross-unit constraints 1 to 7);
+- unit-of-work — `../units-generation/unit-of-work.md` (12 units after Amendment D1, and cross-unit constraints 1 to 7);
 - unit-of-work-dependency — `../units-generation/unit-of-work-dependency.md` (edges and integration points);
 - components — `../domain-design/components.md` (entities, behaviour, scenarios CS and PB);
 - decisions — ADR-001 to ADR-012 in `../domain-design/decisions.md`;
@@ -11,6 +11,11 @@
 **Required corrections from the Units Generation approval (P-07):**
 - **R-07** is resolved in C3 and C8: IAM limited to prefixes, manifest keys enforced by U8 against the approved snapshot, and contract tests that reject unauthorized keys.
 - **R-08** is resolved in C1: U11 reaches U4, U5 and U9 only through U3's authenticated API host and route registration.
+
+**Amendment D1 (Units Generation, re-approved 2026-10-11).** The amendment adds the delivery-only unit U0 `walking-slice`. U0 **adds no contract**:
+- its local slice validates published output against C2 as approved;
+- its demonstration Bolts S1 to S3 are never merged or deployed;
+- every contract below, and R-18 (P-08), are unchanged.
 
 Every spec below lives in U1 (`u1-contracts`) as the source of truth. These blocks are its first version. Shared error, timeout and retry rules are under "Errors, Timeouts and Retries". The fields this stage adds to the domain model, and its renames, are under "Model Additions and Mappings".
 
