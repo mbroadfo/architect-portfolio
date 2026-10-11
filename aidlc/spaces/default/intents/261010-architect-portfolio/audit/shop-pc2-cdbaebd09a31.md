@@ -5886,3 +5886,316 @@ Owner instruction (Michael Broadfoot, 2026-10-10, Architect Portfolio - Autonomo
 **Details**: Re-entering gate after revision
 
 ---
+
+## Session Compacted
+**Timestamp**: 2026-10-11T15:12:44Z
+**Event**: SESSION_COMPACTED
+**Current Stage**: refined-mockups
+**State Validity**: valid
+
+---
+
+## Subagent Completed
+**Timestamp**: 2026-10-11T15:13:51Z
+**Event**: SUBAGENT_COMPLETED
+**Agent Type**: unknown
+**Agent ID**: aedfbeafa64313296
+**Message**: <analysis>\nThe conversation is long. I'll go through it in order and record every request, action and constraint.\n\n1. **Initial request.** Resume lead AI-DLC ownership at the Refined Mockups checkpoin
+
+---
+
+## Human Turn
+**Timestamp**: 2026-10-11T15:15:30Z
+**Event**: HUMAN_TURN
+**Session**: 3bfff7e0-b2c2-48b0-8b00-081386f03bb3
+
+---
+
+## Gate Approved
+**Timestamp**: 2026-10-11T15:15:49Z
+**Event**: GATE_APPROVED
+**Stage**: refined-mockups
+**User Input**: Approve
+
+---
+
+## Stage Completion
+**Timestamp**: 2026-10-11T15:15:49Z
+**Event**: STAGE_COMPLETED
+**Stage**: refined-mockups
+**Validation Basis**: {"graphContract":"sha256:a24fe5e76e30a54250dff6f40ed7dd073597cbf8edbc2b452e33e3c0f0dcfd03","inputs":[{"artifact":"requirements","contentHash":"sha256:0937765018e2ab646ea080d9a76386e94bf0581578bfdd47ea5f8e6fc97bd58a","instanceCount":1,"presentCount":1,"producer":"requirements-analysis","required":true,"structureHash":"sha256:bb8a4d6a26ef7a69949872e948516b3c9b4ddb0e63b88c2975b69baa2c2a5cb3"},{"artifact":"team-practices","contentHash":"sha256:6f771c9b5a5e071a6d25aaf6d21a573aea965c2356121dfdd8a4d10799fdddd1","instanceCount":1,"presentCount":1,"producer":"practices-discovery","required":false,"structureHash":"sha256:b0e6a533c80fc07476fc01e92acc2c2bc52c980a7aa37a507b9074c08670a6a6"},{"artifact":"user-flow","contentHash":"sha256:f8777916d0b5fef16a97e7417527b2a397246bfd45016038b29918471a93c1c9","instanceCount":1,"presentCount":1,"producer":"rough-mockups","required":true,"structureHash":"sha256:1e2be3b5b78fa6948323bffcc509b4ec5b6080355d2c91de51e955ae6bd454a2"},{"artifact":"wireframes","contentHash":"sha256:7c8e6fac30ea46cf29a03085becdef5cf84eb28962a0c5f9ffd384801210e9e4","instanceCount":1,"presentCount":1,"producer":"rough-mockups","required":true,"structureHash":"sha256:de599e8cc901a0355295b2d502c36e3cfcbdc4b704c4f59f96690275c90e8727"}],"outputs":[{"artifact":"accessibility-checklist","contentHash":"sha256:cb767327ce637e5fb1b10047b27aea29635fd69d8123108e2017983324d3a32e","instanceCount":1,"presentCount":1,"producer":"refined-mockups","required":true,"structureHash":"sha256:4a6185567929439495d59fb4ffff68a92aec007cf66e0e5c580da057feeef729"},{"artifact":"design-system-mapping","contentHash":"sha256:9949adfd5a1234514a97a9a8cd33175c0ada380e2872ad12196e0584abbb8da4","instanceCount":1,"presentCount":1,"producer":"refined-mockups","required":true,"structureHash":"sha256:06c2a8fd42bbaacc6e1f39d1967d2dbf0dc084d941a34db9839202b3998eaf69"},{"artifact":"interaction-spec","contentHash":"sha256:e0f1f88fee8d31ea4615f61c5f60bd2deb7fdd7dc4c45ac84a9a799559deb00d","instanceCount":1,"presentCount":1,"producer":"refined-mockups","required":true,"structureHash":"sha256:3fbe9908a066f1fbf15043e8685854df47be08bec96e4a0f7666e2ea616d1621"},{"artifact":"mockups","contentHash":"sha256:71721cd21dc031e507e311d6be46f34ebbe7f6c0cbe15d83cc2135c13c8caf28","instanceCount":1,"presentCount":1,"producer":"refined-mockups","required":true,"structureHash":"sha256:5283e4fe916d8d4c7623f2d52f9dea582f1ceb4c8fdf38fe14568b60271b8a91"},{"artifact":"refined-mockups-questions","contentHash":"sha256:98038d85b87240c891aecfec0be1702e7b4fc70b1ea1cfb28a656c8a3b1ebd62","instanceCount":1,"presentCount":1,"producer":"refined-mockups","required":true,"structureHash":"sha256:a24bb14cd73374ac4d43ce5c57f422cf5f0112b09409b723e9345ba4554a5229"}],"projectType":"greenfield","schema":3}
+**Details**: Stage Refined Mockups approved by gate
+**Tokens In**: 722
+**Tokens Out**: 464708
+**Cache Read**: 147309168
+**Cache Write**: 2521852
+**Cost USD**: 56.13
+**By Model**: opus-5-5=54.65; sonnet-5-5=1.48
+**By Agent**: main=53.50; aidlc-devsecops-agent=1.15; aidlc-product-lead-agent=1.48
+**Tokens By Model**: opus-5-5=672/458.3k/145.4M/2.1M; sonnet-5-5=50/6.4k/1.9M/417.3k
+**Tokens By Agent**: main=644/451.4k/144.1M/2M; aidlc-devsecops-agent=28/6.9k/1.4M/147.1k; aidlc-product-lead-agent=50/6.4k/1.9M/417.3k
+
+---
+
+## Stage Start
+**Timestamp**: 2026-10-11T15:15:49Z
+**Event**: STAGE_STARTED
+**Stage**: domain-design
+**Agent**: aidlc-architect-agent
+**Answer Mode**: guide (reused from intent-capture)
+
+---
+
+## Owner Gate Scope Statement
+**Timestamp**: 2026-10-11T15:15:54Z
+Owner (Michael Broadfoot, 2026-10-11), with the Refined Mockups approval: "This approval is only the Refined Mockups gate. It does not approve publication of STARS or Baduk, trademark/artwork use for Monopoly or Risk, licenses, Risk's live URL, deployment, or merging the stacked PRs. Decision: Approve → proceed to Domain Design."
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-10-11T15:16:10Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/ideation/approval-handoff/decision-log.md
+**Context**: ideation > approval-handoff > decision-log.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-10-11T15:20:23Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/inception/domain-design/domain-design-questions.md
+**Context**: inception > domain-design > domain-design-questions.md
+
+---
+
+## Decision Recorded
+**Timestamp**: 2026-10-11T15:20:29Z
+**Event**: DECISION_RECORDED
+**Stage**: domain-design
+**Decision**: Q1-Q9 (component boundaries, publication snapshot ownership, status derivation, link-check isolation, media split, AI boundary, UI structure, categories and featured order, content backup) answered from approved records
+**Options**: Q1: domain modules,coarse,per screen,Other; Q2: published version,filter live record,Other; Q3: derived,stored,Other; Q4: stateless checker,checker stores,Other; Q5: media owns bytes,projects owns all,Other; Q6: port now provider later,choose now,Other; Q7: studio client plus shared renderer,one app,Other; Q8: projects plus publication,public site only,Other; Q9: backup via owners,db dump,Other
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-10-11T15:20:31Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/.aidlc-engine/answer-text/answer.txt
+**Context**: .aidlc-engine > answer-text > answer.txt
+
+---
+
+## Question Answered
+**Timestamp**: 2026-10-11T15:20:35Z
+**Event**: QUESTION_ANSWERED
+**Stage**: domain-design
+**Details**: Q1: A; Q2: A; Q3: A; Q4: A; Q5: A; Q6: A; Q7: A; Q8: A; Q9: A (all derived from approved records; decomposition confirmed by the owner at the gate)
+**Answer Source**: chosen by the agent as the person asked
+**Instruction**: I'm spending too much time answering process questions. Handle routine decisions autonomously using the approved charter, recorded decisions, and sensible defaults. Batch genuinely unresolved questions.
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-10-11T15:23:24Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/inception/domain-design/components.md
+**Context**: inception > domain-design > components.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-10-11T15:24:42Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/inception/domain-design/decisions.md
+**Context**: inception > domain-design > decisions.md
+
+---
+
+## Review Requested
+**Timestamp**: 2026-10-11T15:25:20Z
+**Event**: REVIEW_REQUESTED
+**Stage**: domain-design
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Iteration**: 1
+**Artifact Fingerprint**: sha256:dbb88b98a571cb92ef8e0e79ffcf33757df4a8c4fd42bee6d0010287590e7e84
+**Request Id**: review:ac32aadba856d446fdf4718795341741
+**Review File**: .aidlc-engine/reviews/domain-design/stage/6968ed94c416696c/1.ac32aadba856d446fdf4718795341741.review.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-10-11T15:27:23Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/.aidlc-engine/reviews/domain-design/stage/6968ed94c416696c/1.ac32aadba856d446fdf4718795341741.review.md
+**Context**: .aidlc-engine > reviews > domain-design > stage > 6968ed94c416696c > 1.ac32aadba856d446fdf4718795341741.review.md
+
+---
+
+## Subagent Completed
+**Timestamp**: 2026-10-11T15:27:32Z
+**Event**: SUBAGENT_COMPLETED
+**Agent Type**: aidlc-architecture-reviewer-agent
+**Agent ID**: a5c32bc8179eda876
+
+---
+
+## Human Turn
+**Timestamp**: 2026-10-11T15:27:33Z
+**Event**: HUMAN_TURN
+**Session**: 3bfff7e0-b2c2-48b0-8b00-081386f03bb3
+
+---
+
+## Review Completed
+**Timestamp**: 2026-10-11T15:27:42Z
+**Event**: REVIEW_COMPLETED
+**Stage**: domain-design
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Iteration**: 1
+**Verdict**: READY
+**Request Fingerprint**: sha256:dbb88b98a571cb92ef8e0e79ffcf33757df4a8c4fd42bee6d0010287590e7e84
+**Artifact Fingerprint**: sha256:dbb88b98a571cb92ef8e0e79ffcf33757df4a8c4fd42bee6d0010287590e7e84
+**Request Id**: review:ac32aadba856d446fdf4718795341741
+**Review Record**: .aidlc-engine/reviews/domain-design/stage/6968ed94c416696c/1.json
+**Review Record Digest**: sha256:43de589a424eab6a29b7d2ac15559aebbb3fb7f3cde875e3e303b8c52c60b3d1
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-11T15:27:53Z
+**Event**: SENSOR_FIRED
+**Fire id**: eef5b67b
+**Sensor ID**: required-sections
+**Stage slug**: domain-design
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/domain-design/components.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-11T15:27:54Z
+**Event**: SENSOR_PASSED
+**Fire id**: eef5b67b
+**Sensor ID**: required-sections
+**Stage slug**: domain-design
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/domain-design/components.md
+**Duration ms**: 81
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-11T15:27:54Z
+**Event**: SENSOR_FIRED
+**Fire id**: 47367e30
+**Sensor ID**: required-sections
+**Stage slug**: domain-design
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/domain-design/decisions.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-11T15:27:54Z
+**Event**: SENSOR_PASSED
+**Fire id**: 47367e30
+**Sensor ID**: required-sections
+**Stage slug**: domain-design
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/domain-design/decisions.md
+**Duration ms**: 82
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-11T15:27:54Z
+**Event**: SENSOR_FIRED
+**Fire id**: 6f23f257
+**Sensor ID**: required-sections
+**Stage slug**: domain-design
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/domain-design/traceability.json
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-11T15:27:54Z
+**Event**: SENSOR_PASSED
+**Fire id**: 6f23f257
+**Sensor ID**: required-sections
+**Stage slug**: domain-design
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/domain-design/traceability.json
+**Duration ms**: 81
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-11T15:27:54Z
+**Event**: SENSOR_FIRED
+**Fire id**: 152e0a76
+**Sensor ID**: upstream-coverage
+**Stage slug**: domain-design
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/domain-design/components.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-11T15:27:54Z
+**Event**: SENSOR_PASSED
+**Fire id**: 152e0a76
+**Sensor ID**: upstream-coverage
+**Stage slug**: domain-design
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/domain-design/components.md
+**Duration ms**: 80
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-11T15:27:54Z
+**Event**: SENSOR_FIRED
+**Fire id**: 04921e0f
+**Sensor ID**: upstream-coverage
+**Stage slug**: domain-design
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/domain-design/decisions.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-11T15:27:54Z
+**Event**: SENSOR_PASSED
+**Fire id**: 04921e0f
+**Sensor ID**: upstream-coverage
+**Stage slug**: domain-design
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/domain-design/decisions.md
+**Duration ms**: 83
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-10-11T15:27:54Z
+**Event**: SENSOR_FIRED
+**Fire id**: 05982bf6
+**Sensor ID**: upstream-coverage
+**Stage slug**: domain-design
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/domain-design/traceability.json
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-10-11T15:27:55Z
+**Event**: SENSOR_PASSED
+**Fire id**: 05982bf6
+**Sensor ID**: upstream-coverage
+**Stage slug**: domain-design
+**Output path**: aidlc/spaces/default/intents/261010-architect-portfolio/inception/domain-design/traceability.json
+**Duration ms**: 101
+
+---
+
+## Stage Awaiting Approval
+**Timestamp**: 2026-10-11T15:27:55Z
+**Event**: STAGE_AWAITING_APPROVAL
+**Stage**: domain-design
+
+---

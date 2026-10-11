@@ -53,6 +53,7 @@ The proposal, review history and evidence are in `inception/refined-mockups/requ
 | P-03 | Learnings and summary-confirmation questionnaires are off for this workflow; routine questions are answered from the charter and record, and only genuinely open questions are batched to the owner | owner instruction at Scope Definition |
 | P-04 | Approved stage artifacts are committed and pushed for the independent architecture reviewer | owner instruction at Scope Definition approval |
 | P-05 | Claude Code is lead engineering agent and sole AI-DLC workflow owner. It proceeds autonomously on routine design, documentation, engineering, testing and workflow matters, and escalates only material decisions: new costs, production or DNS changes, making private information public, final publication approval, material authentication, authorization or privacy changes, destructive actions, significant legal, trademark, licensing or security risk, unrecoverable audit issues, and mandatory human gates. | owner instruction "Architect Portfolio — Autonomous Continuation", 2026-10-10 |
+| P-06 | Refined Mockups gate approved; the workflow proceeds to Domain Design. The approval covers that gate only. It does not approve publication of STARS or Baduk, trademark or artwork use for Monopoly or Risk, licences, Risk's live URL, deployment, or merging the stacked records PRs. The simulated approvals in the prototype export remain simulated. | Michael Broadfoot at the Refined Mockups gate, 2026-10-11 (audit: "Owner Gate Scope Statement") |
 
 ## Assumptions & Open Questions
 
