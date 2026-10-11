@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Studio — Michael Broadfoot (Prototype R5)</title>
+  <link rel="stylesheet" href="fonts/fonts.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="studio.css">
+  <script src="icons.js" defer></script>
+  <script src="data.js" defer></script>
+  <script src="shell.js" defer></script>
+  <script src="studio.js" defer></script>
+</head>
+<body class="studio">
+  <a class="skip" href="#studio-main">Skip to content</a>
+  <div class="proto-strip" role="note">
+    <p><strong>Prototype R5</strong> · Private Studio (owner only) · Simulated data — nothing is saved, sent, checked or published · Sign-in is a mock of the Auth0 + MFA handoff</p>
+    <button class="notes-toggle" type="button" aria-pressed="false">Show scope notes</button>
+  </div>
+
+  <header class="studio-bar" hidden>
+    <a class="studio-mark" href="#projects">Michael Broadfoot <span>Studio</span></a>
+    <nav class="studio-nav" aria-label="Studio">
+      <a href="#projects" data-nav="projects">Projects</a>
+      <a href="#discover" data-nav="discover">Discover</a>
+      <a href="#featured" data-nav="featured">Featured order</a>
+      <a href="#activity" data-nav="activity">Activity</a>
+    </nav>
+    <a class="studio-signout" href="#signin">Sign out</a>
+  </header>
+
+  <main id="studio-main" class="studio-main" tabindex="-1"></main>
+
+  <!-- Dialogs: one at a time, native <dialog> (inert background, Escape cancels) -->
+  <dialog class="sdialog" id="dlg-new" aria-labelledby="dlg-new-h">
+    <form method="dialog" class="sdialog__body" id="form-new" novalidate>
+      <h2 id="dlg-new-h">New project</h2>
+      <p class="sdialog__lede">A project can start with just a title. Repositories, files and images are optional and can be added later (FR3.1).</p>
+      <label class="field">
+        <span class="field__label">Title <span class="req">required</span></span>
+        <input name="title" id="new-title" autocomplete="off" required aria-describedby="new-error">
+      </label>
+      <label class="field">
+        <span class="field__label">Category <span class="opt">optional</span></span>
+        <select name="category" id="new-category"></select>
+      </label>
+      <p class="field__error" id="new-error" hidden>Give the project a title.</p>
+      <div class="sdialog__actions">
+        <button class="btn btn--ghost" value="cancel" type="submit" formnovalidate>Cancel</button>
+        <button class="btn btn--primary" value="create" type="submit">Create draft</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog class="sdialog sdialog--wide" id="dlg-publish" aria-labelledby="dlg-publish-h"></dialog>
+  <dialog class="sdialog" id="dlg-takedown" aria-labelledby="dlg-takedown-h"></dialog>
+  <dialog class="sdialog" id="dlg-order" aria-labelledby="dlg-order-h"></dialog>
+  <dialog class="sdialog" id="dlg-leave" aria-labelledby="dlg-leave-h">
+    <div class="sdialog__body">
+      <h2 id="dlg-leave-h">Leave without saving?</h2>
+      <p class="sdialog__lede">You have unsaved changes. Nothing has been published.</p>
+      <div class="sdialog__actions">
+        <button class="btn btn--primary" type="button" id="leave-stay">Stay</button>
+        <button class="btn btn--ghost" type="button" id="leave-discard">Discard unsaved changes</button>
+      </div>
+    </div>
+  </dialog>
+  <div class="sr-status visually-hidden" role="status" aria-live="polite" id="sr-status"></div>
+</body>
+</html>

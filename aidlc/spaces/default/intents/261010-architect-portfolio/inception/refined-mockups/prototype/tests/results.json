@@ -1,0 +1,1773 @@
+{
+  "run": "2026-10-11T15:06:04.564Z",
+  "passed": 182,
+  "total": 182,
+  "results": [
+    {
+      "id": "R-home-1440",
+      "name": "index.html at 1440px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "P-home",
+      "name": "index.html: requests nothing from a third-party origin (FR9.5)",
+      "pass": true,
+      "evidence": []
+    },
+    {
+      "id": "A-home",
+      "name": "index.html: axe — no serious or critical violations, and the axe run logs no console errors",
+      "pass": true,
+      "evidence": {
+        "violations": [],
+        "consoleErrorsDuringAxe": []
+      }
+    },
+    {
+      "id": "R-home-1024",
+      "name": "index.html at 1024px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-home-768",
+      "name": "index.html at 768px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-home-390",
+      "name": "index.html at 390px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-catalog-1440",
+      "name": "catalog.html at 1440px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "P-catalog",
+      "name": "catalog.html: requests nothing from a third-party origin (FR9.5)",
+      "pass": true,
+      "evidence": []
+    },
+    {
+      "id": "A-catalog",
+      "name": "catalog.html: axe — no serious or critical violations, and the axe run logs no console errors",
+      "pass": true,
+      "evidence": {
+        "violations": [],
+        "consoleErrorsDuringAxe": []
+      }
+    },
+    {
+      "id": "R-catalog-1024",
+      "name": "catalog.html at 1024px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-catalog-768",
+      "name": "catalog.html at 768px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-catalog-390",
+      "name": "catalog.html at 390px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-category-games-1440",
+      "name": "catalog.html?category=games at 1440px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "P-category-games",
+      "name": "catalog.html?category=games: requests nothing from a third-party origin (FR9.5)",
+      "pass": true,
+      "evidence": []
+    },
+    {
+      "id": "A-category-games",
+      "name": "catalog.html?category=games: axe — no serious or critical violations, and the axe run logs no console errors",
+      "pass": true,
+      "evidence": {
+        "violations": [],
+        "consoleErrorsDuringAxe": []
+      }
+    },
+    {
+      "id": "R-category-games-1024",
+      "name": "catalog.html?category=games at 1024px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-category-games-768",
+      "name": "catalog.html?category=games at 768px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-category-games-390",
+      "name": "catalog.html?category=games at 390px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-project-stars-1440",
+      "name": "project.html?p=stars at 1440px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "P-project-stars",
+      "name": "project.html?p=stars: requests nothing from a third-party origin (FR9.5)",
+      "pass": true,
+      "evidence": []
+    },
+    {
+      "id": "A-project-stars",
+      "name": "project.html?p=stars: axe — no serious or critical violations, and the axe run logs no console errors",
+      "pass": true,
+      "evidence": {
+        "violations": [],
+        "consoleErrorsDuringAxe": []
+      }
+    },
+    {
+      "id": "R-project-stars-1024",
+      "name": "project.html?p=stars at 1024px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-project-stars-768",
+      "name": "project.html?p=stars at 768px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-project-stars-390",
+      "name": "project.html?p=stars at 390px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-project-baduk-1440",
+      "name": "project.html?p=baduk at 1440px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "P-project-baduk",
+      "name": "project.html?p=baduk: requests nothing from a third-party origin (FR9.5)",
+      "pass": true,
+      "evidence": []
+    },
+    {
+      "id": "A-project-baduk",
+      "name": "project.html?p=baduk: axe — no serious or critical violations, and the axe run logs no console errors",
+      "pass": true,
+      "evidence": {
+        "violations": [],
+        "consoleErrorsDuringAxe": []
+      }
+    },
+    {
+      "id": "R-project-baduk-1024",
+      "name": "project.html?p=baduk at 1024px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-project-baduk-768",
+      "name": "project.html?p=baduk at 768px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-project-baduk-390",
+      "name": "project.html?p=baduk at 390px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-project-monopoly-1440",
+      "name": "project.html?p=monopoly-arena at 1440px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "P-project-monopoly",
+      "name": "project.html?p=monopoly-arena: requests nothing from a third-party origin (FR9.5)",
+      "pass": true,
+      "evidence": []
+    },
+    {
+      "id": "A-project-monopoly",
+      "name": "project.html?p=monopoly-arena: axe — no serious or critical violations, and the axe run logs no console errors",
+      "pass": true,
+      "evidence": {
+        "violations": [],
+        "consoleErrorsDuringAxe": []
+      }
+    },
+    {
+      "id": "R-project-monopoly-1024",
+      "name": "project.html?p=monopoly-arena at 1024px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-project-monopoly-768",
+      "name": "project.html?p=monopoly-arena at 768px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-project-monopoly-390",
+      "name": "project.html?p=monopoly-arena at 390px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-not-on-display-1440",
+      "name": "project.html?p=risk at 1440px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "P-not-on-display",
+      "name": "project.html?p=risk: requests nothing from a third-party origin (FR9.5)",
+      "pass": true,
+      "evidence": []
+    },
+    {
+      "id": "A-not-on-display",
+      "name": "project.html?p=risk: axe — no serious or critical violations, and the axe run logs no console errors",
+      "pass": true,
+      "evidence": {
+        "violations": [],
+        "consoleErrorsDuringAxe": []
+      }
+    },
+    {
+      "id": "R-not-on-display-1024",
+      "name": "project.html?p=risk at 1024px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-not-on-display-768",
+      "name": "project.html?p=risk at 768px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-not-on-display-390",
+      "name": "project.html?p=risk at 390px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-export-home-1440",
+      "name": "export/index.html at 1440px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "P-export-home",
+      "name": "export/index.html: requests nothing from a third-party origin (FR9.5)",
+      "pass": true,
+      "evidence": []
+    },
+    {
+      "id": "A-export-home",
+      "name": "export/index.html: axe — no serious or critical violations, and the axe run logs no console errors",
+      "pass": true,
+      "evidence": {
+        "violations": [],
+        "consoleErrorsDuringAxe": []
+      }
+    },
+    {
+      "id": "R-export-home-1024",
+      "name": "export/index.html at 1024px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-export-home-768",
+      "name": "export/index.html at 768px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-export-home-390",
+      "name": "export/index.html at 390px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-export-catalog-1440",
+      "name": "export/catalog.html at 1440px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "P-export-catalog",
+      "name": "export/catalog.html: requests nothing from a third-party origin (FR9.5)",
+      "pass": true,
+      "evidence": []
+    },
+    {
+      "id": "A-export-catalog",
+      "name": "export/catalog.html: axe — no serious or critical violations, and the axe run logs no console errors",
+      "pass": true,
+      "evidence": {
+        "violations": [],
+        "consoleErrorsDuringAxe": []
+      }
+    },
+    {
+      "id": "R-export-catalog-1024",
+      "name": "export/catalog.html at 1024px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-export-catalog-768",
+      "name": "export/catalog.html at 768px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-export-catalog-390",
+      "name": "export/catalog.html at 390px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-export-category-games-1440",
+      "name": "export/catalog.html?category=games at 1440px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "P-export-category-games",
+      "name": "export/catalog.html?category=games: requests nothing from a third-party origin (FR9.5)",
+      "pass": true,
+      "evidence": []
+    },
+    {
+      "id": "A-export-category-games",
+      "name": "export/catalog.html?category=games: axe — no serious or critical violations, and the axe run logs no console errors",
+      "pass": true,
+      "evidence": {
+        "violations": [],
+        "consoleErrorsDuringAxe": []
+      }
+    },
+    {
+      "id": "R-export-category-games-1024",
+      "name": "export/catalog.html?category=games at 1024px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-export-category-games-768",
+      "name": "export/catalog.html?category=games at 768px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-export-category-games-390",
+      "name": "export/catalog.html?category=games at 390px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-export-project-stars-1440",
+      "name": "export/project.html?p=stars at 1440px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "P-export-project-stars",
+      "name": "export/project.html?p=stars: requests nothing from a third-party origin (FR9.5)",
+      "pass": true,
+      "evidence": []
+    },
+    {
+      "id": "A-export-project-stars",
+      "name": "export/project.html?p=stars: axe — no serious or critical violations, and the axe run logs no console errors",
+      "pass": true,
+      "evidence": {
+        "violations": [],
+        "consoleErrorsDuringAxe": []
+      }
+    },
+    {
+      "id": "R-export-project-stars-1024",
+      "name": "export/project.html?p=stars at 1024px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-export-project-stars-768",
+      "name": "export/project.html?p=stars at 768px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-export-project-stars-390",
+      "name": "export/project.html?p=stars at 390px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-export-project-baduk-1440",
+      "name": "export/project.html?p=baduk at 1440px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "P-export-project-baduk",
+      "name": "export/project.html?p=baduk: requests nothing from a third-party origin (FR9.5)",
+      "pass": true,
+      "evidence": []
+    },
+    {
+      "id": "A-export-project-baduk",
+      "name": "export/project.html?p=baduk: axe — no serious or critical violations, and the axe run logs no console errors",
+      "pass": true,
+      "evidence": {
+        "violations": [],
+        "consoleErrorsDuringAxe": []
+      }
+    },
+    {
+      "id": "R-export-project-baduk-1024",
+      "name": "export/project.html?p=baduk at 1024px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-export-project-baduk-768",
+      "name": "export/project.html?p=baduk at 768px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-export-project-baduk-390",
+      "name": "export/project.html?p=baduk at 390px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-export-route-monopoly-1440",
+      "name": "export/project.html?p=monopoly-arena at 1440px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "P-export-route-monopoly",
+      "name": "export/project.html?p=monopoly-arena: requests nothing from a third-party origin (FR9.5)",
+      "pass": true,
+      "evidence": []
+    },
+    {
+      "id": "A-export-route-monopoly",
+      "name": "export/project.html?p=monopoly-arena: axe — no serious or critical violations, and the axe run logs no console errors",
+      "pass": true,
+      "evidence": {
+        "violations": [],
+        "consoleErrorsDuringAxe": []
+      }
+    },
+    {
+      "id": "R-export-route-monopoly-1024",
+      "name": "export/project.html?p=monopoly-arena at 1024px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-export-route-monopoly-768",
+      "name": "export/project.html?p=monopoly-arena at 768px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-export-route-monopoly-390",
+      "name": "export/project.html?p=monopoly-arena at 390px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-export-route-risk-1440",
+      "name": "export/project.html?p=risk at 1440px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "P-export-route-risk",
+      "name": "export/project.html?p=risk: requests nothing from a third-party origin (FR9.5)",
+      "pass": true,
+      "evidence": []
+    },
+    {
+      "id": "A-export-route-risk",
+      "name": "export/project.html?p=risk: axe — no serious or critical violations, and the axe run logs no console errors",
+      "pass": true,
+      "evidence": {
+        "violations": [],
+        "consoleErrorsDuringAxe": []
+      }
+    },
+    {
+      "id": "R-export-route-risk-1024",
+      "name": "export/project.html?p=risk at 1024px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-export-route-risk-768",
+      "name": "export/project.html?p=risk at 768px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-export-route-risk-390",
+      "name": "export/project.html?p=risk at 390px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "K-skip",
+      "name": "First Tab lands on 'Skip to content' (WCAG 2.4.1)",
+      "pass": true,
+      "evidence": "skip|Skip to content"
+    },
+    {
+      "id": "K-skip-target",
+      "name": "Activating the skip link moves focus to main content",
+      "pass": true,
+      "evidence": "main"
+    },
+    {
+      "id": "K-focus-visible",
+      "name": "Keyboard focus shows a visible outline",
+      "pass": true,
+      "evidence": {
+        "keyboardFocused": "solid 2px",
+        "sample": [
+          {
+            "sel": ".btn--primary",
+            "outline": "solid 2px"
+          },
+          {
+            "sel": ".round-btn",
+            "outline": "solid 2px"
+          },
+          {
+            "sel": ".side-nav a",
+            "outline": "solid 2px"
+          },
+          {
+            "sel": ".chip, .link-more",
+            "outline": "solid 2px"
+          },
+          {
+            "sel": ".notes-toggle",
+            "outline": "solid 2px"
+          }
+        ]
+      }
+    },
+    {
+      "id": "C-no-autoplay",
+      "name": "Carousel does not advance on its own after 6 s (FR9.7, WCAG 2.2.2)",
+      "pass": true,
+      "evidence": {
+        "before": "01",
+        "after": "01"
+      }
+    },
+    {
+      "id": "C-keyboard",
+      "name": "Carousel next control and ArrowRight advance it; slide copy is announced politely",
+      "pass": true,
+      "evidence": {
+        "idx1": "02",
+        "idx2": "03",
+        "live": "polite"
+      }
+    },
+    {
+      "id": "C-links",
+      "name": "Featured slide links to its project page",
+      "pass": true,
+      "evidence": "project.html?p=monopoly-arena"
+    },
+    {
+      "id": "M-reduced-motion",
+      "name": "Reduced motion removes the carousel transition",
+      "pass": true,
+      "evidence": "0s"
+    },
+    {
+      "id": "F-empty-category",
+      "name": "A category with no published exhibit is not on display (FR9.8)",
+      "pass": true,
+      "evidence": "This category isn't on display"
+    },
+    {
+      "id": "F-counts",
+      "name": "Category counts include published exhibits only (FR9.1)",
+      "pass": true,
+      "evidence": {
+        "chips": [
+          "All 3",
+          "Games & AI Arenas 2",
+          "Astronomy & Exploration 1"
+        ],
+        "n": "2 published exhibits"
+      }
+    },
+    {
+      "id": "F-risk-nolink",
+      "name": "Unapproved Risk card has no link and no live URL",
+      "pass": true,
+      "evidence": 0
+    },
+    {
+      "id": "F-home-categories",
+      "name": "Home shows only populated categories (FR9.1)",
+      "pass": true,
+      "evidence": [
+        "Games & AI Arenas",
+        "Astronomy & Exploration"
+      ]
+    },
+    {
+      "id": "F-mobile-actions",
+      "name": "Project page on a phone shows both Open the app and View source",
+      "pass": true,
+      "evidence": {
+        "src": true,
+        "app": true
+      }
+    },
+    {
+      "id": "X-payload",
+      "name": "Export payload (26 files) contains no identifier of an unapproved candidate — Monopoly or Risk names, slugs, live hosts or assets",
+      "pass": true,
+      "evidence": []
+    },
+    {
+      "id": "X-schema",
+      "name": "Snapshot holds only approved projects with allow-listed fields: no publication state, access internals or private repositories (FR4.10)",
+      "pass": true,
+      "evidence": {
+        "projects": [
+          "stars",
+          "baduk"
+        ],
+        "extra": [],
+        "accessExtra": [],
+        "privateRepos": []
+      }
+    },
+    {
+      "id": "X-assets",
+      "name": "Export ships exactly the assets its approved projects reference, and no draft or unapproved art",
+      "pass": true,
+      "evidence": {
+        "assetFiles": [
+          "assets/live/baduk-board.jpg",
+          "assets/live/baduk-lessons.jpg",
+          "assets/live/baduk-phone.jpg",
+          "assets/live/baduk.jpg",
+          "assets/live/stars-controls.jpg",
+          "assets/live/stars-phone.jpg",
+          "assets/live/stars.jpg"
+        ],
+        "referenced": [
+          "assets/live/baduk-board.jpg",
+          "assets/live/baduk-lessons.jpg",
+          "assets/live/baduk-phone.jpg",
+          "assets/live/baduk.jpg",
+          "assets/live/stars-controls.jpg",
+          "assets/live/stars-phone.jpg",
+          "assets/live/stars.jpg"
+        ]
+      }
+    },
+    {
+      "id": "X-route-index",
+      "name": "export/index.html: no unapproved data in the rendered page or the loaded data, and every request stays inside export/",
+      "pass": true,
+      "evidence": {
+        "leaks": [],
+        "outside": []
+      }
+    },
+    {
+      "id": "X-route-catalog",
+      "name": "export/catalog.html: no unapproved data in the rendered page or the loaded data, and every request stays inside export/",
+      "pass": true,
+      "evidence": {
+        "leaks": [],
+        "outside": []
+      }
+    },
+    {
+      "id": "X-route-catalog-category-games",
+      "name": "export/catalog.html?category=games: no unapproved data in the rendered page or the loaded data, and every request stays inside export/",
+      "pass": true,
+      "evidence": {
+        "leaks": [],
+        "outside": []
+      }
+    },
+    {
+      "id": "X-route-catalog-category-astronomy",
+      "name": "export/catalog.html?category=astronomy: no unapproved data in the rendered page or the loaded data, and every request stays inside export/",
+      "pass": true,
+      "evidence": {
+        "leaks": [],
+        "outside": []
+      }
+    },
+    {
+      "id": "X-route-project-p-stars",
+      "name": "export/project.html?p=stars: no unapproved data in the rendered page or the loaded data, and every request stays inside export/",
+      "pass": true,
+      "evidence": {
+        "leaks": [],
+        "outside": []
+      }
+    },
+    {
+      "id": "X-route-project-p-baduk",
+      "name": "export/project.html?p=baduk: no unapproved data in the rendered page or the loaded data, and every request stays inside export/",
+      "pass": true,
+      "evidence": {
+        "leaks": [],
+        "outside": []
+      }
+    },
+    {
+      "id": "X-route-project-p-monopoly-arena",
+      "name": "export/project.html?p=monopoly-arena: no unapproved data in the rendered page or the loaded data, and every request stays inside export/",
+      "pass": true,
+      "evidence": {
+        "leaks": [],
+        "outside": []
+      }
+    },
+    {
+      "id": "X-direct-project-p-monopoly-arena",
+      "name": "export/project.html?p=monopoly-arena: a direct route to an unapproved candidate shows \"isn't on display\" (FR9.3)",
+      "pass": true,
+      "evidence": "This exhibit isn't on display"
+    },
+    {
+      "id": "X-route-project-p-risk",
+      "name": "export/project.html?p=risk: no unapproved data in the rendered page or the loaded data, and every request stays inside export/",
+      "pass": true,
+      "evidence": {
+        "leaks": [],
+        "outside": []
+      }
+    },
+    {
+      "id": "X-direct-project-p-risk",
+      "name": "export/project.html?p=risk: a direct route to an unapproved candidate shows \"isn't on display\" (FR9.3)",
+      "pass": true,
+      "evidence": "This exhibit isn't on display"
+    },
+    {
+      "id": "X-derived-home",
+      "name": "Export home: carousel, category tiles, counts and gallery come only from approved projects (STARS, Baduk)",
+      "pass": true,
+      "evidence": {
+        "total": "02",
+        "dots": 2,
+        "seen": [
+          "STARS",
+          "Baduk",
+          "STARS"
+        ],
+        "tiles": [
+          "Games & AI Arenas 1 project",
+          "Astronomy & Exploration 1 project"
+        ],
+        "cards": [
+          "STARS",
+          "Baduk"
+        ]
+      }
+    },
+    {
+      "id": "X-derived-catalog",
+      "name": "Export catalog and category page list and count only approved projects",
+      "pass": true,
+      "evidence": {
+        "chips": [
+          "All 2",
+          "Games & AI Arenas 1",
+          "Astronomy & Exploration 1"
+        ],
+        "cards": [
+          "Baduk"
+        ]
+      }
+    },
+    {
+      "id": "E-footer-index-html",
+      "name": "index.html: footer present once with the GitHub link and copyright (FR9.4)",
+      "pass": true,
+      "evidence": {
+        "footers": 1,
+        "github": 1
+      }
+    },
+    {
+      "id": "E-email-index-html",
+      "name": "index.html: no fake Email link — a real mailto: link, or the owner-content dependency shown as text",
+      "pass": true,
+      "evidence": {
+        "fake": 0,
+        "mailto": 0,
+        "pendingInput": [
+          "Email address to come"
+        ]
+      }
+    },
+    {
+      "id": "E-footer-catalog-html",
+      "name": "catalog.html: footer present once with the GitHub link and copyright (FR9.4)",
+      "pass": true,
+      "evidence": {
+        "footers": 1,
+        "github": 1
+      }
+    },
+    {
+      "id": "E-email-catalog-html",
+      "name": "catalog.html: no fake Email link — a real mailto: link, or the owner-content dependency shown as text",
+      "pass": true,
+      "evidence": {
+        "fake": 0,
+        "mailto": 0,
+        "pendingInput": [
+          "Email address to come"
+        ]
+      }
+    },
+    {
+      "id": "E-footer-project-html-p-stars",
+      "name": "project.html?p=stars: footer present once with the GitHub link and copyright (FR9.4)",
+      "pass": true,
+      "evidence": {
+        "footers": 1,
+        "github": 1
+      }
+    },
+    {
+      "id": "E-email-project-html-p-stars",
+      "name": "project.html?p=stars: no fake Email link — a real mailto: link, or the owner-content dependency shown as text",
+      "pass": true,
+      "evidence": {
+        "fake": 0,
+        "mailto": 0,
+        "pendingInput": [
+          "Email address to come"
+        ]
+      }
+    },
+    {
+      "id": "E-footer-project-html-p-risk",
+      "name": "project.html?p=risk: footer present once with the GitHub link and copyright (FR9.4)",
+      "pass": true,
+      "evidence": {
+        "footers": 1,
+        "github": 1
+      }
+    },
+    {
+      "id": "E-email-project-html-p-risk",
+      "name": "project.html?p=risk: no fake Email link — a real mailto: link, or the owner-content dependency shown as text",
+      "pass": true,
+      "evidence": {
+        "fake": 0,
+        "mailto": 0,
+        "pendingInput": [
+          "Email address to come"
+        ]
+      }
+    },
+    {
+      "id": "E-footer-export-index-html",
+      "name": "export/index.html: footer present once with the GitHub link and copyright (FR9.4)",
+      "pass": true,
+      "evidence": {
+        "footers": 1,
+        "github": 1
+      }
+    },
+    {
+      "id": "E-email-export-index-html",
+      "name": "export/index.html: no fake Email link — a real mailto: link, or the owner-content dependency shown as text",
+      "pass": true,
+      "evidence": {
+        "fake": 0,
+        "mailto": 0,
+        "pendingInput": [
+          "Email address to come"
+        ]
+      }
+    },
+    {
+      "id": "E-footer-export-catalog-html",
+      "name": "export/catalog.html: footer present once with the GitHub link and copyright (FR9.4)",
+      "pass": true,
+      "evidence": {
+        "footers": 1,
+        "github": 1
+      }
+    },
+    {
+      "id": "E-email-export-catalog-html",
+      "name": "export/catalog.html: no fake Email link — a real mailto: link, or the owner-content dependency shown as text",
+      "pass": true,
+      "evidence": {
+        "fake": 0,
+        "mailto": 0,
+        "pendingInput": [
+          "Email address to come"
+        ]
+      }
+    },
+    {
+      "id": "E-footer-export-project-html-p-stars",
+      "name": "export/project.html?p=stars: footer present once with the GitHub link and copyright (FR9.4)",
+      "pass": true,
+      "evidence": {
+        "footers": 1,
+        "github": 1
+      }
+    },
+    {
+      "id": "E-email-export-project-html-p-stars",
+      "name": "export/project.html?p=stars: no fake Email link — a real mailto: link, or the owner-content dependency shown as text",
+      "pass": true,
+      "evidence": {
+        "fake": 0,
+        "mailto": 0,
+        "pendingInput": [
+          "Email address to come"
+        ]
+      }
+    },
+    {
+      "id": "E-footer-export-project-html-p-monopoly-arena",
+      "name": "export/project.html?p=monopoly-arena: footer present once with the GitHub link and copyright (FR9.4)",
+      "pass": true,
+      "evidence": {
+        "footers": 1,
+        "github": 1
+      }
+    },
+    {
+      "id": "E-email-export-project-html-p-monopoly-arena",
+      "name": "export/project.html?p=monopoly-arena: no fake Email link — a real mailto: link, or the owner-content dependency shown as text",
+      "pass": true,
+      "evidence": {
+        "fake": 0,
+        "mailto": 0,
+        "pendingInput": [
+          "Email address to come"
+        ]
+      }
+    },
+    {
+      "id": "D-lightbox",
+      "name": "Gallery opens an enlarged view by keyboard, arrows step, Escape closes and focus returns (FR9.2)",
+      "pass": true,
+      "evidence": {
+        "openNow": true,
+        "count": "2 / 3",
+        "back": true
+      }
+    },
+    {
+      "id": "R-studio-signin-1440",
+      "name": "studio.html#signin at 1440px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "P-studio-signin",
+      "name": "studio.html#signin: no third-party requests",
+      "pass": true,
+      "evidence": []
+    },
+    {
+      "id": "A-studio-signin",
+      "name": "studio.html#signin: axe — no serious or critical violations, and the axe run logs no console errors",
+      "pass": true,
+      "evidence": {
+        "violations": [],
+        "consoleErrorsDuringAxe": []
+      }
+    },
+    {
+      "id": "R-studio-signin-390",
+      "name": "studio.html#signin at 390px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-studio-private-1440",
+      "name": "studio.html#private at 1440px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "P-studio-private",
+      "name": "studio.html#private: no third-party requests",
+      "pass": true,
+      "evidence": []
+    },
+    {
+      "id": "A-studio-private",
+      "name": "studio.html#private: axe — no serious or critical violations, and the axe run logs no console errors",
+      "pass": true,
+      "evidence": {
+        "violations": [],
+        "consoleErrorsDuringAxe": []
+      }
+    },
+    {
+      "id": "R-studio-private-390",
+      "name": "studio.html#private at 390px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-studio-projects-1440",
+      "name": "studio.html#projects at 1440px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "P-studio-projects",
+      "name": "studio.html#projects: no third-party requests",
+      "pass": true,
+      "evidence": []
+    },
+    {
+      "id": "A-studio-projects",
+      "name": "studio.html#projects: axe — no serious or critical violations, and the axe run logs no console errors",
+      "pass": true,
+      "evidence": {
+        "violations": [],
+        "consoleErrorsDuringAxe": []
+      }
+    },
+    {
+      "id": "R-studio-projects-390",
+      "name": "studio.html#projects at 390px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-studio-empty-1440",
+      "name": "studio.html#projects/empty at 1440px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "P-studio-empty",
+      "name": "studio.html#projects/empty: no third-party requests",
+      "pass": true,
+      "evidence": []
+    },
+    {
+      "id": "A-studio-empty",
+      "name": "studio.html#projects/empty: axe — no serious or critical violations, and the axe run logs no console errors",
+      "pass": true,
+      "evidence": {
+        "violations": [],
+        "consoleErrorsDuringAxe": []
+      }
+    },
+    {
+      "id": "R-studio-empty-390",
+      "name": "studio.html#projects/empty at 390px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-studio-discover-1440",
+      "name": "studio.html#discover at 1440px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "P-studio-discover",
+      "name": "studio.html#discover: no third-party requests",
+      "pass": true,
+      "evidence": []
+    },
+    {
+      "id": "A-studio-discover",
+      "name": "studio.html#discover: axe — no serious or critical violations, and the axe run logs no console errors",
+      "pass": true,
+      "evidence": {
+        "violations": [],
+        "consoleErrorsDuringAxe": []
+      }
+    },
+    {
+      "id": "R-studio-discover-390",
+      "name": "studio.html#discover at 390px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-studio-editor-stars-1440",
+      "name": "studio.html#edit/stars at 1440px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "P-studio-editor-stars",
+      "name": "studio.html#edit/stars: no third-party requests",
+      "pass": true,
+      "evidence": []
+    },
+    {
+      "id": "A-studio-editor-stars",
+      "name": "studio.html#edit/stars: axe — no serious or critical violations, and the axe run logs no console errors",
+      "pass": true,
+      "evidence": {
+        "violations": [],
+        "consoleErrorsDuringAxe": []
+      }
+    },
+    {
+      "id": "R-studio-editor-stars-390",
+      "name": "studio.html#edit/stars at 390px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-studio-editor-risk-1440",
+      "name": "studio.html#edit/risk at 1440px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "P-studio-editor-risk",
+      "name": "studio.html#edit/risk: no third-party requests",
+      "pass": true,
+      "evidence": []
+    },
+    {
+      "id": "A-studio-editor-risk",
+      "name": "studio.html#edit/risk: axe — no serious or critical violations, and the axe run logs no console errors",
+      "pass": true,
+      "evidence": {
+        "violations": [],
+        "consoleErrorsDuringAxe": []
+      }
+    },
+    {
+      "id": "R-studio-editor-risk-390",
+      "name": "studio.html#edit/risk at 390px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-studio-preview-baduk-1440",
+      "name": "studio.html#preview/baduk at 1440px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "P-studio-preview-baduk",
+      "name": "studio.html#preview/baduk: no third-party requests",
+      "pass": true,
+      "evidence": []
+    },
+    {
+      "id": "A-studio-preview-baduk",
+      "name": "studio.html#preview/baduk: axe — no serious or critical violations, and the axe run logs no console errors",
+      "pass": true,
+      "evidence": {
+        "violations": [],
+        "consoleErrorsDuringAxe": []
+      }
+    },
+    {
+      "id": "R-studio-preview-baduk-390",
+      "name": "studio.html#preview/baduk at 390px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-studio-featured-1440",
+      "name": "studio.html#featured at 1440px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "P-studio-featured",
+      "name": "studio.html#featured: no third-party requests",
+      "pass": true,
+      "evidence": []
+    },
+    {
+      "id": "A-studio-featured",
+      "name": "studio.html#featured: axe — no serious or critical violations, and the axe run logs no console errors",
+      "pass": true,
+      "evidence": {
+        "violations": [],
+        "consoleErrorsDuringAxe": []
+      }
+    },
+    {
+      "id": "R-studio-featured-390",
+      "name": "studio.html#featured at 390px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "R-studio-activity-1440",
+      "name": "studio.html#activity at 1440px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "P-studio-activity",
+      "name": "studio.html#activity: no third-party requests",
+      "pass": true,
+      "evidence": []
+    },
+    {
+      "id": "A-studio-activity",
+      "name": "studio.html#activity: axe — no serious or critical violations, and the axe run logs no console errors",
+      "pass": true,
+      "evidence": {
+        "violations": [],
+        "consoleErrorsDuringAxe": []
+      }
+    },
+    {
+      "id": "R-studio-activity-390",
+      "name": "studio.html#activity at 390px: no horizontal overflow, no console errors",
+      "pass": true,
+      "evidence": {
+        "overflowPx": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "S-title-only",
+      "name": "A project can be created with only a title; it starts as Draft with no repository, and the AI panel says suggestions need a repository (FR3.1, FR5.1)",
+      "pass": true,
+      "evidence": {
+        "focused": "new-title",
+        "emptyTitleError": true,
+        "hash": "#edit/new-mv3ygwih",
+        "status": "Draft"
+      }
+    },
+    {
+      "id": "S-placeholder",
+      "name": "A title-only project's card says it needs a lead image, and never claims a private source it doesn't have",
+      "pass": true,
+      "evidence": "No lead image yetChoose a lead image with alt text before publishing (FR7.3) Woodworking Hall table No summary yet."
+    },
+    {
+      "id": "S-publish-blocked",
+      "name": "Publish is blocked with linked reasons when there's no lead image; initial focus is Cancel (FR7.3)",
+      "pass": true,
+      "evidence": {
+        "blk": [
+          "Choose a lead image"
+        ],
+        "disabled": true,
+        "initial": "Cancel"
+      }
+    },
+    {
+      "id": "S-file-inventory",
+      "name": "Publish confirmation lists attachment metadata and ZIP entries, published unchanged (FR7.2)",
+      "pass": true,
+      "evidence": "inventory text checked"
+    },
+    {
+      "id": "S-escape",
+      "name": "Escape cancels the confirmation",
+      "pass": true,
+      "evidence": true
+    },
+    {
+      "id": "S-leave-guard",
+      "name": "Leaving with unsaved changes asks first, Stay focused (FR4.6)",
+      "pass": true,
+      "evidence": {
+        "guard": true,
+        "stay": "leave-stay"
+      }
+    },
+    {
+      "id": "S-rights-block",
+      "name": "Monopoly cannot be published while the rights review is outstanding (FR10.6)",
+      "pass": true,
+      "evidence": [
+        "Complete the rights review (FR10.6)"
+      ]
+    },
+    {
+      "id": "S-risk-url",
+      "name": "Risk's live URL is excluded until authorized; the private repository is never named (FR10.7)",
+      "pass": true,
+      "evidence": "inventory text checked"
+    },
+    {
+      "id": "S-reachable",
+      "name": "Ready update shows 'Reachable', never 'Verified', 'Safe' or 'Approved' (FR10.5)",
+      "pass": true,
+      "evidence": {
+        "disabled": false
+      }
+    },
+    {
+      "id": "S-published",
+      "name": "Confirming moves Changes since last publish to Published (FR3.2)",
+      "pass": true,
+      "evidence": "table text checked"
+    },
+    {
+      "id": "S-takedown",
+      "name": "Take-down names the exhibit, covers the carousel and category, warns about outside copies, and releases the featured slot (FR8.2, FR8.4)",
+      "pass": true,
+      "evidence": "dialog and table text checked"
+    },
+    {
+      "id": "S-order",
+      "name": "Reordering is private until 'Update featured order' lists the new public order; drafts are shown as not yet public (FR9.7)",
+      "pass": true,
+      "evidence": {
+        "first": "Baduk Changes since last publish"
+      }
+    },
+    {
+      "id": "T-contrast",
+      "name": "Every text/background token pair is at least 4.5:1 (FR9.6, NFR8)",
+      "pass": true,
+      "evidence": {
+        "low": [],
+        "pairs": [
+          [
+            "--text",
+            "--bg",
+            15.54
+          ],
+          [
+            "--text",
+            "--bg-2",
+            15.07
+          ],
+          [
+            "--text",
+            "--panel",
+            14.45
+          ],
+          [
+            "--text",
+            "--panel-2",
+            13.58
+          ],
+          [
+            "--text-2",
+            "--bg",
+            10.92
+          ],
+          [
+            "--text-2",
+            "--bg-2",
+            10.59
+          ],
+          [
+            "--text-2",
+            "--panel",
+            10.15
+          ],
+          [
+            "--text-2",
+            "--panel-2",
+            9.54
+          ],
+          [
+            "--muted",
+            "--bg",
+            6.35
+          ],
+          [
+            "--muted",
+            "--bg-2",
+            6.16
+          ],
+          [
+            "--muted",
+            "--panel",
+            5.9
+          ],
+          [
+            "--muted",
+            "--panel-2",
+            5.55
+          ],
+          [
+            "--brass",
+            "--bg",
+            8.58
+          ],
+          [
+            "--brass",
+            "--bg-2",
+            8.32
+          ],
+          [
+            "--brass",
+            "--panel",
+            7.98
+          ],
+          [
+            "--brass",
+            "--panel-2",
+            7.5
+          ],
+          [
+            "--brass-hi",
+            "--bg",
+            10.63
+          ],
+          [
+            "--brass-hi",
+            "--bg-2",
+            10.31
+          ],
+          [
+            "--brass-hi",
+            "--panel",
+            9.88
+          ],
+          [
+            "--brass-hi",
+            "--panel-2",
+            9.29
+          ],
+          [
+            "--brass-ink",
+            "--brass",
+            8.06
+          ],
+          [
+            "--brass-ink",
+            "--brass-hi",
+            9.98
+          ]
+        ]
+      }
+    },
+    {
+      "id": "T-nontext",
+      "name": "Control borders and the focus ring are at least 3:1 against every surface (WCAG 1.4.11)",
+      "pass": true,
+      "evidence": {
+        "low": [],
+        "pairs": [
+          [
+            "--control-border",
+            "--bg",
+            4.67
+          ],
+          [
+            "--control-border",
+            "--bg-2",
+            4.53
+          ],
+          [
+            "--control-border",
+            "--panel",
+            4.34
+          ],
+          [
+            "--control-border",
+            "--panel-2",
+            4.08
+          ],
+          [
+            "--brass-hi",
+            "--bg",
+            10.63
+          ],
+          [
+            "--brass-hi",
+            "--bg-2",
+            10.31
+          ],
+          [
+            "--brass-hi",
+            "--panel",
+            9.88
+          ],
+          [
+            "--brass-hi",
+            "--panel-2",
+            9.29
+          ]
+        ]
+      }
+    }
+  ]
+}

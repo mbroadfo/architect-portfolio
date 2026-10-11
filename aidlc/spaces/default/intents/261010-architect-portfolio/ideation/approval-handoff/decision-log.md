@@ -29,6 +29,21 @@ Every decision made during Ideation, so later stages and other AI assistants reu
 | D-21 | Take down / Unpublish is Must Have for the first release | Rough Mockups approval | proposed-default-fixes |
 | D-22 | Publish approval covers all public content (text, media, files, links, AI-generated text, including text from private sources); private material is never exposed automatically | Rough Mockups approval | proposed-default-fixes |
 
+## Decisions After Ideation (Requirements Amendment A1)
+
+Authority for D-23 to D-28: Michael Broadfoot's instruction "Architect Portfolio — Autonomous Continuation", 2026-10-10, which authorized change requests CR-01 to CR-05 and set the interim positions in D-28. The text was refined by the independent architecture review the owner relayed. These decisions authorize requirements and design work only. They do not authorize deployment, publication of any particular project, or approval of any stage gate.
+
+The proposal, review history and evidence are in `inception/refined-mockups/requirements-change-proposal.md` and `launch-inventory.md`. The amended requirements are in `inception/requirements-analysis/requirements.md` (Amendment A1).
+
+| ID | Decision | Made at | Source |
+|----|----------|---------|--------|
+| D-23 | **Launch candidates (CR-01).** STARS, Monopoly Arena, Baduk and Risk replace the seed exhibits AI Arcade, STARS and Mom's Recipe Box. Each is eligible for publication on its own, none is mandatory, and launch may proceed with any approved subset. Each candidate's content, imagery, rights, public URL and publication need individual owner approval. Supersedes the "three seed exhibits" in D-03 and D-09; the rest of those decisions stands. | Refined Mockups (owner instruction) | FR10.1, FR10.6, FR10.7 |
+| D-24 | **Optional GitHub (CR-02).** A project can start with only a title; repositories are optional associations. Woodworking, CAD, design documents and software are supported equally. Attachments: PDF, SKP, FCStd, DXF, STL, ZIP, VSDX, up to 50 MB. HEIC photos are converted to sanitized web images. Other formats are deferred. The GitHub-based AI suggestion workflow is unchanged. D-08 (GitHub is the only connector) stands. | Refined Mockups (owner instruction) | FR3.1, FR3.5, FR4.2, FR4.4, FR4.9, FR5.1 |
+| D-25 | **Deployment metadata (CR-03).** Each exhibit records availability, access requirement, repository visibility, licence and phone suitability. A link check at publication means "Reachable", never Verified, Safe or Approved. SSRF protections are mandatory, and their implementation gets an independent security review. No automated public-content changes and no scheduled link monitoring. | Refined Mockups (owner instruction) | FR4.10, FR7.2, FR10.5, NFR17 |
+| D-26 | **Visual identity (CR-04).** The crafted studio aesthetic replaces the charter's dark-navy "Engineering Studio" direction: warm charcoal, brass accents, editorial typography, sophisticated imagery, restrained interaction. Includes the R5 equal-card exhibit grid, which replaces D-16's varied tiles (FR9.1). | Refined Mockups (owner instruction) | FR9.6 |
+| D-27 | **Featured projects and categories (CR-05).** The first release has featured work, a manual carousel and category browsing. One primary category per project in v1, modelled as a project-to-category relationship so multiple classifications need no migration later. No journal, search, analytics, topic tags or visitor accounts in v1. Narrows D-13 ("richer gallery"): featured work and grouping move into v1, while filtering, tags and search stay on the roadmap. | Refined Mockups (owner instruction) | FR9.1, FR9.7, FR9.8 |
+| D-28 | **Interim positions until decided separately.** Monopoly and Risk keep provisional names and safe placeholder imagery pending a trademark and artwork review. STARS and Monopoly keep their current unlicensed status, and no open-source licence is invented. Risk's private source and live URL stay out of every public artifact until explicitly authorized after a privacy and security review. | Refined Mockups (owner instruction) | FR10.6, FR10.7; launch-inventory.md |
+
 ## Process Decisions
 
 | ID | Decision | Source |
@@ -37,6 +52,7 @@ Every decision made during Ideation, so later stages and other AI assistants reu
 | P-02 | Approved decisions are recorded in version control and reused; stage observations do not become permanent rules | team.md ## Mandated |
 | P-03 | Learnings and summary-confirmation questionnaires are off for this workflow; routine questions are answered from the charter and record, and only genuinely open questions are batched to the owner | owner instruction at Scope Definition |
 | P-04 | Approved stage artifacts are committed and pushed for the independent architecture reviewer | owner instruction at Scope Definition approval |
+| P-05 | Claude Code is lead engineering agent and sole AI-DLC workflow owner. It proceeds autonomously on routine design, documentation, engineering, testing and workflow matters, and escalates only material decisions: new costs, production or DNS changes, making private information public, final publication approval, material authentication, authorization or privacy changes, destructive actions, significant legal, trademark, licensing or security risk, unrecoverable audit issues, and mandatory human gates. | owner instruction "Architect Portfolio — Autonomous Continuation", 2026-10-10 |
 
 ## Assumptions & Open Questions
 
