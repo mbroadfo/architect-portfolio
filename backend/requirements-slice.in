@@ -1,0 +1,15 @@
+# Walking slice (U0, S1 to S3) back-end runtime dependencies. Demonstration branch only.
+# Compile from the repository root with:
+#   pip-compile --generate-hashes --allow-unsafe --strip-extras \
+#     --output-file backend/requirements-slice.lock backend/requirements-slice.in
+# Versions shared with the tooling lock are held equal by the constraint below.
+-c ../requirements.lock
+fastapi
+uvicorn
+pydantic
+pymongo
+pyjwt[crypto]
+cryptography
+httpx
+# Windows-only dependency of click (via uvicorn); pinned so the lock installs on Windows too.
+colorama
