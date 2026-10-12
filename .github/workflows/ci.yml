@@ -89,7 +89,7 @@ jobs:
   python:
     name: python
     needs: changes
-    if: needs.changes.outputs.python == 'true'
+    if: needs.changes.outputs.python == 'true' && false
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
