@@ -1,0 +1,128 @@
+{
+  "stage": "nfr-design",
+  "unit": "walking-slice",
+  "upstream_ids": [
+    "NFR1.1",
+    "NFR1.2",
+    "NFR1.3",
+    "NFR1.4",
+    "NFR2.1",
+    "NFR2.2",
+    "NFR3.1",
+    "NFR4.1",
+    "NFR6.1",
+    "NFR6.2",
+    "NFR11.1",
+    "NFR11.2",
+    "NFR13.1",
+    "NFR13.2",
+    "NFR13.3",
+    "NFR13.4",
+    "NFR13.5",
+    "NFR13.6",
+    "NFR15.1",
+    "NFR15.2"
+  ],
+  "coverage": [
+    {
+      "id": "NFR1.1",
+      "status": "OK",
+      "target": "require_owner dependency: JWKS-verified RS256/ES256, iss/aud/exp/sub checks (security-design)"
+    },
+    {
+      "id": "NFR1.2",
+      "status": "OK",
+      "target": "Settings validator refusing local-class issuers unless APP_ENV=local; host exposure only on 127.0.0.1, asserted in slice-check"
+    },
+    {
+      "id": "NFR1.3",
+      "status": "OK",
+      "target": "Fake issuer in local/fake-idp with marker and in-memory key; scripts/guard_fake_idp.py with negative fixture"
+    },
+    {
+      "id": "NFR1.4",
+      "status": "OK",
+      "target": "JWKS cache of at most 10 min with refresh limited to once per 60 s; unreachable endpoint or unknown key id after one refresh leads to 401"
+    },
+    {
+      "id": "NFR2.1",
+      "status": "OK",
+      "target": "C2 validation before rendering; scripts/scan_output.py over every release file"
+    },
+    {
+      "id": "NFR2.2",
+      "status": "OK",
+      "target": "Serialized Publish; compare-and-set on revision and previous version inside with_transaction; reconciliation (reliability-design)"
+    },
+    {
+      "id": "NFR3.1",
+      "status": "OK",
+      "target": "gitleaks in the aggregate check; no keys on disk"
+    },
+    {
+      "id": "NFR4.1",
+      "status": "OK",
+      "target": "Docker Compose local stack only; no cloud resources"
+    },
+    {
+      "id": "NFR6.1",
+      "status": "OK",
+      "target": "Single process, connection pool, indexed lookups"
+    },
+    {
+      "id": "NFR6.2",
+      "status": "OK",
+      "target": "One renderer subprocess per Publish and a symbolic-link swap; timed in slice-check"
+    },
+    {
+      "id": "NFR11.1",
+      "status": "OK",
+      "target": "Request-id middleware, JSON logs, redaction filter"
+    },
+    {
+      "id": "NFR11.2",
+      "status": "OK",
+      "target": "GET /health with a fixed body and no dependency checks"
+    },
+    {
+      "id": "NFR13.1",
+      "status": "OK",
+      "target": "Component jobs plus an always-run gate job (the required check) and codeql.yml"
+    },
+    {
+      "id": "NFR13.2",
+      "status": "OK",
+      "target": "Step summary listing each component result"
+    },
+    {
+      "id": "NFR13.3",
+      "status": "OK",
+      "target": "Parallel component jobs, path-filtered, with caching"
+    },
+    {
+      "id": "NFR13.4",
+      "status": "OK",
+      "target": "pytest --cov-fail-under=80 and Vitest coverage thresholds of 80"
+    },
+    {
+      "id": "NFR13.5",
+      "status": "OK",
+      "target": "npm audit --audit-level=high; pip-audit fails on any finding (stricter, because pip-audit has no severity filter), with a justified ignore list"
+    },
+    {
+      "id": "NFR13.6",
+      "status": "OK",
+      "target": "Top-level read-only permissions, SHA-pinned actions, no pull_request_target, check_workflows.py and actionlint"
+    },
+    {
+      "id": "NFR15.1",
+      "status": "OK",
+      "target": "React escaping, react/no-danger, nginx C9 headers asserted in slice-check, sandboxed preview frame"
+    },
+    {
+      "id": "NFR15.2",
+      "status": "OK",
+      "target": "Token in React state only; storage unit test"
+    }
+  ]
+}

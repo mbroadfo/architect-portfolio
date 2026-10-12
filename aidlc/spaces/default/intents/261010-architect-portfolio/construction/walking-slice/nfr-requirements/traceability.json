@@ -1,0 +1,110 @@
+{
+  "stage": "nfr-requirements",
+  "unit": "walking-slice",
+  "upstream_ids": [
+    "NFR1",
+    "NFR2",
+    "NFR3",
+    "NFR4",
+    "NFR5",
+    "NFR6",
+    "NFR7",
+    "NFR8",
+    "NFR9",
+    "NFR10",
+    "NFR11",
+    "NFR12",
+    "NFR13",
+    "NFR14",
+    "NFR15",
+    "NFR16",
+    "NFR17"
+  ],
+  "coverage": [
+    {
+      "id": "NFR1",
+      "status": "OK",
+      "target": "NFR1.1, NFR1.2, NFR1.3, NFR1.4"
+    },
+    {
+      "id": "NFR2",
+      "status": "OK",
+      "target": "NFR2.1, NFR2.2"
+    },
+    {
+      "id": "NFR3",
+      "status": "OK",
+      "target": "NFR3.1"
+    },
+    {
+      "id": "NFR4",
+      "status": "OK",
+      "target": "NFR4.1"
+    },
+    {
+      "id": "NFR5",
+      "status": "N/A",
+      "target": "Production page-load budget owned by U7 and U8; the slice is never served to visitors"
+    },
+    {
+      "id": "NFR6",
+      "status": "OK",
+      "target": "NFR6.1, NFR6.2"
+    },
+    {
+      "id": "NFR7",
+      "status": "N/A",
+      "target": "Scalability owned by U3, U7 and U8; single-user local slice"
+    },
+    {
+      "id": "NFR8",
+      "status": "N/A",
+      "target": "Accessibility is owned by U7 and U11; the slice's minimal page is a demonstration, never shipped"
+    },
+    {
+      "id": "NFR9",
+      "status": "N/A",
+      "target": "No visitors and no deployment. Visitor privacy (no cookies, analytics or tracking) is owned by U7 and U2 and is enforced on the public site"
+    },
+    {
+      "id": "NFR10",
+      "status": "N/A",
+      "target": "Nightly export and restore owned by U10; the slice keeps no durable data (see the REL-0.x rows)"
+    },
+    {
+      "id": "NFR11",
+      "status": "OK",
+      "target": "NFR11.1, NFR11.2"
+    },
+    {
+      "id": "NFR12",
+      "status": "N/A",
+      "target": "Browser support is verified on U7 and U11; the slice runs on the developer's browser"
+    },
+    {
+      "id": "NFR13",
+      "status": "OK",
+      "target": "NFR13.1, NFR13.2, NFR13.3, NFR13.4, NFR13.5, NFR13.6"
+    },
+    {
+      "id": "NFR14",
+      "status": "N/A",
+      "target": "Portability is met by the committed records; the slice adds no new decision record beyond its design files"
+    },
+    {
+      "id": "NFR15",
+      "status": "OK",
+      "target": "NFR15.1, NFR15.2"
+    },
+    {
+      "id": "NFR16",
+      "status": "N/A",
+      "target": "Rate limits apply to U3's deployed API; the slice is local and single-user"
+    },
+    {
+      "id": "NFR17",
+      "status": "N/A",
+      "target": "The link check is owned by U6; the slice has no live-URL check"
+    }
+  ]
+}

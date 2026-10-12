@@ -50,6 +50,12 @@
 
 
 
+
+
+
+
+
+
 ## Phase Progress
 <!-- Status values: Pending, Active, Verified, Skipped -->
 
@@ -111,7 +117,7 @@ Per unit: [TBD]
 - **Current Stage**: functional-design
 - **Next Stage**: nfr-requirements
 - **Status**: Running
-- **Last Updated**: 2026-10-11T23:26:51Z
+- **Last Updated**: 2026-10-12T00:51:46Z
 
 - **Construction Autonomy Mode**: gated
 

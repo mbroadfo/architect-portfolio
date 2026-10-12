@@ -9613,3 +9613,328 @@ Owner (Michael Broadfoot, 2026-10-11): Delivery Planning revision 6 approved. D1
 **Run floor**: STAGE_JUMPED:2026-10-11T20:51:43Z#1
 
 ---
+
+## Decision Recorded
+**Timestamp**: 2026-10-11T23:28:23Z
+**Event**: DECISION_RECORDED
+**Stage**: nfr-requirements
+**Decision**: U0 NFR Q1-Q4 (local performance targets, FastAPI, React/TS/Vite toolchain, testing and CI) answered from approved records
+**Options**: Q1: local functional targets,Other; Q2: FastAPI,plain handler,Other; Q3: React TS Vite,Other; Q4: team-practice testing,Other
+**Unit**: walking-slice
+
+---
+
+## Question Answered
+**Timestamp**: 2026-10-11T23:28:23Z
+**Event**: QUESTION_ANSWERED
+**Stage**: nfr-requirements
+**Details**: Q1: A; Q2: A; Q3: A; Q4: A (from approved records)
+**Unit**: walking-slice
+**Answer Source**: chosen by the agent as the person asked
+**Instruction**: Continue autonomously. Only escalate important decisions or mandatory human approval gates.
+
+---
+
+## Review Requested
+**Timestamp**: 2026-10-11T23:28:24Z
+**Event**: REVIEW_REQUESTED
+**Stage**: nfr-requirements
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: walking-slice
+**Iteration**: 1
+**Artifact Fingerprint**: sha256:32aa09851a03bae7e84f3c9c56f82a2d7666bbb480ae57770f2fd0c857ef0c12
+**Request Id**: review:1b1dce7db79d89f792ab80e70258f187
+**Review File**: .aidlc-engine/reviews/nfr-requirements/units/walking-slice/eb5d56411b849cf9/1.1b1dce7db79d89f792ab80e70258f187.review.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-10-11T23:29:37Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/.aidlc-engine/reviews/nfr-requirements/units/walking-slice/eb5d56411b849cf9/1.1b1dce7db79d89f792ab80e70258f187.review.md
+**Context**: .aidlc-engine > reviews > nfr-requirements > units > walking-slice > eb5d56411b849cf9 > 1.1b1dce7db79d89f792ab80e70258f187.review.md
+
+---
+
+## Subagent Completed
+**Timestamp**: 2026-10-11T23:29:45Z
+**Event**: SUBAGENT_COMPLETED
+**Agent Type**: aidlc-architecture-reviewer-agent
+**Agent ID**: a54465cbb63297625
+
+---
+
+## Human Turn
+**Timestamp**: 2026-10-11T23:29:47Z
+**Event**: HUMAN_TURN
+**Session**: 3bfff7e0-b2c2-48b0-8b00-081386f03bb3
+
+---
+
+## Review Completed
+**Timestamp**: 2026-10-11T23:29:53Z
+**Event**: REVIEW_COMPLETED
+**Stage**: nfr-requirements
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: walking-slice
+**Iteration**: 1
+**Verdict**: NOT-READY
+**Request Fingerprint**: sha256:32aa09851a03bae7e84f3c9c56f82a2d7666bbb480ae57770f2fd0c857ef0c12
+**Artifact Fingerprint**: sha256:32aa09851a03bae7e84f3c9c56f82a2d7666bbb480ae57770f2fd0c857ef0c12
+**Request Id**: review:1b1dce7db79d89f792ab80e70258f187
+**Review Record**: .aidlc-engine/reviews/nfr-requirements/units/walking-slice/eb5d56411b849cf9/1.json
+**Review Record Digest**: sha256:015f785d2add0d1bf945c75f4e4cd8b82b8b318261a58364504f2920a957c57a
+
+---
+
+## Review Requested
+**Timestamp**: 2026-10-11T23:30:34Z
+**Event**: REVIEW_REQUESTED
+**Stage**: nfr-requirements
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: walking-slice
+**Iteration**: 2
+**Artifact Fingerprint**: sha256:307ad1e9dafb2c24c31a812cca2f122cf51e7d1ad27c2e52f711ddb8d3ea8abf
+**Request Id**: review:84634c297e70858e87b6bda526fd7026
+**Review File**: .aidlc-engine/reviews/nfr-requirements/units/walking-slice/eb5d56411b849cf9/2.84634c297e70858e87b6bda526fd7026.review.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-10-11T23:31:18Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/.aidlc-engine/reviews/nfr-requirements/units/walking-slice/eb5d56411b849cf9/2.84634c297e70858e87b6bda526fd7026.review.md
+**Context**: .aidlc-engine > reviews > nfr-requirements > units > walking-slice > eb5d56411b849cf9 > 2.84634c297e70858e87b6bda526fd7026.review.md
+
+---
+
+## Subagent Completed
+**Timestamp**: 2026-10-11T23:31:21Z
+**Event**: SUBAGENT_COMPLETED
+**Agent Type**: aidlc-architecture-reviewer-agent
+**Agent ID**: a06ed431dc243f7f3
+
+---
+
+## Human Turn
+**Timestamp**: 2026-10-11T23:31:23Z
+**Event**: HUMAN_TURN
+**Session**: 3bfff7e0-b2c2-48b0-8b00-081386f03bb3
+
+---
+
+## Review Completed
+**Timestamp**: 2026-10-11T23:31:33Z
+**Event**: REVIEW_COMPLETED
+**Stage**: nfr-requirements
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: walking-slice
+**Iteration**: 2
+**Verdict**: READY
+**Request Fingerprint**: sha256:307ad1e9dafb2c24c31a812cca2f122cf51e7d1ad27c2e52f711ddb8d3ea8abf
+**Artifact Fingerprint**: sha256:307ad1e9dafb2c24c31a812cca2f122cf51e7d1ad27c2e52f711ddb8d3ea8abf
+**Request Id**: review:84634c297e70858e87b6bda526fd7026
+**Review Record**: .aidlc-engine/reviews/nfr-requirements/units/walking-slice/eb5d56411b849cf9/2.json
+**Review Record Digest**: sha256:9ac2a66cdbe3f1402cb88ba46eeb803b3aff8e85137ab730c08ca3c48f624f1a
+
+---
+
+## Unit Started
+**Timestamp**: 2026-10-11T23:31:36Z
+**Event**: UNIT_STARTED
+**Stage**: nfr-requirements
+**Unit**: walking-slice
+**Run floor**: STAGE_JUMPED:2026-10-11T20:51:43Z#1
+
+---
+
+## Unit Completed
+**Timestamp**: 2026-10-11T23:31:37Z
+**Event**: UNIT_COMPLETED
+**Stage**: nfr-requirements
+**Unit**: walking-slice
+**Run floor**: STAGE_JUMPED:2026-10-11T20:51:43Z#1
+
+---
+
+## Decision Recorded
+**Timestamp**: 2026-10-11T23:33:24Z
+**Event**: DECISION_RECORDED
+**Stage**: nfr-design
+**Decision**: U0 NFR design Q1-Q4 (renderer subprocess, symlink swap, local Docker stack, S0 CI implementation) answered from approved records
+**Options**: Q1: Node CLI subprocess,Python render,Other; Q2: symlink swap,Other; Q3: Docker Compose,Other; Q4: GitHub Actions and scripts,Other
+**Unit**: walking-slice
+
+---
+
+## Question Answered
+**Timestamp**: 2026-10-11T23:33:25Z
+**Event**: QUESTION_ANSWERED
+**Stage**: nfr-design
+**Details**: Q1: A; Q2: A; Q3: A; Q4: A (from approved records)
+**Unit**: walking-slice
+**Answer Source**: chosen by the agent as the person asked
+**Instruction**: Continue autonomously. Only escalate important decisions or mandatory human approval gates.
+
+---
+
+## Review Requested
+**Timestamp**: 2026-10-11T23:33:26Z
+**Event**: REVIEW_REQUESTED
+**Stage**: nfr-design
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: walking-slice
+**Iteration**: 1
+**Artifact Fingerprint**: sha256:7baf5a60dbaebbbdba55e3cd522d9a1009ef9135276085b64885c9b495952743
+**Request Id**: review:1825a94fc7a8b6376ac424a1ae478b8f
+**Review File**: .aidlc-engine/reviews/nfr-design/units/walking-slice/eb5d56411b849cf9/1.1825a94fc7a8b6376ac424a1ae478b8f.review.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-10-11T23:35:22Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/.aidlc-engine/reviews/nfr-design/units/walking-slice/eb5d56411b849cf9/1.1825a94fc7a8b6376ac424a1ae478b8f.review.md
+**Context**: .aidlc-engine > reviews > nfr-design > units > walking-slice > eb5d56411b849cf9 > 1.1825a94fc7a8b6376ac424a1ae478b8f.review.md
+
+---
+
+## Subagent Completed
+**Timestamp**: 2026-10-11T23:35:31Z
+**Event**: SUBAGENT_COMPLETED
+**Agent Type**: aidlc-architecture-reviewer-agent
+**Agent ID**: aaf31d7ea53972c67
+
+---
+
+## Human Turn
+**Timestamp**: 2026-10-11T23:35:33Z
+**Event**: HUMAN_TURN
+**Session**: 3bfff7e0-b2c2-48b0-8b00-081386f03bb3
+
+---
+
+## Review Completed
+**Timestamp**: 2026-10-11T23:35:59Z
+**Event**: REVIEW_COMPLETED
+**Stage**: nfr-design
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: walking-slice
+**Iteration**: 1
+**Verdict**: NOT-READY
+**Request Fingerprint**: sha256:7baf5a60dbaebbbdba55e3cd522d9a1009ef9135276085b64885c9b495952743
+**Artifact Fingerprint**: sha256:7baf5a60dbaebbbdba55e3cd522d9a1009ef9135276085b64885c9b495952743
+**Request Id**: review:1825a94fc7a8b6376ac424a1ae478b8f
+**Review Record**: .aidlc-engine/reviews/nfr-design/units/walking-slice/eb5d56411b849cf9/1.json
+**Review Record Digest**: sha256:72f7893c4626c97003ac18caf1e258d832ff6d64c903396ea253e974a81feec0
+
+---
+
+## Review Requested
+**Timestamp**: 2026-10-11T23:37:24Z
+**Event**: REVIEW_REQUESTED
+**Stage**: nfr-design
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: walking-slice
+**Iteration**: 2
+**Artifact Fingerprint**: sha256:ff0904625b3e24d255b658d90bde7add179ad9cfbfe932163a374e2e28f54e34
+**Request Id**: review:ee27c4aa3b7d6b6f299522475e3a5042
+**Review File**: .aidlc-engine/reviews/nfr-design/units/walking-slice/eb5d56411b849cf9/2.ee27c4aa3b7d6b6f299522475e3a5042.review.md
+
+---
+
+## Review Requested
+**Timestamp**: 2026-10-11T23:37:36Z
+**Event**: REVIEW_REQUESTED
+**Stage**: nfr-design
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: walking-slice
+**Iteration**: 2
+**Artifact Fingerprint**: sha256:78b233e18fb41ad8b1d12af4fb1ef47febec03d1297a9e54d996ea6e0a316de5
+**Request Id**: review:d6b8e4589b0a9c4dd749cc71fe4cae6c
+**Replaces Request Id**: review:ee27c4aa3b7d6b6f299522475e3a5042
+**Review File**: .aidlc-engine/reviews/nfr-design/units/walking-slice/eb5d56411b849cf9/2.d6b8e4589b0a9c4dd749cc71fe4cae6c.review.md
+
+---
+
+## Human Turn
+**Timestamp**: 2026-10-12T00:50:32Z
+**Event**: HUMAN_TURN
+**Session**: 3bfff7e0-b2c2-48b0-8b00-081386f03bb3
+
+---
+
+## Review Requested
+**Timestamp**: 2026-10-12T00:50:40Z
+**Event**: REVIEW_REQUESTED
+**Stage**: nfr-design
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: walking-slice
+**Iteration**: 2
+**Retry**: pending-request
+**Artifact Fingerprint**: sha256:78b233e18fb41ad8b1d12af4fb1ef47febec03d1297a9e54d996ea6e0a316de5
+**Request Id**: review:d6b8e4589b0a9c4dd749cc71fe4cae6c
+**Review File**: .aidlc-engine/reviews/nfr-design/units/walking-slice/eb5d56411b849cf9/2.d6b8e4589b0a9c4dd749cc71fe4cae6c.review.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-10-12T00:51:27Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/.aidlc-engine/reviews/nfr-design/units/walking-slice/eb5d56411b849cf9/2.d6b8e4589b0a9c4dd749cc71fe4cae6c.review.md
+**Context**: .aidlc-engine > reviews > nfr-design > units > walking-slice > eb5d56411b849cf9 > 2.d6b8e4589b0a9c4dd749cc71fe4cae6c.review.md
+
+---
+
+## Subagent Completed
+**Timestamp**: 2026-10-12T00:51:33Z
+**Event**: SUBAGENT_COMPLETED
+**Agent Type**: aidlc-architecture-reviewer-agent
+**Agent ID**: a8242ac14289be48c
+
+---
+
+## Human Turn
+**Timestamp**: 2026-10-12T00:51:34Z
+**Event**: HUMAN_TURN
+**Session**: 3bfff7e0-b2c2-48b0-8b00-081386f03bb3
+
+---
+
+## Review Completed
+**Timestamp**: 2026-10-12T00:51:44Z
+**Event**: REVIEW_COMPLETED
+**Stage**: nfr-design
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: walking-slice
+**Iteration**: 2
+**Verdict**: READY
+**Request Fingerprint**: sha256:78b233e18fb41ad8b1d12af4fb1ef47febec03d1297a9e54d996ea6e0a316de5
+**Artifact Fingerprint**: sha256:78b233e18fb41ad8b1d12af4fb1ef47febec03d1297a9e54d996ea6e0a316de5
+**Request Id**: review:d6b8e4589b0a9c4dd749cc71fe4cae6c
+**Review Record**: .aidlc-engine/reviews/nfr-design/units/walking-slice/eb5d56411b849cf9/2.json
+**Review Record Digest**: sha256:3c66f459148cb0c916ad64a256b1679eb96e91441bcfbb597a5c1e4c607cb45a
+
+---
+
+## Unit Started
+**Timestamp**: 2026-10-12T00:51:46Z
+**Event**: UNIT_STARTED
+**Stage**: nfr-design
+**Unit**: walking-slice
+**Run floor**: STAGE_JUMPED:2026-10-11T20:51:43Z#1
+
+---
+
+## Unit Completed
+**Timestamp**: 2026-10-12T00:51:46Z
+**Event**: UNIT_COMPLETED
+**Stage**: nfr-design
+**Unit**: walking-slice
+**Run floor**: STAGE_JUMPED:2026-10-11T20:51:43Z#1
+
+---
