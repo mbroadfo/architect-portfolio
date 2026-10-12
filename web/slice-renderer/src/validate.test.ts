@@ -101,4 +101,12 @@ describe("C8 variants and C9 download names", () => {
       `${"a".repeat(59)}.stl`,
     );
   });
+
+  it("slugs hostile hyphen-heavy labels in linear time (CodeQL js/polynomial-redos)", () => {
+    const hostile = `-${"-".repeat(50_000)}x${"- ".repeat(50_000)}`;
+    const started = performance.now();
+    expect(downloadName({ label: hostile, fileType: "PDF" })).toBe("x.pdf");
+    expect(downloadName({ label: "-".repeat(100_000), fileType: "DXF" })).toBe("download.dxf");
+    expect(performance.now() - started).toBeLessThan(500);
+  });
 });

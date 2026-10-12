@@ -32,13 +32,18 @@ export function imageVariants(image: Pick<Image, "width">): ImageVariant[] {
   return variants.length > 0 ? variants : [{ variant: "w480", width: image.width }];
 }
 
+/** Strip leading and trailing hyphens in linear time (an anchored `-+$` regex is polynomial). */
+function trimHyphens(text: string): string {
+  let start = 0;
+  let end = text.length;
+  while (start < end && text[start] === "-") start += 1;
+  while (end > start && text[end - 1] === "-") end -= 1;
+  return text.slice(start, end);
+}
+
 /** downloadName = slug(label) + "." + ext (C9). */
 export function downloadName(attachment: Pick<Attachment, "label" | "fileType">): string {
-  const slug = attachment.label
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "")
-    .slice(0, 60)
-    .replace(/-+$/g, "");
+  const words = attachment.label.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+  const slug = trimHyphens(trimHyphens(words).slice(0, 60));
   return `${slug || "download"}.${EXTENSIONS[attachment.fileType]}`;
 }
