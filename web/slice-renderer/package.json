@@ -1,0 +1,43 @@
+{
+  "name": "@portfolio/slice-renderer",
+  "private": true,
+  "version": "0.0.1",
+  "description": "Walking slice renderer (U0 S2): C2 snapshot in, C11 RenderOutput out. Demonstration branch only.",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "hash-assets": "node scripts/hash-assets.mjs",
+    "build:cli": "node scripts/hash-assets.mjs && node scripts/build-cli.mjs",
+    "build": "npm run build:cli",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "format:check": "prettier --check .",
+    "test": "vitest run --coverage",
+    "check": "npm run format:check && npm run lint && npm run typecheck && npm run test && npm run build"
+  },
+  "dependencies": {
+    "ajv": "^8.20.0",
+    "ajv-formats": "^3.0.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.5",
+    "@types/node": "^22.20.5",
+    "@types/react": "^18.3.31",
+    "@types/react-dom": "^18.3.7",
+    "@vitest/coverage-v8": "^5.0.3",
+    "esbuild": "^0.28.2",
+    "eslint": "^9.39.5",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "globals": "^17.13.0",
+    "prettier": "^3.9.10",
+    "typescript": "~5.9",
+    "typescript-eslint": "^8.71.1",
+    "vitest": "^5.0.3"
+  }
+}

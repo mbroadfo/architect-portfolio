@@ -1,0 +1,38 @@
+{
+  "text": {
+    "allWork": "All work",
+    "work": "Work",
+    "featured": "Featured",
+    "categories": "Categories",
+    "newWork": "New work is being installed.",
+    "notFound": "This exhibit isn't on display",
+    "categoryNotFound": "This category isn't on display",
+    "github": "GitHub",
+    "published": "Published",
+    "links": "Links",
+    "repositories": "Source code",
+    "downloads": "Downloads"
+  },
+  "attributes": {
+    "lang": "en",
+    "charset": "utf-8",
+    "viewportName": "viewport",
+    "viewport": "width=device-width, initial-scale=1",
+    "stylesheet": "stylesheet",
+    "webp": "image/webp",
+    "sizes": "(max-width: 60rem) 100vw, 60rem",
+    "primaryNav": "Primary",
+    "home": "/"
+  },
+  "classes": {
+    "siteHeader": "site-header",
+    "siteTitle": "site-title",
+    "siteFooter": "site-footer",
+    "gallery": "gallery",
+    "card": "card",
+    "exhibit": "exhibit",
+    "summary": "exhibit-summary",
+    "published": "published",
+    "notice": "notice"
+  }
+}
