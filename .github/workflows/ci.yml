@@ -32,7 +32,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     outputs:
-      python: ${{ steps.detect.outputs.python }}
+      python: "yes"
       web: ${{ steps.detect.outputs.web }}
       guard: ${{ steps.detect.outputs.guard }}
       audit: ${{ steps.detect.outputs.audit }}
