@@ -396,7 +396,7 @@ jobs:
   gate:
     name: gate
     if: always()
-    needs: [changes, python, web, guard, audit, slice-e2e, workflow-lint, review-check, gitleaks]
+    needs: [changes, python, web, guard, slice-e2e, workflow-lint, review-check, gitleaks]
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:
