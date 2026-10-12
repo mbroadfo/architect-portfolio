@@ -1,0 +1,53 @@
+# LOCAL-ONLY verification override for the walking slice stack. It is used only under a
+# per-checkout project name (portfolio-verify-<checkout id>) with free loopback ports, so it
+# never touches the developer's own stack or another worktree's:
+#
+#   scripts/verify.py and local/slice_check.py run
+#   docker compose -p portfolio-verify-<id> -f local/compose.yaml -f local/compose.verify.yaml ...
+#   with SLICE_API_PORT, SLICE_SITE_PORT, SLICE_IDP_PORT, SLICE_MONGO_PORT and
+#   SLICE_STUDIO_PORT set to ports that were free when the run started.
+#
+# MongoDB keeps its data on tmpfs instead of the mongo-data volume, so every new container
+# starts with an empty database (REL-0.2) and nothing ever has to be deleted. The `site`
+# volume of this project may keep earlier releases; the API reconciles it against the empty
+# database at start-up.
+services:
+  mongo:
+    volumes: !reset []
+    tmpfs:
+      - /data/db
+      - /data/configdb
+
+  # The Studio dev server runs on the per-run port; its origin is the only one the API and
+  # the fake issuer allow.
+  api:
+    environment:
+      CORS_ORIGIN: "http://localhost:${SLICE_STUDIO_PORT:-5173}"
+
+  fake-idp:
+    environment:
+      CORS_ORIGIN: "http://localhost:${SLICE_STUDIO_PORT:-5173}"
+
+  # The back-end integration tests (R5) in a Linux container on the stack's network, so real
+  # symbolic links work on every host. Started only by the slice-integration check:
+  #   docker compose ... --profile tests run --rm --no-deps --build -T slice-it
+  # The back end is mounted read-only; the only writable mount is the JUnit report folder in
+  # the gitignored work directory. The image declares no volumes, so `run --rm` removes only
+  # this one-off container.
+  slice-it:
+    profiles: ["tests"]
+    build:
+      context: ..
+      dockerfile: local/it.Dockerfile
+    user: "${VERIFY_UID:-10001}:${VERIFY_GID:-10001}"
+    environment:
+      SLICE_IT_MONGO_URI: "mongodb://mongo:27017/?directConnection=true"
+      PYTEST_ADDOPTS: "-p no:cacheprovider --junitxml=/junit/${VERIFY_JUNIT_NAME:-slice-integration.xml}"
+    volumes:
+      - ../backend:/repo/backend:ro
+      - ${VERIFY_JUNIT_DIR:-./.slice-check/junit}:/junit
+    working_dir: /repo
+    command: ["python", "-m", "pytest", "backend/tests/integration/slice"]
+    depends_on:
+      mongo:
+        condition: service_healthy
