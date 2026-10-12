@@ -1,0 +1,26 @@
+# Security-sensitive paths (BR5.2). A pull request that changes any path below needs an
+# independent security review recorded in docs/security-reviews/ for its exact patch
+# identity (see scripts/check_security_review.py). The check reads this list from the base
+# branch, so a pull request cannot narrow the list that judges it.
+#
+# Pattern rules: a pattern ending in "/" covers the whole directory; "*" matches within one
+# path segment, "**/" matches any number of directories, and a pattern also covers everything
+# below a directory it matches.
+#
+# Authentication and the local-issuer refusal (BR1.1, BR1.3).
+backend/portfolio_api/settings.py
+backend/portfolio_api/auth.py
+# Publication boundary: routes, C2 allow-list, publish transaction, output folder (BR3.x).
+backend/portfolio_api/slice/
+# Rendering and escaping of public pages, and the Studio's sign-in and API client.
+web/slice-renderer/
+web/slice-studio/src/
+# Local stack headers, exposure and the fake identity provider (BR1.2, NFR1.2, NFR15.1).
+local/nginx.conf
+local/compose.yaml
+local/fake-idp/
+# Contracts, CI, the checks themselves and infrastructure.
+contracts/
+.github/
+scripts/
+infra/

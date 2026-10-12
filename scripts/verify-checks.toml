@@ -1,0 +1,328 @@
+# Verification registry for scripts/verify.py.
+#
+# Each [[check]] is one command. Fields:
+#   id, unit ("project" or a unit slug), kind (static, unit, contract, integration, e2e,
+#   audit), argv ({python} = this Python; {npm} and {npx} are resolved on PATH; {compose} =
+#   `docker compose -p <this checkout's project> -f <the services files>`, only for checks
+#   that require services), cwd, env, applies_when (paths that must exist, else "not
+#   applicable": the unit is not on this branch), requires (docker, services, path:<p>,
+#   tool:<name>, module:<name>, free-port:<n>), required (default true; false =
+#   host-optional or network-dependent, skipped with a notice even under --strict), timeout
+#   (seconds), description, report ("junit": the check writes a JUnit report that verify.py
+#   reads for skipped tests), allowed_skips (tests that may be skipped under --strict:
+#   { test = "<part of the test name>", reason = "...", platforms = ["win32"] }).
+#
+# New units add their own entries here, gated by applies_when; verify.py does not change.
+# The file is identical on main and on the walking-slice demonstration branch.
+
+# The verification stack for integration and end-to-end checks. verify.py derives its Compose
+# project from the checkout path (portfolio-verify-<10 hex>), so worktrees never share a
+# stack, and picks free loopback ports for the variables in `ports` on every run. MongoDB runs
+# on tmpfs (local/compose.verify.yaml), so each start has an empty database without deleting
+# anything. verify.py stops it with a plain `down` (no -v, no --remove-orphans) unless
+# --keep-running. Placeholders: {project} and each port variable.
+[services]
+compose_files = ["local/compose.yaml", "local/compose.verify.yaml"]
+applies_when = ["local/compose.yaml", "local/compose.verify.yaml"]
+ports = ["SLICE_API_PORT", "SLICE_SITE_PORT", "SLICE_IDP_PORT", "SLICE_MONGO_PORT", "SLICE_STUDIO_PORT"]
+ready_urls = ["http://127.0.0.1:{SLICE_API_PORT}/health", "http://127.0.0.1:{SLICE_SITE_PORT}/"]
+ready_timeout = 300
+
+[services.env]
+SLICE_COMPOSE_PROJECT = "{project}"
+SLICE_COMPOSE_FILES = "local/compose.yaml,local/compose.verify.yaml"
+SLICE_STACK_MANAGED = "1"
+SLICE_IT_MONGO_URI = "mongodb://127.0.0.1:{SLICE_MONGO_PORT}/?directConnection=true"
+
+# --- project: static checks (as in CI) ---------------------------------------------------
+
+[[check]]
+id = "ruff-check"
+unit = "project"
+kind = "static"
+argv = ["{python}", "-m", "ruff", "check", "."]
+requires = ["module:ruff"]
+
+[[check]]
+id = "ruff-format"
+unit = "project"
+kind = "static"
+argv = ["{python}", "-m", "ruff", "format", "--check", "."]
+requires = ["module:ruff"]
+
+[[check]]
+id = "mypy"
+unit = "project"
+kind = "static"
+argv = ["{python}", "-m", "mypy"]
+requires = ["module:mypy"]
+
+[[check]]
+id = "workflow-lint"
+unit = "project"
+kind = "static"
+description = "Permissions, SHA-pinned actions, no pull_request_target, gate inventory (NFR13.6)"
+argv = ["{python}", "scripts/check_workflows.py"]
+requires = ["module:yaml"]
+
+[[check]]
+id = "actionlint"
+unit = "project"
+kind = "static"
+argv = ["actionlint"]
+requires = ["tool:actionlint"]
+required = false
+
+[[check]]
+id = "web-format"
+unit = "project"
+kind = "static"
+argv = ["{npm}", "--prefix", "web", "run", "format:check"]
+applies_when = ["web/package.json"]
+requires = ["path:web/node_modules"]
+
+[[check]]
+id = "web-lint"
+unit = "project"
+kind = "static"
+argv = ["{npm}", "--prefix", "web", "run", "lint"]
+applies_when = ["web/package.json"]
+requires = ["path:web/node_modules"]
+
+[[check]]
+id = "web-typecheck"
+unit = "project"
+kind = "static"
+argv = ["{npm}", "--prefix", "web", "run", "typecheck"]
+applies_when = ["web/package.json"]
+requires = ["path:web/node_modules"]
+
+# --- project: tests with coverage --------------------------------------------------------
+
+[[check]]
+id = "scripts-tests"
+unit = "project"
+kind = "unit"
+description = "CI scripts and the verifier, 80% line-coverage floor"
+argv = ["{python}", "-m", "pytest", "tests/scripts", "--cov=scripts", "--cov-fail-under=80"]
+requires = ["module:pytest", "module:pytest_cov"]
+report = "junit"
+
+[[check]]
+id = "guard-negative-fixture"
+unit = "project"
+kind = "unit"
+description = "The guard fails on the contaminated fixture and passes the clean one (AC0.2)"
+argv = ["{python}", "-m", "pytest", "tests/scripts/test_guard_fake_idp.py", "-q"]
+requires = ["module:pytest"]
+report = "junit"
+
+[[check]]
+id = "web-test"
+unit = "project"
+kind = "unit"
+description = "Vitest with the 80% line-coverage floor (JUnit report through VERIFY_JUNIT)"
+argv = ["{npm}", "--prefix", "web", "run", "test"]
+applies_when = ["web/package.json"]
+requires = ["path:web/node_modules"]
+report = "junit"
+
+# --- project: deployable builds and the fake identity provider guard (BR1.2) -------------
+
+[[check]]
+id = "web-build"
+unit = "project"
+kind = "static"
+argv = ["{npm}", "--prefix", "web", "run", "build"]
+applies_when = ["web/package.json"]
+requires = ["path:web/node_modules"]
+
+[[check]]
+id = "backend-wheel"
+unit = "project"
+kind = "static"
+argv = ["{python}", "-m", "build", "--wheel", "--no-isolation", "--outdir", "backend/dist", "backend"]
+applies_when = ["backend/pyproject.toml"]
+requires = ["module:build", "module:setuptools"]
+
+[[check]]
+id = "guard-build-outputs"
+unit = "project"
+kind = "static"
+description = "The deployable outputs CI scans: the backend wheel and the public site bundle"
+argv = ["{python}", "scripts/guard_fake_idp.py", "backend/dist", "web/site/dist"]
+applies_when = ["backend/pyproject.toml", "web/site/package.json"]
+
+# --- walking-slice (U0, S1 to S3; demonstration branch) ----------------------------------
+
+[[check]]
+id = "slice-backend-unit"
+unit = "walking-slice"
+kind = "unit"
+description = "Slice API, auth and settings, 80% line-coverage floor"
+argv = [
+  "{python}", "-m", "pytest", "backend/tests/unit/slice",
+  "--cov=portfolio_api.slice", "--cov=portfolio_api.auth", "--cov=portfolio_api.settings",
+  "--cov-fail-under=80",
+]
+applies_when = ["backend/portfolio_api/slice", "backend/tests/unit/slice"]
+requires = ["module:pytest_cov", "module:fastapi", "module:pymongo", "module:jwt"]
+report = "junit"
+allowed_skips = [
+  { test = "test_public_is_a_relative_symbolic_link", reason = "Windows without Developer Mode cannot create symbolic links; the test runs on Linux CI, and real links are also exercised by slice-integration in its Linux container", platforms = ["win32"] },
+]
+
+[[check]]
+id = "slice-fake-idp"
+unit = "walking-slice"
+kind = "unit"
+argv = ["{python}", "-m", "pytest", "local/fake-idp/tests"]
+applies_when = ["local/fake-idp/tests"]
+requires = ["module:fastapi", "module:jwt"]
+report = "junit"
+
+[[check]]
+id = "slice-check-unit"
+unit = "walking-slice"
+kind = "unit"
+description = "The slice check's isolated Compose argv, project refusal, ports, lock and scan wiring (R1, R3)"
+argv = ["{python}", "-m", "pytest", "local/tests"]
+applies_when = ["local/slice_check.py", "local/tests"]
+requires = ["module:pytest"]
+report = "junit"
+
+[[check]]
+id = "slice-renderer-check"
+unit = "walking-slice"
+kind = "unit"
+description = "Format, lint, types, tests with the 80% floor, CLI bundle"
+argv = ["{npm}", "--prefix", "web/slice-renderer", "run", "check"]
+applies_when = ["web/slice-renderer/package.json"]
+requires = ["path:web/slice-renderer/node_modules"]
+report = "junit"
+
+[[check]]
+id = "slice-studio-check"
+unit = "walking-slice"
+kind = "unit"
+description = "Format, lint, types, tests with the 80% floor, Vite build"
+argv = ["{npm}", "--prefix", "web/slice-studio", "run", "check"]
+applies_when = ["web/slice-studio/package.json"]
+requires = ["path:web/slice-studio/node_modules", "path:web/slice-renderer/node_modules"]
+report = "junit"
+
+[[check]]
+id = "slice-c2-c11-contract-ts"
+unit = "walking-slice"
+kind = "contract"
+description = "C2 schema and semantic rules (Ajv), C11 RenderOutput and CLI"
+argv = ["{npx}", "vitest", "run", "src/validate.test.ts", "src/render.test.tsx", "src/cli.test.ts"]
+cwd = "web/slice-renderer"
+applies_when = ["web/slice-renderer/src/c2-schema.json"]
+requires = ["path:web/slice-renderer/node_modules"]
+report = "junit"
+
+[[check]]
+id = "slice-c2-c11-contract-py"
+unit = "walking-slice"
+kind = "contract"
+description = "C2 allow-list model and the C11 RenderOutput boundary in the API"
+argv = [
+  "{python}", "-m", "pytest",
+  "backend/tests/unit/slice/test_snapshot.py", "backend/tests/unit/slice/test_renderer_boundary.py",
+]
+applies_when = ["backend/tests/unit/slice/test_snapshot.py"]
+requires = ["module:fastapi", "module:pydantic"]
+report = "junit"
+
+[[check]]
+id = "slice-integration"
+unit = "walking-slice"
+kind = "integration"
+description = "MongoDB replica set: repositories, Publish transaction, rollback and compensation faults, restart reconciliation with real links (R5). Runs in a Linux container on the stack's network (local/it.Dockerfile), so symbolic links work and nothing is skipped on any host"
+argv = ["{compose}", "--profile", "tests", "run", "--rm", "--no-deps", "--build", "-T", "slice-it"]
+applies_when = ["backend/tests/integration/slice", "local/it.Dockerfile"]
+requires = ["services"]
+report = "junit"
+timeout = 900
+
+[[check]]
+id = "verify-docker-isolation"
+unit = "project"
+kind = "integration"
+description = "R1: a full services cycle (up, readiness, down) keeps every pre-existing volume and every other project's containers"
+argv = ["{python}", "-m", "pytest", "tests/docker"]
+applies_when = ["local/compose.yaml", "local/compose.verify.yaml", "tests/docker"]
+requires = ["docker", "module:pytest"]
+report = "junit"
+timeout = 900
+
+[[check]]
+id = "slice-e2e"
+unit = "walking-slice"
+kind = "e2e"
+description = "W6: create, save, preview, publish, headers, timings, public-output scan with authorized media digests"
+argv = ["{python}", "local/slice_check.py"]
+applies_when = ["local/slice_check.py", "web/slice-e2e/playwright.config.ts"]
+requires = [
+  "services",
+  "path:web/node_modules/playwright-core/.local-browsers",
+  "path:web/slice-studio/node_modules",
+  "path:web/slice-renderer/node_modules",
+  "tool:npx",
+]
+timeout = 900
+
+# --- audits (network; as in CI) -------------------------------------------------------------
+
+[[check]]
+id = "pip-audit"
+unit = "project"
+kind = "audit"
+argv = ["{python}", "-m", "pip_audit", "--disable-pip", "--require-hashes", "-r", "requirements.lock"]
+requires = ["module:pip_audit"]
+required = false
+
+[[check]]
+id = "npm-audit-web"
+unit = "project"
+kind = "audit"
+argv = ["{npm}", "--prefix", "web", "audit", "--audit-level=high"]
+applies_when = ["web/package-lock.json"]
+required = false
+
+[[check]]
+id = "gitleaks"
+unit = "project"
+kind = "audit"
+argv = ["gitleaks", "git", "--redact", "--no-banner", "."]
+requires = ["tool:gitleaks"]
+required = false
+
+[[check]]
+id = "slice-pip-audit"
+unit = "walking-slice"
+kind = "audit"
+argv = [
+  "{python}", "-m", "pip_audit", "--disable-pip", "--require-hashes",
+  "-r", "backend/requirements-slice.lock", "-r", "local/fake-idp/requirements.lock",
+]
+applies_when = ["backend/requirements-slice.lock", "local/fake-idp/requirements.lock"]
+requires = ["module:pip_audit"]
+required = false
+
+[[check]]
+id = "slice-npm-audit"
+unit = "walking-slice"
+kind = "audit"
+argv = ["{npm}", "--prefix", "web/slice-renderer", "audit", "--audit-level=high"]
+applies_when = ["web/slice-renderer/package-lock.json"]
+required = false
+
+[[check]]
+id = "slice-npm-audit-studio"
+unit = "walking-slice"
+kind = "audit"
+argv = ["{npm}", "--prefix", "web/slice-studio", "audit", "--audit-level=high"]
+applies_when = ["web/slice-studio/package-lock.json"]
+required = false

@@ -1,0 +1,5 @@
+# Reviewed pip-audit exceptions (NFR13.5). The CI audit job passes each entry to
+# `pip-audit --ignore-vuln` and fails on an entry without a future expiry date.
+# Format, one per line:
+#   <vulnerability id>  # <reason>; expires YYYY-MM-DD
+# There are no accepted exceptions.

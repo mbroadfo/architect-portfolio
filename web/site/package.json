@@ -1,0 +1,13 @@
+{
+  "name": "@portfolio/site",
+  "private": true,
+  "version": "0.0.1",
+  "description": "Public site placeholder (U0 S0). U7 and U8 replace it with the real site.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --coverage"
+  }
+}

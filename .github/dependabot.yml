@@ -1,0 +1,25 @@
+# Dependabot proposes dependency updates as pull requests (team practice).
+# Dependabot reads the default branch (main), so this file lists only directories that exist
+# on main. The walking-slice code (S1 to S3: the slice back-end lock, the fake issuer, the
+# slice renderer and Studio, and the local Docker images) never merges to main, so it has no
+# entries here (R-11, R-12). Each later Bolt adds an entry when its package directory lands.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      actions:
+        patterns: ["*"]
+  - package-ecosystem: npm
+    directory: /web
+    schedule:
+      interval: weekly
+    groups:
+      web-dev-tooling:
+        dependency-type: development
+  - package-ecosystem: pip
+    directory: /
+    schedule:
+      interval: weekly

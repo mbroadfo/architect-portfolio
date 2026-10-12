@@ -1,0 +1,16 @@
+# Python tooling for the S0 CI baseline. Compile to the hashed lockfile with:
+#   pip-compile --generate-hashes --allow-unsafe --strip-extras --output-file requirements.lock requirements.in
+# Install with:
+#   python -m pip install --require-hashes -r requirements.lock
+pytest
+pytest-cov
+ruff
+mypy
+pyyaml
+types-PyYAML
+build
+setuptools
+wheel
+pip-audit
+# Windows-only dependency of pytest and build; pinned so the lock installs on Windows checkouts too.
+colorama
