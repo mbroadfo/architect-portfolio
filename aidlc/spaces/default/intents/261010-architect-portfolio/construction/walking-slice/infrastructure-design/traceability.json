@@ -1,0 +1,128 @@
+{
+  "stage": "infrastructure-design",
+  "unit": "walking-slice",
+  "upstream_ids": [
+    "NFR1.1",
+    "NFR1.2",
+    "NFR1.3",
+    "NFR1.4",
+    "NFR2.1",
+    "NFR2.2",
+    "NFR3.1",
+    "NFR4.1",
+    "NFR6.1",
+    "NFR6.2",
+    "NFR11.1",
+    "NFR11.2",
+    "NFR13.1",
+    "NFR13.2",
+    "NFR13.3",
+    "NFR13.4",
+    "NFR13.5",
+    "NFR13.6",
+    "NFR15.1",
+    "NFR15.2"
+  ],
+  "coverage": [
+    {
+      "id": "NFR1.1",
+      "status": "N/A",
+      "target": "Application-level design with no infrastructure resource (see NFR design)"
+    },
+    {
+      "id": "NFR1.2",
+      "status": "OK",
+      "target": "Compose host ports on 127.0.0.1 only; APP_ENV=local; fake-idp.invalid alias"
+    },
+    {
+      "id": "NFR1.3",
+      "status": "OK",
+      "target": "CI guard job scanning the deployable build outputs"
+    },
+    {
+      "id": "NFR1.4",
+      "status": "N/A",
+      "target": "Application-level design with no infrastructure resource (see NFR design)"
+    },
+    {
+      "id": "NFR2.1",
+      "status": "N/A",
+      "target": "Application-level design with no infrastructure resource (see NFR design)"
+    },
+    {
+      "id": "NFR2.2",
+      "status": "OK",
+      "target": "mongo:7 single-node replica set rs0 with mongo-init"
+    },
+    {
+      "id": "NFR3.1",
+      "status": "OK",
+      "target": "gitleaks job; no secrets in CI or compose.env"
+    },
+    {
+      "id": "NFR4.1",
+      "status": "OK",
+      "target": "Local Docker Compose plus free GitHub Actions; no cloud resources"
+    },
+    {
+      "id": "NFR6.1",
+      "status": "N/A",
+      "target": "Application-level design with no infrastructure resource (see NFR design)"
+    },
+    {
+      "id": "NFR6.2",
+      "status": "OK",
+      "target": "site volume with releases/ and a relative public symlink"
+    },
+    {
+      "id": "NFR11.1",
+      "status": "OK",
+      "target": "docker compose logs carrying the JSON request logs"
+    },
+    {
+      "id": "NFR11.2",
+      "status": "N/A",
+      "target": "Application-level design with no infrastructure resource (see NFR design)"
+    },
+    {
+      "id": "NFR13.1",
+      "status": "OK",
+      "target": "ci.yml component jobs plus gate; codeql.yml"
+    },
+    {
+      "id": "NFR13.2",
+      "status": "OK",
+      "target": "The gate job's step summary"
+    },
+    {
+      "id": "NFR13.3",
+      "status": "OK",
+      "target": "Parallel component jobs with a path filter and caching"
+    },
+    {
+      "id": "NFR13.4",
+      "status": "OK",
+      "target": "Coverage thresholds in the python and web jobs"
+    },
+    {
+      "id": "NFR13.5",
+      "status": "OK",
+      "target": "The audit job"
+    },
+    {
+      "id": "NFR13.6",
+      "status": "OK",
+      "target": "Read-only permissions, SHA pins, no pull_request_target, workflow-lint job"
+    },
+    {
+      "id": "NFR15.1",
+      "status": "OK",
+      "target": "nginx.conf headers (CSP, nosniff, Referrer-Policy)"
+    },
+    {
+      "id": "NFR15.2",
+      "status": "N/A",
+      "target": "Application-level design with no infrastructure resource (see NFR design)"
+    }
+  ]
+}

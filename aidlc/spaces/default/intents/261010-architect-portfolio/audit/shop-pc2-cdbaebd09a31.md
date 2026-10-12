@@ -9938,3 +9938,201 @@ Owner (Michael Broadfoot, 2026-10-11): Delivery Planning revision 6 approved. D1
 **Run floor**: STAGE_JUMPED:2026-10-11T20:51:43Z#1
 
 ---
+
+## Decision Recorded
+**Timestamp**: 2026-10-12T00:52:56Z
+**Event**: DECISION_RECORDED
+**Stage**: infrastructure-design
+**Decision**: U0 infrastructure Q1-Q3 (local Docker only, S0 CI on GitHub Actions, no secrets) answered from approved records
+**Options**: Q1: local only,Other; Q2: GitHub Actions gate,Other; Q3: no secrets,Other
+**Unit**: walking-slice
+
+---
+
+## Question Answered
+**Timestamp**: 2026-10-12T00:52:57Z
+**Event**: QUESTION_ANSWERED
+**Stage**: infrastructure-design
+**Details**: Q1: A; Q2: A; Q3: A
+**Unit**: walking-slice
+**Answer Source**: chosen by the agent as the person asked
+**Instruction**: Continue autonomously ... do not merge, deploy or incur spending without the separate authorization already required.
+
+---
+
+## Review Requested
+**Timestamp**: 2026-10-12T00:53:03Z
+**Event**: REVIEW_REQUESTED
+**Stage**: infrastructure-design
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: walking-slice
+**Iteration**: 1
+**Artifact Fingerprint**: sha256:b4f277bd4edfacf1aed56f16db0702af58f4e59cf0523b2365057d6ad24dcf78
+**Request Id**: review:8fbdd2811828c84a23d482b3126bd027
+**Review File**: .aidlc-engine/reviews/infrastructure-design/units/walking-slice/eb5d56411b849cf9/1.8fbdd2811828c84a23d482b3126bd027.review.md
+
+---
+
+## Guard Stood Aside
+**Timestamp**: 2026-10-12T00:53:34Z
+**Event**: GUARD_STOOD_ASIDE
+**Guard**: reviewer-scope
+**Authority**: instruction
+**Grant**: none
+**Actor**: subagent
+**Stage**: infrastructure-design
+**Tool**: Bash
+**Details**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio (unit walking-slice)
+
+---
+
+## Guard Stood Aside
+**Timestamp**: 2026-10-12T00:53:38Z
+**Event**: GUARD_STOOD_ASIDE
+**Guard**: reviewer-scope
+**Authority**: instruction
+**Grant**: none
+**Actor**: subagent
+**Stage**: infrastructure-design
+**Tool**: Bash
+**Details**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio (unit walking-slice)
+
+---
+
+## Guard Stood Aside
+**Timestamp**: 2026-10-12T00:54:16Z
+**Event**: GUARD_STOOD_ASIDE
+**Guard**: reviewer-scope
+**Authority**: instruction
+**Grant**: none
+**Actor**: subagent
+**Stage**: infrastructure-design
+**Tool**: Bash
+**Details**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio (unit walking-slice)
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-10-12T00:54:38Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/.aidlc-engine/reviews/infrastructure-design/units/walking-slice/eb5d56411b849cf9/1.8fbdd2811828c84a23d482b3126bd027.review.md
+**Context**: .aidlc-engine > reviews > infrastructure-design > units > walking-slice > eb5d56411b849cf9 > 1.8fbdd2811828c84a23d482b3126bd027.review.md
+
+---
+
+## Subagent Completed
+**Timestamp**: 2026-10-12T00:54:48Z
+**Event**: SUBAGENT_COMPLETED
+**Agent Type**: aidlc-architecture-reviewer-agent
+**Agent ID**: a0f7be0298498d07f
+
+---
+
+## Human Turn
+**Timestamp**: 2026-10-12T00:54:49Z
+**Event**: HUMAN_TURN
+**Session**: 3bfff7e0-b2c2-48b0-8b00-081386f03bb3
+
+---
+
+## Review Completed
+**Timestamp**: 2026-10-12T00:55:02Z
+**Event**: REVIEW_COMPLETED
+**Stage**: infrastructure-design
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: walking-slice
+**Iteration**: 1
+**Verdict**: NOT-READY
+**Request Fingerprint**: sha256:b4f277bd4edfacf1aed56f16db0702af58f4e59cf0523b2365057d6ad24dcf78
+**Artifact Fingerprint**: sha256:b4f277bd4edfacf1aed56f16db0702af58f4e59cf0523b2365057d6ad24dcf78
+**Request Id**: review:8fbdd2811828c84a23d482b3126bd027
+**Review Record**: .aidlc-engine/reviews/infrastructure-design/units/walking-slice/eb5d56411b849cf9/1.json
+**Review Record Digest**: sha256:410c3eb923e565575688019f631be7411600931a1cd9f05e147045ad79f07d9b
+
+---
+
+## Review Requested
+**Timestamp**: 2026-10-12T00:55:34Z
+**Event**: REVIEW_REQUESTED
+**Stage**: infrastructure-design
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: walking-slice
+**Iteration**: 2
+**Artifact Fingerprint**: sha256:703e6712dba3f69870cf1530aa2f961f04a5bdb0efd4c1dc345d347f4d5aaf43
+**Request Id**: review:65bc2592ec10bec2833053da73ddce3a
+**Review File**: .aidlc-engine/reviews/infrastructure-design/units/walking-slice/eb5d56411b849cf9/2.65bc2592ec10bec2833053da73ddce3a.review.md
+
+---
+
+## Review Requested
+**Timestamp**: 2026-10-12T00:55:47Z
+**Event**: REVIEW_REQUESTED
+**Stage**: infrastructure-design
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: walking-slice
+**Iteration**: 2
+**Artifact Fingerprint**: sha256:5a28c547a8d4752a16d1df08b5bb94c2ab64478f52fd49c71ab2336aaf82546f
+**Request Id**: review:446a94afb61b3432eb10cc1d2e45fadc
+**Replaces Request Id**: review:65bc2592ec10bec2833053da73ddce3a
+**Review File**: .aidlc-engine/reviews/infrastructure-design/units/walking-slice/eb5d56411b849cf9/2.446a94afb61b3432eb10cc1d2e45fadc.review.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-10-12T00:56:23Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261010-architect-portfolio/.aidlc-engine/reviews/infrastructure-design/units/walking-slice/eb5d56411b849cf9/2.446a94afb61b3432eb10cc1d2e45fadc.review.md
+**Context**: .aidlc-engine > reviews > infrastructure-design > units > walking-slice > eb5d56411b849cf9 > 2.446a94afb61b3432eb10cc1d2e45fadc.review.md
+
+---
+
+## Subagent Completed
+**Timestamp**: 2026-10-12T00:56:29Z
+**Event**: SUBAGENT_COMPLETED
+**Agent Type**: aidlc-architecture-reviewer-agent
+**Agent ID**: a3e0f2ac0e74f148d
+
+---
+
+## Human Turn
+**Timestamp**: 2026-10-12T00:56:30Z
+**Event**: HUMAN_TURN
+**Session**: 3bfff7e0-b2c2-48b0-8b00-081386f03bb3
+
+---
+
+## Review Completed
+**Timestamp**: 2026-10-12T00:56:41Z
+**Event**: REVIEW_COMPLETED
+**Stage**: infrastructure-design
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: walking-slice
+**Iteration**: 2
+**Verdict**: READY
+**Request Fingerprint**: sha256:5a28c547a8d4752a16d1df08b5bb94c2ab64478f52fd49c71ab2336aaf82546f
+**Artifact Fingerprint**: sha256:5a28c547a8d4752a16d1df08b5bb94c2ab64478f52fd49c71ab2336aaf82546f
+**Request Id**: review:446a94afb61b3432eb10cc1d2e45fadc
+**Review Record**: .aidlc-engine/reviews/infrastructure-design/units/walking-slice/eb5d56411b849cf9/2.json
+**Review Record Digest**: sha256:6682e30af3a86b33ae504ac5f5cbee9a180a66c07037920c5d591c72dae28292
+
+---
+
+## Unit Started
+**Timestamp**: 2026-10-12T00:56:44Z
+**Event**: UNIT_STARTED
+**Stage**: infrastructure-design
+**Unit**: walking-slice
+**Run floor**: STAGE_JUMPED:2026-10-11T20:51:43Z#1
+
+---
+
+## Unit Completed
+**Timestamp**: 2026-10-12T00:56:44Z
+**Event**: UNIT_COMPLETED
+**Stage**: infrastructure-design
+**Unit**: walking-slice
+**Run floor**: STAGE_JUMPED:2026-10-11T20:51:43Z#1
+
+---
