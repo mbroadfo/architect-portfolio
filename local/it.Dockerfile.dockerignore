@@ -1,0 +1,4 @@
+# Build context for local/it.Dockerfile is the repository root: send only the two lockfiles.
+**
+!requirements.lock
+!backend/requirements-slice.lock

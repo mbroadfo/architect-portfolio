@@ -1,0 +1,186 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://contracts.invalid/public-site-snapshot/1.0.json",
+  "title": "PublicSiteSnapshot",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "generation", "site", "exhibits", "featuredOrder", "categories"],
+  "properties": {
+    "schemaVersion": { "const": "1.0" },
+    "generation": { "type": "integer", "minimum": 0 },
+    "site": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ownerName", "githubProfileUrl"],
+      "properties": {
+        "ownerName": { "type": "string", "maxLength": 120 },
+        "githubProfileUrl": {
+          "type": "string",
+          "format": "uri",
+          "pattern": "^https://github\\.com/[A-Za-z0-9-]+$"
+        },
+        "contactEmail": { "type": ["string", "null"], "format": "email" }
+      }
+    },
+    "exhibits": { "type": "array", "maxItems": 200, "items": { "$ref": "#/$defs/Exhibit" } },
+    "featuredOrder": { "type": "array", "maxItems": 5, "items": { "$ref": "#/$defs/Slug" } },
+    "categories": {
+      "type": "array",
+      "maxItems": 4,
+      "items": { "$ref": "#/$defs/CategoryWithCount" }
+    }
+  },
+  "$defs": {
+    "Slug": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$", "maxLength": 60 },
+    "AssetRef": { "type": "string", "pattern": "^ast_[A-Za-z0-9]{16,32}$" },
+    "Category": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["slug", "name", "position"],
+      "properties": {
+        "slug": { "enum": ["games", "astronomy", "woodworking", "software"] },
+        "name": { "type": "string", "maxLength": 60 },
+        "position": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "CategoryWithCount": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["slug", "name", "position", "count"],
+      "properties": {
+        "slug": { "enum": ["games", "astronomy", "woodworking", "software"] },
+        "name": { "type": "string", "maxLength": 60 },
+        "position": { "type": "integer", "minimum": 0 },
+        "count": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "Image": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["assetRef", "altText", "width", "height"],
+      "properties": {
+        "assetRef": { "$ref": "#/$defs/AssetRef" },
+        "altText": { "type": "string", "minLength": 1, "maxLength": 300 },
+        "caption": { "type": "string", "maxLength": 300 },
+        "width": { "type": "integer", "minimum": 1 },
+        "height": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "Attachment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["assetRef", "label", "fileType", "byteSize"],
+      "properties": {
+        "assetRef": { "$ref": "#/$defs/AssetRef" },
+        "label": { "type": "string", "maxLength": 120 },
+        "fileType": { "enum": ["PDF", "SKP", "FCStd", "DXF", "STL", "ZIP", "VSDX"] },
+        "byteSize": { "type": "integer", "minimum": 1, "maximum": 52428800 }
+      }
+    },
+    "Link": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "label", "url"],
+      "properties": {
+        "kind": { "enum": ["demo", "documentation", "other"] },
+        "label": { "type": "string", "maxLength": 80 },
+        "url": { "$ref": "#/$defs/NonRepositoryHttpsUrl" }
+      }
+    },
+    "NonRepositoryHttpsUrl": {
+      "type": "string",
+      "format": "uri",
+      "maxLength": 2048,
+      "pattern": "^https://",
+      "not": {
+        "pattern": "^https://([A-Za-z0-9-]+\\.)*(github\\.com|githubusercontent\\.com|gitlab\\.com|bitbucket\\.org)(:[0-9]+)?(/|$)"
+      }
+    },
+    "Badge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind"],
+      "properties": {
+        "kind": {
+          "enum": [
+            "inBrowser",
+            "signInRequired",
+            "byInvitation",
+            "bestOnDesktop",
+            "openSource",
+            "sourceAvailable",
+            "sourcePrivate"
+          ]
+        },
+        "spdx": { "type": "string", "pattern": "^[A-Za-z0-9.+-]{1,40}$" }
+      }
+    },
+    "PublicRepository": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "url"],
+      "properties": {
+        "name": { "type": "string", "maxLength": 100 },
+        "url": {
+          "type": "string",
+          "pattern": "^https://github\\.com/[A-Za-z0-9-]+/[A-Za-z0-9._-]+$"
+        },
+        "licence": { "type": "string", "pattern": "^[A-Za-z0-9.+-]{1,40}$" }
+      }
+    },
+    "Sections": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "inspiration": { "type": "string", "maxLength": 8000 },
+        "designChallenges": { "type": "string", "maxLength": 8000 },
+        "architecturalDecisions": { "type": "string", "maxLength": 8000 },
+        "implementation": { "type": "string", "maxLength": 8000 },
+        "outcomes": { "type": "string", "maxLength": 8000 },
+        "lessonsLearned": { "type": "string", "maxLength": 8000 }
+      }
+    },
+    "Exhibit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "slug",
+        "title",
+        "summary",
+        "sections",
+        "leadImage",
+        "images",
+        "attachments",
+        "links",
+        "badges",
+        "publicRepositories",
+        "featured",
+        "publishedAt"
+      ],
+      "properties": {
+        "slug": { "$ref": "#/$defs/Slug" },
+        "title": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "summary": { "type": "string", "maxLength": 1200 },
+        "sections": { "$ref": "#/$defs/Sections" },
+        "leadImage": { "$ref": "#/$defs/Image" },
+        "images": { "type": "array", "maxItems": 40, "items": { "$ref": "#/$defs/Image" } },
+        "attachments": {
+          "type": "array",
+          "maxItems": 20,
+          "items": { "$ref": "#/$defs/Attachment" }
+        },
+        "links": { "type": "array", "maxItems": 10, "items": { "$ref": "#/$defs/Link" } },
+        "liveUrl": { "$ref": "#/$defs/NonRepositoryHttpsUrl" },
+        "badges": { "type": "array", "maxItems": 6, "items": { "$ref": "#/$defs/Badge" } },
+        "publicRepositories": {
+          "type": "array",
+          "maxItems": 10,
+          "items": { "$ref": "#/$defs/PublicRepository" }
+        },
+        "primaryCategory": { "$ref": "#/$defs/Category" },
+        "featured": { "type": "boolean" },
+        "publishedAt": { "type": "string", "format": "date-time" }
+      }
+    }
+  }
+}

@@ -1,0 +1,94 @@
+# LOCAL-ONLY Docker Compose stack for the walking slice (U0, S1 to S3). Never deployed.
+#
+#   docker compose -f local/compose.yaml up -d --build
+#
+# Every host port is published on 127.0.0.1 only (NFR1.2); `make slice-check` asserts it.
+# The host ports default to the designed ones and can be moved when another local service
+# already holds one: SLICE_API_PORT (8000), SLICE_SITE_PORT (8080), SLICE_IDP_PORT (9000),
+# SLICE_MONGO_PORT (27017).
+# Images are pinned by digest; Dependabot can propose updates.
+name: portfolio-slice
+
+services:
+  mongo:
+    image: mongo:7@sha256:1f995ad6fdb93244a1addab1b58f934a0bc2f5643c38e02f5e9d7f0c7d227a7b
+    command: ["--replSet", "rs0", "--bind_ip_all"]
+    ports:
+      - "127.0.0.1:${SLICE_MONGO_PORT:-27017}:27017"
+    volumes:
+      - mongo-data:/data/db
+    healthcheck:
+      # Healthy only when the server answers and this node is the writable primary.
+      test: ["CMD", "mongosh", "--quiet", "--eval", "quit(db.adminCommand({ ping: 1 }).ok === 1 && db.hello().isWritablePrimary ? 0 : 1)"]
+      interval: 2s
+      timeout: 5s
+      retries: 60
+      start_period: 5s
+
+  mongo-init:
+    image: mongo:7@sha256:1f995ad6fdb93244a1addab1b58f934a0bc2f5643c38e02f5e9d7f0c7d227a7b
+    depends_on:
+      mongo:
+        condition: service_started
+    volumes:
+      - ./mongo-init.js:/init/mongo-init.js:ro
+    # The mongo image declares /data/db and /data/configdb as volumes. This one-shot client
+    # stores nothing, so tmpfs keeps Docker from creating anonymous volumes that would outlive it.
+    tmpfs:
+      - /data/db
+      - /data/configdb
+    entrypoint: ["bash", "-c"]
+    command:
+      - >-
+        for attempt in $$(seq 1 60); do
+        mongosh --host mongo:27017 --quiet --eval 'db.adminCommand({ ping: 1 })' >/dev/null 2>&1 && break;
+        sleep 1;
+        done;
+        mongosh --host mongo:27017 --quiet --file /init/mongo-init.js
+    restart: "no"
+
+  fake-idp:
+    # AIDLC_LOCAL_ONLY_FAKE_IDP: the local stand-in for the identity provider.
+    build:
+      context: ./fake-idp
+    env_file: compose.env
+    sysctls:
+      net.ipv4.ip_unprivileged_port_start: "0"
+    networks:
+      default:
+        aliases:
+          - fake-idp.invalid
+    ports:
+      - "127.0.0.1:${SLICE_IDP_PORT:-9000}:80"
+
+  api:
+    build:
+      context: ..
+      dockerfile: local/api.Dockerfile
+    env_file: compose.env
+    ports:
+      - "127.0.0.1:${SLICE_API_PORT:-8000}:8000"
+    volumes:
+      - site:/site
+    depends_on:
+      mongo:
+        condition: service_healthy
+      mongo-init:
+        condition: service_completed_successfully
+      fake-idp:
+        condition: service_healthy
+
+  nginx:
+    image: nginx:1.29-alpine@sha256:5616878291a2eed594aee8db4dade5878cf7edcb475e59193904b198d9b830de
+    ports:
+      - "127.0.0.1:${SLICE_SITE_PORT:-8080}:8080"
+    volumes:
+      - site:/srv/site:ro
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      api:
+        condition: service_healthy
+
+volumes:
+  mongo-data:
+  site:

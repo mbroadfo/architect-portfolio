@@ -1,0 +1,82 @@
+:root {
+  color-scheme: light dark;
+  --ink: #1d1f23;
+  --paper: #fbfaf7;
+  --muted: #5d636e;
+  --accent: #2b5d8a;
+  --notice: #8a2b2b;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ink: #e9e7e2;
+    --paper: #16181c;
+    --muted: #a3a8b1;
+    --accent: #8ab8e2;
+    --notice: #e28a8a;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  line-height: 1.5;
+  color: var(--ink);
+  background: var(--paper);
+}
+
+a {
+  color: var(--accent);
+}
+
+.site-header,
+.site-footer,
+main {
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.site-title {
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+  gap: 1rem;
+  padding: 0;
+  list-style: none;
+}
+
+.card a {
+  display: block;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+.exhibit-summary {
+  white-space: pre-line;
+}
+
+.published {
+  color: var(--muted);
+}
+
+.preview-banner {
+  margin: 0;
+  padding: 0.5rem 1rem;
+  font-weight: 700;
+  text-align: center;
+  color: var(--paper);
+  background: var(--notice);
+}
