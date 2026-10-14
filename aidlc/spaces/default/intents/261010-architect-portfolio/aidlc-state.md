@@ -59,6 +59,11 @@
 
 
 
+
+
+
+- **Construction Verification Command**: .venv\Scripts\python.exe scripts\verify.py --strict
+
 ## Phase Progress
 <!-- Status values: Pending, Active, Verified, Skipped -->
 
@@ -120,7 +125,7 @@ Per unit: [TBD]
 - **Current Stage**: functional-design
 - **Next Stage**: nfr-requirements
 - **Status**: Running
-- **Last Updated**: 2026-10-12T00:56:44Z
+- **Last Updated**: 2026-10-12T14:06:50Z
 
 - **Construction Autonomy Mode**: gated
 
