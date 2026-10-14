@@ -23,6 +23,8 @@ ENV = {
     "FAKE_IDP_TEST_SUBJECTS": "local-other, ",
 }
 SOURCE = Path(__file__).resolve().parents[1] / "fake_idp"
+# The issuer answers only allow-listed Host names (SL-3); TestClient's default is "testserver".
+BASE = "http://localhost"
 
 
 def test_marker_is_in_every_source_file() -> None:
@@ -33,7 +35,7 @@ def test_marker_is_in_every_source_file() -> None:
 
 
 def test_jwks_publishes_only_the_public_key() -> None:
-    keys = TestClient(create_app(ENV)).get("/.well-known/jwks.json").json()["keys"]
+    keys = TestClient(create_app(ENV), base_url=BASE).get("/.well-known/jwks.json").json()["keys"]
     assert len(keys) == 1
     assert keys[0]["kty"] == "EC"
     assert keys[0]["alg"] == "ES256"
@@ -41,7 +43,7 @@ def test_jwks_publishes_only_the_public_key() -> None:
 
 
 def test_owner_token_verifies_against_the_jwks() -> None:
-    client = TestClient(create_app(ENV))
+    client = TestClient(create_app(ENV), base_url=BASE)
     body = client.get("/token", params={"sub": "local-owner"}).json()
     key_set = jwt.PyJWKSet.from_dict(client.get("/.well-known/jwks.json").json())
     kid = jwt.get_unverified_header(body["access_token"])["kid"]
@@ -58,15 +60,19 @@ def test_owner_token_verifies_against_the_jwks() -> None:
 
 
 def test_test_subjects_are_served_and_unknown_subjects_refused() -> None:
-    client = TestClient(create_app(ENV))
+    client = TestClient(create_app(ENV), base_url=BASE)
     assert client.get("/token", params={"sub": "local-other"}).status_code == 200
     assert client.get("/token", params={"sub": "intruder"}).status_code == 400
     assert client.get("/token").status_code == 422
 
 
 def test_each_start_generates_a_new_key() -> None:
-    first = TestClient(create_app(ENV)).get("/.well-known/jwks.json").json()["keys"][0]
-    second = TestClient(create_app(ENV)).get("/.well-known/jwks.json").json()["keys"][0]
+    first = (
+        TestClient(create_app(ENV), base_url=BASE).get("/.well-known/jwks.json").json()["keys"][0]
+    )
+    second = (
+        TestClient(create_app(ENV), base_url=BASE).get("/.well-known/jwks.json").json()["keys"][0]
+    )
     assert first["kid"] != second["kid"]
 
 
@@ -89,7 +95,7 @@ def test_the_key_is_never_written_to_disk(tmp_path: Path, monkeypatch: pytest.Mo
 
     monkeypatch.setattr(builtins, "open", guarded_open)
     monkeypatch.setattr(os, "open", guarded_os_open)
-    client = TestClient(create_app(ENV))
+    client = TestClient(create_app(ENV), base_url=BASE)
     assert client.get("/token", params={"sub": "local-owner"}).status_code == 200
     monkeypatch.undo()
     assert writes == []
@@ -104,10 +110,35 @@ def test_refuses_to_start_without_local_configuration(missing: str) -> None:
 
 
 def test_health_and_cors_for_the_studio_origin() -> None:
-    client = TestClient(create_app(ENV))
+    client = TestClient(create_app(ENV), base_url=BASE)
     assert client.get("/health").json() == {"status": "ok"}
     response = client.get("/health", headers={"Origin": "http://localhost:5173"})
     assert response.headers["access-control-allow-origin"] == "http://localhost:5173"
     other = client.get("/health", headers={"Origin": "http://evil.test.example"})
     assert "access-control-allow-origin" not in other.headers
     assert client.get("/docs").status_code == 404
+
+
+@pytest.mark.parametrize(
+    "host",
+    ["localhost", "localhost:19000", "127.0.0.1", "127.0.0.1:52807", "fake-idp.invalid"],
+)
+def test_sl_3_allowed_hosts_are_served(host: str) -> None:
+    """SL-3: the loopback names and the issuer's network alias, on any port."""
+    client = TestClient(create_app(ENV), base_url=BASE)
+    assert client.get("/health", headers={"Host": host}).status_code == 200
+    token = client.get("/token", params={"sub": "local-owner"}, headers={"Host": host})
+    assert token.status_code == 200
+
+
+@pytest.mark.parametrize(
+    "host",
+    ["evil.example", "rebind.attacker.test:9000", "fake-idp", "192.168.1.5", "testserver"],
+)
+def test_sl_3_a_foreign_host_gets_400_and_no_token(host: str) -> None:
+    """SL-3: a DNS-rebinding page sends its own name as Host; it gets 400 and no token."""
+    client = TestClient(create_app(ENV), base_url=BASE)
+    for path in ("/health", "/.well-known/jwks.json", "/token?sub=local-owner"):
+        response = client.get(path, headers={"Host": host})
+        assert response.status_code == 400, (host, path)
+        assert "access_token" not in response.text

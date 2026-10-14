@@ -18,6 +18,7 @@ BASE_ENV: dict[str, str] = {
     "RENDERER_ASSETS_DIR": "/app/renderer/assets",
     "SITE_OWNER_NAME": "Placeholder Owner",
     "SITE_GITHUB_URL": "https://github.com/example",
+    "ALLOWED_HOSTS": "studio-api.test.example",
 }
 
 
@@ -151,3 +152,34 @@ def test_reads_the_process_environment(monkeypatch: pytest.MonkeyPatch) -> None:
     for key, value in _env(APP_ENV="production").items():
         monkeypatch.setenv(key, value)
     assert load_settings().owner_subject == "owner-subject"
+
+
+# --- SL-3: the Host allow-list --------------------------------------------------------------
+
+
+@pytest.mark.parametrize("app_env", ["production", "preview", "", None])
+def test_sl_3_a_missing_allow_list_outside_local_mode_refuses_start_up(
+    app_env: str | None,
+) -> None:
+    with pytest.raises(ConfigurationError, match="ALLOWED_HOSTS is required"):
+        load_settings(_env(APP_ENV=app_env, ALLOWED_HOSTS=None))
+    with pytest.raises(ConfigurationError, match="ALLOWED_HOSTS is required"):
+        load_settings(_env(APP_ENV=app_env, ALLOWED_HOSTS=" , "))
+
+
+def test_sl_3_local_mode_defaults_to_loopback_and_the_service_name() -> None:
+    settings = load_settings(
+        _env(AUTH_ISSUER="http://fake-idp.invalid", APP_ENV="local", ALLOWED_HOSTS=None)
+    )
+    assert settings.allowed_hosts == ("localhost", "127.0.0.1", "api")
+
+
+def test_sl_3_an_explicit_allow_list_is_used_as_given() -> None:
+    settings = load_settings(_env(APP_ENV="production", ALLOWED_HOSTS="Api.Example.com, b.test"))
+    assert settings.allowed_hosts == ("api.example.com", "b.test")
+
+
+@pytest.mark.parametrize("value", ["*", "*.example.com", "api.example.com:443", "http://a.b"])
+def test_sl_3_wildcards_ports_and_urls_are_refused(value: str) -> None:
+    with pytest.raises(ConfigurationError, match="plain host names"):
+        load_settings(_env(APP_ENV="production", ALLOWED_HOSTS=value))

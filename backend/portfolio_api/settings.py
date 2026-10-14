@@ -8,6 +8,12 @@ reserved or multicast address in any numeric form (``127.1``, ``0x7f.1``, ``0177
 (``AUTH_JWKS_URL``), is refused at start-up unless ``APP_ENV=local`` is set. The validator
 holds only these generic rules, never the local fake issuer's URL, which lives only in
 ``local/compose.env``.
+
+SL-3 (security re-review): the API answers only requests whose ``Host`` is in
+``ALLOWED_HOSTS`` (comma-separated host names, any port), so a hostile page cannot reach it
+through DNS rebinding. With ``APP_ENV=local`` and no setting, the allow-list is ``localhost``,
+``127.0.0.1`` and ``api`` (the Compose service name). In any other environment the setting
+is required; without it the API refuses to start. ``*`` is never accepted.
 """
 
 from __future__ import annotations
@@ -23,6 +29,9 @@ from urllib.parse import urlsplit
 LOCAL_ENV = "local"
 LOCAL_SUFFIXES: tuple[str, ...] = (".invalid", ".local", ".localhost")
 DEFAULT_CORS_ORIGIN = "http://localhost:5173"
+# SL-3: the Host names the API answers in APP_ENV=local when ALLOWED_HOSTS is not set.
+LOCAL_ALLOWED_HOSTS: tuple[str, ...] = ("localhost", "127.0.0.1", "api")
+HOST_NAME = re.compile(r"^(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)*[a-z0-9-]{1,63}\.?$")
 
 
 class ConfigurationError(RuntimeError):
@@ -121,11 +130,29 @@ class Settings:
     site_owner_name: str
     site_github_url: str
     cors_origin: str = DEFAULT_CORS_ORIGIN
+    allowed_hosts: tuple[str, ...] = ()
 
     @property
     def is_local(self) -> bool:
         """True only for the explicit local environment."""
         return self.app_env == LOCAL_ENV
+
+
+def parse_allowed_hosts(value: str, app_env: str) -> tuple[str, ...]:
+    """SL-3: the Host allow-list; refuse a missing list outside local mode, and wildcards."""
+    hosts = tuple(h.strip().lower() for h in value.split(",") if h.strip())
+    if not hosts:
+        if app_env == LOCAL_ENV:
+            return LOCAL_ALLOWED_HOSTS
+        raise ConfigurationError(
+            "ALLOWED_HOSTS is required outside APP_ENV=local (comma-separated host names)"
+        )
+    bad = [h for h in hosts if not HOST_NAME.match(h)]
+    if bad:
+        raise ConfigurationError(
+            f"ALLOWED_HOSTS entries must be plain host names without port or wildcard: {bad}"
+        )
+    return hosts
 
 
 def load_settings(env: Mapping[str, str] | None = None) -> Settings:
@@ -144,6 +171,7 @@ def load_settings(env: Mapping[str, str] | None = None) -> Settings:
             "is accepted only with APP_ENV=local"
         )
     renderer = _required(source, "RENDERER_COMMAND").split()
+    allowed_hosts = parse_allowed_hosts(source.get("ALLOWED_HOSTS", ""), app_env)
     return Settings(
         app_env=app_env,
         auth_issuer=issuer,
@@ -159,4 +187,5 @@ def load_settings(env: Mapping[str, str] | None = None) -> Settings:
         site_owner_name=_required(source, "SITE_OWNER_NAME"),
         site_github_url=_required(source, "SITE_GITHUB_URL"),
         cors_origin=source.get("CORS_ORIGIN", "").strip() or DEFAULT_CORS_ORIGIN,
+        allowed_hosts=allowed_hosts,
     )

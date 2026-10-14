@@ -90,6 +90,54 @@ def test_ac0_11_content_identical_rebase_still_passes(git_repo: RepoFactory) -> 
     assert review.run_check(repo.path, "main", "HEAD").ok
 
 
+def _stable_id(repo: GitRepo) -> str:
+    """The identity the old ``--stable`` mode gave (whitespace dropped), for comparison."""
+    base = repo.run("merge-base", "main", "HEAD")
+    diff = review.git_bytes(
+        repo.path,
+        "diff",
+        "--full-index",
+        base,
+        "HEAD",
+        "--",
+        ".",
+        f":(exclude){review.REVIEWS_DIR}/",
+    )
+    return review.git_bytes(repo.path, "patch-id", "--stable", stdin=diff).decode().split()[0]
+
+
+@pytest.mark.parametrize(
+    ("path", "reviewed", "changed"),
+    [
+        ("scripts/tool.py", "if True:\n    print('v2')\n", "if True:\n        print('v2')\n"),
+        ("scripts/workflow.yml", "jobs:\n  a:\n    b: 1\n", "jobs:\n    a:\n      b: 1\n"),
+        ("scripts/tool.py", "print('a b')\n", "print('a  b')\n"),
+        ("scripts/tool.py", "print('a b')\n", "print('a\tb')\n"),
+    ],
+    ids=["python-indentation", "yaml-indentation", "space-in-string", "tab-in-string"],
+)
+def test_s0_1_whitespace_only_changes_need_a_new_review(
+    git_repo: RepoFactory, path: str, reviewed: str, changed: str
+) -> None:
+    """S0-1: --verbatim keeps whitespace in the identity. An indentation-only change, or a
+    changed space inside a string, after review gives a new identity, so the review no longer
+    matches. (--stable dropped the whitespace and gave both versions the same identity.)"""
+    repo = git_repo()
+    repo.run("checkout", "-q", "-b", "feature")
+    repo.write(path, reviewed)
+    repo.commit_all("reviewed content")
+    reviewed_id = _patch_id(repo)
+    stable_before = _stable_id(repo)
+    repo.write("docs/security-reviews/2026-10-12-ws.md", _record(reviewed_id))
+    repo.commit_all("READY review")
+    assert review.run_check(repo.path, "main", "HEAD").ok
+    repo.write(path, changed)
+    repo.commit_all("whitespace-only change after review")
+    assert _patch_id(repo) != reviewed_id
+    assert not review.run_check(repo.path, "main", "HEAD").ok
+    assert _stable_id(repo) == stable_before, "the old --stable mode could not see this change"
+
+
 def test_content_change_after_review_needs_a_new_review(git_repo: RepoFactory) -> None:
     repo = _feature_touching_scripts(git_repo)
     repo.write("docs/security-reviews/2026-10-11-tool.md", _record(_patch_id(repo)))
@@ -212,6 +260,28 @@ REAL_LIST_COVERS = [
     "scripts/check_security_review.py",
     "scripts/gate_results.py",
     "infra/README.md",
+    # Security re-review S0-3: dependencies, the stack configuration, the scan's trusted
+    # digests, the slice check, the Dockerfiles and the tests that guard the boundaries.
+    ".pip-audit-ignore",
+    "backend/pyproject.toml",
+    "requirements.in",
+    "requirements.lock",
+    "backend/requirements-slice.in",
+    "backend/requirements-slice.lock",
+    "local/fake-idp/requirements.in",
+    "local/fake-idp/requirements.lock",
+    "local/compose.env",
+    "local/compose.verify.yaml",
+    "local/fixtures/derivatives.sha256.json",
+    "local/slice_check.py",
+    "local/api.Dockerfile",
+    "local/it.Dockerfile",
+    "local/fake-idp/Dockerfile",
+    "backend/tests/unit/slice/test_api.py",
+    "backend/tests/integration/slice/test_publish_faults.py",
+    "web/package-lock.json",
+    "web/slice-renderer/package-lock.json",
+    "web/slice-studio/package-lock.json",
 ]
 
 

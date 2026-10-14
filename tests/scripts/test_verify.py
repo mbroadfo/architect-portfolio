@@ -426,6 +426,65 @@ def test_r1_compose_argv_refuses_data_removing_arguments(tmp_path: Path) -> None
         isolation.checkout_project(tmp_path, "Bad Name")
 
 
+# Security re-review S0-4: the same forbidden operations spelled so that exact-token matching
+# missed them, plus the subcommands refused wherever they appear.
+EVASIONS = [
+    ("down", "--volumes=true"),
+    ("down", "--volumes=false"),
+    ("down", "-tv"),
+    ("down", "-v=true"),
+    ("down", "--rmi=all"),
+    ("down", "--remove-orphans=true"),
+    ("--profile", "x", "rm", "-fsv"),
+    ("--profile", "x", "rm"),
+    ("-f", "other.yaml", "rm", "-f"),
+    ("volume", "rm", "data"),
+    ("volumes",),
+    ("system", "prune"),
+    ("--profile", "x", "system", "df"),
+    ("prune",),
+]
+ALLOWED = [
+    ("down",),
+    ("up", "-d", "--build", "--force-recreate"),
+    ("--profile", "tests", "run", "--rm", "--no-deps", "--build", "-T", "slice-it"),
+    ("exec", "-T", "mongo", "mongosh", "--quiet", "portfolio_slice", "--eval", "print(1)"),
+    ("config", "--format", "json"),
+    ("cp", "api:/site/releases/v1", "release"),
+]
+
+
+@pytest.mark.parametrize("args", EVASIONS, ids=[" ".join(a) for a in EVASIONS])
+def test_s0_4_differently_spelled_forbidden_arguments_are_refused(
+    tmp_path: Path, args: tuple[str, ...]
+) -> None:
+    """S0-4: `--flag=value`, combined short flags and `rm`/`volume`/`system`/`prune` after
+    global options are refused, directly and through a verify.py `{compose}` check."""
+    project = isolation.checkout_project(tmp_path)
+    with pytest.raises(isolation.IsolationError, match="refusing data-removing"):
+        isolation.compose_argv(project, tmp_path, ["a.yaml"], *args)
+    argv = ", ".join(repr(part) for part in ("{compose}", *args))
+    path = registry(
+        tmp_path,
+        f"[[check]]\nid='evasion'\nunit='p'\nkind='integration'\nargv=[{argv}]\n"
+        "requires=['services']\n",
+        services=True,
+    )
+    runner = Recorder()
+    code, text = run_main(tmp_path, path, runner=runner)
+    assert code == 1
+    assert "refusing data-removing" in row(text, "evasion")[-1]
+    assert runner.docker_calls == []
+
+
+@pytest.mark.parametrize("args", ALLOWED, ids=[" ".join(a) for a in ALLOWED])
+def test_s0_4_the_commands_verification_uses_are_still_allowed(
+    tmp_path: Path, args: tuple[str, ...]
+) -> None:
+    project = isolation.checkout_project(tmp_path)
+    assert isolation.compose_argv(project, tmp_path, ["a.yaml"], *args)[-len(args) :] == list(args)
+
+
 def test_r1_a_compose_check_with_a_forbidden_flag_fails_without_running(tmp_path: Path) -> None:
     path = registry(
         tmp_path,

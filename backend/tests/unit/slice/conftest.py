@@ -168,6 +168,8 @@ def make_settings(tmp_path: Path) -> Settings:
         renderer_assets_dir=tmp_path / "static",
         site_owner_name="Placeholder Owner",
         site_github_url="https://github.com/example",
+        # SL-3: the test client's Host; outside APP_ENV=local the list must be explicit.
+        allowed_hosts=("testserver", "localhost"),
     )
 
 

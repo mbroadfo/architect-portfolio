@@ -10,6 +10,10 @@ LOCAL-ONLY FAKE identity provider (U0 walking slice; NFR1.3, BR1.2, BR1.3).
   ``local/compose.env``), whichever URL served the token.
 
 The API refuses this issuer unless ``APP_ENV=local`` (BR1.3).
+
+It answers only requests whose ``Host`` is ``localhost``, ``127.0.0.1`` or
+``fake-idp.invalid`` (any port), so a hostile page cannot reach it through DNS rebinding
+while the demo stack runs (security re-review SL-3). Any other Host gets 400.
 """
 
 from __future__ import annotations
@@ -26,11 +30,15 @@ from cryptography.hazmat.primitives.asymmetric import ec
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from jwt.algorithms import ECAlgorithm
+from starlette.middleware.trustedhost import TrustedHostMiddleware
 
 from fake_idp import MARKER
 
 TOKEN_LIFETIME_SECONDS = 600
 DEFAULT_CORS_ORIGIN = "http://localhost:5173"
+# The only Host names it answers (SL-3): the browser and Playwright use the loopback
+# addresses; the API fetches the keys at the issuer's network alias.
+ALLOWED_HOSTS: tuple[str, ...] = ("localhost", "127.0.0.1", "fake-idp.invalid")
 
 
 class FakeIdpConfigurationError(RuntimeError):
@@ -83,6 +91,8 @@ def create_app(env: Mapping[str, str] | None = None) -> FastAPI:
         allow_headers=[],
         allow_credentials=False,
     )
+    # Added last, so it runs first: a foreign Host is refused before anything else.
+    app.add_middleware(TrustedHostMiddleware, allowed_hosts=list(ALLOWED_HOSTS))
 
     @app.get("/health")
     def health() -> dict[str, str]:

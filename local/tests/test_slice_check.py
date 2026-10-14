@@ -159,6 +159,39 @@ def test_r1_the_stack_refuses_data_removing_arguments(flag: str) -> None:
         stack.compose("down", flag)
 
 
+# Security re-review S0-4: forbidden operations spelled to slip past exact-token matching.
+EVASIONS = [
+    ("down", "--volumes=true"),
+    ("down", "-tv"),
+    ("down", "-v=true"),
+    ("down", "--rmi=all"),
+    ("down", "--remove-orphans=true"),
+    ("--profile", "x", "rm", "-fsv"),
+    ("--profile", "x", "rm"),
+    ("volume", "rm", "data"),
+    ("volumes",),
+    ("system", "prune"),
+    ("prune",),
+]
+
+
+@pytest.mark.parametrize("args", EVASIONS, ids=[" ".join(a) for a in EVASIONS])
+def test_s0_4_differently_spelled_forbidden_arguments_are_refused(args: tuple[str, ...]) -> None:
+    stack = slice_check.Stack.from_env({}, free_ports=fake_ports)
+    with pytest.raises(slice_check.SliceCheckError, match="refusing data-removing"):
+        stack.compose(*args)
+
+
+def test_s0_4_every_command_the_check_runs_is_still_allowed(
+    recorded: tuple[Recorder, list[str]],
+) -> None:
+    recorder, _ = recorded
+    stack = slice_check.Stack.from_env({}, free_ports=fake_ports)
+    results = slice_check.run_steps(stack, keep_running=False)
+    assert all(outcome == "passed" for _, outcome, _ in results)
+    assert len(recorder.docker) == 7
+
+
 def test_r1_a_second_run_in_the_same_checkout_fails_clearly(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path, capsys: pytest.CaptureFixture[str]
 ) -> None:

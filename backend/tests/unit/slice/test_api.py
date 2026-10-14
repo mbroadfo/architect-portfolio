@@ -127,6 +127,147 @@ def test_ac0_1_invalid_body_from_a_stranger_is_still_401(
     assert spies == []
 
 
+BAD_BODIES: list[tuple[str, bytes]] = [
+    ("malformed-json", b'{"title": '),
+    ("not-json", b"<xml/>"),
+    ("wrong-shape", b'{"unknown": 1, "revision": "x"}'),
+    ("array", b"[1, 2, 3]"),
+    ("oversized", b'{"title": "' + b"x" * 200_000 + b'"}'),
+]
+
+
+@pytest.fixture
+def body_reads(monkeypatch: pytest.MonkeyPatch) -> list[str]:
+    """Record every read of a request body (FastAPI and the owner_body dependency both read
+    through Request.body)."""
+    from starlette.requests import Request
+
+    reads: list[str] = []
+    original = Request.body
+
+    async def spy(self: Request) -> bytes:
+        reads.append(self.url.path)
+        return await original(self)
+
+    monkeypatch.setattr(Request, "body", spy)
+    return reads
+
+
+@pytest.mark.parametrize(("method", "path", "_body"), REQUESTS)
+@pytest.mark.parametrize(("_kind", "raw"), BAD_BODIES, ids=[kind for kind, _ in BAD_BODIES])
+def test_sl_1_refused_callers_get_401_or_403_whatever_the_body(
+    harness: Harness,
+    spies: list[str],
+    body_reads: list[str],
+    method: str,
+    path: str,
+    _body: object,
+    _kind: str,
+    raw: bytes,
+) -> None:
+    """SL-1 (AC0.1, BR1.1): for every owner route, a caller with no token or a bad token gets
+    401 (403 for another subject) whatever the body: malformed JSON, not JSON, the wrong shape
+    or an oversized body. No handler runs and the body is never read."""
+    for headers, expected in _bad_tokens(harness):
+        response = harness.client.request(
+            method, path, content=raw, headers={**headers, "Content-Type": "application/json"}
+        )
+        assert response.status_code == expected, (headers, response.text[:200])
+        assert response.json()["code"] == ("NOT_OWNER" if expected == 403 else "UNAUTHENTICATED")
+    assert spies == []
+    assert body_reads == []
+
+
+def test_sl_1_every_owner_route_reads_its_body_only_after_authentication(
+    harness: Harness,
+) -> None:
+    """No owner route declares a FastAPI body parameter (which is parsed before dependencies);
+    every body comes from an owner_body dependency that depends on require_owner."""
+    for context in iter_route_contexts(harness.app.routes):
+        dependant = getattr(context, "dependant", None)
+        if dependant is None or context.path == "/health":
+            continue
+        assert dependant.body_params == [], context.path
+
+
+def test_sl_1_the_owner_still_gets_422_for_bad_bodies(harness: Harness) -> None:
+    project = harness.create()
+    for raw, fragment in [
+        (b'{"title": ', "Invalid JSON"),
+        (b'{"title": "x", "extra": 1}', "extra"),
+        (b'{"title": "' + b"x" * 200_000 + b'"}', "larger than 65536 bytes"),
+    ]:
+        response = harness.client.post(
+            "/slice/projects",
+            content=raw,
+            headers={**harness.headers(), "Content-Type": "application/json"},
+        )
+        assert response.status_code == 422, response.text[:200]
+        assert response.json()["code"] == "VALIDATION_FAILED"
+        assert fragment in response.json()["message"]
+    response = harness.client.post(
+        f"/slice/projects/{project['projectId']}/publish",
+        content=b"[]",
+        headers={**harness.headers(), "Content-Type": "application/json"},
+    )
+    assert response.status_code == 422
+
+
+@pytest.mark.parametrize(
+    "host", ["evil.example", "rebind.attacker.test:8000", "192.168.1.5", "api.example.com"]
+)
+def test_sl_3_a_foreign_host_gets_400_before_anything_runs(
+    harness: Harness, spies: list[str], host: str
+) -> None:
+    """SL-3: a DNS-rebinding page's Host is refused with 400 on every route, even with the
+    owner's token, and no handler runs."""
+    for method, path, body in [("GET", "/health", None), *REQUESTS]:
+        response = harness.client.request(
+            method, path, json=body, headers={**harness.headers(), "Host": host}
+        )
+        assert response.status_code == 400, (host, path)
+    assert spies == []
+
+
+@pytest.mark.parametrize("host", ["testserver", "localhost", "localhost:18000"])
+def test_sl_3_allowed_hosts_are_served(harness: Harness, host: str) -> None:
+    assert harness.client.get("/health", headers={"Host": host}).status_code == 200
+    response = harness.client.get("/slice/projects", headers={**harness.headers(), "Host": host})
+    assert response.status_code == 200
+
+
+def test_sl_3_create_app_refuses_an_empty_or_wildcard_allow_list(harness: Harness) -> None:
+    from dataclasses import replace
+
+    from tests.unit.slice.conftest import make_settings
+
+    settings = make_settings(harness.site.root.parent)
+    for hosts in [(), ("*",)]:
+        with pytest.raises(ConfigurationError, match="Host allow-list"):
+            create_app(replace(settings, allowed_hosts=hosts))
+
+
+def test_sl_3_local_settings_allow_the_compose_service_name(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    for key, value in {
+        "APP_ENV": "local",
+        "AUTH_ISSUER": "http://fake-idp.invalid",
+        "AUTH_AUDIENCE": "a",
+        "OWNER_SUBJECT": "o",
+        "MONGO_URI": "mongodb://mongo:27017",
+        "SITE_DIR": "/site",
+        "FIXTURE_DIR": "/f",
+        "RENDERER_COMMAND": "node cli.cjs",
+        "RENDERER_ASSETS_DIR": "/a",
+        "SITE_OWNER_NAME": "o",
+        "SITE_GITHUB_URL": "https://github.com/example",
+    }.items():
+        monkeypatch.setenv(key, value)
+    monkeypatch.delenv("ALLOWED_HOSTS", raising=False)
+    assert load_settings().allowed_hosts == ("localhost", "127.0.0.1", "api")
+
+
 def test_health_is_open_and_fixed(harness: Harness) -> None:
     """NFR11.2 / C10."""
     response = harness.client.get("/health")

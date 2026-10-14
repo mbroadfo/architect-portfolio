@@ -20,9 +20,10 @@ from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+from starlette.middleware.trustedhost import TrustedHostMiddleware
 
 from portfolio_api.auth import AuthError, JwksClient, TokenVerifier
-from portfolio_api.settings import Settings, load_settings
+from portfolio_api.settings import ConfigurationError, Settings, load_settings
 from portfolio_api.slice.api import SliceServices, health_router, slice_router
 from portfolio_api.slice.errors import SliceError
 from portfolio_api.slice.mongo import (
@@ -133,6 +134,8 @@ def create_app(
 ) -> FastAPI:
     """Build the API; raise ConfigurationError (refusing to start) on unsafe settings."""
     resolved = settings if settings is not None else load_settings()
+    if not resolved.allowed_hosts or "*" in resolved.allowed_hosts:
+        raise ConfigurationError("the API needs an explicit Host allow-list (ALLOWED_HOSTS)")
     configure_logging()
     parts = components if components is not None else build_components(resolved)
 
@@ -160,6 +163,9 @@ def create_app(
         expose_headers=["ETag", "X-Request-Id"],
         allow_credentials=False,
     )
+    # SL-3: added last, so it runs first. A foreign Host (DNS rebinding) gets 400 before
+    # logging, CORS or any route.
+    app.add_middleware(TrustedHostMiddleware, allowed_hosts=list(resolved.allowed_hosts))
     install_error_handlers(app)
     app.include_router(health_router)
     app.include_router(slice_router)

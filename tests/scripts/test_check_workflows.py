@@ -207,7 +207,8 @@ def test_r2_missing_output_and_wrong_condition_fail(tmp_path: Path) -> None:
     assert "declares no output 'slice_e2e' for slice-e2e" in violations
     assert "declares no output 'web' for web" in violations
     assert (
-        "job 'slice-e2e' must run only if needs.changes.outputs.slice_e2e == 'true'" in violations
+        "job 'slice-e2e' must run only if exactly needs.changes.outputs.slice_e2e == 'true'"
+        in violations
     )
 
 
@@ -220,3 +221,79 @@ def test_r2_gate_needs_as_a_single_string_is_read(tmp_path: Path) -> None:
     gate = {"needs": "changes", "runs-on": "x", "steps": []}
     violations = lint.check_file(_workflow(tmp_path, _ci(gate=gate), "ci.yml"))
     assert any("jobs.gate.needs ['changes'] differs" in v for v in violations)
+
+
+# --- S0-5: least-privilege permissions and exact path-gated conditions -----------------------
+
+
+@pytest.mark.parametrize(
+    "condition",
+    [
+        "needs.changes.outputs.slice_e2e == 'true' || always()",
+        "always() || needs.changes.outputs.slice_e2e == 'true'",
+        "${{ needs.changes.outputs.slice_e2e == 'true' }} || true",
+        "needs.changes.outputs.slice_e2e != 'false'",
+    ],
+)
+def test_s0_5_a_path_gated_condition_must_match_exactly(tmp_path: Path, condition: str) -> None:
+    job = {"needs": "changes", "if": condition, "runs-on": "x", "steps": [{"run": "x"}]}
+    violations = lint.check_file(_workflow(tmp_path, _ci(slice_e2e=job), "ci.yml"))
+    assert violations == [
+        f"{tmp_path / 'ci.yml'}: job 'slice-e2e' must run only if exactly "
+        "needs.changes.outputs.slice_e2e == 'true'"
+    ]
+
+
+@pytest.mark.parametrize("level", ["top", "job"])
+@pytest.mark.parametrize("value", ["write-all", "read-all"])
+def test_s0_5_write_all_and_read_all_fail_at_any_level(
+    tmp_path: Path, level: str, value: str
+) -> None:
+    if level == "top":
+        text = COMPLIANT.replace("permissions:\n  contents: read\n", f"permissions: {value}\n")
+    else:
+        text = COMPLIANT.replace("    runs-on:", f"    permissions: {value}\n    runs-on:")
+    violations = lint.check_file(_workflow(tmp_path, text))
+    assert len(violations) == 1 and f"is '{value}'" in violations[0]
+
+
+@pytest.mark.parametrize(
+    "block",
+    [
+        "contents: write",
+        "pull-requests: write",
+        "id-token: write",
+        "security-events: write",
+        "actions: read",
+    ],
+)
+def test_s0_5_a_job_may_only_read_contents(tmp_path: Path, block: str) -> None:
+    text = COMPLIANT.replace("    runs-on:", f"    permissions:\n      {block}\n    runs-on:")
+    violations = lint.check_file(_workflow(tmp_path, text))
+    assert violations == [
+        f"{tmp_path / 'wf.yml'}: jobs.build.permissions.{block.replace(': ', ': ', 1)} "
+        "is not allowed"
+    ]
+
+
+def test_s0_5_the_top_level_may_only_read_contents(tmp_path: Path) -> None:
+    text = COMPLIANT.replace("  contents: read\n", "  contents: read\n  issues: write\n", 1)
+    assert lint.check_file(_workflow(tmp_path, text)) == [
+        f"{tmp_path / 'wf.yml'}: permissions.issues: write is not allowed"
+    ]
+    text = COMPLIANT.replace("permissions:\n  contents: read\n", "permissions: [contents]\n")
+    assert "must be a mapping of scopes" in lint.check_file(_workflow(tmp_path, text))[0]
+
+
+def test_s0_5_only_the_codeql_analyze_job_gets_its_extra_scopes(tmp_path: Path) -> None:
+    job_block = (
+        "    permissions:\n      contents: read\n      security-events: write\n"
+        "      actions: read\n    runs-on:"
+    )
+    text = COMPLIANT.replace("    runs-on:", job_block).replace("  build:", "  analyze:")
+    assert lint.check_file(_workflow(tmp_path, text, "codeql.yml")) == []
+    assert len(lint.check_file(_workflow(tmp_path, text, "other.yml"))) == 2
+    renamed = text.replace("  analyze:", "  build:")
+    assert len(lint.check_file(_workflow(tmp_path, renamed, "codeql.yml"))) == 2
+    extra = text.replace("      actions: read\n", "      actions: write\n")
+    assert len(lint.check_file(_workflow(tmp_path, extra, "codeql.yml"))) == 1
