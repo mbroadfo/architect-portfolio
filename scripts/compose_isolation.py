@@ -14,9 +14,12 @@ share these rules so that a verification run never touches anything it did not c
   at once with a clear message. The operating system releases the lock when the process ends,
   so a crashed run never leaves a stale lock behind.
 - **Nothing is deleted.** Compose arguments that remove data or other projects' resources
-  (``-v``, ``--volumes``, ``--rmi``, ``--remove-orphans``, ``prune``, the ``rm`` subcommand)
-  are refused, whatever the caller asks for. Teardown is a plain ``down``: containers and the
-  network of this project only. The project's ``site`` volume is kept and reused.
+  are refused, whatever the caller asks for and however they are spelled (security re-review
+  S0-4): ``--volumes``, ``--rmi`` and ``--remove-orphans`` also as ``--flag=value``; ``-v``
+  also inside combined short flags (``-tv``, ``-fsv``); and the words ``rm``, ``prune``,
+  ``volume``, ``volumes`` and ``system`` wherever they appear (after global options such as
+  ``--profile x`` too). Teardown is a plain ``down``: containers and the network of this
+  project only. The project's ``site`` volume is kept and reused.
 
 Standard library only.
 """
@@ -37,12 +40,13 @@ from typing import IO
 PROJECT_PREFIX = "portfolio-verify-"
 # The developer's own stack (local/compose.yaml), which verification must never touch.
 PROTECTED_PROJECTS: frozenset[str] = frozenset({"portfolio-slice"})
-# Arguments that remove volumes, images or other projects' containers.
-FORBIDDEN_ARGS: frozenset[str] = frozenset({"-v", "--volumes", "--rmi", "--remove-orphans"})
-# Words that, anywhere in the argument list, name a data-removing operation.
-FORBIDDEN_WORDS: frozenset[str] = frozenset({"prune"})
-# Compose subcommands that remove resources other than through a plain ``down``.
-FORBIDDEN_SUBCOMMANDS: frozenset[str] = frozenset({"rm"})
+# Long options that remove volumes, images or other projects' containers (also `--x=value`).
+FORBIDDEN_LONG: frozenset[str] = frozenset({"--volumes", "--rmi", "--remove-orphans"})
+# Short option letters that remove volumes (also inside combined flags such as `-tv`).
+FORBIDDEN_SHORT: frozenset[str] = frozenset({"v"})
+# Subcommands that remove resources other than through a plain `down`, refused wherever they
+# appear in the argument list.
+FORBIDDEN_WORDS: frozenset[str] = frozenset({"rm", "prune", "volume", "volumes", "system"})
 WORK_DIR_NAME = ".verify-work"
 PROJECT_NAME = re.compile(r"^[a-z0-9][a-z0-9_-]*$")
 NAMESPACE = re.compile(r"^[a-z0-9]{1,16}$")
@@ -87,11 +91,21 @@ def checkout_project(root: Path, namespace: str = "") -> str:
     return validate_project(f"{name}-{namespace}" if namespace else name)
 
 
+def _is_forbidden(arg: str) -> bool:
+    """Whether one argument, normalised, removes data: `--x=value` is `--x`, `-tv` is -t -v."""
+    if arg in FORBIDDEN_WORDS:
+        return True
+    if arg.startswith("--"):
+        return arg.split("=", 1)[0] in FORBIDDEN_LONG
+    if arg.startswith("-") and len(arg) > 1:
+        letters = arg[1:].split("=", 1)[0]
+        return any(letter in FORBIDDEN_SHORT for letter in letters)
+    return False
+
+
 def check_compose_args(args: Sequence[str]) -> None:
     """Raise IsolationError when the arguments would remove data or foreign resources."""
-    bad = sorted(FORBIDDEN_ARGS.intersection(args) | FORBIDDEN_WORDS.intersection(args))
-    if args and args[0] in FORBIDDEN_SUBCOMMANDS:
-        bad.append(args[0])
+    bad = [arg for arg in args if _is_forbidden(arg)]
     if bad:
         raise IsolationError(f"refusing data-removing compose argument(s): {', '.join(bad)}")
 

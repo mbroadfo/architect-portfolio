@@ -2,7 +2,10 @@
 
 Fails when a GitHub Actions workflow:
 
-- has no top-level ``permissions:`` (least privilege must be declared explicitly);
+- has no top-level ``permissions:`` (least privilege must be declared explicitly), uses
+  ``write-all`` or ``read-all`` at any level, or grants any scope other than
+  ``contents: read``, except the job scopes listed in ``JOB_PERMISSIONS`` (the CodeQL job's
+  ``security-events: write`` and ``actions: read``) (security re-review S0-5);
 - uses an action that is not pinned to a full 40-character commit SHA
   (local ``./`` actions and ``docker://`` images pinned by ``@sha256:`` digest are allowed);
 - checks out code without ``persist-credentials: false``;
@@ -11,8 +14,8 @@ Fails when a GitHub Actions workflow:
 For the CI workflow (``ci.yml``) it also checks the required ``gate`` job against
 ``scripts/gate_results.py`` (Codex review R2): the gate's ``needs:`` list must equal the
 evaluator's inventory, every other job must be in it, the ``changes`` job must declare an
-output for every path-gated job, and each path-gated job must run only when that output is
-``'true'``.
+output for every path-gated job, and each path-gated job's ``if:`` must be exactly
+``needs.changes.outputs.<x> == 'true'`` (so ``... || always()`` fails).
 
 Usage: ``python scripts/check_workflows.py [workflow files or directories]``
 (default: ``.github/workflows``). Exit codes: 0 compliant, 1 violations, 2 usage error.
@@ -36,6 +39,16 @@ DEFAULT_WORKFLOW_DIR = Path(".github") / "workflows"
 CI_WORKFLOW = "ci.yml"
 GATE_JOB = "gate"
 CHECKOUT_ACTION = "actions/checkout@"
+# Least privilege (security re-review S0-5): the only scope any workflow or job may grant...
+DEFAULT_PERMISSIONS: dict[str, str] = {"contents": "read"}
+# ...except these jobs, keyed by (workflow file, job id), which get exactly these scopes.
+JOB_PERMISSIONS: dict[tuple[str, str], dict[str, str]] = {
+    ("codeql.yml", "analyze"): {
+        "contents": "read",
+        "security-events": "write",
+        "actions": "read",
+    },
+}
 
 
 def _triggers(document: dict[Any, Any]) -> set[str]:
@@ -126,8 +139,49 @@ def check_gate(name: str, document: dict[Any, Any]) -> list[str]:
         job = jobs.get(job_id)
         condition = job.get("if") if isinstance(job, dict) else None
         wanted = f"needs.changes.outputs.{key} == 'true'"
-        if not isinstance(condition, str) or wanted not in condition:
-            violations.append(f"{name}: job '{job_id}' must run only if {wanted}")
+        # Exact match (S0-5): `... || always()` or any other addition fails.
+        if not isinstance(condition, str) or condition.strip() != wanted:
+            violations.append(f"{name}: job '{job_id}' must run only if exactly {wanted}")
+    return violations
+
+
+def _permission_violations(
+    name: str, where: str, value: object, allowed: dict[str, str]
+) -> list[str]:
+    """Each entry of a ``permissions:`` block must be in ``allowed`` with exactly that value."""
+    if isinstance(value, str):
+        return [f"{name}: {where} is '{value}'; declare individual scopes instead"]
+    if not isinstance(value, dict):
+        return [f"{name}: {where} must be a mapping of scopes"]
+    return [
+        f"{name}: {where}.{scope}: {access} is not allowed"
+        for scope, access in value.items()
+        if allowed.get(str(scope)) != access
+    ]
+
+
+def permissions_violations(name: str, document: dict[Any, Any]) -> list[str]:
+    """S0-5: least privilege at every level.
+
+    The top level may grant only ``contents: read``. A job may grant only ``contents: read``,
+    except the jobs in ``JOB_PERMISSIONS``, keyed by workflow file and job. ``write-all`` and
+    ``read-all`` (or any other string) fail at any level.
+    """
+    workflow = Path(name).name
+    violations: list[str] = []
+    if "permissions" not in document:
+        violations.append(f"{name}: missing top-level 'permissions:'")
+    else:
+        violations += _permission_violations(
+            name, "permissions", document["permissions"], DEFAULT_PERMISSIONS
+        )
+    jobs = document.get("jobs")
+    for job_id, job in (jobs or {}).items() if isinstance(jobs, dict) else ():
+        if isinstance(job, dict) and "permissions" in job:
+            allowed = JOB_PERMISSIONS.get((workflow, str(job_id)), DEFAULT_PERMISSIONS)
+            violations += _permission_violations(
+                name, f"jobs.{job_id}.permissions", job["permissions"], allowed
+            )
     return violations
 
 
@@ -135,9 +189,7 @@ def check_document(name: str, document: object) -> list[str]:
     """Return the violations found in one parsed workflow document."""
     if not isinstance(document, dict):
         return [f"{name}: not a workflow mapping"]
-    violations: list[str] = []
-    if "permissions" not in document:
-        violations.append(f"{name}: missing top-level 'permissions:'")
+    violations: list[str] = permissions_violations(name, document)
     if "pull_request_target" in _triggers(document):
         violations.append(f"{name}: uses the forbidden 'pull_request_target' trigger")
     for where, uses in _iter_uses(document):

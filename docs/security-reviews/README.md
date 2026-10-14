@@ -11,8 +11,10 @@ confirms them.
 ## How to record a review
 
 1. Push the pull request's final content.
-2. Compute its patch identity: the stable `git patch-id` of the diff from the merge base to
-   the head, excluding this folder. The check prints it when it fails:
+2. Compute its patch identity: `git patch-id --verbatim` of the diff from the merge base to
+   the head, excluding this folder (git 2.39 or later). `--verbatim` keeps every whitespace
+   byte in the identity, so re-indenting Python or YAML, or changing a space inside a string,
+   is a new identity that needs a new review. The check prints the identity when it fails:
 
    ```
    python scripts/check_security_review.py --base origin/main --head HEAD
@@ -23,7 +25,8 @@ confirms them.
    `<YYYY-MM-DD>-<short-topic>.md`.
 4. Commit the record on the same pull request. Adding the record does not change the patch
    identity, because this folder is excluded from it. A rebase that keeps the same content
-   keeps the same identity; any content change needs a new review.
+   keeps the same identity (patch-id ignores line numbers); any content change, including a
+   whitespace-only one, needs a new review.
 
 ## What the check enforces, and what it does not
 

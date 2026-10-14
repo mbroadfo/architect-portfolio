@@ -24,3 +24,21 @@ contracts/
 .github/
 scripts/
 infra/
+# Dependencies and their reviewed exceptions (security re-review S0-3): every pinned lock and
+# its input, the npm locks, the audit ignore file and the back-end package definition.
+.pip-audit-ignore
+backend/pyproject.toml
+**/requirements*.in
+**/requirements*.lock
+**/package-lock.json
+# The local stack's configuration and images, the public-output scan's trusted digests and
+# the end-to-end check (S0-3). local/fake-idp/Dockerfile is covered by local/fake-idp/ above.
+local/compose.env
+local/compose.verify.yaml
+local/fixtures/derivatives.sha256.json
+local/slice_check.py
+local/*.Dockerfile
+local/*.Dockerfile.dockerignore
+local/fake-idp/Dockerfile
+# The tests that guard the authentication, approval and privacy invariants (S0-3).
+backend/tests/

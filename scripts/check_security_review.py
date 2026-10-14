@@ -11,10 +11,13 @@ narrow the list that judges it. CI also runs this script as it is on the base (s
 ``.github/workflows/ci.yml``, review-check). Only when the base has no list yet (the pull
 request that introduces the check) is the head's list used, with a printed notice.
 
-The patch identity is ``git patch-id --stable`` over the diff from
+The patch identity is ``git patch-id --verbatim`` over the diff from
 ``merge-base(<base>, <head>)`` to ``<head>``, excluding ``docs/security-reviews/``.
-Adding the review record therefore does not change the identity it must match, and a
-rebase that keeps the same content keeps the same identity (patch-id ignores line numbers).
+``--verbatim`` (git 2.39 or later; it implies ``--stable``) hashes every whitespace byte, so
+re-indenting Python or YAML, or changing a space inside a string, gives a new identity and
+needs a new review (security re-review S0-1; ``--stable`` alone dropped whitespace).
+Adding the review record does not change the identity it must match, and a rebase that keeps
+the same content keeps the same identity (patch-id ignores line numbers).
 
 Usage::
 
@@ -145,7 +148,10 @@ def sensitive_paths(changed: Sequence[str], patterns: Sequence[str]) -> list[str
 
 
 def compute_patch_id(repo: Path, merge_base: str, head: str) -> str | None:
-    """Return the stable patch identity of ``merge_base..head`` without the review records."""
+    """Return the verbatim patch identity of ``merge_base..head`` without the review records.
+
+    Whitespace is part of the identity: an indentation-only change is a new identity.
+    """
     diff = git_bytes(
         repo,
         "diff",
@@ -162,7 +168,7 @@ def compute_patch_id(repo: Path, merge_base: str, head: str) -> str | None:
     )
     if not diff.strip():
         return None
-    output = git_bytes(repo, "patch-id", "--stable", stdin=diff).decode("ascii").strip()
+    output = git_bytes(repo, "patch-id", "--verbatim", stdin=diff).decode("ascii").strip()
     if not output:
         return None
     return output.split()[0]
