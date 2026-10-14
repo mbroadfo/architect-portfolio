@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=75", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "portfolio-api"
+version = "0.0.1"
+description = "Architect Portfolio Studio API (U0 baseline package)."
+requires-python = ">=3.12"
+readme = "README.md"
+# Runtime dependencies are pinned with hashes in lockfiles, not here:
+# requirements.lock (tooling) and, on the slice branch, backend/requirements-slice.lock.
+dependencies = []
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["portfolio_api*"]
+
+[tool.setuptools.package-data]
+portfolio_api = ["py.typed"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+addopts = "-ra --strict-markers"
+markers = [
+  "integration: needs the local MongoDB replica set (docker compose -f local/compose.yaml up -d mongo mongo-init)",
+]
+
+[tool.coverage.run]
+branch = false
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = false

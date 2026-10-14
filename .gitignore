@@ -44,3 +44,17 @@ __pycache__/
 .venv/
 .pytest_cache/
 coverage/
+# Python and web tooling output (U0 S0)
+*.egg-info/
+build/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+*.tsbuildinfo
+test-results/
+playwright-report/
+# scripts/verify.py work directory: the per-checkout lock and JUnit reports
+.verify-work/
