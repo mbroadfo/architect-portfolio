@@ -1,0 +1,212 @@
+{
+  "stage": "nfr-design",
+  "unit": "contracts",
+  "upstream_ids": [
+    "NFR1.1",
+    "NFR1.2",
+    "NFR1.3",
+    "NFR2.1",
+    "NFR2.2",
+    "NFR2.3",
+    "NFR2.4",
+    "NFR2.5",
+    "NFR3.1",
+    "NFR3.2",
+    "NFR4.1",
+    "NFR6.1",
+    "NFR6.2",
+    "NFR8.1",
+    "NFR11.1",
+    "NFR11.2",
+    "NFR12.1",
+    "NFR13.1",
+    "NFR13.2",
+    "NFR13.3",
+    "NFR13.4",
+    "NFR13.5",
+    "NFR13.6",
+    "NFR13.7",
+    "NFR13.8",
+    "NFR13.9",
+    "NFR13.10",
+    "NFR13.11",
+    "NFR13.12",
+    "NFR13.13",
+    "NFR14.1",
+    "NFR15.1",
+    "NFR16.1",
+    "NFR17.1"
+  ],
+  "coverage": [
+    {
+      "id": "NFR1.1",
+      "status": "OK",
+      "target": "Reference host with the owner-access pipeline contract and four harness-issued token fixtures (401, 401, 403, 401) with spy counts of 0; re-run on the real hosts (security-design: Contract-Test Harness)"
+    },
+    {
+      "id": "NFR1.2",
+      "status": "OK",
+      "target": "Harness issuer with an in-memory ES256 key per session, tokens of at most 300 s, and a post-run grep proving the key never reached disk (security-design: Contract-Test Harness; Fixtures hygiene)"
+    },
+    {
+      "id": "NFR1.3",
+      "status": "OK",
+      "target": "Test-only harness folder with the local-only marker, package-content test over every deployable output, import-boundary test (security-design: Package-content and import-boundary tests)"
+    },
+    {
+      "id": "NFR2.1",
+      "status": "OK",
+      "target": "Reviewed allow-list in the contract register compared with the schema's permitted field paths; version-change and review rule (security-design: Contract Register, Ledger and Constants)"
+    },
+    {
+      "id": "NFR2.2",
+      "status": "OK",
+      "target": "Prefix data file read by U2's IAM test, one shared manifest validator for U8 and U9, table-driven K matrix with a completeness check (security-design: Storage Scope and Manifest-Key Enforcement)"
+    },
+    {
+      "id": "NFR2.3",
+      "status": "OK",
+      "target": "Address-field register, candidate predicate, positive fixture and four negative fixtures in contracts-lint (security-design: Contract Register, Ledger and Constants)"
+    },
+    {
+      "id": "NFR2.4",
+      "status": "OK",
+      "target": "FenceStore and PublicWriter contract with a conformance suite (C3-F1 to F5, concurrency case) and the stated residual window with mitigation options for Infrastructure Design (security-design: Fence-Conditional Write Contract)"
+    },
+    {
+      "id": "NFR2.5",
+      "status": "OK",
+      "target": "One shared wrapper per language, strict mode default, tolerant mode selected only from the register, S1 to S7 as one function, S6a and S8 to S10 absent (security-design: Shared Validator Wrapper)"
+    },
+    {
+      "id": "NFR3.1",
+      "status": "OK",
+      "target": "gitleaks over contracts, placeholder-only builders, in-memory key, post-run PEM grep (security-design: Fixtures hygiene)"
+    },
+    {
+      "id": "NFR3.2",
+      "status": "OK",
+      "target": "Fixture-host scan against the .invalid domain, the github.com C2 forms and the register's placeholder-owner list (security-design: Fixtures hygiene)"
+    },
+    {
+      "id": "NFR4.1",
+      "status": "OK",
+      "target": "Open-source local tools only, offline guards in every contracts check (security-design: Offline and Network-Blocking Design; Dependencies)"
+    },
+    {
+      "id": "NFR6.1",
+      "status": "OK",
+      "target": "Validator-selection checklist and decision, deterministic maximum-size fixture builder, benchmark gate of 250 ms median of 5 on the parsed object, parse timed separately, retry once on failure (security-design: Performance Figures and Validator Selection)"
+    },
+    {
+      "id": "NFR6.2",
+      "status": "OK",
+      "target": "Same fixture validated in headless Chromium inside contracts-browser, 1-second ceiling, median of 5 (security-design: Performance Figures and Validator Selection)"
+    },
+    {
+      "id": "NFR8.1",
+      "status": "OK",
+      "target": "Schema altText minLength 1 and maxLength 300 on leadImage and images, with a negative fixture per image field (security-design: Shared Validator Wrapper; Fixtures hygiene)"
+    },
+    {
+      "id": "NFR11.1",
+      "status": "OK",
+      "target": "Reason-code-only refusals mapped to the closed error table, harness error-message scan for secret shapes with 0 matches (security-design: Shared Validator Wrapper; Contract-Test Harness)"
+    },
+    {
+      "id": "NFR11.2",
+      "status": "OK",
+      "target": "Health schema with a fixed body and the empty-security-list lint in contracts-lint (security-design: Contract-Test Harness)"
+    },
+    {
+      "id": "NFR12.1",
+      "status": "OK",
+      "target": "Fixture parity run in Playwright Chromium, Firefox and WebKit and in Node 22 inside contracts-browser (security-design: Generation Pipeline; CI Timing Allocation)"
+    },
+    {
+      "id": "NFR13.1",
+      "status": "OK",
+      "target": "Coverage configuration omitting generated files from the 80% denominator, with mypy strict and tsc strict still running over them (security-design: Generation Pipeline)"
+    },
+    {
+      "id": "NFR13.2",
+      "status": "OK",
+      "target": "Eleven contracts-* verify-check entries summing to 180 seconds with hang-guard timeouts of three times each allocation; no new workflow (security-design: CI Timing Allocation)"
+    },
+    {
+      "id": "NFR13.3",
+      "status": "OK",
+      "target": "Ledger check also recomputes rule-to-test coverage from the functional-design traceability so each BR has a test citing its AC (security-design: Contract-Test Harness; CI Timing Allocation)"
+    },
+    {
+      "id": "NFR13.4",
+      "status": "OK",
+      "target": "Pipeline run twice to two temporary folders for byte equality, then compared with the committed generated folder; fixed seed, sorted maps, no clock, LF (security-design: Generation Pipeline)"
+    },
+    {
+      "id": "NFR13.5",
+      "status": "OK",
+      "target": "Python socket guard, Node network-denying preload, browser request interception, local-only schema retriever, and a canary check (security-design: Offline and Network-Blocking Design)"
+    },
+    {
+      "id": "NFR13.6",
+      "status": "OK",
+      "target": "Own hashed lock for U1 Python dependencies, npm workspace, audits and Dependabot, and the recorded-dependency table (security-design: Dependencies, Licence Report and Supply Chain)"
+    },
+    {
+      "id": "NFR13.7",
+      "status": "OK",
+      "target": "Licence report over the shipped and bundled closure against the SPDX allow-list and an exceptions file, as an optional verify-check (security-design: Dependencies, Licence Report and Supply Chain)"
+    },
+    {
+      "id": "NFR13.8",
+      "status": "OK",
+      "target": "DOWNLOAD_NAME_BUDGET set to 250 ms for a 200,000-character label with its derivation, plus the 25,000 and 100,000 character scaling test; single-pass rule (security-design: Performance Figures and Validator Selection)"
+    },
+    {
+      "id": "NFR13.9",
+      "status": "OK",
+      "target": "Proposed security-sensitive path list for the CI Pipeline stage; no new workflow (security-design: Contract Register, Ledger and Constants)"
+    },
+    {
+      "id": "NFR13.10",
+      "status": "OK",
+      "target": "Pattern-subset grammar lint, whole-string matching that does not depend on the engine's $ rule, and the pattern-edge fixtures (security-design: Shared Validator Wrapper)"
+    },
+    {
+      "id": "NFR13.11",
+      "status": "OK",
+      "target": "In-repo checkers for exactly uri, date-time, email and uuid with format assertion enabled identically, plus a lint on other formats (security-design: Shared Validator Wrapper)"
+    },
+    {
+      "id": "NFR13.12",
+      "status": "OK",
+      "target": "Depth pre-scan, size limit before parsing, early stop after 20 errors, pattern-length computation and ReDoS-shape lint, stress fixtures in both languages (security-design: Shared Validator Wrapper)"
+    },
+    {
+      "id": "NFR13.13",
+      "status": "OK",
+      "target": "In-repo strict JSON parsers rejecting NaN, Infinity, duplicate keys and unsafe integers, and shared fixtures with a verdict per mode run in Python, Node and three browser engines (security-design: Shared Validator Wrapper)"
+    },
+    {
+      "id": "NFR14.1",
+      "status": "OK",
+      "target": "Committed specs, register and fixtures; the owed contract-summary clarification carried as a tracked handoff item (security-design: Contract Register, Ledger and Constants)"
+    },
+    {
+      "id": "NFR15.1",
+      "status": "OK",
+      "target": "One standalone TypeScript validator build shared by Node, U8 and the U11 bundle under the drift check, with an interpreting-validator fallback; browser CSP run with a violation listener (security-design: Generation Pipeline)"
+    },
+    {
+      "id": "NFR16.1",
+      "status": "OK",
+      "target": "Shared 429 RATE_LIMITED response declared once on every rate-limited operation and checked by the document lint (security-design: Contract-Test Harness)"
+    },
+    {
+      "id": "NFR17.1",
+      "status": "OK",
+      "target": "C5 request and result fixtures for U6 (length, labels, sanitised finalAddress, timeouts, one URL per exhibit) held in the fixture set (security-design: Fixtures hygiene)"
+    }
+  ]
+}
