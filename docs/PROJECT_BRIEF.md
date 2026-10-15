@@ -4,7 +4,7 @@
 
 Michael Broadfoot's public, image-rich studio of architecture, engineering and making, with a private owner-only Studio for low-effort curation. `CHARTER.md` is the initiating brief; approved decisions and requirements elaborate it, and where they differ the later record wins (for example, the charter's dark-navy aesthetic and seed examples are superseded by D-23 and D-26). This summary introduces no new requirements.
 
-Authoritative release requirements: `../aidlc/spaces/default/intents/261010-architect-portfolio/inception/requirements-analysis/requirements.md` (approved 2026-10-10; Amendment A1 applies CR-01 to CR-05). Decisions D-01–D-28 and process decisions P-01–P-05 are in `.../ideation/approval-handoff/decision-log.md`; affirmed team practices are in `aidlc/spaces/default/memory/`. User Stories is deliberately skipped in the approved plan.
+Authoritative release requirements: `../aidlc/spaces/default/intents/261010-architect-portfolio/inception/requirements-analysis/requirements.md` (approved 2026-10-10; Amendment A1 applies CR-01 to CR-05). Decisions D-01–D-28 and process decisions P-01–P-06 are in `.../ideation/approval-handoff/decision-log.md`; affirmed team practices are in `aidlc/spaces/default/memory/`. User Stories is deliberately skipped in the approved plan.
 
 ## First Release
 
@@ -42,7 +42,7 @@ Every change reaches `main` through a PR with checks and the applicable owner ap
 
 ## Current Work and Handoff
 
-**Stage:** Requirements Analysis is approved (Amendment A1 applied). Refined Mockups is in revision after the owner's Request Changes. Its baseline is the R5 prototype under `inception/refined-mockups/prototype/`, and it returns to Michael's approval gate after a fresh independent review.
+**Stage:** Requirements Analysis (Amendment A1), Refined Mockups and Domain Design are approved. Refined Mockups was approved on 2026-10-11 for that gate only (P-06); its approved prototype is under `inception/refined-mockups/prototype/`. Domain Design was approved on 2026-10-11 and defines twelve components with ADR-001 to ADR-012. The next stage is Units Generation.
 
 **Ownership:** Claude Code is lead engineering agent and sole workflow owner by owner instruction (P-05; `ownership-handoff.md`). Codex and Grok are inactive as workflow writers.
 
@@ -59,4 +59,14 @@ Owner decisions still open:
 
 Later design stages settle the AI provider and framework, the credential mechanism, secure recovery and detailed infrastructure contracts. The contact address remains an owner content input.
 
-Issue #2 tracks an outdated spa-on-aws statement in the charter; approved practices reflect the v2 OIDC baseline. No ADR is fabricated before Domain Design. Architectural decisions belong in `docs/decisions/` when that stage produces and approves them.
+Issue #2 tracks an outdated spa-on-aws statement in the charter; approved practices reflect the v2 OIDC baseline.
+
+The accepted architecture decisions are in `docs/decisions/` (ADR-001 to ADR-012, approved at the Domain Design gate on 2026-10-11). The key decisions:
+
+- a modular monolith of twelve components;
+- the public site is built only from frozen, allow-listed published versions;
+- confirmations are bound to the exact reviewed content;
+- one site-wide, fenced publication sequence;
+- a stateless, isolated link checker.
+
+The component catalogue is `inception/domain-design/components.md`.

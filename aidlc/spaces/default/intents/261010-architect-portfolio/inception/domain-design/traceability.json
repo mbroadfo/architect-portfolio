@@ -1,0 +1,439 @@
+{
+  "stage": "domain-design",
+  "upstream_ids": [
+    "FR1",
+    "FR2",
+    "FR3",
+    "FR4",
+    "FR5",
+    "FR6",
+    "FR7",
+    "FR8",
+    "FR9",
+    "FR10",
+    "FR1.1",
+    "FR1.2",
+    "FR1.3",
+    "FR1.4",
+    "FR2.1",
+    "FR2.2",
+    "FR2.3",
+    "FR2.4",
+    "FR2.5",
+    "FR3.1",
+    "FR3.2",
+    "FR3.3",
+    "FR3.4",
+    "FR3.5",
+    "FR4.1",
+    "FR4.2",
+    "FR4.3",
+    "FR4.4",
+    "FR4.5",
+    "FR4.6",
+    "FR4.7",
+    "FR4.8",
+    "FR4.9",
+    "FR4.10",
+    "FR5.1",
+    "FR5.2",
+    "FR5.3",
+    "FR5.4",
+    "FR5.5",
+    "FR5.6",
+    "FR5.7",
+    "FR5.8",
+    "FR5.9",
+    "FR6.1",
+    "FR6.2",
+    "FR7.1",
+    "FR7.2",
+    "FR7.3",
+    "FR7.4",
+    "FR7.5",
+    "FR7.6",
+    "FR7.7",
+    "FR7.8",
+    "FR8.1",
+    "FR8.2",
+    "FR8.3",
+    "FR8.4",
+    "FR9.1",
+    "FR9.2",
+    "FR9.3",
+    "FR9.4",
+    "FR9.5",
+    "FR9.6",
+    "FR9.7",
+    "FR9.8",
+    "FR10.1",
+    "FR10.2",
+    "FR10.3",
+    "FR10.4",
+    "FR10.5",
+    "FR10.6",
+    "FR10.7"
+  ],
+  "coverage": [
+    {
+      "id": "FR1",
+      "status": "OK",
+      "target": "OwnerAccess"
+    },
+    {
+      "id": "FR2",
+      "status": "OK",
+      "target": "RepositoryCatalog"
+    },
+    {
+      "id": "FR3",
+      "status": "OK",
+      "target": "Projects"
+    },
+    {
+      "id": "FR4",
+      "status": "OK",
+      "target": "Projects"
+    },
+    {
+      "id": "FR5",
+      "status": "OK",
+      "target": "DescriptionAssistant"
+    },
+    {
+      "id": "FR6",
+      "status": "OK",
+      "target": "Publication"
+    },
+    {
+      "id": "FR7",
+      "status": "OK",
+      "target": "Publication"
+    },
+    {
+      "id": "FR8",
+      "status": "OK",
+      "target": "Publication"
+    },
+    {
+      "id": "FR9",
+      "status": "OK",
+      "target": "SiteRenderer"
+    },
+    {
+      "id": "FR10",
+      "status": "OK",
+      "target": "Publication"
+    },
+    {
+      "id": "FR1.1",
+      "status": "OK",
+      "target": "OwnerAccess"
+    },
+    {
+      "id": "FR1.2",
+      "status": "OK",
+      "target": "StudioApi"
+    },
+    {
+      "id": "FR1.3",
+      "status": "OK",
+      "target": "OwnerAccess"
+    },
+    {
+      "id": "FR1.4",
+      "status": "OK",
+      "target": "LocalEditDraft"
+    },
+    {
+      "id": "FR2.1",
+      "status": "OK",
+      "target": "RepositoryCatalog"
+    },
+    {
+      "id": "FR2.2",
+      "status": "OK",
+      "target": "RepositoryCatalog"
+    },
+    {
+      "id": "FR2.3",
+      "status": "OK",
+      "target": "RepositoryLink"
+    },
+    {
+      "id": "FR2.4",
+      "status": "OK",
+      "target": "RepositoryCatalog"
+    },
+    {
+      "id": "FR2.5",
+      "status": "OK",
+      "target": "RepositoryCatalog"
+    },
+    {
+      "id": "FR3.1",
+      "status": "OK",
+      "target": "Project"
+    },
+    {
+      "id": "FR3.2",
+      "status": "OK",
+      "target": "PublicationRecord"
+    },
+    {
+      "id": "FR3.3",
+      "status": "OK",
+      "target": "Project"
+    },
+    {
+      "id": "FR3.4",
+      "status": "OK",
+      "target": "Project"
+    },
+    {
+      "id": "FR3.5",
+      "status": "OK",
+      "target": "StudioWeb"
+    },
+    {
+      "id": "FR4.1",
+      "status": "OK",
+      "target": "Project"
+    },
+    {
+      "id": "FR4.2",
+      "status": "OK",
+      "target": "MediaAsset"
+    },
+    {
+      "id": "FR4.3",
+      "status": "OK",
+      "target": "PublishedVersion"
+    },
+    {
+      "id": "FR4.4",
+      "status": "OK",
+      "target": "MediaAsset"
+    },
+    {
+      "id": "FR4.5",
+      "status": "OK",
+      "target": "SiteRenderer"
+    },
+    {
+      "id": "FR4.6",
+      "status": "OK",
+      "target": "StudioWeb"
+    },
+    {
+      "id": "FR4.7",
+      "status": "OK",
+      "target": "Project"
+    },
+    {
+      "id": "FR4.8",
+      "status": "OK",
+      "target": "UploadAuthorization"
+    },
+    {
+      "id": "FR4.9",
+      "status": "OK",
+      "target": "ExhibitAttachment"
+    },
+    {
+      "id": "FR4.10",
+      "status": "OK",
+      "target": "PublishedVersion"
+    },
+    {
+      "id": "FR5.1",
+      "status": "OK",
+      "target": "Suggestion"
+    },
+    {
+      "id": "FR5.2",
+      "status": "OK",
+      "target": "TextProvenance"
+    },
+    {
+      "id": "FR5.3",
+      "status": "OK",
+      "target": "StudioApi"
+    },
+    {
+      "id": "FR5.4",
+      "status": "OK",
+      "target": "DescriptionAssistant"
+    },
+    {
+      "id": "FR5.5",
+      "status": "OK",
+      "target": "DescriptionAssistant"
+    },
+    {
+      "id": "FR5.6",
+      "status": "OK",
+      "target": "DescriptionAssistant"
+    },
+    {
+      "id": "FR5.7",
+      "status": "OK",
+      "target": "DescriptionAssistant"
+    },
+    {
+      "id": "FR5.8",
+      "status": "OK",
+      "target": "AiSpendPolicy"
+    },
+    {
+      "id": "FR5.9",
+      "status": "OK",
+      "target": "AiProviderApproval"
+    },
+    {
+      "id": "FR6.1",
+      "status": "OK",
+      "target": "SiteRenderer"
+    },
+    {
+      "id": "FR6.2",
+      "status": "OK",
+      "target": "StudioApi"
+    },
+    {
+      "id": "FR7.1",
+      "status": "OK",
+      "target": "ConfirmationTicket"
+    },
+    {
+      "id": "FR7.2",
+      "status": "OK",
+      "target": "ConfirmationTicket"
+    },
+    {
+      "id": "FR7.3",
+      "status": "OK",
+      "target": "Publication"
+    },
+    {
+      "id": "FR7.4",
+      "status": "OK",
+      "target": "PublicSiteExporter"
+    },
+    {
+      "id": "FR7.5",
+      "status": "OK",
+      "target": "PublishedVersion"
+    },
+    {
+      "id": "FR7.6",
+      "status": "OK",
+      "target": "PublicationOperation"
+    },
+    {
+      "id": "FR7.7",
+      "status": "OK",
+      "target": "ActivityEntry"
+    },
+    {
+      "id": "FR7.8",
+      "status": "OK",
+      "target": "PublicSiteState"
+    },
+    {
+      "id": "FR8.1",
+      "status": "OK",
+      "target": "Publication"
+    },
+    {
+      "id": "FR8.2",
+      "status": "OK",
+      "target": "PublicSiteExporter"
+    },
+    {
+      "id": "FR8.3",
+      "status": "OK",
+      "target": "PublicationRecord"
+    },
+    {
+      "id": "FR8.4",
+      "status": "OK",
+      "target": "StudioWeb"
+    },
+    {
+      "id": "FR9.1",
+      "status": "OK",
+      "target": "SiteRenderer"
+    },
+    {
+      "id": "FR9.2",
+      "status": "OK",
+      "target": "SiteRenderer"
+    },
+    {
+      "id": "FR9.3",
+      "status": "OK",
+      "target": "SiteRenderer"
+    },
+    {
+      "id": "FR9.4",
+      "status": "OK",
+      "target": "SiteRenderer"
+    },
+    {
+      "id": "FR9.5",
+      "status": "OK",
+      "target": "SiteRenderer"
+    },
+    {
+      "id": "FR9.6",
+      "status": "OK",
+      "target": "SiteRenderer"
+    },
+    {
+      "id": "FR9.7",
+      "status": "OK",
+      "target": "PublishedFeaturedOrder"
+    },
+    {
+      "id": "FR9.8",
+      "status": "OK",
+      "target": "CategoryAssignment"
+    },
+    {
+      "id": "FR10.1",
+      "status": "OK",
+      "target": "Publication"
+    },
+    {
+      "id": "FR10.2",
+      "status": "Deferred",
+      "target": "Infrastructure Design (HTTPS at the CDN, certificate, 301 redirect); no application component"
+    },
+    {
+      "id": "FR10.3",
+      "status": "Deferred",
+      "target": "Infrastructure Design (production indexable; preview noindex and gated); no application component"
+    },
+    {
+      "id": "FR10.4",
+      "status": "Deferred",
+      "target": "Deployment Pipeline (owner-approved production run); no application component"
+    },
+    {
+      "id": "FR10.5",
+      "status": "OK",
+      "target": "LinkChecker"
+    },
+    {
+      "id": "FR10.6",
+      "status": "OK",
+      "target": "Project"
+    },
+    {
+      "id": "FR10.7",
+      "status": "OK",
+      "target": "PublishedVersion"
+    }
+  ]
+}

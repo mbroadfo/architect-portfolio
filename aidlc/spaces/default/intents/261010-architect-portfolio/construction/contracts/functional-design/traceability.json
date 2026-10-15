@@ -1,0 +1,686 @@
+{
+  "stage": "functional-design",
+  "unit": "contracts",
+  "upstream_ids": [
+    "AC1.1",
+    "AC1.2",
+    "AC1.3",
+    "AC1.4",
+    "AC1.5",
+    "AC1.6",
+    "AC1.7",
+    "AC1.8",
+    "AC1.9",
+    "AC1.10",
+    "AC1.11",
+    "AC1.12",
+    "AC1.13",
+    "AC1.14",
+    "AC1.15",
+    "AC1.16",
+    "AC1.17",
+    "AC1.18",
+    "AC1.19",
+    "AC1.20",
+    "AC1.21",
+    "AC1.22",
+    "AC1.23",
+    "AC1.24",
+    "AC1.25",
+    "AC1.26",
+    "AC1.27",
+    "AC1.28",
+    "AC1.29",
+    "AC1.30",
+    "AC1.31",
+    "AC1.32",
+    "AC1.33",
+    "AC1.34",
+    "AC1.35",
+    "AC1.36",
+    "AC1.37",
+    "AC1.38",
+    "AC1.39",
+    "AC1.40",
+    "AC1.41",
+    "FR1",
+    "FR2",
+    "FR3",
+    "FR4",
+    "FR5",
+    "FR6",
+    "FR7",
+    "FR8",
+    "FR9",
+    "FR10",
+    "FR1.1",
+    "FR1.2",
+    "FR1.3",
+    "FR1.4",
+    "FR2.1",
+    "FR2.2",
+    "FR2.3",
+    "FR2.4",
+    "FR2.5",
+    "FR3.1",
+    "FR3.2",
+    "FR3.3",
+    "FR3.4",
+    "FR3.5",
+    "FR4.1",
+    "FR4.2",
+    "FR4.3",
+    "FR4.4",
+    "FR4.5",
+    "FR4.6",
+    "FR4.7",
+    "FR4.8",
+    "FR4.9",
+    "FR4.10",
+    "FR5.1",
+    "FR5.2",
+    "FR5.3",
+    "FR5.4",
+    "FR5.5",
+    "FR5.6",
+    "FR5.7",
+    "FR5.8",
+    "FR5.9",
+    "FR6.1",
+    "FR6.2",
+    "FR7.1",
+    "FR7.2",
+    "FR7.3",
+    "FR7.4",
+    "FR7.5",
+    "FR7.6",
+    "FR7.7",
+    "FR7.8",
+    "FR8.1",
+    "FR8.2",
+    "FR8.3",
+    "FR8.4",
+    "FR9.1",
+    "FR9.2",
+    "FR9.3",
+    "FR9.4",
+    "FR9.5",
+    "FR9.6",
+    "FR9.7",
+    "FR9.8",
+    "FR10.1",
+    "FR10.2",
+    "FR10.3",
+    "FR10.4",
+    "FR10.5",
+    "FR10.6",
+    "FR10.7"
+  ],
+  "coverage": [
+    {
+      "id": "AC1.1",
+      "status": "OK",
+      "target": "BR1.1, BR1.2"
+    },
+    {
+      "id": "AC1.2",
+      "status": "OK",
+      "target": "BR1.3, BR9.3"
+    },
+    {
+      "id": "AC1.3",
+      "status": "OK",
+      "target": "BR1.4, BR1.5"
+    },
+    {
+      "id": "AC1.4",
+      "status": "OK",
+      "target": "BR1.6"
+    },
+    {
+      "id": "AC1.5",
+      "status": "OK",
+      "target": "BR1.7, BR1.8"
+    },
+    {
+      "id": "AC1.6",
+      "status": "OK",
+      "target": "BR1.9, BR1.6, BR9.3"
+    },
+    {
+      "id": "AC1.7",
+      "status": "OK",
+      "target": "BR1.10"
+    },
+    {
+      "id": "AC1.8",
+      "status": "OK",
+      "target": "BR2.1"
+    },
+    {
+      "id": "AC1.9",
+      "status": "OK",
+      "target": "BR2.2, BR2.3"
+    },
+    {
+      "id": "AC1.10",
+      "status": "OK",
+      "target": "BR2.4, BR5.6"
+    },
+    {
+      "id": "AC1.11",
+      "status": "OK",
+      "target": "BR2.5"
+    },
+    {
+      "id": "AC1.12",
+      "status": "OK",
+      "target": "BR3.1, BR3.2"
+    },
+    {
+      "id": "AC1.13",
+      "status": "OK",
+      "target": "BR3.3, BR3.4"
+    },
+    {
+      "id": "AC1.14",
+      "status": "OK",
+      "target": "BR3.5"
+    },
+    {
+      "id": "AC1.15",
+      "status": "OK",
+      "target": "BR3.6, BR3.7"
+    },
+    {
+      "id": "AC1.16",
+      "status": "OK",
+      "target": "BR4.1, BR4.2, BR4.12, BR4.13"
+    },
+    {
+      "id": "AC1.17",
+      "status": "OK",
+      "target": "BR4.3, BR4.4, BR4.13"
+    },
+    {
+      "id": "AC1.18",
+      "status": "OK",
+      "target": "BR4.5, BR4.6, BR4.7"
+    },
+    {
+      "id": "AC1.19",
+      "status": "OK",
+      "target": "BR4.8, BR4.13"
+    },
+    {
+      "id": "AC1.20",
+      "status": "OK",
+      "target": "BR4.9"
+    },
+    {
+      "id": "AC1.21",
+      "status": "OK",
+      "target": "BR4.10, BR4.11"
+    },
+    {
+      "id": "AC1.22",
+      "status": "OK",
+      "target": "BR5.1, BR5.2"
+    },
+    {
+      "id": "AC1.23",
+      "status": "OK",
+      "target": "BR5.3"
+    },
+    {
+      "id": "AC1.24",
+      "status": "OK",
+      "target": "BR5.4"
+    },
+    {
+      "id": "AC1.25",
+      "status": "OK",
+      "target": "BR5.5"
+    },
+    {
+      "id": "AC1.26",
+      "status": "OK",
+      "target": "BR6.1, BR6.2"
+    },
+    {
+      "id": "AC1.27",
+      "status": "OK",
+      "target": "BR6.3"
+    },
+    {
+      "id": "AC1.28",
+      "status": "OK",
+      "target": "BR6.4, BR6.6"
+    },
+    {
+      "id": "AC1.29",
+      "status": "OK",
+      "target": "BR6.5"
+    },
+    {
+      "id": "AC1.30",
+      "status": "OK",
+      "target": "BR7.1, BR7.3"
+    },
+    {
+      "id": "AC1.31",
+      "status": "OK",
+      "target": "BR7.2"
+    },
+    {
+      "id": "AC1.32",
+      "status": "OK",
+      "target": "BR7.4, BR7.5"
+    },
+    {
+      "id": "AC1.33",
+      "status": "OK",
+      "target": "BR7.6"
+    },
+    {
+      "id": "AC1.34",
+      "status": "OK",
+      "target": "BR8.1, BR8.2, BR8.3, BR8.4"
+    },
+    {
+      "id": "AC1.35",
+      "status": "OK",
+      "target": "BR8.5"
+    },
+    {
+      "id": "AC1.36",
+      "status": "OK",
+      "target": "BR9.1, BR9.2"
+    },
+    {
+      "id": "AC1.37",
+      "status": "OK",
+      "target": "BR9.3, BR9.5"
+    },
+    {
+      "id": "AC1.38",
+      "status": "OK",
+      "target": "BR9.4"
+    },
+    {
+      "id": "AC1.39",
+      "status": "OK",
+      "target": "BR9.6"
+    },
+    {
+      "id": "AC1.40",
+      "status": "OK",
+      "target": "BR3.8, BR3.7"
+    },
+    {
+      "id": "AC1.41",
+      "status": "OK",
+      "target": "BR1.11"
+    },
+    {
+      "id": "FR1",
+      "status": "N/A",
+      "target": "Owned by U3 (u3-studio-api); U1 only specifies the contracts it uses"
+    },
+    {
+      "id": "FR2",
+      "status": "N/A",
+      "target": "Owned by U3 (u3-studio-api); U1 only specifies the contracts it uses"
+    },
+    {
+      "id": "FR3",
+      "status": "N/A",
+      "target": "Owned by U3 (u3-studio-api); U1 only specifies the contracts it uses"
+    },
+    {
+      "id": "FR4",
+      "status": "N/A",
+      "target": "Owned by U4 (u4-media-library); U1 only specifies the contracts it uses"
+    },
+    {
+      "id": "FR5",
+      "status": "N/A",
+      "target": "Owned by U5 (u5-description-assistant); U1 only specifies the contracts it uses"
+    },
+    {
+      "id": "FR6",
+      "status": "N/A",
+      "target": "Owned by U7 (u7-site-renderer); U1 only specifies the contracts it uses"
+    },
+    {
+      "id": "FR7",
+      "status": "N/A",
+      "target": "Owned by U9 (u9-publication); U1 only specifies the contracts it uses"
+    },
+    {
+      "id": "FR8",
+      "status": "N/A",
+      "target": "Owned by U9 (u9-publication); U1 only specifies the contracts it uses"
+    },
+    {
+      "id": "FR9",
+      "status": "N/A",
+      "target": "Owned by U7 (u7-site-renderer); U1 only specifies the contracts it uses"
+    },
+    {
+      "id": "FR10",
+      "status": "N/A",
+      "target": "Owned by U9 (u9-publication); U1 only specifies the contracts it uses"
+    },
+    {
+      "id": "FR1.1",
+      "status": "OK",
+      "target": "BR4.4"
+    },
+    {
+      "id": "FR1.2",
+      "status": "OK",
+      "target": "BR4.3, BR4.4"
+    },
+    {
+      "id": "FR1.3",
+      "status": "N/A",
+      "target": "Owned by U3 (u3-studio-api); U1 only specifies the contracts it uses"
+    },
+    {
+      "id": "FR1.4",
+      "status": "N/A",
+      "target": "Owned by U11 (u11-studio-web); U1 only specifies the contracts it uses"
+    },
+    {
+      "id": "FR2.1",
+      "status": "N/A",
+      "target": "Owned by U3 (u3-studio-api); U1 only specifies the contracts it uses"
+    },
+    {
+      "id": "FR2.2",
+      "status": "N/A",
+      "target": "Owned by U3 (u3-studio-api); U1 only specifies the contracts it uses"
+    },
+    {
+      "id": "FR2.3",
+      "status": "N/A",
+      "target": "Owned by U3 (u3-studio-api); U1 only specifies the contracts it uses"
+    },
+    {
+      "id": "FR2.4",
+      "status": "N/A",
+      "target": "Owned by U3 (u3-studio-api); U1 only specifies the contracts it uses"
+    },
+    {
+      "id": "FR2.5",
+      "status": "N/A",
+      "target": "Owned by U3 (u3-studio-api); U1 only specifies the contracts it uses"
+    },
+    {
+      "id": "FR3.1",
+      "status": "N/A",
+      "target": "Owned by U3 (u3-studio-api); U1 only specifies the contracts it uses"
+    },
+    {
+      "id": "FR3.2",
+      "status": "N/A",
+      "target": "Owned by U9 (u9-publication); U1 only specifies the contracts it uses"
+    },
+    {
+      "id": "FR3.3",
+      "status": "OK",
+      "target": "BR4.10"
+    },
+    {
+      "id": "FR3.4",
+      "status": "OK",
+      "target": "BR4.10"
+    },
+    {
+      "id": "FR3.5",
+      "status": "N/A",
+      "target": "Owned by U11 (u11-studio-web); U1 only specifies the contracts it uses"
+    },
+    {
+      "id": "FR4.1",
+      "status": "N/A",
+      "target": "Owned by U3 (u3-studio-api); U1 only specifies the contracts it uses"
+    },
+    {
+      "id": "FR4.2",
+      "status": "OK",
+      "target": "BR5.5, BR7.2"
+    },
+    {
+      "id": "FR4.3",
+      "status": "OK",
+      "target": "BR2.1"
+    },
+    {
+      "id": "FR4.4",
+      "status": "OK",
+      "target": "BR5.5, BR7.3, BR7.6"
+    },
+    {
+      "id": "FR4.5",
+      "status": "N/A",
+      "target": "Owned by U7 (u7-site-renderer); U1 only specifies the contracts it uses"
+    },
+    {
+      "id": "FR4.6",
+      "status": "N/A",
+      "target": "Owned by U11 (u11-studio-web); U1 only specifies the contracts it uses"
+    },
+    {
+      "id": "FR4.7",
+      "status": "N/A",
+      "target": "Owned by U3 (u3-studio-api); U1 only specifies the contracts it uses"
+    },
+    {
+      "id": "FR4.8",
+      "status": "OK",
+      "target": "BR4.9, BR6.4"
+    },
+    {
+      "id": "FR4.9",
+      "status": "OK",
+      "target": "BR7.3, BR7.6"
+    },
+    {
+      "id": "FR4.10",
+      "status": "OK",
+      "target": "BR1.3, BR1.4, BR2.1, BR2.3, BR6.5"
+    },
+    {
+      "id": "FR5.1",
+      "status": "N/A",
+      "target": "Owned by U5 (u5-description-assistant); U1 only specifies the contracts it uses"
+    },
+    {
+      "id": "FR5.2",
+      "status": "N/A",
+      "target": "Owned by U5 (u5-description-assistant); U1 only specifies the contracts it uses"
+    },
+    {
+      "id": "FR5.3",
+      "status": "N/A",
+      "target": "Owned by U3 (u3-studio-api); U1 only specifies the contracts it uses"
+    },
+    {
+      "id": "FR5.4",
+      "status": "N/A",
+      "target": "Owned by U5 (u5-description-assistant); U1 only specifies the contracts it uses"
+    },
+    {
+      "id": "FR5.5",
+      "status": "N/A",
+      "target": "Owned by U5 (u5-description-assistant); U1 only specifies the contracts it uses"
+    },
+    {
+      "id": "FR5.6",
+      "status": "N/A",
+      "target": "Owned by U5 (u5-description-assistant); U1 only specifies the contracts it uses"
+    },
+    {
+      "id": "FR5.7",
+      "status": "N/A",
+      "target": "Owned by U5 (u5-description-assistant); U1 only specifies the contracts it uses"
+    },
+    {
+      "id": "FR5.8",
+      "status": "N/A",
+      "target": "Owned by U5 (u5-description-assistant); U1 only specifies the contracts it uses"
+    },
+    {
+      "id": "FR5.9",
+      "status": "N/A",
+      "target": "Owned by U5 (u5-description-assistant); U1 only specifies the contracts it uses"
+    },
+    {
+      "id": "FR6.1",
+      "status": "OK",
+      "target": "BR5.1, BR8.5"
+    },
+    {
+      "id": "FR6.2",
+      "status": "OK",
+      "target": "BR2.4, BR4.9, BR5.2, BR5.3, BR5.6"
+    },
+    {
+      "id": "FR7.1",
+      "status": "N/A",
+      "target": "Owned by U9 (u9-publication); U1 only specifies the contracts it uses"
+    },
+    {
+      "id": "FR7.2",
+      "status": "N/A",
+      "target": "Owned by U9 (u9-publication); U1 only specifies the contracts it uses"
+    },
+    {
+      "id": "FR7.3",
+      "status": "OK",
+      "target": "BR5.3"
+    },
+    {
+      "id": "FR7.4",
+      "status": "OK",
+      "target": "BR3.6, BR7.4"
+    },
+    {
+      "id": "FR7.5",
+      "status": "N/A",
+      "target": "Owned by U9 (u9-publication); U1 only specifies the contracts it uses"
+    },
+    {
+      "id": "FR7.6",
+      "status": "N/A",
+      "target": "Owned by U9 (u9-publication); U1 only specifies the contracts it uses"
+    },
+    {
+      "id": "FR7.7",
+      "status": "N/A",
+      "target": "Owned by U9 (u9-publication); U1 only specifies the contracts it uses"
+    },
+    {
+      "id": "FR7.8",
+      "status": "N/A",
+      "target": "Owned by U9 (u9-publication); U1 only specifies the contracts it uses"
+    },
+    {
+      "id": "FR8.1",
+      "status": "N/A",
+      "target": "Owned by U9 (u9-publication); U1 only specifies the contracts it uses"
+    },
+    {
+      "id": "FR8.2",
+      "status": "N/A",
+      "target": "Owned by U8 (u8-site-publisher); U1 only specifies the contracts it uses"
+    },
+    {
+      "id": "FR8.3",
+      "status": "N/A",
+      "target": "Owned by U9 (u9-publication); U1 only specifies the contracts it uses"
+    },
+    {
+      "id": "FR8.4",
+      "status": "N/A",
+      "target": "Owned by U11 (u11-studio-web); U1 only specifies the contracts it uses"
+    },
+    {
+      "id": "FR9.1",
+      "status": "OK",
+      "target": "BR7.4, BR7.5"
+    },
+    {
+      "id": "FR9.2",
+      "status": "OK",
+      "target": "BR7.4, BR7.5"
+    },
+    {
+      "id": "FR9.3",
+      "status": "OK",
+      "target": "BR7.4, BR7.5"
+    },
+    {
+      "id": "FR9.4",
+      "status": "OK",
+      "target": "BR7.5"
+    },
+    {
+      "id": "FR9.5",
+      "status": "OK",
+      "target": "BR7.5"
+    },
+    {
+      "id": "FR9.6",
+      "status": "N/A",
+      "target": "Owned by U7 (u7-site-renderer); U1 only specifies the contracts it uses"
+    },
+    {
+      "id": "FR9.7",
+      "status": "N/A",
+      "target": "Owned by U9 (u9-publication); U1 only specifies the contracts it uses"
+    },
+    {
+      "id": "FR9.8",
+      "status": "N/A",
+      "target": "Owned by U3 (u3-studio-api); U1 only specifies the contracts it uses"
+    },
+    {
+      "id": "FR10.1",
+      "status": "N/A",
+      "target": "Owned by U9 (u9-publication); U1 only specifies the contracts it uses"
+    },
+    {
+      "id": "FR10.2",
+      "status": "N/A",
+      "target": "Owned by U2 (u2-platform); U1 only specifies the contracts it uses"
+    },
+    {
+      "id": "FR10.3",
+      "status": "OK",
+      "target": "BR7.5"
+    },
+    {
+      "id": "FR10.4",
+      "status": "N/A",
+      "target": "Owned by U2 (u2-platform); U1 only specifies the contracts it uses"
+    },
+    {
+      "id": "FR10.5",
+      "status": "OK",
+      "target": "BR5.4"
+    },
+    {
+      "id": "FR10.6",
+      "status": "N/A",
+      "target": "Owned by U3 (u3-studio-api); U1 only specifies the contracts it uses"
+    },
+    {
+      "id": "FR10.7",
+      "status": "OK",
+      "target": "BR2.3, BR9.4"
+    }
+  ]
+}
