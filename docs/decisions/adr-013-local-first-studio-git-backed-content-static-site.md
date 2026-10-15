@@ -1,0 +1,76 @@
+# ADR-013: Local-first Studio, Git-backed private content, static public site
+
+- **Status:** Accepted in principle — approved by Michael Broadfoot on 2026-10-14 ("I approve Path B in principle"), after the simplification assessment. It supersedes parts of ADR-001 to ADR-012 and the hosted-backend stack in charter §6. Recorded as P-09 in `aidlc/spaces/default/intents/261010-architect-portfolio/ideation/approval-handoff/decision-log.md`.
+
+- **Context**
+  - The product is a single-owner inventory and exhibition of projects, with the lifecycle Inventory → Curate → Publish → Retire.
+  - Most of the approved architecture's complexity came from hosting the Studio as a public web application:
+    - owner sign-in with MFA;
+    - server-side authorization on every request;
+    - an API on Lambda and a database on MongoDB Atlas;
+    - pre-signed uploads, rate limits and SSRF protection;
+    - a site-wide fenced publication sequence;
+    - nightly exports and a standing preview environment.
+  - A single owner does not need a hosted administration surface, and remote editing can be added later.
+  - The approved delivery plan had 12 units and 30 Bolts. At the observed pace, that was months of sessions before a real exhibit was public.
+- **Decision**
+  - **Studio.** The Studio runs only on the owner's machine. It is a local server bound to the loopback interface, with a Host allow-list and a same-origin check on every request that changes data, and it serves the approved Studio screens.
+  - **Content.** Content lives in a **private** Git repository that is separate from this public code repository. It holds:
+    - draft project records;
+    - private original uploads;
+    - sanitized image derivatives;
+    - the frozen published versions.
+
+    Each change is committed, so Git history is both the activity log and the first backup.
+  - **Publication.** Publication keeps the ADR-002 boundary.
+    - A confirmed Publish freezes an immutable published version, bound to the reviewed revision (ADR-012).
+    - The public site is generated **only** from published versions, by the shared React static renderer (ADR-008).
+    - The site is then checked by the public-output allow-list and image-digest scan before it can be deployed.
+    - Take down removes the published version and regenerates the site.
+  - **Delivery.** Three modules replace the 12 units:
+    - **L1** — the public renderer and the approved design system;
+    - **L2** — the local Studio, the content store, and publish and take down;
+    - **L3** — hosting, CI and DNS.
+
+    Hosting is chosen in L3 and needs the owner's authorization before any cloud resource exists.
+  - **Retained:**
+    - ADR-002 (published versions are the only input);
+    - ADR-003 (status is derived);
+    - ADR-006 (originals stay private, derivatives are published), adapted to files;
+    - ADR-008 (one shared renderer for preview and export);
+    - ADR-010 (categories as a relationship; featured line-up);
+    - ADR-012 (confirmation bound to the reviewed revision);
+    - the C2 public site snapshot schema;
+    - the security headers, image sanitization, escaping and output-scan requirements.
+  - **Superseded:**
+    - ADR-001 (twelve components);
+    - ADR-004 (site-wide fenced sequence): there is one local writer, the site build is atomic, and the previous build is the rollback;
+    - ADR-005 (isolated link-checker service): any link check is a local advisory check;
+    - ADR-009 (nightly backup service): Git history replaces it, plus a private remote once the owner authorizes one;
+    - ADR-011 (hosted ownership enforcement): replaced by local-only access, with MFA on the owner's GitHub account protecting the content repository;
+    - in charter §6: Lambda, API Gateway, MongoDB Atlas, Auth0, SSM Parameter Store and the standing preview environment.
+  - **Deferred:**
+    - ADR-007 (AI description suggestions);
+    - GitHub discovery;
+    - attachments beyond images;
+    - remote editing.
+- **Consequences**
+  - Positive:
+    - there is no public write path and no hosted secret, which removes most of the attack surface;
+    - hosting cost is $0 to about $1 a month;
+    - the slice reuses the U0 renderer, the snapshot schema, the output scan and the CI gate;
+    - a real exhibit can be produced in days rather than months.
+  - Negative:
+    - curating needs a machine with the content repository checked out, so there is no editing from a phone;
+    - a private remote for off-machine backup must be authorized separately;
+    - published copy and images are stored twice (draft and published), as under ADR-002.
+- **Alternatives Rejected**
+  - **Continue the approved hosted architecture (Path A):** disproportionate effort, cost and operational surface for one owner.
+  - **A conventional CMS (WordPress, Ghost):** a hosted admin to secure, and hard to match the approved aesthetic.
+  - **A Git-based CMS editing the public repository (Decap, Tina):** drafts would sit in a public repository.
+  - **A managed backend (Supabase, Firebase):** still needs hosted authentication and access rules for an admin no visitor uses.
+- **Security and compliance**
+  - Private content never enters the public code repository. The Studio refuses to use a content directory inside it.
+  - The site build reads only published versions and fails on any output-scan finding.
+  - Image uploads are validated by content, limited in pixels, and re-encoded without metadata.
+  - Rights review and the withheld live-URL rules (FR10.6, FR10.7) still block publication.

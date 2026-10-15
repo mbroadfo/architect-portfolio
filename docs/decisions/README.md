@@ -16,3 +16,6 @@ These are the accepted architecture decisions for the Architect Portfolio. They 
 | [ADR-010](adr-010-categories-as-a-relationship-featured-line-up-separate-from.md) | Categories as a relationship; featured line-up separate from the published order | Domain Design (approved 2026-10-11) |
 | [ADR-011](adr-011-studioapi-enforces-ownership-on-every-request-and-composes-c.md) | StudioApi enforces ownership on every request and composes cross-component flows | Domain Design (approved 2026-10-11) |
 | [ADR-012](adr-012-a-confirmation-is-bound-to-the-exact-reviewed-revision-and-i.md) | A confirmation is bound to the exact reviewed revision and inventory | Domain Design (approved 2026-10-11) |
+| [ADR-013](adr-013-local-first-studio-git-backed-content-static-site.md) | Local-first Studio, Git-backed private content, static public site. **Supersedes** ADR-001, ADR-004, ADR-005, ADR-009 and ADR-011, and the hosted-backend stack in charter §6; defers ADR-007 | Simplification (approved in principle 2026-10-14) |
+
+ADR-002, ADR-003, ADR-006, ADR-008, ADR-010 and ADR-012 remain in force under ADR-013. The superseded ADRs are kept as history.
