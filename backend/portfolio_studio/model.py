@@ -13,7 +13,14 @@ from datetime import UTC, datetime
 from enum import StrEnum
 from typing import Annotated, Any, Literal
 
-from pydantic import BaseModel, ConfigDict, Field, StringConstraints, field_validator
+from pydantic import (
+    AfterValidator,
+    BaseModel,
+    ConfigDict,
+    Field,
+    StringConstraints,
+    field_validator,
+)
 
 ID_PATTERN = r"^[a-z0-9]+(-[a-z0-9]+)*$"
 SLUG_PATTERN = ID_PATTERN
@@ -46,8 +53,31 @@ CATEGORIES: dict[str, tuple[str, int]] = {
 FEATURED_MAX = 5
 IMAGES_MAX = 41  # the lead image plus C2's 40 further images
 
-Id = Annotated[str, StringConstraints(pattern=ID_PATTERN, max_length=60)]
-Slug = Annotated[str, StringConstraints(pattern=SLUG_PATTERN, max_length=60)]
+# Windows reserved device names (security review LS-5): a folder or file named "con", "nul"
+# or "com1", with or without an extension and in any case, cannot be created on Windows.
+RESERVED_NAMES = frozenset(
+    {"con", "prn", "aux", "nul"}
+    | {f"com{n}" for n in range(1, 10)}
+    | {f"lpt{n}" for n in range(1, 10)}
+)
+
+
+def is_reserved_name(name: str) -> bool:
+    return name.split(".", 1)[0].strip().lower() in RESERVED_NAMES
+
+
+def _not_reserved(value: str) -> str:
+    if is_reserved_name(value):
+        raise ValueError(f"'{value}' is a name Windows reserves; choose another address")
+    return value
+
+
+Id = Annotated[
+    str, StringConstraints(pattern=ID_PATTERN, max_length=60), AfterValidator(_not_reserved)
+]
+Slug = Annotated[
+    str, StringConstraints(pattern=SLUG_PATTERN, max_length=60), AfterValidator(_not_reserved)
+]
 AssetRef = Annotated[str, StringConstraints(pattern=ASSET_REF_PATTERN)]
 Sha256 = Annotated[str, StringConstraints(pattern=SHA256_PATTERN)]
 Text300 = Annotated[str, StringConstraints(max_length=300)]
@@ -290,8 +320,10 @@ def derive_status(
 
 
 def propose_slug(title: str) -> str:
+    """A slug from a title; a Windows reserved name gets a suffix ("con" becomes "con-project")."""
     slug = re.sub(r"[^a-z0-9]+", "-", title.lower()).strip("-")
-    return slug[:60].strip("-") or "project"
+    slug = slug[:60].strip("-") or "project"
+    return f"{slug}-project" if is_reserved_name(slug) else slug
 
 
 def with_suffix(slug: str, number: int) -> str:

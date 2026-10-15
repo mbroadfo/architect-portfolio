@@ -132,10 +132,6 @@ class ContentRepo:
         status = run_git(self.root, ["status", "--porcelain", "--untracked-files=all"])
         return bool(status.stdout.strip())
 
-    def commit_count(self) -> int:
-        completed = run_git(self.root, ["rev-list", "--count", "HEAD"], check=False)
-        return int(completed.stdout.strip()) if completed.returncode == 0 else 0
-
     def log(self, limit: int = 100) -> list[Commit]:
         """The newest commits first: the Studio's activity log."""
         completed = run_git(

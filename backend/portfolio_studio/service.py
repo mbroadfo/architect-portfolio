@@ -347,7 +347,7 @@ class StudioService:
             exhibits,
             [slugs[i] for i in order if i in slugs],
             self.store.settings(),
-            self.store.git.commit_count(),
+            c2.PUBLIC_GENERATION,
         )
 
     def _slugs_by_id(self, project_id: str, exhibit: dict[str, Any] | None) -> dict[str, str]:

@@ -41,6 +41,7 @@ from portfolio_studio.model import (
     PublishedVersion,
     SiteSettings,
     Withdrawn,
+    is_reserved_name,
 )
 
 PROJECTS = "projects"
@@ -85,7 +86,7 @@ DEFAULT_SETTINGS = SiteSettings(
 
 
 def check_id(project_id: str) -> str:
-    if not ID_REGEX.match(project_id) or len(project_id) > 60:
+    if not ID_REGEX.match(project_id) or len(project_id) > 60 or is_reserved_name(project_id):
         raise NotFoundError("no such project")
     return project_id
 

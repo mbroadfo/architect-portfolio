@@ -149,12 +149,24 @@ export function PublishDialog({
                 </li>
               </ul>
             </section>
+            <section
+              className={`inv${review.rightsReview === "outstanding" ? " inv--block" : " inv--warn"}`}
+              aria-label="Rights review"
+            >
+              <h3>Rights review</h3>
+              <p>
+                {review.rightsReview === "not required"
+                  ? "Not marked as needing one. Confirm that nothing here uses names or artwork that belong to someone else; if it does, mark the rights review as required in the editor first (FR10.6)."
+                  : review.rightsReview === "complete"
+                    ? "Recorded as complete: names and artwork cleared."
+                    : "Outstanding: names and artwork must be cleared before publishing (FR10.6)."}
+              </p>
+            </section>
             <section className="inv">
               <h3>Placement</h3>
               <ul>
                 <li>Category: {review.category ?? "none — gallery only"}</li>
                 <li>Featured: {review.featured ? "yes" : "no"}</li>
-                <li>Rights review: {review.rightsReview}</li>
               </ul>
             </section>
           </div>

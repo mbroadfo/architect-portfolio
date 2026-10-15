@@ -5,6 +5,8 @@ administration server:
 
 - it binds 127.0.0.1 only (``check_bind_host``);
 - the Host header must be ``127.0.0.1:<port>`` or ``localhost:<port>`` (DNS rebinding);
+- any request whose ``Sec-Fetch-Site`` is present and is neither ``same-origin`` nor ``none``
+  (direct navigation) is refused on every route, so another site cannot even start a preview;
 - every request that changes data must carry the Studio's own Origin, the custom header
   ``X-Studio-Request: 1`` (which a cross-site form or image cannot send without a CORS
   preflight this server never grants) and, when the browser sends it,
@@ -39,6 +41,7 @@ from portfolio_studio.errors import (
     ValidationFailedError,
 )
 from portfolio_studio.images import MAX_UPLOAD_BYTES, read_limited
+from portfolio_studio.location import code_root
 from portfolio_studio.model import (
     CreateRequest,
     FeaturedOrderRequest,
@@ -46,6 +49,7 @@ from portfolio_studio.model import (
     SaveRequest,
     TakeDownRequest,
 )
+from portfolio_studio.pages import package_pages
 from portfolio_studio.service import StudioService
 from portfolio_studio.store import check_asset_ref, check_id
 
@@ -101,6 +105,7 @@ class ServerConfig:
     static_dir: Path
     site_output: Path
     site_url: str | None = None
+    scanner: Path | None = None
     extra_hosts: tuple[str, ...] = ()
 
     @property
@@ -120,6 +125,11 @@ def _refusal(request: Request, config: ServerConfig) -> JSONResponse | None:
     """Host, Origin and custom-header checks; None when the request may proceed."""
     if request.headers.get("host", "") not in config.allowed_hosts:
         return _error(421, "HOST_REFUSED", "this server answers on its loopback address only")
+    # LS-3: a page on another site may not make the Studio do anything, not even a preview
+    # (which runs the renderer and may call GitHub). Direct navigation sends "none".
+    fetch_site = request.headers.get("sec-fetch-site")
+    if fetch_site is not None and fetch_site not in ("same-origin", "none"):
+        return _error(403, "CROSS_SITE_REFUSED", "requests from other sites are refused")
     length = request.headers.get("content-length")
     if length is not None and (not length.isdigit() or int(length) > MAX_BODY_BYTES):
         return _error(413, "TOO_LARGE", "the request is too large")
@@ -128,8 +138,7 @@ def _refusal(request: Request, config: ServerConfig) -> JSONResponse | None:
             return _error(403, "ORIGIN_REFUSED", "changes are accepted only from the Studio page")
         if request.headers.get(STUDIO_HEADER) != "1":
             return _error(403, "HEADER_REQUIRED", "changes need the Studio's request header")
-        fetch_site = request.headers.get("sec-fetch-site")
-        if fetch_site is not None and fetch_site != "same-origin":
+        if fetch_site == "none":
             return _error(403, "ORIGIN_REFUSED", "changes are accepted only from the Studio page")
         if length is None and request.headers.get("transfer-encoding"):
             return _error(411, "LENGTH_REQUIRED", "send a Content-Length")
@@ -258,6 +267,23 @@ def _api_routes(
     @app.get("/api/site")
     def site() -> dict[str, Any]:
         return {"output": str(config.site_output), "url": config.site_url}
+
+    @app.post("/api/site/package")
+    def package() -> dict[str, Any]:
+        """Package the last scanned build for Pages, staging only (noindex)."""
+        scanner = config.scanner or code_root() / "scripts" / "scan_output.py"
+        with service.lock:
+            result = package_pages(config.site_output, config.site_output.parent, scanner)
+        return {
+            "artifact": str(result.artifact),
+            "mode": result.mode,
+            "files": result.file_count,
+            "bytes": result.total_bytes,
+            "buildId": result.build_id,
+            "exhibits": result.exhibits,
+            "scan": result.scan,
+            "dryRun": f"python -m portfolio_studio deploy-pages --artifact {result.artifact}",
+        }
 
     @app.post("/api/site/build")
     def build() -> dict[str, Any]:

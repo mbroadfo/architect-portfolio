@@ -67,7 +67,9 @@ def test_foreign_host_header_is_refused(client: TestClient) -> None:
         ({"Origin": "http://evil.example", "X-Studio-Request": "1"}, "ORIGIN_REFUSED"),
         ({"Origin": "null", "X-Studio-Request": "1"}, "ORIGIN_REFUSED"),
         ({"Origin": ORIGIN}, "HEADER_REQUIRED"),
-        ({**CHANGE, "Sec-Fetch-Site": "cross-site"}, "ORIGIN_REFUSED"),
+        ({**CHANGE, "Sec-Fetch-Site": "cross-site"}, "CROSS_SITE_REFUSED"),
+        ({**CHANGE, "Sec-Fetch-Site": "same-site"}, "CROSS_SITE_REFUSED"),
+        ({**CHANGE, "Sec-Fetch-Site": "none"}, "ORIGIN_REFUSED"),
     ],
 )
 def test_changes_need_the_studio_origin_and_header(
@@ -197,3 +199,61 @@ def test_missing_ui_explains_how_to_build_it(
     )
     page = TestClient(create_app(service, builder, config)).get("/")
     assert "not built" in page.text
+
+
+def test_package_for_pages_needs_a_scanned_build(
+    client: TestClient, service: StudioService
+) -> None:
+    """The Studio packages staging only, from the last scanned build; nothing is uploaded."""
+    refused = client.post("/api/site/package", headers=CHANGE)
+    assert refused.status_code == 422 and refused.json()["code"] == "PAGES_REFUSED"
+    ready_project(service)
+    review = service.prepare_review("stars")
+    from portfolio_studio.model import PublishRequest
+
+    service.publish(
+        "stars", PublishRequest(revision=review["revision"], reviewId=review["reviewId"])
+    )
+    assert client.post("/api/site/build", headers=CHANGE).status_code == 200
+    packaged = client.post("/api/site/package", headers=CHANGE)
+    assert packaged.status_code == 200, packaged.text
+    body = packaged.json()
+    assert body["mode"] == "staging" and body["exhibits"][0]["projectId"] == "stars"
+    assert body["dryRun"].startswith("python -m portfolio_studio deploy-pages --artifact ")
+    assert (Path(body["artifact"]) / "site" / "_headers").is_file()
+
+
+@pytest.mark.parametrize("fetch_site", ["cross-site", "same-site"])
+def test_cross_site_requests_are_refused_on_every_route(
+    client: TestClient, service: StudioService, renderer: Any, fetch_site: str
+) -> None:
+    """LS-3: another site cannot start a preview (renderer, GitHub) or read anything."""
+    ready_project(service)
+    calls = len(renderer.calls)
+    headers = {"Sec-Fetch-Site": fetch_site}
+    for path in ("/preview/stars/exhibit", "/api/projects", "/", "/media/x/w480.jpg"):
+        response = client.get(path, headers=headers)
+        assert response.status_code == 403, path
+        assert response.json()["code"] == "CROSS_SITE_REFUSED"
+    assert len(renderer.calls) == calls
+
+
+def test_direct_navigation_and_same_origin_are_served(
+    client: TestClient, service: StudioService
+) -> None:
+    assert client.get("/", headers={"Sec-Fetch-Site": "none"}).status_code == 200
+    ready_project(service)
+    same = client.get("/preview/stars/exhibit", headers={"Sec-Fetch-Site": "same-origin"})
+    assert same.status_code == 200
+    assert client.get("/api/projects", headers={"Sec-Fetch-Site": "same-origin"}).status_code == 200
+
+
+def test_reserved_slug_is_a_clear_422(client: TestClient) -> None:
+    """LS-5: no GIT_FAILED or unhandled error for Windows device names."""
+    created = client.post("/api/projects", json={"title": "Nul"}, headers=CHANGE).json()
+    assert created["id"] == "nul-project"
+    body = {"revision": created["revision"], "title": "Nul", "slug": "nul", "images": []}
+    response = client.put("/api/projects/nul-project", json=body, headers=CHANGE)
+    assert response.status_code == 422
+    assert "Windows reserves" in response.json()["message"]
+    assert client.get("/api/projects/con").status_code == 404

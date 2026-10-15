@@ -7,6 +7,8 @@
 !web/slice-renderer/scripts/**
 !web/slice-renderer/src/**
 !web/slice-renderer/assets/**
+!web/slice-renderer/styles/**
+!web/slice-renderer/licences/**
 !local/fixtures/fixture.json
 !local/fixtures/ast_SliceFixtureImage0001/**
 **/__pycache__

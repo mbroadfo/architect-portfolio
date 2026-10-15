@@ -150,6 +150,17 @@ export interface BuildResult {
   url: string | null;
 }
 
+export interface PackageResult {
+  artifact: string;
+  mode: "staging" | "production";
+  files: number;
+  bytes: number;
+  buildId: string;
+  exhibits: { projectId: string; slug: string; sourceRevision: number }[];
+  scan: string;
+  dryRun: string;
+}
+
 export class ApiError extends Error {
   readonly status: number;
   readonly code: string;
@@ -227,6 +238,7 @@ export const api = {
       .entries,
   site: () => request<{ output: string; url: string | null }>("GET", "/api/site"),
   build: () => request<BuildResult>("POST", "/api/site/build"),
+  packagePages: () => request<PackageResult>("POST", "/api/site/package"),
 };
 
 export type StudioApi = typeof api;

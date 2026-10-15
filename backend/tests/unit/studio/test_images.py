@@ -120,3 +120,28 @@ def test_variant_widths_follow_c8() -> None:
     assert variant_widths(300) == [("w480", 300)]
     assert variant_widths(960) == [("w480", 480), ("w960", 960)]
     assert [n for n, _ in variant_widths(5000)] == ["w480", "w960", "w1600"]
+
+
+def test_multi_picture_jpeg_keeps_only_the_primary_image() -> None:
+    """LS-6: an MPO (phone camera JPEG) is accepted; its secondary picture and metadata are
+    dropped, and only the primary image's pixels are re-encoded."""
+    primary = Image.new("RGB", (1000, 700), (200, 30, 30))
+    secondary = Image.new("RGB", (320, 240), (30, 200, 30))
+    exif = Image.Exif()
+    exif[0x0110] = "SecretCam 9000"
+    exif[0x8825] = {1: "N", 2: (47.0, 36.0, 12.0)}
+    buffer = io.BytesIO()
+    primary.save(buffer, "MPO", save_all=True, append_images=[secondary], exif=exif.tobytes())
+    data = buffer.getvalue()
+    opened = Image.open(io.BytesIO(data))
+    assert opened.format == "MPO" and getattr(opened, "n_frames", 1) == 2
+    processed = process_image(data)
+    assert (processed.width, processed.height) == (1000, 700)
+    for derivative in processed.derivatives:
+        assert derivative.data.count(b"\xff\xd8") == (1 if derivative.key.endswith(".jpg") else 0)
+        assert b"MPF" not in derivative.data and b"Exif" not in derivative.data
+        assert b"SecretCam" not in derivative.data
+        image = Image.open(io.BytesIO(derivative.data))
+        assert getattr(image, "n_frames", 1) == 1
+        red, green, _ = image.convert("RGB").getpixel((10, 10))  # type: ignore[misc]
+        assert red > 150 and green < 80  # the primary picture, not the secondary

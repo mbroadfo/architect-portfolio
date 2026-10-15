@@ -2,7 +2,8 @@
 
 1. The size limit (10 MB) is enforced while reading, before any decoding.
 2. The file signature decides the type (JPEG, PNG or WebP); the name and declared type are
-   ignored. HEIC is deferred.
+   ignored. A multi-picture JPEG (MPO) is accepted, and only its primary image is used.
+   HEIC is deferred.
 3. The header is parsed lazily and the pixel count checked before the full decode; Pillow's
    own decompression-bomb limit is turned into an error as a second line of defence.
 4. The decoded pixels are oriented, flattened to RGB and re-encoded into the C8 variants
@@ -34,7 +35,13 @@ FORMATS: tuple[str, ...] = ("webp", "jpg")
 WEBP_QUALITY = 82
 JPEG_QUALITY = 85
 BACKGROUND = (14, 13, 11)  # the site's --bg, used to flatten transparency
-SIGNATURES: tuple[tuple[str, str], ...] = (("jpg", "JPEG"), ("png", "PNG"), ("webp", "WEBP"))
+# The Pillow formats each signature may decode as. MPO (multi-picture JPEG, as phones write
+# it) is a JPEG signature too: only its primary image is used (security review LS-6).
+FORMATS_BY_SIGNATURE: dict[str, frozenset[str]] = {
+    "jpg": frozenset({"JPEG", "MPO"}),
+    "png": frozenset({"PNG"}),
+    "webp": frozenset({"WEBP"}),
+}
 ALPHABET = string.ascii_letters + string.digits
 
 
@@ -95,15 +102,16 @@ def _open_checked(data: bytes, kind: str) -> Image.Image:
         raise ImageRejectedError("the image has too many pixels") from error
     except (UnidentifiedImageError, OSError) as error:
         raise ImageRejectedError("the file is not a readable image") from error
-    expected = dict(SIGNATURES)[kind]
-    if image.format != expected:
+    if image.format not in FORMATS_BY_SIGNATURE[kind]:
         raise ImageRejectedError("the image content does not match its signature")
     width, height = image.size
     if width < 1 or height < 1 or width > MAX_SIDE or height > MAX_SIDE:
         raise ImageRejectedError(f"images are limited to {MAX_SIDE} pixels on each side")
     if width * height > MAX_PIXELS:
         raise ImageRejectedError(f"images are limited to {MAX_PIXELS // 1_000_000} megapixels")
-    if getattr(image, "n_frames", 1) > 1:
+    if image.format == "MPO":
+        image.seek(0)  # the primary image; the secondary pictures are never decoded or kept
+    elif getattr(image, "n_frames", 1) > 1:
         raise ImageRejectedError("animated images are not accepted")
     try:
         image.load()

@@ -150,6 +150,16 @@ export function fakeClient(overrides: Partial<StudioApi> = {}): StudioApi {
       scan: "scan_output: OK - 15 file(s) scanned",
       url: "http://127.0.0.1:8766/",
     })),
+    packagePages: vi.fn(async () => ({
+      artifact: "C:/content/build/pages-20261015T010203Z",
+      mode: "staging" as const,
+      files: 22,
+      bytes: 1234567,
+      buildId: "build-20261015010000-1",
+      exhibits: [{ projectId: "stars", slug: "stars", sourceRevision: 6 }],
+      scan: "scan_output: OK - 21 file(s) scanned",
+      dryRun: "python -m portfolio_studio deploy-pages --artifact C:/content/build/pages-x",
+    })),
     ...overrides,
   };
 }

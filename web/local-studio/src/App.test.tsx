@@ -94,6 +94,10 @@ describe("Editor", () => {
     const title = await screen.findByDisplayValue("STARS");
     await userEvent.type(title, " 2");
     expect(screen.getByText(/Unsaved changes/)).toBeTruthy();
+    const rights = screen.getByRole("group", { name: "Rights review" });
+    expect(within(rights).getByText(/Only you decide/)).toBeTruthy();
+    const legends = Array.from(document.querySelectorAll("legend")).map((l) => l.textContent);
+    expect(legends.indexOf("Rights review")).toBe(1); // right after Basics
     expect(
       (screen.getByRole("button", { name: "Review publication" }) as HTMLButtonElement).disabled,
     ).toBe(true);
@@ -216,6 +220,8 @@ describe("Publish", () => {
     expect(within(dialog).getByText(/could not be confirmed public/)).toBeTruthy();
     expect(within(dialog).getByText(/Source available · Open source · MIT/)).toBeTruthy();
     expect(within(dialog).getByText("Inspiration")).toBeTruthy();
+    const rights = within(dialog).getByRole("region", { name: "Rights review" });
+    expect(within(rights).getByText(/Not marked as needing one/)).toBeTruthy();
     await userEvent.click(within(dialog).getByRole("button", { name: "Publish this revision" }));
     expect(client.publish).toHaveBeenCalledWith("stars", 5, "0123456789abcdef0123456789abcdef");
     expect(
@@ -336,6 +342,33 @@ describe("Featured order, activity and site", () => {
     );
     await userEvent.click(screen.getByRole("button", { name: "Build the public site" }));
     expect(await screen.findByText(/15 file\(s\) scanned/)).toBeTruthy();
+  });
+
+  it("packages the last build for Pages staging without uploading", async () => {
+    const client = fakeClient();
+    start(client, "#site");
+    await userEvent.click(
+      await screen.findByRole("button", { name: "Package for Pages (staging)" }),
+    );
+    const panel = await screen.findByRole("region", { name: "Pages package" });
+    expect(within(panel).getByText(/22 files, 1234567 bytes/)).toBeTruthy();
+    expect(within(panel).getByText(/stars \(revision 6\)/)).toBeTruthy();
+    expect(within(panel).getByText(/Nothing was uploaded/)).toBeTruthy();
+  });
+
+  it("shows a refused package", async () => {
+    start(
+      fakeClient({
+        packagePages: vi.fn(async () =>
+          Promise.reject(new ApiError(422, "PAGES_REFUSED", "run 'build' first")),
+        ),
+      }),
+      "#site",
+    );
+    await userEvent.click(
+      await screen.findByRole("button", { name: "Package for Pages (staging)" }),
+    );
+    expect((await screen.findByRole("alert")).textContent).toContain("run 'build' first");
   });
 
   it("shows a failed build (the previous site is kept)", async () => {

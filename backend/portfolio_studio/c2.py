@@ -40,6 +40,10 @@ LIVE_BADGES: dict[str, str] = {
     "invitation": "byInvitation",
 }
 BADGES_MAX = 6
+# C2 ``generation``. The renderer does not use it, and it must not carry anything from the
+# private repository: before security review LS-7 it was the content repository's commit
+# count, which moves with every private draft save. It is a fixed, non-identifying value.
+PUBLIC_GENERATION = 0
 
 
 def live_url_published(draft: Draft) -> bool:

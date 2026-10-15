@@ -392,3 +392,42 @@ def test_upload_is_refused_at_a_stale_revision(service: StudioService) -> None:
     save(service, view["id"], summary="moved on")
     with pytest.raises(ConflictError):
         service.upload_image(view["id"], view["revision"], make_image())
+
+
+@pytest.mark.parametrize(
+    ("title", "expected"),
+    [
+        ("Con", "con-project"),
+        ("NUL", "nul-project"),
+        ("com1", "com1-project"),
+        ("Lpt9", "lpt9-project"),
+    ],
+)
+def test_reserved_device_names_become_safe_ids(
+    service: StudioService, title: str, expected: str
+) -> None:
+    """LS-5: a title mapping to a Windows reserved name gets a safe, suffixed id and slug."""
+    view = service.create(CreateRequest(title=title))
+    assert view["id"] == expected and view["slug"] == expected
+    assert service.store.draft_path(expected).is_file()
+
+
+@pytest.mark.parametrize("slug", ["con", "aux", "prn", "nul", "com3", "lpt1"])
+def test_reserved_device_names_are_refused_as_slugs(service: StudioService, slug: str) -> None:
+    view = service.create(CreateRequest(title="STARS"))
+    from pydantic import ValidationError
+
+    with pytest.raises(ValidationError, match="Windows reserves"):
+        save(service, view["id"], slug=slug)
+    assert service.get(view["id"])["slug"] == "stars"
+
+
+def test_reserved_names_are_not_project_ids(service: StudioService) -> None:
+    from portfolio_studio.errors import NotFoundError
+    from portfolio_studio.model import is_reserved_name
+
+    with pytest.raises(NotFoundError):
+        service.get("con")
+    assert is_reserved_name("CON.txt") and is_reserved_name("com9")
+    assert not is_reserved_name("console") and not is_reserved_name("con-project")
+    assert not is_reserved_name("com10")

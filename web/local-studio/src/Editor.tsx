@@ -314,6 +314,31 @@ export function Editor({
             </div>
           </fieldset>
 
+          <fieldset className="fs fs--rights" id="rights-review">
+            <legend>Rights review</legend>
+            <p className="field__note field__note--warn">
+              Does this project use names, characters or artwork that belong to someone else (for
+              example Monopoly or Risk)? Only you decide. If it does, tick the first box: Publish
+              stays blocked until you record that the rights review is complete (FR10.6).
+            </p>
+            <label className="check">
+              <input
+                type="checkbox"
+                checked={fields.rightsReviewRequired}
+                onChange={(e) => update("rightsReviewRequired", e.target.checked)}
+              />{" "}
+              This project needs a rights review (names or artwork of others)
+            </label>
+            <label className="check">
+              <input
+                type="checkbox"
+                checked={fields.rightsReviewComplete}
+                onChange={(e) => update("rightsReviewComplete", e.target.checked)}
+              />{" "}
+              Rights review complete — names and artwork cleared
+            </label>
+          </fieldset>
+
           <fieldset className="fs">
             <legend>Story</legend>
             <p className="field__hint">Empty sections are left off the public page.</p>
@@ -452,26 +477,6 @@ export function Editor({
               onChange={(repositories) => update("repositories", repositories)}
             />
             <LinksField links={fields.links} onChange={(links) => update("links", links)} />
-          </fieldset>
-
-          <fieldset className="fs">
-            <legend>Rights review</legend>
-            <label className="check">
-              <input
-                type="checkbox"
-                checked={fields.rightsReviewRequired}
-                onChange={(e) => update("rightsReviewRequired", e.target.checked)}
-              />{" "}
-              This project needs a rights review (names or artwork of others)
-            </label>
-            <label className="check">
-              <input
-                type="checkbox"
-                checked={fields.rightsReviewComplete}
-                onChange={(e) => update("rightsReviewComplete", e.target.checked)}
-              />{" "}
-              Rights review complete — names and artwork cleared
-            </label>
           </fieldset>
         </form>
       </div>

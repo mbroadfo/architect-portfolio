@@ -59,9 +59,11 @@ describe("api client", () => {
     await api.activity();
     await api.site();
     await api.build();
+    await api.packagePages();
     const paths = fetchMock.mock.calls.map((call) => (call as unknown as [string])[0]);
     expect(paths).toContain("/api/projects/stars/take-down");
     expect(paths).toContain("/api/site/build");
+    expect(paths).toContain("/api/site/package");
   });
 
   it("describes errors and labels badges", () => {

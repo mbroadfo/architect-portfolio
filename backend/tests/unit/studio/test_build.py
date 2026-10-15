@@ -42,7 +42,10 @@ def test_build_contains_published_versions_only(
     assert media == sorted(published.derivatives)
     assert not any("originals" in p.as_posix() for p in output.rglob("*"))
     manifest = json.loads(output.with_name("site.build.json").read_text(encoding="utf-8"))
-    assert manifest["exhibits"] == ["stars"]
+    assert [(e["projectId"], e["sourceRevision"]) for e in manifest["exhibits"]] == [("stars", 3)]
+    assert manifest["scan"]["passed"] is True
+    assert manifest["files"]["work/stars/index.html"]
+    assert "snapshot.json" in manifest["scanInputs"]
 
 
 def test_take_down_removes_the_exhibit_and_media_from_the_next_build(
@@ -128,3 +131,76 @@ def test_renderer_failure_fails_the_build(
 def test_empty_site_builds(builder: SiteBuilder, service: StudioService) -> None:
     result = builder.build(default_output(service.store.root))
     assert result.exhibits == 0
+
+
+def _flaky_rename(
+    monkeypatch: pytest.MonkeyPatch, fail: Any, transient_failures: int = 0
+) -> list[str]:
+    """Replace Path.rename: fail ``transient_failures`` times, then whenever ``fail(src)``."""
+    import portfolio_studio.build as build_module
+
+    monkeypatch.setattr(build_module, "RENAME_BACKOFF_SECONDS", 0.0)
+    original = Path.rename
+    seen: list[str] = []
+
+    def rename(self: Path, target: Any) -> Path:
+        seen.append(self.name)
+        if len(seen) <= transient_failures or fail(self.name):
+            error = PermissionError(13, "Access is denied")
+            error.winerror = 5  # type: ignore[attr-defined]
+            raise error
+        return original(self, target)
+
+    monkeypatch.setattr(Path, "rename", rename)
+    return seen
+
+
+def test_transient_windows_rename_errors_are_retried(
+    service: StudioService, builder: SiteBuilder, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """LS-4: WinError 5 from a briefly held file is retried, not fatal."""
+    ready_project(service, "STARS")
+    publish(service, "stars")
+    output = default_output(service.store.root)
+    builder.build(output)
+    seen = _flaky_rename(monkeypatch, lambda name: False, transient_failures=3)
+    result = builder.build(output)
+    assert result.exhibits == 1 and len(seen) > 3
+    assert not [p for p in output.parent.iterdir() if ".previous-" in p.name]
+
+
+def test_failed_swap_and_failed_restore_keep_the_previous_build(
+    service: StudioService, builder: SiteBuilder, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """LS-4: if neither the new build nor the restore can be renamed, the previous build is
+    kept complete under a recoverable name, and the next build puts it back first."""
+    ready_project(service, "STARS")
+    publish(service, "stars")
+    output = default_output(service.store.root)
+    builder.build(output)
+    before = (output / "work" / "stars" / "index.html").read_text(encoding="utf-8")
+    _flaky_rename(monkeypatch, lambda name: name.startswith((".site.staging-", ".site.previous-")))
+    with pytest.raises(BuildFailedError, match="kept, complete, at") as raised:
+        builder.build(output)
+    monkeypatch.undo()
+    kept = [p for p in output.parent.iterdir() if p.name.startswith(".site.previous-")]
+    assert len(kept) == 1 and str(kept[0]) in str(raised.value)
+    assert (kept[0] / "work" / "stars" / "index.html").read_text(encoding="utf-8") == before
+    assert not output.exists()
+    builder.build(output)  # recovers the previous build first, then replaces it
+    assert (output / "work" / "stars" / "index.html").is_file()
+    assert not [p for p in output.parent.iterdir() if ".previous-" in p.name]
+
+
+def test_failed_swap_restores_the_previous_build(
+    service: StudioService, builder: SiteBuilder, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    ready_project(service, "STARS")
+    publish(service, "stars")
+    output = default_output(service.store.root)
+    builder.build(output)
+    _flaky_rename(monkeypatch, lambda name: name.startswith(".site.staging-"))
+    with pytest.raises(BuildFailedError, match="could not be put in place"):
+        builder.build(output)
+    monkeypatch.undo()
+    assert (output / "work" / "stars" / "index.html").is_file()

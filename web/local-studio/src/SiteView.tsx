@@ -1,7 +1,7 @@
 // Public site: build the static site from published versions only, scan it, and view it on
 // the local site server. Building never reads drafts.
 import { useEffect, useState } from "react";
-import { describe, type BuildResult } from "./api";
+import { describe, type BuildResult, type PackageResult } from "./api";
 import { useApi } from "./App";
 
 export function SiteView() {
@@ -10,6 +10,7 @@ export function SiteView() {
   const [result, setResult] = useState<BuildResult | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const [packaged, setPackaged] = useState<PackageResult | null>(null);
 
   useEffect(() => {
     let live = true;
@@ -17,6 +18,7 @@ export function SiteView() {
       (value) => live && setSite(value),
       (failure: unknown) => live && setError(describe(failure)),
     );
+
     return () => {
       live = false;
     };
@@ -29,6 +31,19 @@ export function SiteView() {
       setResult(await client.build());
     } catch (failure) {
       setResult(null);
+      setError(describe(failure));
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function packagePages() {
+    setBusy(true);
+    setError(null);
+    try {
+      setPackaged(await client.packagePages());
+    } catch (failure) {
+      setPackaged(null);
       setError(describe(failure));
     } finally {
       setBusy(false);
@@ -53,6 +68,14 @@ export function SiteView() {
             onClick={() => void build()}
           >
             {busy ? "Building…" : "Build the public site"}
+          </button>
+          <button
+            className="btn btn--ghost"
+            type="button"
+            disabled={busy}
+            onClick={() => void packagePages()}
+          >
+            Package for Pages (staging)
           </button>
           {site?.url && (
             <a className="btn btn--ghost" href={site.url} target="_blank" rel="noreferrer">
@@ -79,6 +102,24 @@ export function SiteView() {
             pages, {result.files} files.
           </p>
           <p className="field__hint">{result.scan}</p>
+        </section>
+      )}
+      {packaged && (
+        <section className="panel" aria-label="Pages package">
+          <h2>Packaged for Cloudflare Pages ({packaged.mode})</h2>
+          <p>
+            {packaged.files} files, {packaged.bytes} bytes, from {packaged.buildId}. Exhibits:{" "}
+            {packaged.exhibits.length
+              ? packaged.exhibits
+                  .map((e) => `${e.projectId} (revision ${e.sourceRevision})`)
+                  .join(", ")
+              : "none"}
+            .
+          </p>
+          <p className="field__hint">{packaged.scan}</p>
+          <p className="field__hint">
+            Nothing was uploaded. Check it with a dry run: <code>{packaged.dryRun}</code>
+          </p>
         </section>
       )}
     </>
