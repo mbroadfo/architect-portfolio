@@ -71,7 +71,8 @@ test("W1 to W4: create, save, preview and publish a static page in the Studio", 
   expect(html).toContain(SUMMARY);
   expect(html).not.toContain("<demo>");
   expect(html).not.toContain("Preview — not public");
-  expect(html).not.toMatch(/<script/i);
+  // NFR15: only the one hashed, same-origin external script; never an inline script.
+  expect(html).not.toMatch(/<script(?![^>]*\ssrc="\/assets\/site\.[0-9a-f]{10}\.js")/i);
 
   await page.goto(`${SITE}/work/${SLUG}`);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(TITLE);

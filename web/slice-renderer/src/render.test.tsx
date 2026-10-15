@@ -4,7 +4,7 @@ import { createHash } from "node:crypto";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { publicResolver } from "./cli";
 import { render } from "./render";
-import { STATIC_ASSETS } from "./static-assets";
+import { STATIC_ASSET_PATHS, STATIC_ASSETS } from "./static-assets";
 import { ASSET, exhibit, snapshot } from "./test-fixtures";
 import { RenderInputError, type RenderOptions } from "./types";
 
@@ -41,13 +41,15 @@ describe("escaping (AC0.6, BR4.2)", () => {
       "&lt;script&gt;alert(&quot;x&quot;)&lt;/script&gt; &amp; &quot;quotes&quot;",
     );
     expect(page).toContain("&lt;img src=x onerror=alert(1)&gt; summary");
-    expect(page).not.toMatch(/<script/i);
+    expect(page).not.toMatch(/<script>/i);
     expect(page).not.toMatch(/<img src=x/i);
   });
 
-  it("produces no inline scripts, styles or separator comments on any page", () => {
+  it("produces no inline scripts, styles, handlers or comments on any page (NFR15)", () => {
     for (const page of render(snapshot(), PUBLIC).pages) {
-      expect(page.html).not.toMatch(/<script|<style|style=|<!--/i);
+      const scripts = page.html.match(/<script[^>]*>[^<]*<\/script>/gi) ?? [];
+      expect(scripts).toEqual([`<script src="${STATIC_ASSETS.script.path}" defer=""></script>`]);
+      expect(page.html).not.toMatch(/<style|style=|<!--|\son[a-z]+=|javascript:/i);
     }
   });
 });
@@ -126,7 +128,7 @@ describe("pages and required assets (C9, C8)", () => {
       ["/404.html", 404],
       ["/category-404.html", 404],
     ]);
-    expect(output.staticAssets).toEqual([STATIC_ASSETS.site.path]);
+    expect(output.staticAssets).toEqual([...STATIC_ASSET_PATHS]);
   });
 
   it("shows the installation notice when nothing is published", () => {
@@ -180,7 +182,7 @@ describe("pages and required assets (C9, C8)", () => {
       { assetRef: ASSET, downloadName: "plans-drawings.pdf" },
     ]);
     const home = output.pages[0]?.html ?? "";
-    expect(home).toContain("Featured");
+    expect(home).toContain(">Featured</p>");
     expect(home).toContain('href="/category/software"');
     const page = output.pages.find((p) => p.path === "/work/placeholder-project")?.html ?? "";
     expect(page).toContain(`href="/files/${ASSET}/plans-drawings.pdf"`);
@@ -188,9 +190,14 @@ describe("pages and required assets (C9, C8)", () => {
     expect(page).toContain('href="https://demo.test.example"');
   });
 
-  it("references the static asset whose hash matches its content", () => {
-    const css = readFileSync(new URL("../assets/site.css", import.meta.url));
-    const hash = createHash("sha256").update(css).digest("hex").slice(0, 10);
-    expect(STATIC_ASSETS.site.path).toBe(`/assets/site.${hash}.css`);
+  it("references every static asset by the hash of its committed content", () => {
+    const all = [STATIC_ASSETS.site, STATIC_ASSETS.script, ...STATIC_ASSETS.fonts];
+    expect(all.map((asset) => asset.path)).toEqual([...STATIC_ASSET_PATHS]);
+    for (const { path, source } of all) {
+      const data = readFileSync(new URL(`../${source}`, import.meta.url));
+      const hash = createHash("sha256").update(data).digest("hex").slice(0, 10);
+      const [stem, ext] = source.replace("assets/", "").split(".");
+      expect(path).toBe(`/assets/${stem}.${hash}.${ext}`);
+    }
   });
 });

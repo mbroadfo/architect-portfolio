@@ -326,3 +326,51 @@ kind = "audit"
 argv = ["{npm}", "--prefix", "web/slice-studio", "audit", "--audit-level=high"]
 applies_when = ["web/slice-studio/package-lock.json"]
 required = false
+
+# --- local-studio (L2, ADR-013: local Studio, private content repository, site build) -----
+
+[[check]]
+id = "local-studio-backend-unit"
+unit = "local-studio"
+kind = "unit"
+description = "Content isolation, Host/Origin/header refusal, revisions, image sanitization, publish boundary, take-down, build scan and swap; 80% line-coverage floor"
+argv = [
+  "{python}", "-m", "pytest", "backend/tests/unit/studio",
+  "--cov=portfolio_studio", "--cov-fail-under=80",
+]
+applies_when = ["backend/portfolio_studio", "backend/tests/unit/studio"]
+requires = [
+  "module:pytest_cov", "module:fastapi", "module:PIL", "module:python_multipart",
+  "module:httpx", "tool:git", "tool:node",
+]
+report = "junit"
+
+[[check]]
+id = "local-studio-ui-check"
+unit = "local-studio"
+kind = "unit"
+description = "Studio page: format, lint, types, Vitest with the 80% floor, Vite build"
+argv = ["{npm}", "--prefix", "web/local-studio", "run", "check"]
+applies_when = ["web/local-studio/package.json"]
+requires = ["path:web/local-studio/node_modules"]
+report = "junit"
+
+[[check]]
+id = "local-studio-pip-audit"
+unit = "local-studio"
+kind = "audit"
+argv = [
+  "{python}", "-m", "pip_audit", "--disable-pip", "--require-hashes",
+  "-r", "backend/requirements-studio.lock",
+]
+applies_when = ["backend/requirements-studio.lock"]
+requires = ["module:pip_audit"]
+required = false
+
+[[check]]
+id = "local-studio-npm-audit"
+unit = "local-studio"
+kind = "audit"
+argv = ["{npm}", "--prefix", "web/local-studio", "audit", "--audit-level=high"]
+applies_when = ["web/local-studio/package-lock.json"]
+required = false

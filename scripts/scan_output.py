@@ -106,6 +106,7 @@ NUMBER_ATTRIBUTES = frozenset({"width", "height"})
 EXIF_MARKER = b"Exif\x00\x00"
 BINARY_PREFIXES: tuple[str, ...] = ("media/", "files/")
 SHA256_HEX = re.compile(r"^[0-9a-f]{64}$")
+FRAGMENT = re.compile(r"^#[a-z][a-z0-9-]*$")
 
 
 class DigestManifestError(ValueError):
@@ -153,6 +154,8 @@ class Allowed:
     urls: set[str] = field(default_factory=set)
     numbers: set[str] = field(default_factory=set)
     files: set[str] = field(default_factory=set)
+    # Same-page links ("#main"): only fragments the template vocabulary itself spells.
+    fragments: set[str] = field(default_factory=set)
 
 
 # --- snapshot checks -------------------------------------------------------------------
@@ -280,12 +283,29 @@ def _add_exhibit(allowed: Allowed, exhibit: dict[str, Any]) -> None:
         allowed.urls.add(exhibit["liveUrl"])
 
 
+def _count_strings(snapshot: dict[str, Any]) -> set[str]:
+    """Decimal counts the pages show: published exhibits in all and per category (C2 count)."""
+    exhibits = snapshot.get("exhibits")
+    counts = {str(len(exhibits))} if isinstance(exhibits, list) else set()
+    for category in snapshot.get("categories") or []:
+        count = category.get("count") if isinstance(category, dict) else None
+        if isinstance(count, int) and not isinstance(count, bool):
+            counts.add(str(count))
+    return counts
+
+
 def build_allowed(snapshot: dict[str, Any], vocabulary: Sequence[object]) -> Allowed:
     """Build the allow-list from the snapshot and the template vocabulary."""
     allowed = Allowed()
-    allowed.strings.update(_string_leaves(snapshot))
+    snapshot_strings = set(_string_leaves(snapshot))
+    # HTML text is compared after whitespace normalization, so a multi-line narrative section
+    # is allowed in its normalized form too (the same characters, whitespace collapsed).
+    allowed.strings.update(snapshot_strings, {_normalize(text) for text in snapshot_strings})
+    allowed.strings.update(_count_strings(snapshot))
     for document in vocabulary:
-        allowed.strings.update(_string_leaves(document))
+        vocabulary_strings = set(_string_leaves(document))
+        allowed.strings.update(vocabulary_strings)
+        allowed.fragments.update(v for v in vocabulary_strings if FRAGMENT.match(v))
     allowed.urls.update({"/", "/work/"})
     allowed.files.update({"index.html", "work/index.html", "404.html", "category-404.html"})
     site = snapshot.get("site") or {}
@@ -353,7 +373,7 @@ class _HtmlScanner(HTMLParser):
         if value is None or value == "":
             return
         if name in URL_ATTRIBUTES:
-            if value not in self.allowed.urls:
+            if value not in self.allowed.urls and value not in self.allowed.fragments:
                 self._flag(f"{where}={value!r}", _value_reason(value))
         elif name == "srcset":
             self._check_srcset(where, value)

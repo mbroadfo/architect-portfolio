@@ -1,0 +1,159 @@
+{
+  "schemaVersion": "1.0",
+  "generation": 1,
+  "site": {
+    "ownerName": "Michael Broadfoot",
+    "githubProfileUrl": "https://github.com/mbroadfo",
+    "contactEmail": null
+  },
+  "exhibits": [
+    {
+      "slug": "stars",
+      "title": "STARS",
+      "summary": "Fly through the real galaxy — 123,000 stars at their true 3D positions, with instruments no planetarium ships.",
+      "sections": {
+        "inspiration": "Everyone builds maps; nobody builds instruments. STARS starts from that thesis: a navigable atlas of the real solar neighbourhood that lets you measure it, not only look at it.",
+        "designChallenges": "Rendering more than a hundred thousand real stars smoothly in a browser, and keeping the data honest: real data is rendered as real, and anything procedural is labelled.",
+        "architecturalDecisions": "A Python pipeline packs the AT-HYG catalogue into a compact binary star buffer. A Vite, React and Three.js viewer flies through it with SketchUp-style orbit, pan and zoom, in a galactic frame with the Sun at the origin and one unit per light-year.",
+        "implementation": "Measurement tethers give the true 3D separation of any two stars; closure rates come from real velocity vectors; relativistic mission briefs give ship time, Earth time and peak γ at constant 1 g; intercept navigation aims where a star will be; deep-time scrubbing runs ±100,000 years. It ships as a static site built by GitHub Actions.",
+        "outcomes": "Live in the browser, showing 123,018 catalogue stars and 145,128 far-field stars."
+      },
+      "leadImage": {
+        "assetRef": "ast_StarsLead0000000",
+        "altText": "STARS: a 3D atlas of real stars around the Sun, with Sirius, Procyon and Altair labelled",
+        "width": 1400,
+        "height": 950
+      },
+      "images": [
+        {
+          "assetRef": "ast_StarsGallery0000",
+          "altText": "The atlas centred on the Sun, with nearby stars and constellation lines labelled",
+          "caption": "The solar neighbourhood, one unit per light-year",
+          "width": 1400,
+          "height": 950
+        },
+        {
+          "assetRef": "ast_StarsGallery1000",
+          "altText": "STARS instrument panels: view, visibility, time, travel-time view, infection lab, universes and radiosphere",
+          "caption": "The instrument panels",
+          "width": 750,
+          "height": 700
+        },
+        {
+          "assetRef": "ast_StarsGallery2000",
+          "altText": "STARS running on a phone-sized screen",
+          "caption": "On a phone",
+          "width": 700,
+          "height": 1256
+        }
+      ],
+      "attachments": [],
+      "links": [],
+      "liveUrl": "https://stars.xaminisalamini.com/",
+      "badges": [
+        {
+          "kind": "inBrowser"
+        },
+        {
+          "kind": "sourceAvailable"
+        }
+      ],
+      "publicRepositories": [
+        {
+          "name": "stars",
+          "url": "https://github.com/mbroadfo/stars"
+        }
+      ],
+      "primaryCategory": {
+        "slug": "astronomy",
+        "name": "Astronomy & Exploration",
+        "position": 1
+      },
+      "featured": true,
+      "publishedAt": "2026-10-11T12:00:00Z"
+    },
+    {
+      "slug": "baduk",
+      "title": "Baduk",
+      "summary": "Learn Go by playing it — four bots with distinct personalities, and a coach that explains every move.",
+      "sections": {
+        "inspiration": "A superhuman opponent teaches a beginner almost nothing. Baduk is a place where someone who has never played can sit down, understand what is happening, and enjoy it.",
+        "designChallenges": "Making bot strength honest. Levels are measured in bot-versus-bot arenas rather than guessed, and nothing claims a calibrated human rank.",
+        "architecturalDecisions": "The bots and the coach reason from the same evaluator, so the advice a learner reads is the reasoning the opponent actually used. Facts about the position are kept apart from opinions about what to play. It is a static build with no backend; bots run in a Web Worker.",
+        "implementation": "A rules engine with ko and superko, area and territory scoring, handicap and SGF; four opponents from random play to Monte Carlo tree search; graduated hints; a 15-concept curriculum and post-game review; 170 tests.",
+        "outcomes": "Measured on 9×9: Sprout beats Pebble 9–0, Kaze beats Sprout 9–3, and Tenuki beats Kaze 5–3 at 600 ms of thinking time.",
+        "lessonsLearned": "Learners bond with characters more readily than with a difficulty slider, so each opponent has a name, a face and an honest blind spot."
+      },
+      "leadImage": {
+        "assetRef": "ast_BadukLead0000000",
+        "altText": "A 9×9 Go game in progress between two bots",
+        "width": 1160,
+        "height": 1170
+      },
+      "images": [
+        {
+          "assetRef": "ast_BadukGallery0000",
+          "altText": "A bot-versus-bot Go game with the move log explaining each move",
+          "caption": "Every move comes with its reasoning",
+          "width": 1680,
+          "height": 945
+        },
+        {
+          "assetRef": "ast_BadukGallery1000",
+          "altText": "The Baduk game panel with opponents, settings and the lessons list beside an empty board",
+          "caption": "Opponents, settings and lessons",
+          "width": 1600,
+          "height": 1326
+        },
+        {
+          "assetRef": "ast_BadukGallery2000",
+          "altText": "Baduk running on a phone-sized screen",
+          "caption": "On a phone",
+          "width": 700,
+          "height": 1256
+        }
+      ],
+      "attachments": [],
+      "links": [],
+      "liveUrl": "https://baduk.xaminisalamini.com/",
+      "badges": [
+        {
+          "kind": "inBrowser"
+        },
+        {
+          "kind": "openSource",
+          "spdx": "MIT"
+        }
+      ],
+      "publicRepositories": [
+        {
+          "name": "baduk",
+          "url": "https://github.com/mbroadfo/baduk",
+          "licence": "MIT"
+        }
+      ],
+      "primaryCategory": {
+        "slug": "games",
+        "name": "Games & AI Arenas",
+        "position": 0
+      },
+      "featured": true,
+      "publishedAt": "2026-10-11T12:00:00Z"
+    }
+  ],
+  "featuredOrder": ["stars", "baduk"],
+  "categories": [
+    {
+      "slug": "games",
+      "name": "Games & AI Arenas",
+      "position": 0,
+      "count": 1
+    },
+    {
+      "slug": "astronomy",
+      "name": "Astronomy & Exploration",
+      "position": 1,
+      "count": 1
+    }
+  ]
+}

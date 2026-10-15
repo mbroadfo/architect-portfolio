@@ -3,3 +3,6 @@ dist/
 coverage/
 package-lock.json
 src/static-assets.ts
+assets/site.css
+assets/site.js
+licences/

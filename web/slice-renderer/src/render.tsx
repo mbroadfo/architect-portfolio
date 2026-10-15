@@ -10,8 +10,7 @@ import {
   NotFoundPage,
   type PageContext,
 } from "./pages";
-import { STATIC_ASSETS } from "./static-assets";
-import vocab from "./template-strings.json";
+import { STATIC_ASSET_PATHS } from "./static-assets";
 import {
   RenderInputError,
   type PublicSiteSnapshot,
@@ -92,18 +91,14 @@ export function render(snapshot: PublicSiteSnapshot, options: RenderOptions): Re
         <CategoryPage ctx={ctx} slug={category.slug} name={category.name} />,
       ),
     ),
-    page("/404.html", 404, <NotFoundPage ctx={ctx} message={vocab.text.notFound} />),
-    page(
-      "/category-404.html",
-      404,
-      <NotFoundPage ctx={ctx} message={vocab.text.categoryNotFound} />,
-    ),
+    page("/404.html", 404, <NotFoundPage ctx={ctx} kind="exhibit" />),
+    page("/category-404.html", 404, <NotFoundPage ctx={ctx} kind="category" />),
   ];
   return {
     contractVersion: "1.0",
     pages,
     requiredImages: requiredImages(valid),
     requiredDownloads: requiredDownloads(valid),
-    staticAssets: [STATIC_ASSETS.site.path],
+    staticAssets: [...STATIC_ASSET_PATHS],
   };
 }

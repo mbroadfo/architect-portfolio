@@ -457,3 +457,50 @@ def test_r3_main_requires_and_checks_the_manifest(
     assert scan.main([*base, "--media-digests", str(good)]) == 0
     _write(release, JPEG_KEY, JPEG + b"x")
     assert scan.main([*base, "--media-digests", str(good)]) == 1
+
+
+# --- L1 public design: same-page links, counts and multi-line narrative -------------------
+
+
+def _page(body: str) -> str:
+    return f'<!DOCTYPE html><html lang="en"><body>{body}</body></html>'
+
+
+def _allowed(snapshot: dict[str, Any] | None = None) -> scan.Allowed:
+    vocabulary = {**VOCABULARY, "fragments": ["#main", "#story"]}
+    return scan.build_allowed(snapshot or SNAPSHOT, [vocabulary])
+
+
+def test_l1_vocabulary_fragments_are_allowed_links() -> None:
+    """The skip link and in-page navigation may target fragments the vocabulary spells."""
+    html = _page('<a href="#main">All work</a><a href="#story">All work</a>')
+    assert scan.scan_html("page", html, _allowed()) == []
+
+
+def test_l1_other_fragments_and_snapshot_strings_are_not_links() -> None:
+    """A fragment the vocabulary does not spell is refused, even if the snapshot has it."""
+    snapshot = copy.deepcopy(SNAPSHOT)
+    snapshot["exhibits"][0]["summary"] = "#evil"
+    html = _page('<a href="#evil">All work</a><a href="#Main">All work</a>')
+    reasons = [f.location for f in scan.scan_html("page", html, _allowed(snapshot))]
+    assert reasons == ["page [<a href>='#evil']", "page [<a href>='#Main']"]
+
+
+def test_l1_counts_derived_from_the_snapshot_are_allowed() -> None:
+    """The exhibit total and each C2 category count may appear as text; other numbers not."""
+    snapshot = copy.deepcopy(SNAPSHOT)
+    snapshot["categories"] = [{"slug": "games", "name": "Games", "position": 0, "count": 7}]
+    allowed = _allowed(snapshot)
+    assert scan.scan_html("page", _page("<span>1</span><span>7</span>"), allowed) == []
+    findings = scan.scan_html("page", _page("<span>42</span>"), allowed)
+    assert [f.location for f in findings] == ["page [text '42']"]
+
+
+def test_l1_multi_line_snapshot_text_is_allowed_in_normalized_form() -> None:
+    """A narrative with paragraphs is compared after whitespace normalization."""
+    snapshot = copy.deepcopy(SNAPSHOT)
+    snapshot["exhibits"][0]["sections"] = {"outcomes": "First line.\n\nSecond  line."}
+    allowed = _allowed(snapshot)
+    html = _page("<p>First line.\n\nSecond  line.</p>")
+    assert scan.scan_html("page", html, allowed) == []
+    assert scan.scan_html("page", _page("<p>First line. Third line.</p>"), allowed) != []
