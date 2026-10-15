@@ -42,3 +42,5 @@ local/*.Dockerfile.dockerignore
 local/fake-idp/Dockerfile
 # The tests that guard the authentication, approval and privacy invariants (S0-3).
 backend/tests/
+backend/portfolio_studio/
+web/local-studio/src/

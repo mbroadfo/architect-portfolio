@@ -110,6 +110,9 @@ jobs:
           if [ -f backend/requirements-slice.lock ]; then
             python -m pip install --require-hashes -r backend/requirements-slice.lock
           fi
+          if [ -f backend/requirements-studio.lock ]; then
+            python -m pip install --require-hashes -r backend/requirements-studio.lock
+          fi
       - name: Ruff lint
         run: ruff check .
       - name: Ruff format
@@ -121,7 +124,10 @@ jobs:
       - name: Back-end unit tests with the 80% line-coverage floor (when present)
         run: |
           if [ -d backend/tests/unit ]; then
-            python -m pytest backend/tests/unit --cov=portfolio_api --cov-fail-under=80
+            cov="--cov=portfolio_api"
+            if [ -d backend/portfolio_studio ]; then cov="$cov --cov=portfolio_studio"; fi
+            # shellcheck disable=SC2086
+            python -m pytest backend/tests/unit $cov --cov-fail-under=80
           fi
       - name: Fake issuer tests (when present)
         run: |
@@ -165,7 +171,7 @@ jobs:
       - name: Standalone packages (when present)
         run: |
           shopt -s nullglob
-          for dir in web/slice-*/; do
+          for dir in web/slice-*/ web/local-studio/; do
             if [ -f "${dir}package-lock.json" ]; then
               echo "::group::${dir}"
               (cd "$dir" && npm ci && npm run check)
