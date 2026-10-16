@@ -7,12 +7,17 @@ FROM node:22-slim@sha256:c3de60bf2f9dd0ac6370e6117950ff62d6e339527e7472301c9c78a
 WORKDIR /build
 COPY web/slice-renderer/package.json web/slice-renderer/package-lock.json ./
 RUN npm ci --no-audit --no-fund
+# tsconfig.json is an esbuild input (it shapes the client bundle), so it must be here for the
+# bundle to match the committed assets/site.js byte for byte (security review LS-2).
+COPY web/slice-renderer/tsconfig.json ./
 COPY web/slice-renderer/scripts ./scripts
 COPY web/slice-renderer/src ./src
 COPY web/slice-renderer/assets ./assets
 COPY web/slice-renderer/styles ./styles
 COPY web/slice-renderer/licences ./licences
-RUN node scripts/hash-assets.mjs && node scripts/build-cli.mjs
+# The image serves the committed, reviewed generated assets. `--check` regenerates them in
+# memory and fails the build if any differs from the committed file; it never rewrites them.
+RUN node scripts/hash-assets.mjs --check && node scripts/build-cli.mjs
 
 FROM python:3.12-slim@sha256:a6e34c598f2467ed0e9a8d349809fcd8b5c603269512df273a0bb1784edc11b1
 ENV PYTHONDONTWRITEBYTECODE=1 \

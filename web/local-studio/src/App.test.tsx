@@ -354,6 +354,7 @@ describe("Featured order, activity and site", () => {
     expect(within(panel).getByText(/22 files, 1234567 bytes/)).toBeTruthy();
     expect(within(panel).getByText(/stars \(revision 6\)/)).toBeTruthy();
     expect(within(panel).getByText(/Nothing was uploaded/)).toBeTruthy();
+    expect(within(panel).getByText(/Registered in the content repository/)).toBeTruthy();
   });
 
   it("shows a refused package", async () => {

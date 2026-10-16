@@ -12,6 +12,7 @@ Layout::
     published/media/<ref>/<variant>.<fmt>           the derivatives a published version uses
     published/featured-order.json     the published carousel order (project ids)
     withdrawn/<id>.json               the take-down record
+    deployments/packages.json         the Pages package register (packages and staging deploys)
     build/                            generated site output (ignored by Git)
 
 Files are written to a temporary name and renamed into place. Each operation then commits the

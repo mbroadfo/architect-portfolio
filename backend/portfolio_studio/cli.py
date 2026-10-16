@@ -8,11 +8,12 @@ Commands::
     build             --content <dir> [--out <dir>]
     serve-site        --content <dir> [--out <dir>] [--port 8766]
     backup            --content <dir> --to <file.bundle>
-    package-pages     --content <dir> [--site <build>] [--out <dir>] [--staging | --production
-                      --i-have-owner-authorization]
-    deploy-pages      --artifact <pages-dir> [--project P] [--branch staging] [--execute]
-                      (dry run unless --execute; production needs --production and
-                      --i-have-owner-authorization)
+    package-pages     --content <dir> [--site <build>] [--staging | --production]
+                      (registers the artifact in <content>/deployments/packages.json)
+    deploy-pages      --content <dir> --artifact <content>/build/pages-<ts> [--project P]
+                      [--execute]     (dry run unless --execute; staging branch only)
+    prune-deployments --content <dir> [--project P] [--execute]
+                      (dry run unless --execute; deletes older staging deployments)
 
 ``--content`` defaults to ``architect-portfolio-content`` beside the code repository.
 Exit codes: 0 success; 1 the operation failed; 2 usage error.
@@ -42,14 +43,8 @@ from portfolio_studio.location import (
     default_content_dir,
 )
 from portfolio_studio.locking import ContentLock
-from portfolio_studio.pages import (
-    Runner,
-    describe_plan,
-    execute_deploy,
-    package_pages,
-    plan_deploy,
-    subprocess_runner,
-)
+from portfolio_studio.pages import package_pages
+from portfolio_studio.pages_deploy import Deployer
 from portfolio_studio.renderer import (
     CliRenderer,
     RenderOutput,
@@ -59,10 +54,9 @@ from portfolio_studio.renderer import (
 )
 from portfolio_studio.server import LOOPBACK, ServerConfig, check_bind_host, configure_logging
 from portfolio_studio.service import StudioService
-from portfolio_studio.store import BUILD, ContentStore
+from portfolio_studio.store import ContentStore
 
 DEFAULT_PORT = 8765
-BRANCH_HELP = "'staging' (default); with --production, the production branch"
 RENDERER_HELP = "the renderer folder (default: web/slice-renderer; uses dist/cli.cjs)"
 
 
@@ -94,24 +88,20 @@ def _parser() -> argparse.ArgumentParser:
     backup.add_argument("--to", type=Path, required=True)
     package = command("package-pages", "package the last scanned build for Cloudflare Pages")
     package.add_argument("--site", type=Path, default=None, help="the build (default build/site)")
-    package.add_argument("--out", type=Path, default=None, help="artifacts folder (default build/)")
     modes = package.add_mutually_exclusive_group()
     modes.add_argument("--staging", action="store_true", help="the default: noindex everywhere")
-    modes.add_argument("--production", action="store_true", help="no noindex; needs the flag below")
-    package.add_argument("--i-have-owner-authorization", action="store_true", dest="authorized")
-    deploy = commands.add_parser(
-        "deploy-pages", help="dry run (default) or run the Pages Direct Upload of an artifact"
+    modes.add_argument(
+        "--production", action="store_true", help="no noindex; packaged only, never deployed here"
     )
-    deploy.add_argument("--artifact", type=Path, required=True, help="a pages-<timestamp> folder")
-    deploy.add_argument("--project", default=None, help="the Pages project name")
+    deploy = command("deploy-pages", "dry run (default) or the staging Pages upload of an artifact")
     deploy.add_argument(
-        "--branch",
-        default=None,
-        help="'staging' (default); with --production, the production branch",
+        "--artifact", type=Path, required=True, help="a registered pages-<ts> folder"
     )
-    deploy.add_argument("--production", action="store_true")
-    deploy.add_argument("--i-have-owner-authorization", action="store_true", dest="authorized")
+    deploy.add_argument("--project", default=None, help="the Pages project name")
     deploy.add_argument("--execute", action="store_true", help="actually upload (default: dry run)")
+    prune = command("prune-deployments", "dry run (default) or delete older staging deployments")
+    prune.add_argument("--project", default=None, help="the Pages project name")
+    prune.add_argument("--execute", action="store_true", help="actually delete (default: dry run)")
     return parser
 
 
@@ -262,42 +252,44 @@ def cmd_package_pages(args: argparse.Namespace, content: Path) -> int:
     store = _open_store(content)
     with ContentLock(store.root):
         result = package_pages(
+            store.root,
             args.site or default_output(store.root),
-            args.out or store.root / BUILD,
             code_root() / "scripts" / "scan_output.py",
             mode="production" if args.production else "staging",
-            owner_authorized=args.authorized,
         )
     exhibits = ", ".join(f"{e['projectId']} r{e['sourceRevision']}" for e in result.exhibits)
     print(f"Packaged {result.build_id} for Pages ({result.mode}) at {result.artifact}")
     print(f"{result.file_count} files, {result.total_bytes} bytes; exhibits: {exhibits or 'none'}")
+    print(f"Registered: manifest sha256 {result.manifest_sha256}")
     print(result.scan)
-    print(f"Next: python -m portfolio_studio deploy-pages --artifact {result.artifact}")
+    if result.mode == "staging":
+        print(f"Next: python -m portfolio_studio deploy-pages --artifact {result.artifact}")
+    else:
+        print("Production packages are never deployed by this tool (owner-approved mechanism).")
     return 0
 
 
-def cmd_deploy_pages(
-    args: argparse.Namespace,
-    environment: Mapping[str, str] | None = None,
-    runner: Runner = subprocess_runner,
-) -> int:
-    """Dry run unless --execute; reads nothing but the artifact folder and the environment."""
+def _deployer(content: Path, environment: Mapping[str, str] | None) -> Deployer:
     env = dict(os.environ) if environment is None else dict(environment)
-    plan = plan_deploy(
-        args.artifact,
-        args.project,
-        args.branch,
-        args.production,
-        args.authorized,
-        env,
-        npx=shutil.which("npx") or "npx",
-    )
-    print(describe_plan(plan, env, execute=args.execute and plan.executable))
-    if not args.execute:
-        return 0
-    if not plan.executable:
-        return 1
-    return execute_deploy(plan, env, runner)
+    return Deployer(content=content, environment=env)
+
+
+def cmd_deploy_pages(
+    args: argparse.Namespace, content: Path, deployer: Deployer | None = None
+) -> int:
+    """Dry run unless --execute. Reads only the register and the artifact; staging only."""
+    store = ContentStore(check_content_dir(content))
+    with ContentLock(store.root):
+        active = deployer or _deployer(store.root, None)
+        return active.deploy(args.artifact, args.project, args.execute)
+
+
+def cmd_prune_deployments(
+    args: argparse.Namespace, content: Path, deployer: Deployer | None = None
+) -> int:
+    store = ContentStore(check_content_dir(content))
+    active = deployer or _deployer(store.root, None)
+    return active.prune(args.project, args.execute)
 
 
 def main(argv: Sequence[str] | None = None) -> int:
@@ -312,7 +304,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         "serve-site": lambda: cmd_serve_site(args, content),
         "backup": lambda: cmd_backup(args, content),
         "package-pages": lambda: cmd_package_pages(args, content),
-        "deploy-pages": lambda: cmd_deploy_pages(args),
+        "deploy-pages": lambda: cmd_deploy_pages(args, content),
+        "prune-deployments": lambda: cmd_prune_deployments(args, content),
     }
     try:
         return handlers[args.command]()

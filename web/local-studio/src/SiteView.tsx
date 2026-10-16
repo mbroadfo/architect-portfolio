@@ -118,6 +118,9 @@ export function SiteView() {
           </p>
           <p className="field__hint">{packaged.scan}</p>
           <p className="field__hint">
+            Registered in the content repository: manifest <code>{packaged.manifestSha256}</code>
+          </p>
+          <p className="field__hint">
             Nothing was uploaded. Check it with a dry run: <code>{packaged.dryRun}</code>
           </p>
         </section>

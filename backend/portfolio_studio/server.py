@@ -273,7 +273,7 @@ def _api_routes(
         """Package the last scanned build for Pages, staging only (noindex)."""
         scanner = config.scanner or code_root() / "scripts" / "scan_output.py"
         with service.lock:
-            result = package_pages(config.site_output, config.site_output.parent, scanner)
+            result = package_pages(service.store.root, config.site_output, scanner)
         return {
             "artifact": str(result.artifact),
             "mode": result.mode,
@@ -282,6 +282,7 @@ def _api_routes(
             "buildId": result.build_id,
             "exhibits": result.exhibits,
             "scan": result.scan,
+            "manifestSha256": result.manifest_sha256,
             "dryRun": f"python -m portfolio_studio deploy-pages --artifact {result.artifact}",
         }
 

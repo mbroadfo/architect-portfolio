@@ -1,0 +1,12 @@
+{
+  "name": "@portfolio/pages-deploy",
+  "private": true,
+  "version": "0.0.1",
+  "description": "Pinned wrangler for `python -m portfolio_studio deploy-pages` (staging only). Install with `npm ci`; the Studio runs node_modules/wrangler/bin/wrangler.js directly, never through npx or a shell.",
+  "engines": {
+    "node": ">=22"
+  },
+  "devDependencies": {
+    "wrangler": "4.149.0"
+  }
+}

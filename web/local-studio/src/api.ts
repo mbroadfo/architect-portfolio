@@ -158,6 +158,7 @@ export interface PackageResult {
   buildId: string;
   exhibits: { projectId: string; slug: string; sourceRevision: number }[];
   scan: string;
+  manifestSha256: string;
   dryRun: string;
 }
 

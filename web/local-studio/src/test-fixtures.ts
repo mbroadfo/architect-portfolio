@@ -158,6 +158,7 @@ export function fakeClient(overrides: Partial<StudioApi> = {}): StudioApi {
       buildId: "build-20261015010000-1",
       exhibits: [{ projectId: "stars", slug: "stars", sourceRevision: 6 }],
       scan: "scan_output: OK - 21 file(s) scanned",
+      manifestSha256: "ab".repeat(32),
       dryRun: "python -m portfolio_studio deploy-pages --artifact C:/content/build/pages-x",
     })),
     ...overrides,

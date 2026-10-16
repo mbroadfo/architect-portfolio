@@ -4,6 +4,7 @@
 !backend/portfolio_api/**
 !web/slice-renderer/package.json
 !web/slice-renderer/package-lock.json
+!web/slice-renderer/tsconfig.json
 !web/slice-renderer/scripts/**
 !web/slice-renderer/src/**
 !web/slice-renderer/assets/**

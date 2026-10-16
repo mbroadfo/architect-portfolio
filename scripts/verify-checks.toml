@@ -374,3 +374,12 @@ kind = "audit"
 argv = ["{npm}", "--prefix", "web/local-studio", "audit", "--audit-level=high"]
 applies_when = ["web/local-studio/package-lock.json"]
 required = false
+
+[[check]]
+id = "local-studio-npm-audit-pages-deploy"
+unit = "local-studio"
+kind = "audit"
+description = "The pinned wrangler used by deploy-pages"
+argv = ["{npm}", "--prefix", "tools/pages-deploy", "audit", "--audit-level=high"]
+applies_when = ["tools/pages-deploy/package-lock.json"]
+required = false
