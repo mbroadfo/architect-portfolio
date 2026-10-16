@@ -1,0 +1,420 @@
+# U0 S0 CI baseline (BR5.1, BR5.2, BR1.2; NFR13.1 to NFR13.6).
+# One aggregate job, `gate`, is the single required status check. It always runs, and passes
+# only when every component job it needs succeeded or was skipped because its `changes`
+# output is exactly "false" (scripts/gate_results.py; its job inventory is kept equal to
+# gate.needs by scripts/check_workflows.py). CodeQL runs in codeql.yml.
+name: ci
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+env:
+  # Every job checks out the pull request head commit, not GitHub's synthetic merge commit.
+  HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+  ACTIONLINT_VERSION: "1.7.12"
+  ACTIONLINT_SHA256: "8aca8db96f1b94770f1b0d72b6dddcb1ebb8123cb3712530b08cc387b349a3d8"
+  GITLEAKS_VERSION: "8.30.1"
+  GITLEAKS_SHA256: "551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb"
+
+jobs:
+  changes:
+    name: changes
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    outputs:
+      python: ${{ steps.detect.outputs.python }}
+      web: ${{ steps.detect.outputs.web }}
+      guard: ${{ steps.detect.outputs.guard }}
+      audit: ${{ steps.detect.outputs.audit }}
+      slice_e2e: ${{ steps.detect.outputs.slice_e2e }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ env.HEAD_SHA }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Detect changed components
+        id: detect
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          BASE_REF: ${{ github.base_ref }}
+          BEFORE_SHA: ${{ github.event.before }}
+        run: |
+          set -euo pipefail
+          base=""
+          if [ "$EVENT_NAME" = "pull_request" ]; then
+            base="$(git merge-base "origin/$BASE_REF" HEAD)"
+          elif [ -n "$BEFORE_SHA" ] && git cat-file -e "$BEFORE_SHA^{commit}" 2>/dev/null; then
+            base="$BEFORE_SHA"
+          fi
+          force=false
+          changed=""
+          if [ -z "$base" ]; then
+            force=true
+          else
+            changed="$(git diff --name-only --no-renames "$base" HEAD)"
+          fi
+          printf 'Changed paths:\n%s\n' "$changed"
+          # Edits to CI, the scripts, a lockfile or a pinned runtime force every job to run.
+          if grep -qE '^(\.github/|scripts/|\.python-version$|\.nvmrc$)|(^|/)(requirements[^/]*\.lock|package-lock\.json)$' <<<"$changed"; then
+            force=true
+          fi
+          component() {
+            if [ "$force" = true ] || grep -qE "$1" <<<"$changed"; then echo true; else echo false; fi
+          }
+          # The walking-slice journey runs only where the slice code exists (not on main after
+          # S0): the forcing rule above never turns it on when local/compose.yaml is absent.
+          slice_e2e=false
+          if [ -f local/compose.yaml ]; then
+            slice_e2e="$(component '^(backend/|web/slice-|web/package(-lock)?\.json$|local/|scripts/|tests/docker/|\.github/|\.python-version$|\.nvmrc$|requirements)|(^|/)(requirements[^/]*\.lock|package-lock\.json)$')"
+          fi
+          {
+            echo "python=$(component '^(backend/|scripts/|tests/|local/|requirements|ruff\.toml|mypy\.ini)')"
+            echo "web=$(component '^(web/|\.prettierrc)')"
+            echo "guard=$(component '^(backend/|web/|local/|tests/guard/)')"
+            echo "audit=$(component '(^|/)(requirements[^/]*\.(in|lock)|package(-lock)?\.json)$|^\.pip-audit-ignore$')"
+            echo "slice_e2e=$slice_e2e"
+          } | tee -a "$GITHUB_OUTPUT"
+
+  python:
+    name: python
+    needs: changes
+    if: needs.changes.outputs.python == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ env.HEAD_SHA }}
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version-file: .python-version
+          cache: pip
+          cache-dependency-path: "**/requirements*.lock"
+      - name: Install the locked tooling
+        run: python -m pip install --require-hashes -r requirements.lock
+      - name: Install the back-end lock when present
+        run: |
+          if [ -f backend/requirements-slice.lock ]; then
+            python -m pip install --require-hashes -r backend/requirements-slice.lock
+          fi
+          if [ -f backend/requirements-studio.lock ]; then
+            python -m pip install --require-hashes -r backend/requirements-studio.lock
+          fi
+      - name: Ruff lint
+        run: ruff check .
+      - name: Ruff format
+        run: ruff format --check .
+      - name: Type check
+        run: mypy
+      - name: Script tests with the 80% line-coverage floor
+        run: python -m pytest tests/scripts --cov=scripts --cov-fail-under=80
+      - name: Back-end unit tests with the 80% line-coverage floor (when present)
+        run: |
+          if [ -d backend/tests/unit ]; then
+            cov="--cov=portfolio_api"
+            if [ -d backend/portfolio_studio ]; then cov="$cov --cov=portfolio_studio"; fi
+            # shellcheck disable=SC2086
+            python -m pytest backend/tests/unit $cov --cov-fail-under=80
+          fi
+      - name: Fake issuer tests (when present)
+        run: |
+          if [ -d local/fake-idp/tests ]; then
+            python -m pytest local/fake-idp/tests
+          fi
+      - name: Slice check unit tests (when present)
+        run: |
+          if [ -d local/tests ]; then
+            python -m pytest local/tests
+          fi
+      # The MongoDB integration tests run in the slice-e2e job, through scripts/verify.py,
+      # in this checkout's isolated Compose project (no `down -v` anywhere).
+
+  web:
+    name: web
+    needs: changes
+    if: needs.changes.outputs.web == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ env.HEAD_SHA }}
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          cache-dependency-path: "web/**/package-lock.json"
+      - name: Workspace checks (format, lint, types, tests with coverage, build)
+        working-directory: web
+        run: |
+          npm ci
+          npm run format:check
+          npm run lint
+          npm run typecheck
+          npm run test
+          npm run build
+      - name: Standalone packages (when present)
+        run: |
+          shopt -s nullglob
+          for dir in web/slice-*/ web/local-studio/; do
+            if [ -f "${dir}package-lock.json" ]; then
+              echo "::group::${dir}"
+              (cd "$dir" && npm ci && npm run check)
+              echo "::endgroup::"
+            fi
+          done
+
+  guard:
+    name: guard
+    needs: changes
+    if: needs.changes.outputs.guard == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ env.HEAD_SHA }}
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version-file: .python-version
+          cache: pip
+          cache-dependency-path: "**/requirements*.lock"
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          cache-dependency-path: "web/**/package-lock.json"
+      - name: Install the locked tooling
+        run: python -m pip install --require-hashes -r requirements.lock
+      - name: Build the deployable outputs
+        run: |
+          python -m build --wheel --no-isolation --outdir backend/dist backend
+          (cd web && npm ci && npm run build)
+      - name: Fake identity provider guard (BR1.2)
+        run: python scripts/guard_fake_idp.py
+      - name: Guard negative-fixture test (AC0.2)
+        run: python -m pytest tests/scripts/test_guard_fake_idp.py
+
+  audit:
+    name: audit
+    needs: changes
+    if: needs.changes.outputs.audit == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ env.HEAD_SHA }}
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version-file: .python-version
+          cache: pip
+          cache-dependency-path: "**/requirements*.lock"
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+      - name: Install the locked tooling
+        run: python -m pip install --require-hashes -r requirements.lock
+      - name: npm audit (fails on high or critical)
+        run: |
+          shopt -s nullglob
+          for dir in web/ web/slice-*/; do
+            if [ -f "${dir}package-lock.json" ]; then
+              (cd "$dir" && npm audit --audit-level=high)
+            fi
+          done
+      - name: pip-audit (fails on any finding not in the reviewed ignore file)
+        run: |
+          set -euo pipefail
+          today="$(date -u +%F)"
+          ignore_args=()
+          while read -r vuln_id rest; do
+            if [ -z "$vuln_id" ] || [ "${vuln_id:0:1}" = "#" ]; then
+              continue
+            fi
+            expiry="$(grep -oE 'expires [0-9]{4}-[0-9]{2}-[0-9]{2}' <<<"$rest" | cut -d' ' -f2 || true)"
+            if [ -z "$expiry" ] || [[ "$expiry" < "$today" ]]; then
+              echo "::error::.pip-audit-ignore entry $vuln_id has no expiry or has expired"
+              exit 1
+            fi
+            ignore_args+=(--ignore-vuln "$vuln_id")
+          done < .pip-audit-ignore
+          for lock in requirements.lock backend/requirements-slice.lock local/fake-idp/requirements.lock; do
+            if [ -f "$lock" ]; then
+              pip-audit --disable-pip --require-hashes -r "$lock" "${ignore_args[@]}"
+            fi
+          done
+
+  slice-e2e:
+    # Codex review R4: the walking-slice journey as a required, path-gated job. It builds the
+    # whole stack with Docker Compose in this checkout's isolated project, runs the MongoDB
+    # integration and fault-injection tests in their Linux container, the Docker isolation
+    # regression, the Playwright create -> save -> preview -> publish journey, and the
+    # public-output scan of the exported release. `changes` sets slice_e2e to "false" only
+    # when the slice code is absent (main after S0).
+    name: slice-e2e
+    needs: changes
+    if: needs.changes.outputs.slice_e2e == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ env.HEAD_SHA }}
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version-file: .python-version
+          cache: pip
+          cache-dependency-path: "**/requirements*.lock"
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          cache-dependency-path: "web/**/package-lock.json"
+      - name: Install the locked tooling
+        run: python -m pip install --require-hashes -r requirements.lock
+      - name: Install the locked npm packages (Playwright comes from web/package-lock.json)
+        run: |
+          npm --prefix web ci
+          npm --prefix web/slice-renderer ci
+          npm --prefix web/slice-studio ci
+      - name: Install Playwright's Chromium and its system dependencies
+        working-directory: web
+        env:
+          PLAYWRIGHT_BROWSERS_PATH: "0"
+        run: npx playwright install --with-deps chromium
+      - name: Walking slice end to end, integration and isolation (strict)
+        run: python scripts/verify.py --strict --kind e2e --kind integration
+
+  workflow-lint:
+    name: workflow-lint
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ env.HEAD_SHA }}
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version-file: .python-version
+          cache: pip
+          cache-dependency-path: "**/requirements*.lock"
+      - name: Install the locked tooling
+        run: python -m pip install --require-hashes -r requirements.lock
+      - name: actionlint (binary verified by checksum)
+        run: |
+          set -euo pipefail
+          archive="actionlint_${ACTIONLINT_VERSION}_linux_amd64.tar.gz"
+          curl -fsSLo "$RUNNER_TEMP/$archive" \
+            "https://github.com/rhysd/actionlint/releases/download/v${ACTIONLINT_VERSION}/${archive}"
+          echo "${ACTIONLINT_SHA256}  $RUNNER_TEMP/$archive" | sha256sum -c -
+          tar -xzf "$RUNNER_TEMP/$archive" -C "$RUNNER_TEMP" actionlint
+          "$RUNNER_TEMP/actionlint" -color
+      - name: Workflow security lint (NFR13.6)
+        run: python scripts/check_workflows.py
+
+  review-check:
+    name: review-check
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ env.HEAD_SHA }}
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version-file: .python-version
+      - name: Content-bound security-review check (BR5.2), with the checker from the base
+        # The pull request under review must not supply its own checker or path list: the
+        # script is taken from the base branch, and it reads the list from the base too.
+        # Bootstrap: when the base has no checker yet (the pull request that introduces it),
+        # the head copy is used and the log says so.
+        env:
+          BASE_REF: ${{ github.base_ref }}
+        run: |
+          set -euo pipefail
+          checker="$RUNNER_TEMP/check_security_review.py"
+          if git show "origin/$BASE_REF:scripts/check_security_review.py" > "$checker" 2>/dev/null; then
+            echo "Using scripts/check_security_review.py from origin/$BASE_REF"
+          else
+            cp scripts/check_security_review.py "$checker"
+            echo "::notice::Bootstrap: origin/$BASE_REF has no scripts/check_security_review.py yet; using the pull request's copy. Its review rests on Michael's review."
+          fi
+          python "$checker" --repo . --base "origin/$BASE_REF" --head "$HEAD_SHA"
+
+  gitleaks:
+    name: gitleaks
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ env.HEAD_SHA }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: gitleaks (binary verified by checksum)
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          BASE_REF: ${{ github.base_ref }}
+          BEFORE_SHA: ${{ github.event.before }}
+        run: |
+          set -euo pipefail
+          archive="gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz"
+          curl -fsSLo "$RUNNER_TEMP/$archive" \
+            "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/${archive}"
+          echo "${GITLEAKS_SHA256}  $RUNNER_TEMP/$archive" | sha256sum -c -
+          tar -xzf "$RUNNER_TEMP/$archive" -C "$RUNNER_TEMP" gitleaks
+          if [ "$EVENT_NAME" = "pull_request" ]; then
+            range="$(git merge-base "origin/$BASE_REF" HEAD)..HEAD"
+          elif [ -n "$BEFORE_SHA" ] && git cat-file -e "$BEFORE_SHA^{commit}" 2>/dev/null; then
+            range="$BEFORE_SHA..HEAD"
+          else
+            range="HEAD"
+          fi
+          "$RUNNER_TEMP/gitleaks" git --redact --verbose --exit-code 1 --log-opts="$range" .
+
+  gate:
+    name: gate
+    if: always()
+    needs: [changes, python, web, guard, audit, slice-e2e, workflow-lint, review-check, gitleaks]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      # The aggregation logic lives in scripts/gate_results.py and is unit-tested
+      # (tests/scripts/test_gate_results.py). This workflow and that script are protected only
+      # by the ruleset and Michael's review (docs/security-reviews/README.md).
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ env.HEAD_SHA }}
+          persist-credentials: false
+      - name: Aggregate the component results (BR5.1, NFR13.2)
+        env:
+          NEEDS_JSON: ${{ toJSON(needs) }}
+          EVENT_NAME: ${{ github.event_name }}
+        run: python3 scripts/gate_results.py

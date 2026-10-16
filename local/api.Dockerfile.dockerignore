@@ -1,0 +1,17 @@
+# Build context for local/api.Dockerfile is the repository root: send only what it copies.
+**
+!backend/requirements-slice.lock
+!backend/portfolio_api/**
+!web/slice-renderer/package.json
+!web/slice-renderer/package-lock.json
+!web/slice-renderer/tsconfig.json
+!web/slice-renderer/scripts/**
+!web/slice-renderer/src/**
+!web/slice-renderer/assets/**
+!web/slice-renderer/styles/**
+!web/slice-renderer/licences/**
+!local/fixtures/fixture.json
+!local/fixtures/ast_SliceFixtureImage0001/**
+**/__pycache__
+**/*.test.ts
+**/*.test.tsx

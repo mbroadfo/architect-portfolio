@@ -1,0 +1,20 @@
+# Local Studio (L2, ADR-013) runtime dependencies. The Studio runs only on the owner's machine.
+# Compile from the repository root with:
+#   pip-compile --generate-hashes --allow-unsafe --strip-extras \
+#     --output-file backend/requirements-studio.lock backend/requirements-studio.in
+# Install with:
+#   python -m pip install --require-hashes -r backend/requirements-studio.lock
+# Versions shared with the tooling and slice locks are held equal by the constraints below.
+-c ../requirements.lock
+-c requirements-slice.lock
+fastapi
+uvicorn
+pydantic
+# Image validation and re-encoding (JPEG, PNG and WebP; HEIC is deferred).
+pillow
+# Multipart form parsing for image uploads.
+python-multipart
+# TestClient for the Studio's tests.
+httpx
+# Windows-only dependency of click (via uvicorn); pinned so the lock installs on Windows too.
+colorama

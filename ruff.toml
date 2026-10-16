@@ -1,0 +1,40 @@
+# Ruff lint and format configuration for every Python path in the repository.
+target-version = "py312"
+line-length = 100
+extend-exclude = [
+  ".agents",
+  ".aidlc",
+  ".aidlc-engine",
+  ".claude",
+  ".codex",
+  ".opencode",
+  "aidlc",
+  "tools",
+  "web",
+]
+
+[lint]
+select = [
+  "E",   # pycodestyle errors
+  "W",   # pycodestyle warnings
+  "F",   # pyflakes
+  "I",   # isort
+  "B",   # bugbear
+  "UP",  # pyupgrade
+  "S",   # bandit (security)
+  "N",   # pep8-naming
+  "SIM", # simplify
+  "RUF", # ruff-specific
+]
+
+[lint.per-file-ignores]
+# The CI scripts call git and other fixed binaries with argument lists, never a shell.
+"scripts/**" = ["S603", "S607"]
+# Tests use assert, fixed subprocess calls and throwaway test values.
+"tests/**" = ["S101", "S105", "S106", "S108", "S603", "S607"]
+"**/tests/**" = ["S101", "S105", "S106", "S108", "S603", "S607"]
+"local/**" = ["S603", "S607"]
+
+[format]
+quote-style = "double"
+line-ending = "lf"

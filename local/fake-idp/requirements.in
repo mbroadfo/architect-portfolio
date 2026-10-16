@@ -1,0 +1,9 @@
+# LOCAL-ONLY FAKE identity provider (AIDLC_LOCAL_ONLY_FAKE_IDP) runtime dependencies.
+# Compile from the repository root with:
+#   pip-compile --generate-hashes --allow-unsafe --strip-extras \
+#     --output-file local/fake-idp/requirements.lock local/fake-idp/requirements.in
+-c ../../backend/requirements-slice.lock
+fastapi
+uvicorn
+pyjwt[crypto]
+cryptography

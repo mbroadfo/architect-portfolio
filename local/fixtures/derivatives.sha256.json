@@ -1,0 +1,9 @@
+{
+  "description": "LOCAL-ONLY trusted digests of the authorized walking-slice fixture derivatives (Codex review R3). scripts/scan_output.py --media-digests fails any published media file whose bytes differ, or that has no entry here. Regenerated together with the images by local/fixtures/make_fixture.py.",
+  "version": 1,
+  "algorithm": "sha256",
+  "derivatives": {
+    "media/ast_SliceFixtureImage0001/w480.jpg": "a79bd7beac547ffc9eda15bfa8944c4f396111c271931515cee98c83b1cbaa6f",
+    "media/ast_SliceFixtureImage0001/w480.webp": "f68b3a7f566888baf5b650ad1ea624549367768a3e88761190a90bde5b22605c"
+  }
+}
